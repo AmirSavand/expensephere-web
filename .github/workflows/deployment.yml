@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.2.0
         with:
-          github_access_token: ${{ secrets.ACCESS_TOKEN }}
+          github_access_token: ${{ secrets.SECRET_TOKEN }}
           build_configuration: production
           base_href: /openexpenses-web/
           deploy_branch: gh-pages
