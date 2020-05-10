@@ -1,1 +1,126 @@
-<router-outlet></router-outlet>
+<!-- Loading bar -->
+<ngx-loading-bar color="#3c40c6" [includeSpinner]="false"></ngx-loading-bar>
+
+<!-- Outer -->
+<div id="outer" [class.is-auth]="user">
+
+  <!-- Page wrapper -->
+  <div id="page-wrapper">
+
+    <!-- Header -->
+    <div id="header">
+
+      <!-- Container -->
+      <div class="container">
+
+        <!-- Wallets -->
+        <a class="text-dark d-flex align-items-center item-icon-action" title="Current wallet" *ngIf="wallets">
+          <div class="item-icon shadow-none " [ngStyle]="style(wallets[0].color)">
+            <span class="icon-{{ wallets[0].icon }}"></span>
+          </div>
+          <div class="ml-3">
+            <div class="font-weight-bold">{{ wallets[0].name }}</div>
+            <div class="text-muted small">${{ wallets[0].balance | number }}</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Page -->
+    <div id="page">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" *ngIf="user">
+
+    <!-- User -->
+    <div id="user" (click)="toggleUserView()">
+
+      <!-- Name -->
+      <div class="font-weight-bold">
+        <div>{{ user.account.display_name || user.username }}</div>
+        <small class="text-muted">{{ user.email }}</small>
+      </div>
+
+      <!-- Icon -->
+      <fa-icon [fixedWidth]="true" class="ml-auto text-secondary"
+               [icon]="sidebarViewSelected === sidebarView.USER ? faBack : faView">
+      </fa-icon>
+    </div>
+
+    <!-- Sidebar view: User -->
+    <div *ngIf="sidebarViewSelected === sidebarView.USER">
+
+      <!-- My profile -->
+      <div class="my profiles">
+
+        <!-- Header -->
+        <p class="font-weight-bold">My Profiles</p>
+
+        <!-- Profile -->
+        <div class="card shadow-sm" *ngFor="let profile of profiles; let last = last" [class.mb-3]="!last">
+          <div class="card-body">
+            <span class="font-weight-bold">{{ profile.name }}</span>
+            <span class="float-right" title="Balance">${{ profile.balance | number:'0.2-2' }}</span>
+            <div *ngIf="profile.note" class="text-muted small">{{ profile.note }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My account -->
+      <div class="my account">
+
+        <!-- Header -->
+        <p class="font-weight-bold">My Account</p>
+
+        <!-- Settings -->
+        <button class="btn btn-secondary shadow-sm" title="Settings">
+          <fa-icon [fixedWidth]="true" [icon]="faSettings"></fa-icon>
+        </button>
+
+        <!-- Sign out -->
+        <button class="btn btn-secondary shadow-sm ml-2" (click)="auth.signOut()" title="Logout">
+          <fa-icon [fixedWidth]="true" [icon]="faSignOut"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar view: Main -->
+    <div *ngIf="sidebarViewSelected === sidebarView.MAIN">
+
+      <!-- Navigation -->
+      <div class="my navigation">
+
+        <!-- Header -->
+        <p class="font-weight-bold">Navigation</p>
+
+        <!-- Links -->
+        <div class="row links">
+          <div class="col-6 mb-3" *ngFor="let item of navigation">
+            <a class="btn btn-light btn-block text-{{ item.color }}"
+               routerLinkActive="bg-white shadow" [routerLink]="item.link">
+              <fa-icon [fixedWidth]="true" [icon]="item.icon"></fa-icon>
+              <div class="small text-muted">{{ item.text }}</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- My wallets -->
+      <div class="my wallets">
+
+        <!-- Header -->
+        <p class="font-weight-bold">My Wallets</p>
+      </div>
+
+      <!-- My events -->
+      <div class="my events">
+
+        <!-- Header -->
+        <p class="font-weight-bold">My Events</p>
+      </div>
+    </div>
+  </div>
+</div>

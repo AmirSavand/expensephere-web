@@ -1,0 +1,37 @@
+// Bootstrap variables override
+
+$primary: #3c40c6;
+$secondary: #808e9b;
+$info: #0fbcf9;
+$success: #0be881;
+$danger: #ff3f34;
+$warning: #ffa801;
+$dark: #1e272e;
+$light: #F9FAFC;
+
+$font-family-base: "Hind", "Roboto", sans-serif;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 600;
+
+$body-color: #050505;
+
+$input-bg: $light;
+$input-border-width: 0;
+
+$card-border-width: 0;
+
+// Icons variables override
+
+$icomoon-font-path: 'src/assets/icon/fonts';
+
+// Custom variables
+
+$sidebar-color: $light;
+$sidebar-width: 350px;
+$header-height: 90px;
+
+// Bootstrap variables
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";

@@ -1,1 +1,16 @@
-Hello world!
+<div class="container mt-4">
+  <p class="font-weight-bold">My Categories</p>
+  <div class="row">
+    <div class="col-xl-3 col-lg-4" *ngFor="let category of categories; let last = last" [class.mb-3]="!last">
+      <div class="d-flex align-items-center item-icon-action">
+        <div class="item-icon" [ngStyle]="style(category.color)">
+          <i class="icon-{{ category.icon }}"></i>
+        </div>
+        <div class="ml-3">
+          <div>{{ category.name }}</div>
+          <div class="small text-muted">{{ category.transactions_count }} Transactions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "sass"
+          "style": "scss"
         }
       },
       "root": "",
@@ -25,7 +25,8 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/404.html"
             ],
             "styles": [
               "src/styles.scss"
@@ -60,17 +61,36 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "dev-prod": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev-prod.ts"
+                }
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "openexpenses-web:build"
+            "browserTarget": "openexpenses-web:build",
+            "host": "0.0.0.0",
+            "disableHostCheck": true
           },
           "configurations": {
             "production": {
               "browserTarget": "openexpenses-web:build:production"
+            },
+            "dev-prod": {
+              "browserTarget": "openexpenses-web:build:dev-prod"
             }
           }
         },

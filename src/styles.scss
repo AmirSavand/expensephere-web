@@ -1,6 +1,34 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
+@import url("https://fonts.googleapis.com/css?family=Hind:300,400,600&display=swap");
 
-$primary: $teal;
+@import "./variables";
 
 @import "~bootstrap/scss/bootstrap";
+@import "src/assets/icon/style";
+
+html, body, app-root {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.bg-special {
+  background: #833ab4;
+  background: linear-gradient(90deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+}
+
+.btn {
+  padding-top: $btn-padding-y + 0.2rem;
+}
+
+.item-icon {
+  border-radius: $border-radius;
+  flex-basis: 48px;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+}

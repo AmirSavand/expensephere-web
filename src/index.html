@@ -5,9 +5,24 @@
   <title>Open Expenses</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
 </head>
 <body>
-  <app-root></app-root>
+<!-- Github Pages hack to allow SPA refresh without receiving 404. -->
+<script>
+  (() => {
+    // Retrieve the URL the user was trying to access when receiving the 404.
+    let redirect = sessionStorage.redirect;
+    // Remove the URL from sessionStorage.
+    delete sessionStorage.redirect;
+    // Check if we actually need to redirect.
+    if (redirect && redirect !== location.href) {
+      // We need to redirect to the URL the user was trying to access.
+      history.replaceState(null, null, redirect);
+    }
+  })();
+</script>
+<!-- Application root -->
+<app-root></app-root>
 </body>
 </html>

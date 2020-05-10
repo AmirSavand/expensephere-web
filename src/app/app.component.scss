@@ -1,0 +1,78 @@
+@import "src/variables";
+
+#outer, #sidebar, #page-wrapper, #page, #header {
+  display: flex;
+  height: 100%;
+}
+
+#outer {
+  width: 100%;
+
+  /**
+   * Hide sidebar and header if user is not authenticated
+   */
+  &:not(.is-auth) {
+    > #sidebar, #header {
+      display: none;
+    }
+  }
+
+  > #sidebar {
+    flex-direction: column;
+    min-width: $sidebar-width;
+    overflow-y: auto;
+    background: $light;
+
+    > div {
+      padding: map_get($spacers, 4);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      .my {
+        margin-bottom: map_get($spacers, 5);
+      }
+    }
+
+    > #user {
+      height: $header-height;
+      flex-direction: row;
+      align-items: center;
+      justify-content: end;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      &:active {
+        background: rgba(0, 0, 0, 0.075);
+      }
+    }
+  }
+
+  > #page-wrapper {
+    flex-direction: column;
+    width: 100%;
+
+    > #header {
+      height: $header-height;
+      min-height: $header-height;
+      background: $white;
+      color: $light;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+      align-items: center;
+    }
+
+    > #page {
+      width: 100%;
+      overflow-y: auto;
+
+      &::ng-deep > *:not(router-outlet) {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
