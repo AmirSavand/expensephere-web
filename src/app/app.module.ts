@@ -7,7 +7,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
 import { HttpInterceptorService } from '@shared/services/http-interceptor.service';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
     LoadingBarModule,
     LoadingBarHttpClientModule,
     FontAwesomeModule,
+    PopoverModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },

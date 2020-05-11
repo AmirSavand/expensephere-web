@@ -6,6 +6,7 @@ import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
 import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
@@ -26,11 +27,14 @@ export class AppComponent implements OnInit {
 
   readonly sidebarView = SidebarView;
   readonly style = Color.style;
+  readonly colorsReserved = Color.COLORS_RESERVED;
 
   readonly faView: IconDefinition = faChevronDown;
   readonly faBack: IconDefinition = faChevronUp;
   readonly faSignOut: IconDefinition = faSignOutAlt;
   readonly faSettings: IconDefinition = faCog;
+  readonly faDropdown: IconDefinition = faChevronDown;
+  readonly faWallets: IconDefinition = faLayerGroup;
 
   /**
    * Authenticated user data

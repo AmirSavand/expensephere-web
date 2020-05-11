@@ -11,6 +11,10 @@ html, body, app-root {
   width: 100%;
 }
 
+a, button, .btn {
+  cursor: pointer;
+}
+
 .bg-special {
   background: #833ab4;
   background: linear-gradient(90deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
@@ -31,4 +35,8 @@ html, body, app-root {
   justify-content: center;
   align-items: center;
   font-size: 1.3rem;
+}
+
+.popover-content {
+  width: 180px;
 }

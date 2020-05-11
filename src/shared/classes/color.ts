@@ -33,6 +33,10 @@ export class Color {
     '#607d8b',
   ];
 
+  static readonly COLORS_RESERVED: Record<string, string> = {
+    wallets: '#607d8b',
+  };
+
   /**
    * @returns Lighten amount of a color
    */

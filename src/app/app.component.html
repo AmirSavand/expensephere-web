@@ -14,15 +14,21 @@
       <div class="container">
 
         <!-- Wallets -->
-        <a class="text-dark d-flex align-items-center item-icon-action" title="Current wallet" *ngIf="wallets">
-          <div class="item-icon shadow-none " [ngStyle]="style(wallets[0].color)">
-            <span class="icon-{{ wallets[0].icon }}"></span>
-          </div>
-          <div class="ml-3">
-            <div class="font-weight-bold">{{ wallets[0].name }}</div>
-            <div class="text-muted small">${{ wallets[0].balance | number }}</div>
-          </div>
-        </a>
+        <div class="d-inline-block">
+          <a class="text-dark d-flex align-items-center" title="Current wallet"
+             *ngIf="wallets" [popover]="walletsTemplate" placement="bottom" [outsideClick]="true">
+            <div class="item-icon shadow-none " [ngStyle]="style(wallets[0].color)">
+              <span class="icon-{{ wallets[0].icon }}"></span>
+            </div>
+            <div class="ml-3">
+              <div>
+                <span class="font-weight-bold">{{ wallets[0].name }}</span>
+                <fa-icon [icon]="faDropdown" size="sm" class="ml-2 text-muted"></fa-icon>
+              </div>
+              <div class="text-muted small">${{ wallets[0].balance | number }}</div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -124,3 +130,28 @@
     </div>
   </div>
 </div>
+
+<!-- Wallet popover -->
+<ng-template #walletsTemplate>
+  <a class="d-flex align-items-center mb-3">
+    <span class="item-icon" [ngStyle]="style(colorsReserved.wallets)">
+      <fa-icon [fixedWidth]="true" [icon]="faWallets"></fa-icon>
+    </span>
+    <div class="ml-3">
+      <div class="font-weight-bold">Total</div>
+      <div class="text-muted small">${{ profiles[0].balance | number }}</div>
+    </div>
+  </a>
+  <a class="align-items-center mb-3" *ngFor="let wallet of wallets"
+     [class.d-none]="wallet.id === wallets[0].id"
+     [class.d-flex]="wallet.id !== wallets[0].id">
+    <div class="item-icon shadow-none" [ngStyle]="style(wallet.color)">
+      <span class="icon-{{ wallet.icon }}"></span>
+    </div>
+    <div class="ml-3">
+      <div class="font-weight-bold">{{ wallet.name }}</div>
+      <div class="text-muted small">${{ wallet.balance | number }}</div>
+    </div>
+  </a>
+  <button class="btn btn-primary btn-block btn-sm">New Wallet</button>
+</ng-template>
