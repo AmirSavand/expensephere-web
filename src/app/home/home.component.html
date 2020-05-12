@@ -78,7 +78,7 @@
         <!-- Transactions -->
         <div class="d-flex align-items-center mt-3 item-icon-wrapper"
              *ngFor="let transaction of transactionGroup.value">
-          <!-- Icon -->
+          <!-- Icon and wallet -->
           <div class="item-icon" [ngStyle]="style(getCategory(transaction.category).color)">
             <i class="icon-{{ getCategory(transaction.category).icon }}"></i>
             <i class="icon-{{ getWallet(transaction.wallet).icon }} icon-badge"
@@ -90,11 +90,14 @@
             <div>{{ getCategory(transaction.category).name }}</div>
             <div class="small text-muted">{{ transaction.created | date:'hh:mm aa' }}</div>
           </div>
-          <!-- Amount -->
+          <!-- Amount and (to wallet) -->
           <div class="ml-auto font-weight-bold"
                [class.text-secondary]="transaction.kind === expenseKind.TRANSFER"
                [class.text-danger]="transaction.kind === expenseKind.EXPENSE">
-            ${{ transaction.amount | number:'0.0-2' }}
+            <div class="text-right">${{ transaction.amount | number:'0.0-2' }}</div>
+            <div class="small" *ngIf="transaction.kind === expenseKind.TRANSFER">
+              +{{ getWallet(transaction.into).name }}
+            </div>
           </div>
         </div>
       </div>
