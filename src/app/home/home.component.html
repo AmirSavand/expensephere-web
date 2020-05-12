@@ -2,14 +2,14 @@
   <div class="row">
 
     <!-- Left -->
-    <div class="col-lg-8 mb-3">
+    <div class="col-xl-8 mb-3">
 
       <!-- My wallets -->
       <p class="font-weight-bold">My Wallets</p>
 
       <!-- Wallets -->
       <div class="row" *ngIf="wallets && profiles">
-        <div class="col-lg-4">
+        <div class="col-xl-4 mb-3">
           <div class="card" [ngStyle]="style(colorsReserved.wallets)">
             <div class="card-body d-flex align-items-center">
               <div class="item-icon">
@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4" *ngFor="let wallet of wallets; let last = last" [class.mb-3]="!last">
+        <div class="col-xl-4" *ngFor="let wallet of wallets; let last = last" [class.mb-3]="!last">
           <div class="card" [ngStyle]="style(wallet.color)">
             <div class="card-body d-flex align-items-center">
               <div class="item-icon">
@@ -42,7 +42,7 @@
 
       <!-- Categories -->
       <div class="row">
-        <div class="col-lg-3" *ngFor="let category of categories; let last = last" [class.mb-3]="!last">
+        <div class="col-xl-4" *ngFor="let category of categories; let last = last" [class.mb-3]="!last">
           <div class="d-flex align-items-center item-icon-action">
             <div class="item-icon" [ngStyle]="style(category.color)">
               <i class="icon-{{ category.icon }}"></i>
@@ -57,7 +57,7 @@
     </div>
 
     <!-- Right -->
-    <div class="col-lg-4 mb-3">
+    <div class="col-xl-4 mb-3">
 
       <!-- My transactions -->
       <p class="font-weight-bold mt-3">My Transactions</p>
@@ -77,7 +77,7 @@
 
         <!-- Transactions -->
         <div class="d-flex align-items-center mt-3 item-icon-wrapper"
-             *ngFor="let transaction of transactionGroup.value">
+             *ngFor="let transaction of transactionGroup.value" [title]="transaction.note">
           <!-- Icon and wallet -->
           <div class="item-icon" [ngStyle]="style(getCategory(transaction.category).color)">
             <i class="icon-{{ getCategory(transaction.category).icon }}"></i>
