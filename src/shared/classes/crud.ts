@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
-import { ProfileService } from '@shared/services/profile.service';
 import { PK } from '@shared/types/pk';
 import { Observable } from 'rxjs';
 
@@ -28,14 +27,14 @@ export class Crud<T, LT = T[]> {
    * Get list of objects
    */
   list(params: { [key: string]: string } = {}): Observable<LT> {
-    return this.http.get<LT>(this.endpoint, { params: Object.assign(params, String(ProfileService.PROFILE)) });
+    return this.http.get<LT>(this.endpoint, { params });
   }
 
   /**
    * Create a new object
    */
   create(payload: Partial<T>): Observable<T> {
-    return this.http.post<T>(this.endpoint, Object.assign(payload, { profile: ProfileService.PROFILE }));
+    return this.http.post<T>(this.endpoint, payload);
   }
 
   /**

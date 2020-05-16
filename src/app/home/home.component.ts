@@ -32,18 +32,48 @@ export class HomeComponent implements OnInit {
 
   transactionsGroups: Record<string, Transaction[]>;
 
+  balanceChartResults: { name: string; value: number }[];
+  categoryChartResults: { name: string; value: number }[];
+  balanceChartColors: { name: string; value: string }[] = [];
+  categoryChartColors: { name: string; value: string }[] = [];
+
   constructor(private api: ApiService) {
   }
 
   ngOnInit(): void {
     this.api.profile.list().subscribe((data: Profile[]): void => {
       this.profiles = data;
+      this.balanceChartResults = [{
+        name: 'Income',
+        value: data[0].balance.income,
+      }, {
+        name: 'Expense',
+        value: data[0].balance.expense,
+      }];
+      this.balanceChartColors = [{
+        name: 'Income',
+        value: '#3c40c6',
+      }, {
+        name: 'Expense',
+        value: '#3c40c644',
+      }];
     });
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
       this.wallets = data;
     });
     this.api.category.list().subscribe((data: Category[]): void => {
       this.categories = data;
+      this.categoryChartResults = [];
+      for (const category of data) {
+        this.categoryChartResults.push({
+          name: category.name,
+          value: category.transactions_total || 0,
+        });
+        this.categoryChartColors.push({
+          name: category.name,
+          value: category.color,
+        });
+      }
     });
     this.api.transaction.list().subscribe((data: Transaction[]): void => {
       this.transactions = data;

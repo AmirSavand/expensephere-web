@@ -10,4 +10,5 @@ export interface Category {
   icon: Icon;
   archive: boolean;
   transactions_count: number;
+  transactions_total: number;
 }
