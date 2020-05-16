@@ -25,7 +25,7 @@
                 <span class="font-weight-bold">{{ wallets[0].name }}</span>
                 <fa-icon [icon]="faDropdown" size="sm" class="ml-2 text-muted"></fa-icon>
               </div>
-              <div class="text-muted small">${{ wallets[0].balance | number }}</div>
+              <div class="text-muted small">${{ wallets[0].balance.total | number }}</div>
             </div>
           </a>
         </div>
@@ -69,7 +69,7 @@
         <div class="card shadow-sm" *ngFor="let profile of profiles; let last = last" [class.mb-3]="!last">
           <div class="card-body">
             <span class="font-weight-bold">{{ profile.name }}</span>
-            <span class="float-right" title="Balance">${{ profile.balance | number:'0.0-2' }}</span>
+            <span class="float-right" title="Balance">${{ profile.balance.total | number:'0.0-2' }}</span>
             <div *ngIf="profile.note" class="text-muted small">{{ profile.note }}</div>
           </div>
         </div>
@@ -139,7 +139,7 @@
     </span>
     <div class="ml-3">
       <div class="font-weight-bold">Total</div>
-      <div class="text-muted small">${{ profiles[0].balance | number }}</div>
+      <div class="text-muted small">${{ profiles[0].balance.total | number }}</div>
     </div>
   </a>
   <a class="align-items-center mb-3" *ngFor="let wallet of wallets"
@@ -150,7 +150,7 @@
     </div>
     <div class="ml-3">
       <div class="font-weight-bold">{{ wallet.name }}</div>
-      <div class="text-muted small">${{ wallet.balance | number }}</div>
+      <div class="text-muted small">${{ wallet.balance.total | number }}</div>
     </div>
   </a>
   <button class="btn btn-primary btn-block btn-sm">New Wallet</button>

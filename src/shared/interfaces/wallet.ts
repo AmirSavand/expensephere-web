@@ -1,3 +1,4 @@
+import { Balance } from '@shared/interfaces/balance';
 import { Icon } from '@shared/types/icon';
 
 export interface Wallet {
@@ -7,5 +8,5 @@ export interface Wallet {
   color: string;
   icon: Icon;
   archive: boolean;
-  balance: number;
+  balance: Balance;
 }
