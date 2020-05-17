@@ -1,0 +1,168 @@
+<!-- Header -->
+<div class="modal-header bg-special">
+
+  <!-- Title -->
+  <span>New Transaction</span>
+
+  <!-- Close -->
+  <button class="ml-auto btn btn-light" (click)="modal.hide()">
+    <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
+  </button>
+</div>
+
+<!-- Body -->
+<div class="modal-body pb-0">
+  <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
+
+    <!-- Kind -->
+    <div class="form-group btn-group d-flex justify-content-center text-uppercase" title="Transaction Type">
+      <div class="btn font-weight-bold"
+           (click)="expenseKindSelected = expenseKind.INCOME"
+           [class.btn-light]="expenseKindSelected !== expenseKind.INCOME"
+           [class.btn-primary]="expenseKindSelected === expenseKind.INCOME">
+        <span>Income</span>
+      </div>
+      <div class="btn font-weight-bold"
+           (click)="expenseKindSelected = expenseKind.EXPENSE"
+           [class.btn-light]="expenseKindSelected !== expenseKind.EXPENSE"
+           [class.btn-danger]="expenseKindSelected === expenseKind.EXPENSE">
+        <span>Expense</span>
+      </div>
+      <div class="btn font-weight-bold"
+           (click)="expenseKindSelected = expenseKind.TRANSFER"
+           [class.btn-light]="expenseKindSelected !== expenseKind.TRANSFER"
+           [class.btn-secondary]="expenseKindSelected === expenseKind.TRANSFER">
+        <span>Transfer</span>
+      </div>
+    </div>
+
+    <!-- Wallet -->
+    <div class="form-group">
+      <label for="wallet">Wallet</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWallet"></fa-icon>
+        </div>
+        <select id="wallet" class="custom-select" formControlName="wallet"
+                [class.is-invalid]="form.error.wallet">
+          <option [ngValue]="null">Select wallet</option>
+          <option *ngFor="let wallet of wallets" [ngValue]="wallet.id">{{ wallet.name }}</option>
+        </select>
+        <div class="invalid-tooltip" *ngIf="form.error.wallet">{{ form.error.wallet[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Into (wallet) -->
+    <div class="form-group" *ngIf="expenseKindSelected === expenseKind.TRANSFER">
+      <label for="into">Into Wallet</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWallet"></fa-icon>
+        </div>
+        <select id="into" class="custom-select" formControlName="into"
+                [class.is-invalid]="form.error.into">
+          <option [ngValue]="null">Select wallet to transfer to</option>
+          <option *ngFor="let wallet of wallets" [ngValue]="wallet.id">{{ wallet.name }}</option>
+        </select>
+        <div class="invalid-tooltip" *ngIf="form.error.into">{{ form.error.into[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Category -->
+    <div class="form-group" *ngIf="expenseKindSelected !== expenseKind.TRANSFER">
+      <label for="category">Category</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faCategory"></fa-icon>
+        </div>
+        <select id="category" class="custom-select" formControlName="category"
+                [class.is-invalid]="form.error.category">
+          <option [ngValue]="null">Select category</option>
+          <option *ngFor="let category of categoryGroups[expenseKindSelected]" [ngValue]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+        <div class="invalid-tooltip" *ngIf="form.error.category">{{ form.error.category[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Amount -->
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
+        </div>
+        <input type="number" id="amount" class="form-control" formControlName="amount"
+               [step]="1" [min]="0" placeholder="Enter amount"
+               [class.is-invalid]="form.error.amount">
+        <div class="input-group-append"><span class="input-group-text font-weight-bold">USD</span></div>
+        <div class="invalid-tooltip" *ngIf="form.error.amount">{{ form.error.amount[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Time -->
+    <div class="form-group">
+      <label for="time">Time</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faTime"></fa-icon>
+        </div>
+        <input type="datetime-local" id="time" class="form-control" formControlName="time"
+               [class.is-invalid]="form.error.time">
+        <div class="invalid-tooltip" *ngIf="form.error.time">{{ form.error.time[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Extra details toggle -->
+    <a class="d-block font-weight-bold text-secondary mt-5 mb-3 text-uppercase"
+       (click)="showExtraDetails = !showExtraDetails">
+      <span>Extra Details</span>
+      <fa-icon class="float-right" [icon]="faCollapse" [flip]="showExtraDetails ? 'vertical' : null"></fa-icon>
+    </a>
+
+    <!-- Extra details -->
+    <div [collapse]="!showExtraDetails">
+
+      <!-- Event -->
+      <div class="form-group">
+        <label for="event">Event</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faEvent"></fa-icon>
+          </div>
+          <select id="event" class="custom-select" formControlName="event"
+                  [class.is-invalid]="form.error.event">
+            <option [ngValue]="null">Select event</option>
+            <option *ngFor="let event of events" [ngValue]="event.id">{{ event.name }}</option>
+          </select>
+          <div class="invalid-tooltip" *ngIf="form.error.event">{{ form.error.event[0] }}</div>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="form-group">
+        <label for="note">Note</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faNote"></fa-icon>
+          </div>
+          <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
+                    [class.is-invalid]="form.error.note">
+          </textarea>
+          <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[0] }}</div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Footer -->
+<div class="modal-footer text-right">
+
+  <!-- Cancel -->
+  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+
+  <!-- Done -->
+  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">Done</button>
+</div>

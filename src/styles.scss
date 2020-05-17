@@ -5,6 +5,36 @@
 @import "~bootstrap/scss/bootstrap";
 @import "src/assets/icon/style";
 
+::-moz-selection {
+  background-color: $primary;
+  color: $white;
+}
+
+::selection {
+  background-color: $primary;
+  color: $white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: transparent;
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lighten($secondary, 30);
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 html, body, app-root {
   display: flex;
   height: 100%;
@@ -25,6 +55,7 @@ a, button, .btn {
 }
 
 .item-icon {
+  position: relative;
   border-radius: $border-radius;
   flex-basis: 48px;
   width: 48px;
@@ -73,7 +104,58 @@ a, button, .btn {
   width: 180px;
 }
 
+.modal {
+  .modal-header,
+  .modal-footer {
+    background: $light;
+    display: flex;
+    align-items: center;
+
+    &.modal-header {
+      font-weight: bold;
+
+      > button > fa-icon {
+        color: $secondary;
+      }
+    }
+  }
+
+  .modal-body {
+    label {
+      @extend .text-uppercase;
+      @extend .small;
+      @extend .font-weight-bold;
+      @extend .text-secondary;
+    }
+  }
+}
+
 .chart-wrapper {
   display: grid;
   height: 300px;
+}
+
+.input-group {
+  > .input-group-prepend {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    > span,
+    > fa-icon {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.form-group {
+  .invalid-tooltip {
+    right: 0;
+  }
+}
+
+.oy-scroll {
+  overflow-y: auto;
 }

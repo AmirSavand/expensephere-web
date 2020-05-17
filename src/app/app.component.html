@@ -11,10 +11,10 @@
     <div id="header">
 
       <!-- Container -->
-      <div class="container">
+      <div class="container d-flex align-items-center">
 
         <!-- Wallets -->
-        <div class="d-inline-block">
+        <div class="d-inline-block" *ngIf="profiles">
           <a class="text-dark d-flex align-items-center" title="Current wallet"
              *ngIf="wallets" [popover]="walletsTemplate" placement="bottom" [outsideClick]="true">
             <div class="item-icon ff" [ngStyle]="style(colorsReserved.wallets)">
@@ -29,6 +29,9 @@
             </div>
           </a>
         </div>
+
+        <!-- Create button -->
+        <div class="btn btn-primary ml-auto" (click)="addTransaction()">Create</div>
       </div>
     </div>
 

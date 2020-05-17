@@ -2,12 +2,14 @@ import { ExpenseKind } from '@shared/enums/kind';
 
 export interface Transaction {
   readonly id: number;
-  readonly kind: ExpenseKind;
   wallet: number;
   category: number;
+  kind: ExpenseKind;
   event?: number;
   into?: number;
   amount: number;
   note: string;
+  time: string;
   created: string;
+  updated: string;
 }

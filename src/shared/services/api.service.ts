@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Crud } from '@shared/classes/crud';
 import { Category } from '@shared/interfaces/category';
+import { Event } from '@shared/interfaces/event';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { User } from '@shared/interfaces/user';

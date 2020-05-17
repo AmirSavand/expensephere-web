@@ -1,11 +1,11 @@
-<div class="container mt-4" *ngIf="profiles && wallets && categories && transactions">
-  <div class="row">
+<div class="container" *ngIf="profiles && wallets && categories && transactions">
+  <div class="row mb-4">
 
     <!-- Left -->
-    <div class="col-xl-8 mb-3">
+    <div class="col-xl-8">
 
       <!-- Wallets -->
-      <div class="card bg-light mt-3">
+      <div class="card bg-light mt-4">
         <div class="card-header font-weight-bold">My Wallets</div>
         <div class="card-body pt-0 pb-3">
           <div class="row" *ngIf="wallets && profiles">
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="card bg-light mt-3">
+      <div class="card bg-light mt-4">
         <div class="card-header font-weight-bold">My Categories</div>
         <div class="card-body pt-0 pb-3">
           <div class="row">
@@ -62,8 +62,8 @@
       <div class="row">
 
         <!-- Transactions overview -->
-        <div class="col-lg-6 mt-4" *ngIf="balanceChartResults">
-          <div class="card bg-light">
+        <div class="col-lg-6" *ngIf="balanceChartResults">
+          <div class="card bg-light mt-4">
             <div class="card-header font-weight-bold">Transactions Overview</div>
             <div class="card-body chart-wrapper p-0">
               <ngx-charts-pie-chart [results]="balanceChartResults"
@@ -77,8 +77,8 @@
         </div>
 
         <!-- Categories overview -->
-        <div class="col-lg-6 mt-4" *ngIf="categoryChartResults">
-          <div class="card bg-light">
+        <div class="col-lg-6" *ngIf="categoryChartResults">
+          <div class="card bg-light mt-4">
             <div class="card-header font-weight-bold">Categories Overview</div>
             <div class="card-body chart-wrapper p-0">
               <ngx-charts-pie-chart [results]="categoryChartResults"
@@ -94,15 +94,15 @@
     </div>
 
     <!-- Right -->
-    <div class="col-xl-4 mb-3">
+    <div class="col-xl-4">
 
       <!-- My transactions -->
-      <div class="card bg-light mt-3">
+      <div class="card bg-light overflow-hidden mt-4">
         <div class="card-header font-weight-bold">My Transactions</div>
-        <div class="card-body pt-0">
+        <div class="card-body oy-scroll pt-0" [style.maxHeight]="708 + 'px'">
 
           <!-- Transaction groups -->
-          <div *ngFor="let transactionGroup of transactionsGroups | keyvalue">
+          <div *ngFor="let transactionGroup of transactionsGroups | keyvalue:orderByDate">
 
             <!-- Date -->
             <div class="mt-4 d-flex align-items-center text-secondary border-bottom pb-2">
@@ -127,7 +127,7 @@
               <!-- Name and time -->
               <div class="ml-3">
                 <div>{{ getCategory(transaction.category).name }}</div>
-                <div class="small text-muted">{{ transaction.created | date:'hh:mm aa' }}</div>
+                <div class="small text-muted">{{ transaction.time | date:'hh:mm aa' }}</div>
               </div>
               <!-- Amount and (to wallet) -->
               <div class="ml-auto font-weight-bold"

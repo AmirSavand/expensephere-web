@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit {
   setupTransactionsGroup() {
     this.transactionsGroups = {};
     for (const transaction of this.transactions) {
-      const created: Date = new Date(transaction.created);
+      const created: Date = new Date(transaction.time);
       const date: string = new Date(created.getFullYear(), created.getMonth(), created.getDate()).toString();
       if (!this.transactionsGroups[date]) {
         this.transactionsGroups[date] = [];
@@ -108,5 +109,20 @@ export class HomeComponent implements OnInit {
    */
   getCategory(id: number): Category {
     return this.categories.find(item => item.id === id);
+  }
+
+  /**
+   * Order dict by date
+   */
+  orderByDate(a: KeyValue<string, Transaction[]>, b: KeyValue<string, Transaction[]>): number {
+    const aDate: number = new Date(a.key).getTime();
+    const bDate: number = new Date(b.key).getTime();
+    if (aDate < bDate) {
+      return 1;
+    }
+    if (aDate > bDate) {
+      return -1;
+    }
+    return 0;
   }
 }

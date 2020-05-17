@@ -15,8 +15,10 @@ import { Color } from '@shared/classes/color';
 import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
 import { Wallet } from '@shared/interfaces/wallet';
+import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-root',
@@ -87,7 +89,8 @@ export class AppComponent implements OnInit {
   sidebarViewSelected: SidebarView = SidebarView.MAIN;
 
   constructor(public auth: AuthService,
-              private api: ApiService) {
+              private api: ApiService,
+              private modalService: BsModalService) {
   }
 
   ngOnInit() {
@@ -120,5 +123,12 @@ export class AppComponent implements OnInit {
     } else {
       this.sidebarViewSelected = SidebarView.USER;
     }
+  }
+
+  /**
+   * Open up transaction form modal
+   */
+  addTransaction(): void {
+    this.modalService.show(TransactionFormModalComponent);
   }
 }
