@@ -36,6 +36,10 @@ a, button, .btn {
   align-items: center;
   font-size: 1.3rem;
 
+  &.ff {
+    padding-top: 6px;
+  }
+
   > .icon-badge {
     position: absolute;
     font-size: 0.7rem;
