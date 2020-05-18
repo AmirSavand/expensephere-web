@@ -187,4 +187,7 @@ export const icons = [
   'ticket',
   'shopping-basket',
   'beer',
+  'sports-shoe',
+  'transfer',
+  'arrows',
 ] as const;
