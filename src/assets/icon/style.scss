@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?2t4dvh');
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?2t4dvh#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?2t4dvh') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?2t4dvh') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?2t4dvh##{$icomoon-font-family}') format('svg');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?vwlhqn');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?vwlhqn#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?vwlhqn') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?vwlhqn') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?vwlhqn##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -27,11 +27,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-transfer {
-  &:before {
-    content: $icon-transfer; 
-  }
-}
 .icon-arrows {
   &:before {
     content: $icon-arrows; 
@@ -42,9 +37,9 @@
     content: $icon-movie; 
   }
 }
-.icon-video {
+.icon-gift {
   &:before {
-    content: $icon-video; 
+    content: $icon-gift; 
   }
 }
 .icon-dice {
@@ -52,44 +47,9 @@
     content: $icon-dice; 
   }
 }
-.icon-game {
-  &:before {
-    content: $icon-game; 
-  }
-}
-.icon-chance {
-  &:before {
-    content: $icon-chance; 
-  }
-}
-.icon-luck {
-  &:before {
-    content: $icon-luck; 
-  }
-}
-.icon-random {
-  &:before {
-    content: $icon-random; 
-  }
-}
-.icon-gample {
-  &:before {
-    content: $icon-gample; 
-  }
-}
-.icon-library {
-  &:before {
-    content: $icon-library; 
-  }
-}
 .icon-bank {
   &:before {
     content: $icon-bank; 
-  }
-}
-.icon-building {
-  &:before {
-    content: $icon-building; 
   }
 }
 .icon-credit-card {
@@ -97,144 +57,9 @@
     content: $icon-credit-card; 
   }
 }
-.icon-money {
+.icon-couple {
   &:before {
-    content: $icon-money; 
-  }
-}
-.icon-payment {
-  &:before {
-    content: $icon-payment; 
-  }
-}
-.icon-ecommerce {
-  &:before {
-    content: $icon-ecommerce; 
-  }
-}
-.icon-coin-yen {
-  &:before {
-    content: $icon-coin-yen; 
-  }
-}
-.icon-money3 {
-  &:before {
-    content: $icon-money3; 
-  }
-}
-.icon-cash1 {
-  &:before {
-    content: $icon-cash1; 
-  }
-}
-.icon-currency-yen {
-  &:before {
-    content: $icon-currency-yen; 
-  }
-}
-.icon-coin-pound {
-  &:before {
-    content: $icon-coin-pound; 
-  }
-}
-.icon-money6 {
-  &:before {
-    content: $icon-money6; 
-  }
-}
-.icon-cash3 {
-  &:before {
-    content: $icon-cash3; 
-  }
-}
-.icon-currency-pound {
-  &:before {
-    content: $icon-currency-pound; 
-  }
-}
-.icon-coin-euro {
-  &:before {
-    content: $icon-coin-euro; 
-  }
-}
-.icon-money8 {
-  &:before {
-    content: $icon-money8; 
-  }
-}
-.icon-cash4 {
-  &:before {
-    content: $icon-cash4; 
-  }
-}
-.icon-currency-euro {
-  &:before {
-    content: $icon-currency-euro; 
-  }
-}
-.icon-coin-dollar {
-  &:before {
-    content: $icon-coin-dollar; 
-  }
-}
-.icon-money10 {
-  &:before {
-    content: $icon-money10; 
-  }
-}
-.icon-cash5 {
-  &:before {
-    content: $icon-cash5; 
-  }
-}
-.icon-currency-dollar {
-  &:before {
-    content: $icon-currency-dollar; 
-  }
-}
-.icon-man-woman {
-  &:before {
-    content: $icon-man-woman; 
-  }
-}
-.icon-toilet {
-  &:before {
-    content: $icon-toilet; 
-  }
-}
-.icon-bathroom {
-  &:before {
-    content: $icon-bathroom; 
-  }
-}
-.icon-sex {
-  &:before {
-    content: $icon-sex; 
-  }
-}
-.icon-gender {
-  &:before {
-    content: $icon-gender; 
-  }
-}
-.icon-spades {
-  &:before {
-    content: $icon-spades; 
-  }
-}
-.icon-cards {
-  &:before {
-    content: $icon-cards; 
-  }
-}
-.icon-poker {
-  &:before {
-    content: $icon-poker; 
-  }
-}
-.icon-earth {
-  &:before {
-    content: $icon-earth; 
+    content: $icon-couple; 
   }
 }
 .icon-globe {
@@ -242,94 +67,29 @@
     content: $icon-globe; 
   }
 }
-.icon-language {
-  &:before {
-    content: $icon-language; 
-  }
-}
-.icon-web {
-  &:before {
-    content: $icon-web; 
-  }
-}
-.icon-internet {
-  &:before {
-    content: $icon-internet; 
-  }
-}
-.icon-sphere {
-  &:before {
-    content: $icon-sphere; 
-  }
-}
-.icon-planet {
-  &:before {
-    content: $icon-planet; 
-  }
-}
-.icon-aid-kit {
-  &:before {
-    content: $icon-aid-kit; 
-  }
-}
 .icon-health {
   &:before {
     content: $icon-health; 
   }
 }
-.icon-medicine {
+.icon-price-ribbon {
   &:before {
-    content: $icon-medicine; 
+    content: $icon-price-ribbon; 
   }
 }
-.icon-medical {
+.icon-trophy {
   &:before {
-    content: $icon-medical; 
+    content: $icon-trophy; 
   }
 }
-.icon-fork-and-spoon {
+.icon-shoe {
   &:before {
-    content: $icon-fork-and-spoon; 
+    content: $icon-shoe; 
   }
 }
-.icon-lunch1 {
+.icon-football {
   &:before {
-    content: $icon-lunch1; 
-  }
-}
-.icon-food1 {
-  &:before {
-    content: $icon-food1; 
-  }
-}
-.icon-restaurant {
-  &:before {
-    content: $icon-restaurant; 
-  }
-}
-.icon-meal {
-  &:before {
-    content: $icon-meal; 
-  }
-}
-.icon-dinner {
-  &:before {
-    content: $icon-dinner; 
-  }
-}
-.icon-bowl {
-  &:before {
-    content: $icon-bowl; 
-  }
-}
-.icon-sports-shoe {
-  &:before {
-    content: $icon-sports-shoe; 
-  }
-}
-.icon-soccer-ball {
-  &:before {
-    content: $icon-soccer-ball; 
+    content: $icon-football; 
   }
 }
 .icon-billiard-ball {
@@ -337,9 +97,9 @@
     content: $icon-billiard-ball; 
   }
 }
-.icon-bowling-pins {
+.icon-bowling {
   &:before {
-    content: $icon-bowling-pins; 
+    content: $icon-bowling; 
   }
 }
 .icon-mail {
@@ -347,79 +107,19 @@
     content: $icon-mail; 
   }
 }
-.icon-email {
-  &:before {
-    content: $icon-email; 
-  }
-}
-.icon-letter {
-  &:before {
-    content: $icon-letter; 
-  }
-}
-.icon-envelope {
-  &:before {
-    content: $icon-envelope; 
-  }
-}
-.icon-contact {
-  &:before {
-    content: $icon-contact; 
-  }
-}
 .icon-wallet {
   &:before {
     content: $icon-wallet; 
   }
 }
-.icon-money1 {
+.icon-money {
   &:before {
-    content: $icon-money1; 
+    content: $icon-money; 
   }
 }
-.icon-cash {
+.icon-shirt {
   &:before {
-    content: $icon-cash; 
-  }
-}
-.icon-banknote {
-  &:before {
-    content: $icon-banknote; 
-  }
-}
-.icon-check {
-  &:before {
-    content: $icon-check; 
-  }
-}
-.icon-bill {
-  &:before {
-    content: $icon-bill; 
-  }
-}
-.icon-money4 {
-  &:before {
-    content: $icon-money4; 
-  }
-}
-.icon-cash2 {
-  &:before {
-    content: $icon-cash2; 
-  }
-}
-.icon-t-shirt {
-  &:before {
-    content: $icon-t-shirt; 
-  }
-}
-.icon-team {
-  &:before {
-    content: $icon-team; 
-  }
-}
-.icon-group {
-  &:before {
-    content: $icon-group; 
+    content: $icon-shirt; 
   }
 }
 .icon-food {
@@ -427,129 +127,14 @@
     content: $icon-food; 
   }
 }
-.icon-lunch {
+.icon-gas {
   &:before {
-    content: $icon-lunch; 
+    content: $icon-gas; 
   }
 }
-.icon-soup {
+.icon-dollar-off {
   &:before {
-    content: $icon-soup; 
-  }
-}
-.icon-mug {
-  &:before {
-    content: $icon-mug; 
-  }
-}
-.icon-drink {
-  &:before {
-    content: $icon-drink; 
-  }
-}
-.icon-coffee1 {
-  &:before {
-    content: $icon-coffee1; 
-  }
-}
-.icon-cup {
-  &:before {
-    content: $icon-cup; 
-  }
-}
-.icon-drink2 {
-  &:before {
-    content: $icon-drink2; 
-  }
-}
-.icon-break {
-  &:before {
-    content: $icon-break; 
-  }
-}
-.icon-drink3 {
-  &:before {
-    content: $icon-drink3; 
-  }
-}
-.icon-drink4 {
-  &:before {
-    content: $icon-drink4; 
-  }
-}
-.icon-drink5 {
-  &:before {
-    content: $icon-drink5; 
-  }
-}
-.icon-drink6 {
-  &:before {
-    content: $icon-drink6; 
-  }
-}
-.icon-straw1 {
-  &:before {
-    content: $icon-straw1; 
-  }
-}
-.icon-glass1 {
-  &:before {
-    content: $icon-glass1; 
-  }
-}
-.icon-gamepad {
-  &:before {
-    content: $icon-gamepad; 
-  }
-}
-.icon-joystick {
-  &:before {
-    content: $icon-joystick; 
-  }
-}
-.icon-pacman {
-  &:before {
-    content: $icon-pacman; 
-  }
-}
-.icon-game1 {
-  &:before {
-    content: $icon-game1; 
-  }
-}
-.icon-money-bag {
-  &:before {
-    content: $icon-money-bag; 
-  }
-}
-.icon-sack-dollar {
-  &:before {
-    content: $icon-sack-dollar; 
-  }
-}
-.icon-bag {
-  &:before {
-    content: $icon-bag; 
-  }
-}
-.icon-safe {
-  &:before {
-    content: $icon-safe; 
-  }
-}
-.icon-money5 {
-  &:before {
-    content: $icon-money5; 
-  }
-}
-.icon-coins {
-  &:before {
-    content: $icon-coins; 
-  }
-}
-.icon-money7 {
-  &:before {
-    content: $icon-money7; 
+    content: $icon-dollar-off; 
   }
 }
 .icon-dollar {
@@ -557,219 +142,14 @@
     content: $icon-dollar; 
   }
 }
-.icon-bill1 {
+.icon-haircut {
   &:before {
-    content: $icon-bill1; 
+    content: $icon-haircut; 
   }
 }
-.icon-money9 {
+.icon-laptop {
   &:before {
-    content: $icon-money9; 
-  }
-}
-.icon-stack {
-  &:before {
-    content: $icon-stack; 
-  }
-}
-.icon-dollar1 {
-  &:before {
-    content: $icon-dollar1; 
-  }
-}
-.icon-bill2 {
-  &:before {
-    content: $icon-bill2; 
-  }
-}
-.icon-money11 {
-  &:before {
-    content: $icon-money11; 
-  }
-}
-.icon-wallet1 {
-  &:before {
-    content: $icon-wallet1; 
-  }
-}
-.icon-money12 {
-  &:before {
-    content: $icon-money12; 
-  }
-}
-.icon-discout {
-  &:before {
-    content: $icon-discout; 
-  }
-}
-.icon-price {
-  &:before {
-    content: $icon-price; 
-  }
-}
-.icon-sale {
-  &:before {
-    content: $icon-sale; 
-  }
-}
-.icon-tag {
-  &:before {
-    content: $icon-tag; 
-  }
-}
-.icon-money-bag1 {
-  &:before {
-    content: $icon-money-bag1; 
-  }
-}
-.icon-sack-dollar1 {
-  &:before {
-    content: $icon-sack-dollar1; 
-  }
-}
-.icon-bag1 {
-  &:before {
-    content: $icon-bag1; 
-  }
-}
-.icon-ice-cream {
-  &:before {
-    content: $icon-ice-cream; 
-  }
-}
-.icon-cone {
-  &:before {
-    content: $icon-cone; 
-  }
-}
-.icon-plane {
-  &:before {
-    content: $icon-plane; 
-  }
-}
-.icon-fly {
-  &:before {
-    content: $icon-fly; 
-  }
-}
-.icon-flight {
-  &:before {
-    content: $icon-flight; 
-  }
-}
-.icon-airplane {
-  &:before {
-    content: $icon-airplane; 
-  }
-}
-.icon-travel {
-  &:before {
-    content: $icon-travel; 
-  }
-}
-.icon-pil {
-  &:before {
-    content: $icon-pil; 
-  }
-}
-.icon-drug {
-  &:before {
-    content: $icon-drug; 
-  }
-}
-.icon-medicine1 {
-  &:before {
-    content: $icon-medicine1; 
-  }
-}
-.icon-suitcase {
-  &:before {
-    content: $icon-suitcase; 
-  }
-}
-.icon-briefcase {
-  &:before {
-    content: $icon-briefcase; 
-  }
-}
-.icon-map {
-  &:before {
-    content: $icon-map; 
-  }
-}
-.icon-location {
-  &:before {
-    content: $icon-location; 
-  }
-}
-.icon-address {
-  &:before {
-    content: $icon-address; 
-  }
-}
-.icon-tie {
-  &:before {
-    content: $icon-tie; 
-  }
-}
-.icon-diamond {
-  &:before {
-    content: $icon-diamond; 
-  }
-}
-.icon-gem {
-  &:before {
-    content: $icon-gem; 
-  }
-}
-.icon-drink1 {
-  &:before {
-    content: $icon-drink1; 
-  }
-}
-.icon-straw {
-  &:before {
-    content: $icon-straw; 
-  }
-}
-.icon-glass {
-  &:before {
-    content: $icon-glass; 
-  }
-}
-.icon-heart {
-  &:before {
-    content: $icon-heart; 
-  }
-}
-.icon-love {
-  &:before {
-    content: $icon-love; 
-  }
-}
-.icon-like {
-  &:before {
-    content: $icon-like; 
-  }
-}
-.icon-money_off {
-  &:before {
-    content: $icon-money_off; 
-  }
-}
-.icon-attach_money1 {
-  &:before {
-    content: $icon-attach_money1; 
-  }
-}
-.icon-content_cut {
-  &:before {
-    content: $icon-content_cut; 
-  }
-}
-.icon-laptop_chromebook {
-  &:before {
-    content: $icon-laptop_chromebook; 
+    content: $icon-laptop; 
   }
 }
 .icon-school {
@@ -787,99 +167,44 @@
     content: $icon-cake; 
   }
 }
-.icon-lunch_dining {
+.icon-burger {
   &:before {
-    content: $icon-lunch_dining; 
+    content: $icon-burger; 
   }
 }
-.icon-emoji_food_beverage1 {
+.icon-tea {
   &:before {
-    content: $icon-emoji_food_beverage1; 
+    content: $icon-tea; 
   }
 }
-.icon-fastfood1 {
+.icon-children {
   &:before {
-    content: $icon-fastfood1; 
+    content: $icon-children; 
   }
 }
-.icon-child_friendly {
+.icon-bus {
   &:before {
-    content: $icon-child_friendly; 
+    content: $icon-bus; 
   }
 }
-.icon-attach_money {
+.icon-people {
   &:before {
-    content: $icon-attach_money; 
+    content: $icon-people; 
   }
 }
-.icon-directions_bus {
+.icon-bike {
   &:before {
-    content: $icon-directions_bus; 
+    content: $icon-bike; 
   }
 }
-.icon-people_alt {
+.icon-car {
   &:before {
-    content: $icon-people_alt; 
+    content: $icon-car; 
   }
 }
-.icon-directions_bike {
+.icon-phone {
   &:before {
-    content: $icon-directions_bike; 
-  }
-}
-.icon-directions_car {
-  &:before {
-    content: $icon-directions_car; 
-  }
-}
-.icon-stay_current_portrait {
-  &:before {
-    content: $icon-stay_current_portrait; 
-  }
-}
-.icon-stay_primary_portrait {
-  &:before {
-    content: $icon-stay_primary_portrait; 
-  }
-}
-.icon-smartphone {
-  &:before {
-    content: $icon-smartphone; 
-  }
-}
-.icon-emoji_food_beverage {
-  &:before {
-    content: $icon-emoji_food_beverage; 
-  }
-}
-.icon-local_drink {
-  &:before {
-    content: $icon-local_drink; 
-  }
-}
-.icon-box {
-  &:before {
-    content: $icon-box; 
-  }
-}
-.icon-shopping-bag {
-  &:before {
-    content: $icon-shopping-bag; 
-  }
-}
-.icon-shopping-cart {
-  &:before {
-    content: $icon-shopping-cart; 
-  }
-}
-.icon-eye-off {
-  &:before {
-    content: $icon-eye-off; 
-  }
-}
-.icon-coffee {
-  &:before {
-    content: $icon-coffee; 
+    content: $icon-phone; 
   }
 }
 .icon-paw {
@@ -912,11 +237,6 @@
     content: $icon-train; 
   }
 }
-.icon-cab {
-  &:before {
-    content: $icon-cab; 
-  }
-}
 .icon-taxi {
   &:before {
     content: $icon-taxi; 
@@ -925,11 +245,6 @@
 .icon-money2 {
   &:before {
     content: $icon-money2; 
-  }
-}
-.icon-television {
-  &:before {
-    content: $icon-television; 
   }
 }
 .icon-tv {
@@ -957,14 +272,154 @@
     content: $icon-ticket; 
   }
 }
-.icon-shopping-basket {
+.icon-basket {
   &:before {
-    content: $icon-shopping-basket; 
+    content: $icon-basket; 
+  }
+}
+.icon-box {
+  &:before {
+    content: $icon-box; 
+  }
+}
+.icon-bag {
+  &:before {
+    content: $icon-bag; 
+  }
+}
+.icon-cart {
+  &:before {
+    content: $icon-cart; 
+  }
+}
+.icon-eye-off {
+  &:before {
+    content: $icon-eye-off; 
+  }
+}
+.icon-repair {
+  &:before {
+    content: $icon-repair; 
   }
 }
 .icon-beer {
   &:before {
     content: $icon-beer; 
+  }
+}
+.icon-coffee {
+  &:before {
+    content: $icon-coffee; 
+  }
+}
+.icon-drink1 {
+  &:before {
+    content: $icon-drink1; 
+  }
+}
+.icon-coffee2 {
+  &:before {
+    content: $icon-coffee2; 
+  }
+}
+.icon-drink2 {
+  &:before {
+    content: $icon-drink2; 
+  }
+}
+.icon-drink {
+  &:before {
+    content: $icon-drink; 
+  }
+}
+.icon-gamepad {
+  &:before {
+    content: $icon-gamepad; 
+  }
+}
+.icon-pacman {
+  &:before {
+    content: $icon-pacman; 
+  }
+}
+.icon-money-bag {
+  &:before {
+    content: $icon-money-bag; 
+  }
+}
+.icon-safe {
+  &:before {
+    content: $icon-safe; 
+  }
+}
+.icon-coins {
+  &:before {
+    content: $icon-coins; 
+  }
+}
+.icon-money3 {
+  &:before {
+    content: $icon-money3; 
+  }
+}
+.icon-money1 {
+  &:before {
+    content: $icon-money1; 
+  }
+}
+.icon-wallet1 {
+  &:before {
+    content: $icon-wallet1; 
+  }
+}
+.icon-discount {
+  &:before {
+    content: $icon-discount; 
+  }
+}
+.icon-ice-cream {
+  &:before {
+    content: $icon-ice-cream; 
+  }
+}
+.icon-plane {
+  &:before {
+    content: $icon-plane; 
+  }
+}
+.icon-medicine {
+  &:before {
+    content: $icon-medicine; 
+  }
+}
+.icon-suitcase {
+  &:before {
+    content: $icon-suitcase; 
+  }
+}
+.icon-map {
+  &:before {
+    content: $icon-map; 
+  }
+}
+.icon-tie {
+  &:before {
+    content: $icon-tie; 
+  }
+}
+.icon-diamond {
+  &:before {
+    content: $icon-diamond; 
+  }
+}
+.icon-juice {
+  &:before {
+    content: $icon-juice; 
+  }
+}
+.icon-heart {
+  &:before {
+    content: $icon-heart; 
   }
 }
 

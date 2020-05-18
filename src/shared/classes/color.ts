@@ -10,27 +10,29 @@ export class Color {
 
   /**
    * Predefined colors for user to select
+   * Color shades: 500 - 900 - A 400
+   * Total colors: 54
    */
   static readonly COLORS: string[] = [
-    '#f44336',
-    '#e91e63',
-    '#9c27b0',
-    '#673ab7',
-    '#3f51b5',
-    '#2196f3',
-    '#03a9f4',
-    '#00bcd4',
-    '#009688',
-    '#4caf50',
-    '#8bc34a',
-    '#cddc39',
-    '#ffeb3b',
-    '#ffc107',
-    '#ff9800',
-    '#ff5722',
-    '#795548',
-    '#9e9e9e',
-    '#607d8b',
+    '#ff4038', '#b71c1c', '#FF1744',
+    '#e91e63', '#880e4f', '#f50057',
+    '#9c27b0', '#4a148c', '#d500f9',
+    '#673ab7', '#311b92', '#651fff',
+    '#3f51b5', '#1a237e', '#3d5afe',
+    '#2196f3', '#0d47a1', '#2979ff',
+    '#03a9f4', '#01579b', '#00b0ff',
+    '#00bcd4', '#006064', '#00e5ff',
+    '#009688', '#004d40', '#1de9b6',
+    '#4caf50', '#1b5e20', '#00e676',
+    '#8bc34a', '#33691e', '#76ff03',
+    '#cddc39', '#827717', '#c6ff00',
+    '#ffeb3b', '#f57f17', '#ffea00',
+    '#ffc107', '#FF6F00', '#ffc400',
+    '#ff9800', '#e65100', '#ff9100',
+    '#ff5722', '#bf360c', '#ff3d00',
+    '#795548', '#3E2723',
+    '#9e9e9e', '#212121',
+    '#607d8b', '#263238',
   ];
 
   static readonly COLORS_RESERVED: Record<string, string> = {
