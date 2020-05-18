@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?cd38tq');
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?cd38tq#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?cd38tq') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?cd38tq') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?cd38tq##{$icomoon-font-family}') format('svg');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?2t4dvh');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?2t4dvh#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?2t4dvh') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?2t4dvh') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?2t4dvh##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -880,6 +880,11 @@
 .icon-coffee {
   &:before {
     content: $icon-coffee; 
+  }
+}
+.icon-paw {
+  &:before {
+    content: $icon-paw; 
   }
 }
 .icon-book {

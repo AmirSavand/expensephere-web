@@ -190,4 +190,5 @@ export const icons = [
   'sports-shoe',
   'transfer',
   'arrows',
+  'paw',
 ] as const;
