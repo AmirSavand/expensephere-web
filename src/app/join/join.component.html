@@ -27,6 +27,8 @@
       <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
       <!-- Button -->
       <button class="btn btn-block btn-primary" [disabled]="form.loading">Register</button>
+      <!-- Login link -->
+      <a class="btn btn-block btn-link" routerLink="/login">Already have an account?</a>
     </div>
   </form>
 </div>
