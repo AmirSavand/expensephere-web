@@ -1,0 +1,15 @@
+<div class="container mb-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-4">
+      <div class="card bg-light mt-3">
+        <div class="card-header">Profiles</div>
+        <div class="card-body">
+          <p *ngFor="let profile of profiles">
+            <a class="btn btn-link">{{ profile.name }}</a>
+          </p>
+          <p class="m-0"><a routerLink="/profile/add" class="btn btn-link">Create a profile</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

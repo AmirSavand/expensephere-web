@@ -57,6 +57,11 @@ export class AuthService {
   static readonly SIGN_IN_REDIRECT = '/';
 
   /**
+   * Where to redirect after sign in without profiles
+   */
+  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/profile';
+
+  /**
    * Authentication user subject
    */
   private static userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(AuthService.getUser());
@@ -146,12 +151,19 @@ export class AuthService {
         AuthService.token = data.token;
         // Store user
         AuthService.setUser(data.user);
-        // Set current profile as first profile
-        ProfileService.PROFILE = data.profiles[0];
         // Store storage version
         localStorage.setItem(AuthService.STORAGE_VERSION_KEY, String(AuthService.STORAGE_VERSION));
-        // Redirect
-        this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT);
+        // Check profiles
+        if (data.profiles.length) {
+          // Store profiles and profile
+          ProfileService.profiles = data.profiles;
+          ProfileService.profile = ProfileService.profiles[0];
+          // Redirect
+          this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT);
+        } else {
+          // Redirect to profile selection
+          this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT_NO_PROFILE);
+        }
         // Return response
         return data;
       }),

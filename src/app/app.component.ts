@@ -18,6 +18,7 @@ import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
+import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -44,9 +45,14 @@ export class AppComponent implements OnInit {
   user: User;
 
   /**
+   * Current profile
+   */
+  profileSelected: Profile = ProfileService.profile;
+
+  /**
    * List of profiles
    */
-  profiles: Profile[];
+  profiles: Profile[] = ProfileService.profiles;
 
   /**
    * List of wallets
@@ -100,15 +106,9 @@ export class AppComponent implements OnInit {
     AuthService.user.subscribe((user: User): void => {
       this.user = user;
       /**
-       * If user is authenticated
+       * If user is authenticated and has a profile selected
        */
-      if (AuthService.isAuth()) {
-        /**
-         * Get profiles
-         */
-        this.api.profile.list().subscribe((data: Profile[]): void => {
-          this.profiles = data;
-        });
+      if (AuthService.isAuth() && ProfileService.profile) {
         /**
          * Get wallets
          */

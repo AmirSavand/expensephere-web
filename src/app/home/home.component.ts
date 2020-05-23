@@ -9,6 +9,7 @@ import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
+import { ProfileService } from '@shared/services/profile.service';
 
 @Component({
   selector: 'app-home',
@@ -44,6 +45,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.api.profile.list().subscribe((data: Profile[]): void => {
       this.profiles = data;
+      if (!this.profiles.length) {
+        ProfileService.clear();
+        return;
+      }
       this.balanceChartResults = [{
         name: 'Income',
         value: data[0].balance.income,
