@@ -97,27 +97,32 @@ export class AppComponent implements OnInit {
     /**
      * Watch authentication and user data
      */
-    AuthService.user.subscribe((data: User): void => {
-      this.user = data;
-    });
-    /**
-     * Get profiles
-     */
-    this.api.profile.list().subscribe((data: Profile[]): void => {
-      this.profiles = data;
-    });
-    /**
-     * Get wallets
-     */
-    this.api.wallet.list().subscribe((data: Wallet[]): void => {
-      this.wallets = data;
+    AuthService.user.subscribe((user: User): void => {
+      this.user = user;
+      /**
+       * If user is authenticated
+       */
+      if (AuthService.isAuth()) {
+        /**
+         * Get profiles
+         */
+        this.api.profile.list().subscribe((data: Profile[]): void => {
+          this.profiles = data;
+        });
+        /**
+         * Get wallets
+         */
+        this.api.wallet.list().subscribe((data: Wallet[]): void => {
+          this.wallets = data;
+        });
+      }
     });
   }
 
   /**
    * Go to user sidebar view or get out of it
    */
-  toggleUserView() {
+  toggleUserView(): void {
     if (this.sidebarViewSelected === SidebarView.USER) {
       this.sidebarViewSelected = SidebarView.MAIN;
     } else {

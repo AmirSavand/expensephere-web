@@ -6,14 +6,14 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { AuthService } from '@shared/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-join',
+  templateUrl: './join.component.html',
+  styleUrls: ['./join.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class JoinComponent implements OnInit {
 
   /**
-   * Login form data
+   * Sign up form data
    */
   form: ReactiveFormData = {
     error: {},
@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
      */
     this.form.form = this.formBuilder.group({
       username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
    */
   submit(): void {
     this.form.loading = true;
-    this.auth.signIn(this.form.form.value).subscribe((): void => {
+    this.auth.signUp(this.form.form.value).subscribe((): void => {
     }, (error: HttpErrorResponse): void => {
       this.form.loading = false;
       this.form.error = error.error;
