@@ -159,3 +159,10 @@ a, button, .btn {
 .oy-scroll {
   overflow-y: auto;
 }
+
+.card {
+  > .card-header {
+    display: flex;
+    align-items: center;
+  }
+}

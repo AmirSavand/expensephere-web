@@ -10,6 +10,7 @@ export class ProfileService {
     if (localStorage.getItem('profiles')) {
       return JSON.parse(localStorage.getItem('profiles'));
     }
+    return [];
   }
 
   static set profiles(value: Profile[]) {

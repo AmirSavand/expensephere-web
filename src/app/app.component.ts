@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SidebarView } from '@app/shared/enums/sidebar-view';
 import { Navigation } from '@app/shared/interfaces/navigation';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -96,6 +97,7 @@ export class AppComponent implements OnInit {
 
   constructor(public auth: AuthService,
               private api: ApiService,
+              private router: Router,
               private modalService: BsModalService) {
   }
 
@@ -106,15 +108,26 @@ export class AppComponent implements OnInit {
     AuthService.user.subscribe((user: User): void => {
       this.user = user;
       /**
-       * If user is authenticated and has a profile selected
+       * If user is authenticated
        */
-      if (AuthService.isAuth() && ProfileService.profile) {
+      if (AuthService.isAuth()) {
         /**
-         * Get wallets
+         * If a profile is selected
          */
-        this.api.wallet.list().subscribe((data: Wallet[]): void => {
-          this.wallets = data;
-        });
+        if (ProfileService.profile) {
+          /**
+           * Get wallets
+           */
+          this.api.wallet.list().subscribe((data: Wallet[]): void => {
+            this.wallets = data;
+          });
+        } else {
+          if (ProfileService.profiles.length) {
+            this.router.navigateByUrl('/profile/list');
+          } else {
+            this.router.navigateByUrl('/profile/add');
+          }
+        }
       }
     });
   }
