@@ -99,37 +99,6 @@
     <!-- Sidebar view: Main -->
     <div *ngIf="sidebarViewSelected === sidebarView.MAIN">
 
-      <!-- Navigation -->
-      <div class="my navigation">
-
-        <!-- Header -->
-        <p class="font-weight-bold">Navigation</p>
-
-        <!-- Links -->
-        <div class="row links">
-          <div class="col-6 mb-3" *ngFor="let item of navigation">
-            <a class="btn btn-light btn-block text-{{ item.color }}"
-               routerLinkActive="bg-white shadow" [routerLink]="item.link">
-              <fa-icon [fixedWidth]="true" [icon]="item.icon"></fa-icon>
-              <div class="small text-muted">{{ item.text }}</div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- My wallets -->
-      <div class="my wallets">
-
-        <!-- Header -->
-        <p class="font-weight-bold">My Wallets</p>
-      </div>
-
-      <!-- My events -->
-      <div class="my events">
-
-        <!-- Header -->
-        <p class="font-weight-bold">My Events</p>
-      </div>
     </div>
   </div>
 </div>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Crud } from '@shared/classes/crud';
 import { Category } from '@shared/interfaces/category';
+import { Currency } from '@shared/interfaces/currency';
 import { Event } from '@shared/interfaces/event';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
@@ -24,6 +25,7 @@ export class ApiService {
    */
   readonly user = new Crud<User>(this.http, 'user');
   readonly account = new Crud<Account>(this.http, 'account');
+  readonly currency = new Crud<Currency>(this.http, 'currency');
   readonly profile = new Crud<Profile>(this.http, 'profile');
   readonly wallet = new Crud<Wallet>(this.http, 'wallet', true);
   readonly category = new Crud<Category>(this.http, 'category', true);

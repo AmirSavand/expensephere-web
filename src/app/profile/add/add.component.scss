@@ -1,0 +1,10 @@
+.container-fluid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+
+  > .card {
+    width: 300px;
+  }
+}
