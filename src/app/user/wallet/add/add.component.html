@@ -1,0 +1,34 @@
+<div class="container-fluid bg-special">
+  <form [formGroup]="form.form" (ngSubmit)="submit()" class="card shadow my-4">
+    <div class="card-body p-5">
+      <!-- Title -->
+      <p class="font-weight-bold text-center mb-5">Add <span class="text-primary">Wallet</span></p>
+      <!-- Name -->
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Name"
+               formControlName="name" [class.is-invalid]="form.error.name">
+        <p class="small text-danger" *ngIf="form.error.name">{{ form.error.name[0] }}</p>
+      </div>
+      <!-- Icon -->
+      <div class="form-group">
+        <select class="form-control" formControlName="icon" [class.is-invalid]="form.error.name">
+          <option [ngValue]="null">Select icon</option>
+          <option [ngValue]="icon" *ngFor="let icon of icons">{{ icon | titlecase }}</option>
+        </select>
+        <p class="small text-danger" *ngIf="form.error.icon">{{ form.error.icon[0] }}</p>
+      </div>
+      <!-- Color -->
+      <div class="form-group">
+        <select class="form-control" formControlName="color" [class.is-invalid]="form.error.name">
+          <option [ngValue]="null">Select color</option>
+          <option [ngValue]="color" *ngFor="let color of colors">{{ color }}</option>
+        </select>
+        <p class="small text-danger" *ngIf="form.error.color">{{ form.error.color[0] }}</p>
+      </div>
+      <!-- Error -->
+      <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
+      <!-- Button -->
+      <button class="btn btn-block btn-primary" [disabled]="form.loading">Add</button>
+    </div>
+  </form>
+</div>

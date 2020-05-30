@@ -49,7 +49,7 @@ export class AuthService {
   /**
    * Where to redirect after sign out
    */
-  private static readonly SIGN_OUT_REDIRECT = '/login';
+  private static readonly SIGN_OUT_REDIRECT = '/user/login';
 
   /**
    * Where to redirect after sign in
@@ -59,7 +59,7 @@ export class AuthService {
   /**
    * Where to redirect after sign in without profiles
    */
-  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/profile';
+  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/user/profile';
 
   /**
    * Authentication user subject

@@ -4,24 +4,20 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    loadChildren: () => import('./index/index.module').then(m => m.IndexModule),
   },
   {
-    path: 'join',
-    loadChildren: () => import('./join/join.module').then(m => m.JoinModule),
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
   {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+    path: 'dash',
+    loadChildren: () => import('./dash/dash.module').then(m => m.DashModule),
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: '',
   },
 ];
 
