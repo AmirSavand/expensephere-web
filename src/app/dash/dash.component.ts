@@ -20,6 +20,7 @@ import { TransactionFormModalComponent } from '@shared/modules/transaction-form-
 import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
+import { WalletService } from '@shared/services/wallet.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -32,6 +33,8 @@ export class DashComponent implements OnInit {
   readonly sidebarView = SidebarView;
   readonly style = Color.style;
   readonly colorsReserved = Color.COLORS_RESERVED;
+  readonly walletService = WalletService;
+  readonly profileService = ProfileService;
 
   readonly faView: IconDefinition = faChevronDown;
   readonly faBack: IconDefinition = faChevronUp;
@@ -94,6 +97,13 @@ export class DashComponent implements OnInit {
               private api: ApiService,
               private router: Router,
               private modalService: BsModalService) {
+  }
+
+  /**
+   * @returns Selected wallet data
+   */
+  get walletSelected(): Wallet {
+    return this.wallets.find((wallet: Wallet): boolean => wallet.id === WalletService.wallet);
   }
 
   ngOnInit(): void {

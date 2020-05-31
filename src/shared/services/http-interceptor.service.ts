@@ -2,6 +2,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Injectable } from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
+import { WalletService } from '@shared/services/wallet.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -27,8 +28,13 @@ export class HttpInterceptorService implements HttpInterceptor {
        */
       const params: { [p: string]: string } = {};
       if (request.method === 'GET') {
-        if (HttpInterceptorService.PROFILE_ENDPOINTS.some((substr: string): boolean => request.url.includes(substr))) {
+        if (ProfileService.profile && HttpInterceptorService.PROFILE_ENDPOINTS.some((substr: string): boolean => (
+          request.url.includes(substr)
+        ))) {
           params.profile = String(ProfileService.profile.id);
+        }
+        if (WalletService.wallet && request.url.includes('transaction')) {
+          params.wallet = String(WalletService.wallet);
         }
       }
       /**

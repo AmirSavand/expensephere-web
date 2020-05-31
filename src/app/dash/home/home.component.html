@@ -43,7 +43,7 @@
         <div class="card-header font-weight-bold">My Categories</div>
         <div class="card-body pt-0 pb-3">
           <div class="row">
-            <div class="col-xl-4 mt-3" *ngFor="let category of categories">
+            <div class="col-xl-4 mt-3" *ngFor="let category of categories" [hidden]="!category.transactions_count">
               <div class="d-flex align-items-center item-icon-action">
                 <div class="item-icon" [ngStyle]="style(category.color)">
                   <i class="icon-{{ category.icon }}"></i>

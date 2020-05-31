@@ -114,9 +114,12 @@ export class TransactionFormModalComponent implements OnInit {
     this.expenseKindSelected = expenseKind;
     /**
      * Set category to transfer if it's a transfer so we can hide the category field
+     * Otherwise clear it
      */
     if (expenseKind === ExpenseKind.TRANSFER) {
       this.form.form.get('category').setValue(this.categoryGroups[ExpenseKind.TRANSFER][0].id);
+    } else {
+      this.form.form.get('category').reset();
     }
   }
 }
