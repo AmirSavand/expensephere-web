@@ -17,19 +17,19 @@
     <!-- Kind -->
     <div class="form-group btn-group d-flex justify-content-center text-uppercase" title="Transaction Type">
       <div class="btn font-weight-bold"
-           (click)="expenseKindSelected = expenseKind.INCOME"
+           (click)="setExpenseKind(expenseKind.INCOME)"
            [class.btn-light]="expenseKindSelected !== expenseKind.INCOME"
            [class.btn-primary]="expenseKindSelected === expenseKind.INCOME">
         <span>Income</span>
       </div>
       <div class="btn font-weight-bold"
-           (click)="expenseKindSelected = expenseKind.EXPENSE"
+           (click)="setExpenseKind(expenseKind.EXPENSE)"
            [class.btn-light]="expenseKindSelected !== expenseKind.EXPENSE"
            [class.btn-danger]="expenseKindSelected === expenseKind.EXPENSE">
         <span>Expense</span>
       </div>
       <div class="btn font-weight-bold"
-           (click)="expenseKindSelected = expenseKind.TRANSFER"
+           (click)="setExpenseKind(expenseKind.TRANSFER)"
            [class.btn-light]="expenseKindSelected !== expenseKind.TRANSFER"
            [class.btn-secondary]="expenseKindSelected === expenseKind.TRANSFER">
         <span>Transfer</span>
@@ -94,7 +94,7 @@
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
         </div>
         <input type="number" id="amount" class="form-control" formControlName="amount"
-               [step]="1" [min]="0" placeholder="Enter amount"
+               [step]="1" [min]="0" placeholder="Enter amount" autocomplete="off"
                [class.is-invalid]="form.error.amount">
         <div class="input-group-append"><span class="input-group-text font-weight-bold">USD</span></div>
         <div class="invalid-tooltip" *ngIf="form.error.amount">{{ form.error.amount[0] }}</div>
