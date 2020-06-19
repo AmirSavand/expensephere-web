@@ -22,7 +22,9 @@
                 <span class="font-weight-bold">Total</span>
                 <fa-icon [icon]="faDropdown" size="sm" class="ml-2 text-muted"></fa-icon>
               </div>
-              <div class="text-muted small">{{ profiles[0].balance.total | currency:profiles[0].currency }}</div>
+              <div class="text-muted small">
+                {{ profiles[0].balance.total | currency }}
+              </div>
             </div>
             <div class="item-icon" [ngStyle]="style(walletSelected.color)" *ngIf="walletSelected">
               <span class="icon-{{ walletSelected.icon }}"></span>
@@ -32,7 +34,9 @@
                 <span class="font-weight-bold">{{ walletSelected.name }}</span>
                 <fa-icon [icon]="faDropdown" size="sm" class="ml-2 text-muted"></fa-icon>
               </div>
-              <div class="text-muted small">{{ walletSelected.balance.total | currency }}</div>
+              <div class="text-muted small">
+                {{ walletSelected.balance.total | currency }}
+              </div>
             </div>
           </a>
         </div>
@@ -79,7 +83,9 @@
         <div class="card shadow-sm" *ngFor="let profile of profiles; let last = last" [class.mb-3]="!last">
           <div class="card-body">
             <span class="font-weight-bold">{{ profile.name }}</span>
-            <span class="float-right" title="Balance">${{ profile.balance.total | number:'0.0-2' }}</span>
+            <span class="float-right" title="Balance">
+              {{ profile.balance.total | currency }}
+            </span>
             <div *ngIf="profile.note" class="text-muted small">{{ profile.note }}</div>
           </div>
         </div>
@@ -119,7 +125,7 @@
     <div class="ml-3">
       <div class="font-weight-bold" [class.text-primary]="!walletSelected">Total</div>
       <div class="text-muted small">
-        {{ profileService.profile.balance.total | currency:profileService.profile.currency }}
+        {{ profileService.profile.balance.total | currency }}
       </div>
     </div>
   </a>

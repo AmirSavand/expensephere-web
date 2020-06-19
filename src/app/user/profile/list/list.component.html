@@ -19,9 +19,9 @@
           <div>
             <span>Balance</span>
             <span class="float-right">
-              <span title="Expense" class="text-danger">${{ profile.balance.expense }}</span>
-              <span title="Income" class="mx-3">${{ profile.balance.income }}</span>
-              <span title="Total" class="text-secondary">${{ profile.balance.total }}</span>
+              <span title="Expense" class="text-danger">{{ profile.balance.expense | currency }}</span>
+              <span title="Income" class="mx-3">{{ profile.balance.income | currency }}</span>
+              <span title="Total" class="text-secondary">{{ profile.balance.total | currency }}</span>
             </span>
           </div>
         </div>
