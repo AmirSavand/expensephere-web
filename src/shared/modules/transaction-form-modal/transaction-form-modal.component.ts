@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -22,6 +23,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   selector: 'app-transaction-form-modal',
   templateUrl: './transaction-form-modal.component.html',
   styleUrls: ['./transaction-form-modal.component.scss'],
+  providers: [DatePipe],
 })
 export class TransactionFormModalComponent implements OnInit {
 
@@ -55,7 +57,8 @@ export class TransactionFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
-              private api: ApiService) {
+              private api: ApiService,
+              private date: DatePipe) {
   }
 
   ngOnInit(): void {
@@ -92,14 +95,16 @@ export class TransactionFormModalComponent implements OnInit {
       into: [null],
       event: [null],
       amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
-      time: [new Date().toISOString().slice(0, 16), Validators.required],
+      time: [this.date.transform(new Date(), 'yyyy-MM-ddThh:mm'), Validators.required],
       note: [''],
     });
   }
 
   submit(): void {
     this.form.loading = true;
-    this.api.transaction.create(this.form.form.value).subscribe((): void => {
+    this.api.transaction.create(Object.assign(this.form.form.value, {
+      time: new Date(this.form.form.value.time).toISOString(),
+    })).subscribe((): void => {
       this.modal.hide();
     }, (error: HttpErrorResponse): void => {
       this.form.loading = false;
