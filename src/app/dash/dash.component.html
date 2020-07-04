@@ -112,6 +112,29 @@
     <!-- Sidebar view: Main -->
     <div *ngIf="sidebarViewSelected === sidebarView.MAIN">
 
+      <!-- Links -->
+      <div class="links">
+        <a routerLink="/dash/home" routerLinkActive="active">
+          <fa-icon [fixedWidth]="true" [icon]="faDashboard"></fa-icon>
+          <span>Dashboard</span>
+        </a>
+        <a routerLink="/dash/transaction" routerLinkActive="active">
+          <fa-icon [fixedWidth]="true" [icon]="faTransactions"></fa-icon>
+          <span>Transactions</span>
+        </a>
+        <a routerLink="/user/wallet" routerLinkActive="active">
+          <fa-icon [fixedWidth]="true" [icon]="faWallets"></fa-icon>
+          <span>Wallets</span>
+        </a>
+        <a routerLink="/dash/category" routerLinkActive="active">
+          <fa-icon [fixedWidth]="true" [icon]="faCategories"></fa-icon>
+          <span>Categories</span>
+        </a>
+        <a routerLink="/dash/event" routerLinkActive="active">
+          <fa-icon [fixedWidth]="true" [icon]="faEvents"></fa-icon>
+          <span>Events</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>

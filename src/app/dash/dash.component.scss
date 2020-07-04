@@ -23,6 +23,36 @@
       .my {
         margin-bottom: map_get($spacers, 5);
       }
+
+      > .links {
+        margin: 0 map_get($spacers, 4) * -1;
+
+        > a {
+          padding: map_get($spacers, 4);
+          display: block;
+          color: $dark;
+          text-decoration: none;
+
+          &:hover,
+          &:focus {
+            background: rgba(0, 0, 0, 0.025);
+          }
+
+          &:active,
+          &.active {
+            background: rgba(0, 0, 0, 0.05);
+
+            > fa-icon {
+              color: $primary;
+            }
+          }
+
+          > fa-icon {
+            margin-right: map_get($spacers, 3);
+            opacity: 0.5;
+          }
+        }
+      }
     }
 
     > #user {

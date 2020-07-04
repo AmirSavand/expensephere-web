@@ -8,6 +8,8 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
+import { faMeteor } from '@fortawesome/free-solid-svg-icons/faMeteor';
+import { faRetweet } from '@fortawesome/free-solid-svg-icons/faRetweet';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
 import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
@@ -43,6 +45,11 @@ export class DashComponent implements OnInit {
   readonly faDropdown: IconDefinition = faChevronDown;
   readonly faWallets: IconDefinition = faLayerGroup;
 
+  readonly faDashboard: IconDefinition = faTachometerAlt;
+  readonly faTransactions: IconDefinition = faRetweet;
+  readonly faCategories: IconDefinition = faTags;
+  readonly faEvents: IconDefinition = faCalendarAlt;
+
   /**
    * Authenticated user data
    */
@@ -57,36 +64,6 @@ export class DashComponent implements OnInit {
    * List of wallets
    */
   wallets: Wallet[];
-
-  /**
-   * Navigation list
-   */
-  navigation: Navigation[] = [
-    {
-      text: 'Dashboard',
-      icon: faTachometerAlt,
-      link: '/',
-      color: 'primary',
-    },
-    {
-      text: 'Wallets',
-      icon: faWallet,
-      link: '/wallet',
-      color: 'info',
-    },
-    {
-      text: 'Events',
-      icon: faCalendarAlt,
-      link: '/event',
-      color: 'warning',
-    },
-    {
-      text: 'Categories',
-      icon: faTags,
-      link: '/category',
-      color: 'success',
-    },
-  ];
 
   /**
    * What other view that sidebar is showing
