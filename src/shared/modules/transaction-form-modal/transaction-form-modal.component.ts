@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons/faCalendar';
@@ -15,9 +15,11 @@ import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
+import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-form-modal',
@@ -38,6 +40,8 @@ export class TransactionFormModalComponent implements OnInit {
   readonly faEvent: IconDefinition = faCalendar;
   readonly faCollapse: IconDefinition = faChevronDown;
 
+  @Input() transaction?: Transaction;
+
   expenseKindSelected: ExpenseKind = this.expenseKind.EXPENSE;
 
   wallets: Wallet[];
@@ -54,6 +58,11 @@ export class TransactionFormModalComponent implements OnInit {
   };
 
   showExtraDetails = false;
+
+  /**
+   * If {@see transaction} is given, then the modal is for edit
+   */
+  isEditing: boolean;
 
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
@@ -79,6 +88,11 @@ export class TransactionFormModalComponent implements OnInit {
       for (const category of this.categories) {
         this.categoryGroups[category.kind].push(category);
       }
+      // For editing, update selected kind
+      if (this.isEditing) {
+        this.setExpenseKind(this.transaction.kind);
+        this.form.form.get('category').patchValue(this.transaction.category);
+      }
     });
     /**
      * Load events
@@ -98,13 +112,33 @@ export class TransactionFormModalComponent implements OnInit {
       time: [this.date.transform(new Date(), 'yyyy-MM-ddThh:mm'), Validators.required],
       note: [''],
     });
+    /**
+     * Check if editing
+     */
+    if (this.transaction) {
+      this.isEditing = true;
+      this.form.form.patchValue(Object.assign(this.transaction, {
+        time: this.date.transform(this.transaction.time, 'yyyy-MM-ddThh:mm'),
+      }));
+    }
   }
 
+  /**
+   * Submit the form
+   */
   submit(): void {
     this.form.loading = true;
-    this.api.transaction.create(Object.assign(this.form.form.value, {
+    const payload: Partial<Transaction> = Object.assign(this.form.form.value, {
       time: new Date(this.form.form.value.time).toISOString(),
-    })).subscribe((): void => {
+    });
+    let method: Observable<Transaction> = this.api.transaction.create(payload);
+    if (this.isEditing) {
+      method = this.api.transaction.update(this.transaction.id, payload);
+    }
+    method.subscribe((data: Transaction): void => {
+      if (this.isEditing) {
+        Object.assign(this.transaction, data);
+      }
       this.modal.hide();
     }, (error: HttpErrorResponse): void => {
       this.form.loading = false;

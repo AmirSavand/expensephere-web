@@ -93,6 +93,19 @@ a, button, .btn {
 }
 
 .item-icon-wrapper:hover {
+  &:hover,
+  &:focus {
+    background: #fff;
+    box-shadow: 0 0 0 5px #fff;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:active {
+      background: none;
+      box-shadow: none;
+    }
+  }
+
   > .item-icon {
     > .icon-badge {
       opacity: 1;

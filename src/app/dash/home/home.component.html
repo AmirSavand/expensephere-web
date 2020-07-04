@@ -116,7 +116,9 @@
 
             <!-- Transactions -->
             <div class="d-flex align-items-center mt-3 item-icon-wrapper"
-                 *ngFor="let transaction of transactionGroup.value" [title]="transaction.note">
+                 *ngFor="let transaction of transactionGroup.value"
+                 (click)="editTransaction(transaction)"
+                 [title]="transaction.note">
               <!-- Icon and wallet -->
               <div class="item-icon" [ngStyle]="style(getCategory(transaction.category).color)">
                 <i class="icon-{{ getCategory(transaction.category).icon }}"></i>

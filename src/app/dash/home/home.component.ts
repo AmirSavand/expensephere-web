@@ -9,8 +9,10 @@ import { Category } from '@shared/interfaces/category';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
+import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +43,8 @@ export class HomeComponent implements OnInit {
   categoryChartColors: { name: string; value: string }[] = [];
 
   constructor(private api: ApiService,
-              private router: Router) {
+              private router: Router,
+              private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
@@ -135,5 +138,12 @@ export class HomeComponent implements OnInit {
       return -1;
     }
     return 0;
+  }
+
+  /**
+   * Open transaction form modal for editing
+   */
+  editTransaction(transaction: Transaction): void {
+    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } })
   }
 }

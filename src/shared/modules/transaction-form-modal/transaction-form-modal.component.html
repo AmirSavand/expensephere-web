@@ -2,7 +2,7 @@
 <div class="modal-header bg-special">
 
   <!-- Title -->
-  <span>New Transaction</span>
+  <span>{{ isEditing ? 'Edit' : 'New' }} Transaction</span>
 
   <!-- Close -->
   <button class="ml-auto btn btn-light" (click)="modal.hide()">
@@ -163,6 +163,8 @@
   <!-- Cancel -->
   <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
 
-  <!-- Done -->
-  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">Done</button>
+  <!-- Submit -->
+  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+    {{ isEditing ? 'Update' : 'Done' }}
+  </button>
 </div>
