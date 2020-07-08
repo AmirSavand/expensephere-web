@@ -1,27 +1,67 @@
 # OpenExpenses (Web)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
+Web app for OpenExpenses.
 
-## Development server
+## Development
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Install dependencies.
 
-## Code scaffolding
+```bash
+> npm install
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run the server.
 
-## Build
+```bash
+> npm run serve
+> npm run serve-prod
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Code quality.
 
-## Running unit tests
+```bash
+> npm run lint
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Source Code
 
-## Running end-to-end tests
+Here are the list of technologies used:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- angular
+- bootstrap
+- ngx-bootstrap
+- fontawesome
 
-## Further help
+### Routes
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Here are the app routes to follow:
+
+```
+/user/sign-in
+/user/sign-up
+/user/sign-out
+/user/forgot-password
+/user/settings
+
+/profile/list
+/profile/new
+
+/profile/:id/wallet/list
+/profile/:id/wallet/new
+/profile/:id/wallet/:id/dashboard
+
+/profile/:id/wallet/:id/transaction
+/profile/:id/wallet/:id/transaction/:id
+
+/profile/:id/wallet/:id/event
+/profile/:id/wallet/:id/event/:id
+
+/profile/:id/wallet/:id/category
+/profile/:id/wallet/:id/category/:id
+```
+
+### Modals
+
+Here are the modals that are not a page but a modal only:
+
+- `TransactionFormModal` is used for creating and editing a transaction.
