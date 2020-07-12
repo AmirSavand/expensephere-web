@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AddComponent } from 'src/app/user/wallet/add/add.component';
+import { AddComponent } from '@app/dash/profile/add/add.component';
 
 const routes: Routes = [{ path: '', component: AddComponent }];
 

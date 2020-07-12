@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { WalletComponent } from 'src/app/user/wallet/wallet.component';
+import { ProfileComponent } from '@app/dash/profile/profile.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: WalletComponent,
+    component: ProfileComponent,
     children: [
       {
         path: 'list',
-        loadChildren: () => import('src/app/user/wallet/list/list.module').then(m => m.ListModule),
+        loadChildren: () => import('@app/dash/profile/list/list.module').then(m => m.ListModule),
       },
       {
         path: 'add',
-        loadChildren: () => import('src/app/user/wallet/add/add.module').then(m => m.AddModule),
+        loadChildren: () => import('@app/dash/profile/add/add.module').then(m => m.AddModule),
       },
       {
         path: '**',
@@ -29,5 +29,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class WalletRoutingModule {
+export class ProfileRoutingModule {
 }
