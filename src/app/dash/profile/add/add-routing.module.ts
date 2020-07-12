@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AddComponent } from '@app/dash/profile/add/add.component';
+import { AddComponent } from './add.component';
 
-const routes: Routes = [{ path: '', component: AddComponent }];
+const routes: Routes = [
+  {
+    path: '',
+    component: AddComponent,
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

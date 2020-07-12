@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { ListRoutingModule } from '@app/dash/profile/list/list-routing.module';
-import { ListComponent } from '@app/dash/profile/list/list.component';
+import { ListRoutingModule } from './list-routing.module';
+import { ListComponent } from './list.component';
 
 @NgModule({
   declarations: [

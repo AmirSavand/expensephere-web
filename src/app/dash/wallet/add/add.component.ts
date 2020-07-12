@@ -18,12 +18,12 @@ export class AddComponent implements OnInit {
   /**
    * Colors for selection
    */
-  readonly colors = Color.COLORS;
+  readonly colors: string[] = Color.COLORS;
 
   /**
    * Icons for selection
    */
-  readonly icons = icons;
+  readonly icons: readonly string[] = icons;
 
   form: ReactiveFormData = {
     error: {},

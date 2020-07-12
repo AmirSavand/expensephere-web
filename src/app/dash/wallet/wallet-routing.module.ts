@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { WalletComponent } from '@app/dash/wallet/wallet.component';
+import { WalletComponent } from './wallet.component';
 
 const routes: Routes = [
   {
@@ -10,11 +10,11 @@ const routes: Routes = [
     children: [
       {
         path: 'list',
-        loadChildren: () => import('@app/dash/wallet/list/list.module').then(m => m.ListModule),
+        loadChildren: () => import('./list/list.module').then(m => m.ListModule),
       },
       {
         path: 'add',
-        loadChildren: () => import('@app/dash/wallet/add/add.module').then(m => m.AddModule),
+        loadChildren: () => import('./add/add.module').then(m => m.AddModule),
       },
       {
         path: '**',

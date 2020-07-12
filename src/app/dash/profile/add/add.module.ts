@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AddRoutingModule } from '@app/dash/profile/add/add-routing.module';
-import { AddComponent } from '@app/dash/profile/add/add.component';
+import { AddRoutingModule } from './add-routing.module';
+import { AddComponent } from './add.component';
 
 @NgModule({
   declarations: [

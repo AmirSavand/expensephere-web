@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProfileComponent } from '@app/dash/profile/profile.component';
+import { ProfileComponent } from './profile.component';
 
 const routes: Routes = [
   {
@@ -10,11 +10,11 @@ const routes: Routes = [
     children: [
       {
         path: 'list',
-        loadChildren: () => import('@app/dash/profile/list/list.module').then(m => m.ListModule),
+        loadChildren: () => import('./list/list.module').then(m => m.ListModule),
       },
       {
         path: 'add',
-        loadChildren: () => import('@app/dash/profile/add/add.module').then(m => m.AddModule),
+        loadChildren: () => import('./add/add.module').then(m => m.AddModule),
       },
       {
         path: '**',
