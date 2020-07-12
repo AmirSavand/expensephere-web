@@ -43,25 +43,32 @@ Here are the app routes to follow:
 /user/forgot-password
 /user/settings
 
-/profile/list
-/profile/new
+/dash/overview
+/dash/calendar
+/dash/statistics
 
-/profile/:id/wallet/list
-/profile/:id/wallet/new
-/profile/:id/wallet/:id/dashboard
+/dash/profile/list
+/dash/profile/<id>
 
-/profile/:id/wallet/:id/transaction
-/profile/:id/wallet/:id/transaction/:id
+/dash/wallet/list
+/dash/wallet/<id>
 
-/profile/:id/wallet/:id/event
-/profile/:id/wallet/:id/event/:id
+/dash/category/list
+/dash/category/<id>
 
-/profile/:id/wallet/:id/category
-/profile/:id/wallet/:id/category/:id
+/dash/event/list
+/dash/event/<id>
+
+/dash/transaction/list
+/dash/transaction/<id>
 ```
 
 ### Modals
 
-Here are the modals that are not a page but a modal only:
+Here are some modals that can be used instead of a page for that route:
 
+- `ProfileFormModal`is used for creating and editing a profile.
+- `WalletFormModal`is used for creating and editing a wallet.
+- `CategoryFormModal`is used for creating and editing a category.
+- `EventFormModal`is used for creating and editing an event.
 - `TransactionFormModal` is used for creating and editing a transaction.
