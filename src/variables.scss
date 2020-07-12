@@ -14,7 +14,8 @@ $font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-bold: 600;
 
-$body-color: #050505;
+$body-bg: white;
+$body-color: $dark;
 
 $input-bg: $light;
 $input-border-width: 0;
@@ -38,6 +39,7 @@ $icomoon-font-path: 'src/assets/icon/fonts';
 $sidebar-color: $light;
 $sidebar-width: 350px;
 $header-height: 90px;
+$scrollbar-size: 6px;
 
 // Bootstrap variables
 

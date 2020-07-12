@@ -1,0 +1,150 @@
+<div class="container" *ngIf="profiles && profiles.length && wallets && categories && transactions">
+  <div class="row mb-4">
+
+    <!-- Left -->
+    <div class="col-xl-8">
+
+      <!-- Wallets -->
+      <div class="card bg-light mt-4">
+        <div class="card-header font-weight-bold">My Wallets</div>
+        <div class="card-body oy-scroll pt-0 pb-3" [style.height]="120 + 'px'">
+          <div class="row" *ngIf="wallets && profiles">
+            <div class="col-xl-4 mt-3">
+              <div class="card" [ngStyle]="style(colorsReserved.wallets)">
+                <div class="card-body d-flex align-items-center">
+                  <div class="item-icon ff">
+                    <fa-icon [icon]="faWallets"></fa-icon>
+                  </div>
+                  <div class="ml-3 font-weight-bold">
+                    <div>Total</div>
+                    <div class="text-dark">{{ profiles[0].balance.total | currency }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 mt-3" *ngFor="let wallet of wallets">
+              <div class="card" [ngStyle]="style(wallet.color)">
+                <div class="card-body d-flex align-items-center">
+                  <div class="item-icon">
+                    <i class="icon-{{ wallet.icon }}"></i>
+                  </div>
+                  <div class="ml-3 font-weight-bold">
+                    <div>{{ wallet.name }}</div>
+                    <div class="text-dark">{{ wallet.balance.total | currency }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="card bg-light mt-4">
+        <div class="card-header font-weight-bold">My Categories</div>
+        <div class="card-body oy-scroll pt-0 pb-3" [style.height]="205 + 'px'">
+          <div class="row">
+            <div class="col-xl-4 mt-3" *ngFor="let category of categories" [hidden]="!category.transactions_count">
+              <div class="d-flex align-items-center item-icon-action">
+                <div class="item-icon" [ngStyle]="style(category.color)">
+                  <i class="icon-{{ category.icon }}"></i>
+                </div>
+                <div class="ml-3">
+                  <div>{{ category.name }}</div>
+                  <div class="small text-muted">{{ category.transactions_count }} Transactions</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transactions Overview + Categories Overview -->
+      <div class="row">
+
+        <!-- Transactions overview -->
+        <div class="col-lg-6" *ngIf="balanceChartResults">
+          <div class="card bg-light mt-4">
+            <div class="card-header font-weight-bold">Transactions Overview</div>
+            <div class="card-body chart-wrapper p-0">
+              <ngx-charts-pie-chart [results]="balanceChartResults"
+                                    [customColors]="balanceChartColors"
+                                    [doughnut]="true"
+                                    [arcWidth]="0.25"
+                                    [labels]="true">
+              </ngx-charts-pie-chart>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories overview -->
+        <div class="col-lg-6" *ngIf="categoryChartResults">
+          <div class="card bg-light mt-4">
+            <div class="card-header font-weight-bold">Categories Overview</div>
+            <div class="card-body chart-wrapper p-0">
+              <ngx-charts-pie-chart [results]="categoryChartResults"
+                                    [customColors]="categoryChartColors"
+                                    [doughnut]="true"
+                                    [arcWidth]="0.25"
+                                    [labels]="true">
+              </ngx-charts-pie-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="col-xl-4">
+
+      <!-- My transactions -->
+      <div class="card bg-light overflow-hidden mt-4">
+        <div class="card-header font-weight-bold">My Transactions</div>
+        <div class="card-body oy-scroll pt-0" [style.height]="769 + 'px'">
+
+          <!-- Transaction groups -->
+          <div *ngFor="let transactionGroup of transactionsGroups | keyvalue:orderByDate">
+
+            <!-- Date -->
+            <div class="mt-4 d-flex align-items-center text-secondary border-bottom pb-2">
+              <h3 class="mb-0 mr-2 text-dark">{{ transactionGroup.key | date:'d' }}</h3>
+              <div class="small">
+                <div>{{ transactionGroup.key | date:'EEEE' }}</div>
+                <div>{{ transactionGroup.key | date:'MMM yyyy' }}</div>
+              </div>
+              <div class="ml-auto mt-auto small">{{ transactionGroup.value.length }} Transactions</div>
+            </div>
+
+            <!-- Transactions -->
+            <div class="d-flex align-items-center mt-3 item-icon-wrapper"
+                 *ngFor="let transaction of transactionGroup.value"
+                 (click)="editTransaction(transaction)"
+                 [title]="transaction.note">
+              <!-- Icon and wallet -->
+              <div class="item-icon" [ngStyle]="style(getCategory(transaction.category).color)">
+                <i class="icon-{{ getCategory(transaction.category).icon }}"></i>
+                <i class="icon-{{ getWallet(transaction.wallet).icon }} icon-badge"
+                   [title]="getWallet(transaction.wallet).name"
+                   [style.background]="getWallet(transaction.wallet).color"></i>
+              </div>
+              <!-- Name and time -->
+              <div class="ml-3">
+                <div>{{ getCategory(transaction.category).name }}</div>
+                <div class="small text-muted">{{ transaction.time | date:'hh:mm aa' }}</div>
+              </div>
+              <!-- Amount and (to wallet) -->
+              <div class="ml-auto font-weight-bold"
+                   [class.text-secondary]="transaction.kind === expenseKind.TRANSFER"
+                   [class.text-danger]="transaction.kind === expenseKind.EXPENSE">
+                <div class="text-right">{{ transaction.amount | currency }}</div>
+                <div class="small" *ngIf="transaction.kind === expenseKind.TRANSFER">
+                  +{{ getWallet(transaction.into).name }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

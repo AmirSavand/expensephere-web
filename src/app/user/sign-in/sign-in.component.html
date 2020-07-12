@@ -1,0 +1,29 @@
+<!-- Form -->
+<form [formGroup]="form.form" (ngSubmit)="submit()">
+
+  <!-- Title -->
+  <p class="font-weight-bold text-center mb-5">Welcome <span class="text-primary">back</span> 🚀</p>
+
+  <!-- Username -->
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Username"
+           formControlName="username" [class.is-invalid]="form.error.username">
+    <p class="small text-danger" *ngIf="form.error.username">{{ form.error.username[0] }}</p>
+  </div>
+
+  <!-- Password -->
+  <div class="form-group">
+    <input type="password" class="form-control" placeholder="Password"
+           formControlName="password" [class.is-invalid]="form.error.username">
+    <p class="small text-danger" *ngIf="form.error.password">{{ form.error.password[0] }}</p>
+  </div>
+
+  <!-- Error -->
+  <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
+
+  <!-- Button -->
+  <button class="btn btn-block btn-primary" [disabled]="form.loading">Login</button>
+
+  <!-- Sign up link -->
+  <a class="btn btn-block btn-link" routerLink="../../sign-up">Don't have an account?</a>
+</form>

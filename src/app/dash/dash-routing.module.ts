@@ -9,13 +9,21 @@ const routes: Routes = [
     component: DashComponent,
     children: [
       {
-        path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+        path: 'overview',
+        loadChildren: () => import('./overview/overview.module').then(m => m.OverviewModule),
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+      },
+      {
+        path: 'wallet',
+        loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule),
       },
       {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'home',
+        redirectTo: 'overview',
       },
     ],
   },

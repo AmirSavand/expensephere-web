@@ -16,8 +16,8 @@
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: $scrollbar-size;
+  height: $scrollbar-size;
   background: transparent;
 }
 

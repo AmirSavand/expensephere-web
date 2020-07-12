@@ -10,6 +10,11 @@ import { ProfileService } from '@shared/services/profile.service';
 })
 export class AppComponent implements OnInit {
 
+  /**
+   * Primary color of the app
+   */
+  static readonly PRIMARY_COLOR = getComputedStyle(document.body).getPropertyValue('--primary');
+
   constructor(private router: Router) {
   }
 
@@ -20,9 +25,9 @@ export class AppComponent implements OnInit {
     AuthService.user.subscribe((): void => {
       if (AuthService.isAuth() && !ProfileService.profile) {
         if (ProfileService.profiles.length) {
-          this.router.navigateByUrl('/user/profile/list');
+          this.router.navigateByUrl('/dash/profile/list');
         } else {
-          this.router.navigateByUrl('/user/profile/add');
+          this.router.navigateByUrl('/dash/profile/add');
         }
       }
     });

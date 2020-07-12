@@ -1,0 +1,25 @@
+<!-- To sign out -->
+<div *ngIf="!signedOut">
+
+  <!-- Title -->
+  <p class="font-weight-bold text-center mb-5">Leave 😭</p>
+
+  <!-- Text -->
+  <p class="text-center">Click the button below to logout of OpenExpenses, we will miss you.</p>
+
+  <!-- Button -->
+  <button class="btn btn-block btn-primary" (click)="signOut()">Logout</button>
+
+  <!-- Login link -->
+  <a class="btn btn-block btn-link" routerLink="/">Go Home</a>
+</div>
+
+<!-- Signed out -->
+<div *ngIf="signedOut" class="text-center">
+
+  <!-- Cry -->
+  <img src="assets/img/cry.gif" alt="Cry" title="Yes, you made me cry" [width]="128">
+
+  <!-- Button -->
+  <a class="btn btn-light" routerLink="../../sign-in">Come Back 🚀</a>
+</div>

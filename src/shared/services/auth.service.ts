@@ -49,7 +49,7 @@ export class AuthService {
   /**
    * Where to redirect after sign out
    */
-  private static readonly SIGN_OUT_REDIRECT = '/user/login';
+  private static readonly SIGN_OUT_REDIRECT = '/user/sign-in';
 
   /**
    * Where to redirect after sign in
@@ -59,7 +59,7 @@ export class AuthService {
   /**
    * Where to redirect after sign in without profiles
    */
-  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/user/profile';
+  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/dash/profile/add';
 
   /**
    * Authentication user subject
@@ -133,10 +133,12 @@ export class AuthService {
   /**
    * Un-authenticate and redirect
    */
-  signOut(): void {
+  signOut(redirect: boolean = true): void {
     AuthService.userSubject.next(null);
     localStorage.clear();
-    this.router.navigateByUrl(AuthService.SIGN_OUT_REDIRECT);
+    if (redirect) {
+      this.router.navigateByUrl(AuthService.SIGN_OUT_REDIRECT);
+    }
   }
 
   /**

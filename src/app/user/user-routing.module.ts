@@ -9,20 +9,16 @@ const routes: Routes = [
     component: UserComponent,
     children: [
       {
-        path: 'join',
-        loadChildren: () => import('./join/join.module').then(m => m.JoinModule),
+        path: 'sign-up',
+        loadChildren: () => import('./sign-up/sign-up.module').then(m => m.SignUpModule),
       },
       {
-        path: 'login',
-        loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+        path: 'sign-in',
+        loadChildren: () => import('./sign-in/sign-in.module').then(m => m.SignInModule),
       },
       {
-        path: 'profile',
-        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
-      },
-      {
-        path: 'wallet',
-        loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule),
+        path: 'sign-out',
+        loadChildren: () => import('./sign-out/sign-out.module').then(m => m.SignOutModule),
       },
       {
         path: '**',
