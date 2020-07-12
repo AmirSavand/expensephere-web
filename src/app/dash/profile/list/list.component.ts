@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.api.profile.list().subscribe((data: Profile[]): void => {
       if (!data.length) {
-        this.router.navigateByUrl('/user/profile/add');
+        this.router.navigateByUrl('/dash/profile/add');
       }
       this.profiles = data;
     });

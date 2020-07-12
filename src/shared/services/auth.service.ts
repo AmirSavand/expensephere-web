@@ -59,7 +59,7 @@ export class AuthService {
   /**
    * Where to redirect after sign in without profiles
    */
-  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/user/profile';
+  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/dash/profile/add';
 
   /**
    * Authentication user subject

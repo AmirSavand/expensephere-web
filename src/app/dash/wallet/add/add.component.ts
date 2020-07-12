@@ -49,7 +49,7 @@ export class AddComponent implements OnInit {
   submit(): void {
     this.form.loading = true;
     this.api.wallet.create(this.form.form.value).subscribe((): void => {
-      this.router.navigateByUrl('/user/wallet/list');
+      this.router.navigateByUrl('/dash/wallet/list');
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;
       this.form.loading = false;

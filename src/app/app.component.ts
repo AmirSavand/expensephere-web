@@ -25,9 +25,9 @@ export class AppComponent implements OnInit {
     AuthService.user.subscribe((): void => {
       if (AuthService.isAuth() && !ProfileService.profile) {
         if (ProfileService.profiles.length) {
-          this.router.navigateByUrl('/user/profile/list');
+          this.router.navigateByUrl('/dash/profile/list');
         } else {
-          this.router.navigateByUrl('/user/profile/add');
+          this.router.navigateByUrl('/dash/profile/add');
         }
       }
     });

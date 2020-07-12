@@ -48,7 +48,7 @@ export class AddComponent implements OnInit {
     this.api.profile.create(this.form.form.value).subscribe((data: Profile): void => {
       ProfileService.profiles = ProfileService.profiles.concat(data);
       ProfileService.profile = data;
-      this.router.navigateByUrl('/user/wallet/add');
+      this.router.navigateByUrl('/dash/wallet/add');
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;
       this.form.loading = false;

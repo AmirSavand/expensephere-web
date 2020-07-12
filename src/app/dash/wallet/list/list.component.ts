@@ -13,8 +13,6 @@ export class ListComponent implements OnInit {
 
   wallets: Wallet[];
 
-  profileSelected = ProfileService.profile;
-
   constructor(private api: ApiService,
               private router: Router) {
   }
@@ -22,7 +20,7 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
       if (!data.length) {
-        this.router.navigateByUrl('/user/wallet/add');
+        this.router.navigateByUrl('/dash/wallet/add');
       }
       this.wallets = data;
     });
