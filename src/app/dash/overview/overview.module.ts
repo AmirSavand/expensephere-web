@@ -4,21 +4,21 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TransactionFormModalModule } from '@shared/modules/transaction-form-modal/transaction-form-modal.module';
 import { PieChartModule } from '@swimlane/ngx-charts';
 
-import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
+import { OverviewRoutingModule } from './overview-routing.module';
+import { OverviewComponent } from './overview.component';
 
 
 @NgModule({
   declarations: [
-    HomeComponent,
+    OverviewComponent,
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule,
+    OverviewRoutingModule,
     FontAwesomeModule,
     PieChartModule,
     TransactionFormModalModule,
   ],
 })
-export class HomeModule {
+export class OverviewModule {
 }

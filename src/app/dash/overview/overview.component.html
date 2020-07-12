@@ -7,7 +7,7 @@
       <!-- Wallets -->
       <div class="card bg-light mt-4">
         <div class="card-header font-weight-bold">My Wallets</div>
-        <div class="card-body pt-0 pb-3">
+        <div class="card-body oy-scroll pt-0 pb-3" [style.height]="120 + 'px'">
           <div class="row" *ngIf="wallets && profiles">
             <div class="col-xl-4 mt-3">
               <div class="card" [ngStyle]="style(colorsReserved.wallets)">
@@ -39,9 +39,10 @@
         </div>
       </div>
 
+      <!-- Categories -->
       <div class="card bg-light mt-4">
         <div class="card-header font-weight-bold">My Categories</div>
-        <div class="card-body pt-0 pb-3">
+        <div class="card-body oy-scroll pt-0 pb-3" [style.height]="205 + 'px'">
           <div class="row">
             <div class="col-xl-4 mt-3" *ngFor="let category of categories" [hidden]="!category.transactions_count">
               <div class="d-flex align-items-center item-icon-action">
@@ -99,7 +100,7 @@
       <!-- My transactions -->
       <div class="card bg-light overflow-hidden mt-4">
         <div class="card-header font-weight-bold">My Transactions</div>
-        <div class="card-body oy-scroll pt-0" [style.maxHeight]="708 + 'px'">
+        <div class="card-body oy-scroll pt-0" [style.height]="769 + 'px'">
 
           <!-- Transaction groups -->
           <div *ngFor="let transactionGroup of transactionsGroups | keyvalue:orderByDate">

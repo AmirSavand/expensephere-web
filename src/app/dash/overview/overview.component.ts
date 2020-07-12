@@ -1,6 +1,7 @@
 import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppComponent } from '@app/app.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
 import { Color } from '@shared/classes/color';
@@ -15,11 +16,11 @@ import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class OverviewComponent implements OnInit {
 
   readonly style = Color.style;
   readonly colorsReserved = Color.COLORS_RESERVED;
@@ -63,15 +64,15 @@ export class HomeComponent implements OnInit {
       }];
       this.balanceChartColors = [{
         name: 'Income',
-        value: '#3c40c6',
+        value: AppComponent.PRIMARY_COLOR,
       }, {
         name: 'Expense',
-        value: '#3c40c644',
+        value: AppComponent.PRIMARY_COLOR + '44',
       }];
     });
     this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
       if (!wallets.length) {
-        this.router.navigateByUrl('/user/wallet/add');
+        this.router.navigateByUrl('/dash/wallet/add');
         return;
       }
       this.wallets = wallets;

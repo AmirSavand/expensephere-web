@@ -10,6 +10,11 @@ import { ProfileService } from '@shared/services/profile.service';
 })
 export class AppComponent implements OnInit {
 
+  /**
+   * Primary color of the app
+   */
+  static readonly PRIMARY_COLOR = getComputedStyle(document.body).getPropertyValue('--primary');
+
   constructor(private router: Router) {
   }
 
