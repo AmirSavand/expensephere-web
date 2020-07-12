@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: 'join',
-        loadChildren: () => import('./join/join.module').then(m => m.JoinModule),
+        loadChildren: () => import('./sign-up/join.module').then(m => m.JoinModule),
       },
       {
         path: 'login',

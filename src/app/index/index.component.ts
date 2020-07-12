@@ -25,7 +25,7 @@ export class IndexComponent implements OnInit {
         this.router.navigateByUrl('/user/profile/add');
       }
     } else {
-      this.router.navigateByUrl('/user/join');
+      this.router.navigateByUrl('/user/sign-up');
     }
   }
 }
