@@ -25,12 +25,12 @@ Code quality.
 
 ## Source Code
 
-Here are the list of technologies used:
+Here's what the project is build with:
 
-- angular
-- bootstrap
-- ngx-bootstrap
-- fontawesome
+- [Angular](https://angular.io/)
+- [Bootstrap)(https://getbootstrap.com/)
+- [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
+- [Font Awesome](https://fontawesome.com/)
 
 ### Routes
 
