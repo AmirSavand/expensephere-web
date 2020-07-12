@@ -145,6 +145,6 @@ export class OverviewComponent implements OnInit {
    * Open transaction form modal for editing
    */
   editTransaction(transaction: Transaction): void {
-    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } })
+    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } });
   }
 }
