@@ -32,7 +32,7 @@ export class JoinComponent implements OnInit {
       this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT);
     }
     /**
-     * Setup login form
+     * Setup sign-in form
      */
     this.form.form = this.formBuilder.group({
       username: ['', Validators.required],
@@ -42,7 +42,7 @@ export class JoinComponent implements OnInit {
   }
 
   /**
-   * Submit login form and authenticate
+   * Submit sign-in form and authenticate
    */
   submit(): void {
     this.form.loading = true;

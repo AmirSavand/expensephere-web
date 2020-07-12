@@ -49,7 +49,7 @@ export class AuthService {
   /**
    * Where to redirect after sign out
    */
-  private static readonly SIGN_OUT_REDIRECT = '/user/login';
+  private static readonly SIGN_OUT_REDIRECT = '/user/sign-in';
 
   /**
    * Where to redirect after sign in
