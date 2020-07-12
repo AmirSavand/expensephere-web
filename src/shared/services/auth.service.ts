@@ -133,10 +133,12 @@ export class AuthService {
   /**
    * Un-authenticate and redirect
    */
-  signOut(): void {
+  signOut(redirect: boolean = true): void {
     AuthService.userSubject.next(null);
     localStorage.clear();
-    this.router.navigateByUrl(AuthService.SIGN_OUT_REDIRECT);
+    if (redirect) {
+      this.router.navigateByUrl(AuthService.SIGN_OUT_REDIRECT);
+    }
   }
 
   /**

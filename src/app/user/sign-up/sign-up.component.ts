@@ -6,11 +6,11 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { AuthService } from '@shared/services/auth.service';
 
 @Component({
-  selector: 'app-join',
-  templateUrl: './join.component.html',
-  styleUrls: ['./join.component.scss'],
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
 })
-export class JoinComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
   /**
    * Sign up form data

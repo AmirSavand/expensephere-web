@@ -1,5 +1,10 @@
-::ng-deep {
-  .bg-special.container-fluid {
-    min-height: 100%;
+.container-fluid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+
+  > .card {
+    width: 300px;
   }
 }

@@ -6,14 +6,14 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { AuthService } from '@shared/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class SignInComponent implements OnInit {
 
   /**
-   * Login form data
+   * Sign in form data
    */
   form: ReactiveFormData = {
     error: {},
