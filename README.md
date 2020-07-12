@@ -67,8 +67,8 @@ Here are the app routes to follow:
 
 Here are some modals that can be used instead of a page for that route:
 
-- `ProfileFormModal`is used for creating and editing a profile.
-- `WalletFormModal`is used for creating and editing a wallet.
-- `CategoryFormModal`is used for creating and editing a category.
-- `EventFormModal`is used for creating and editing an event.
+- `ProfileFormModal` is used for creating and editing a profile.
+- `WalletFormModal` is used for creating and editing a wallet.
+- `CategoryFormModal` is used for creating and editing a category.
+- `EventFormModal` is used for creating and editing an event.
 - `TransactionFormModal` is used for creating and editing a transaction.
