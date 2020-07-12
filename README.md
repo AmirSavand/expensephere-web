@@ -28,7 +28,7 @@ Code quality.
 Here's what the project is build with:
 
 - [Angular](https://angular.io/)
-- [Bootstrap)(https://getbootstrap.com/)
+- [Bootstrap](https://getbootstrap.com/)
 - [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
 - [Font Awesome](https://fontawesome.com/)
 
