@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Wallet } from '@shared/interfaces/wallet';
+import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
-import { ProfileService } from '@shared/services/profile.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-list',
@@ -14,15 +15,30 @@ export class ListComponent implements OnInit {
   wallets: Wallet[];
 
   constructor(private api: ApiService,
-              private router: Router) {
+              private router: Router,
+              private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
       if (!data.length) {
-        this.router.navigateByUrl('/dash/wallet/add');
+        this.addWallet();
       }
       this.wallets = data;
     });
+  }
+
+  /**
+   * Open up wallet form modal
+   */
+  addWallet(): void {
+    this.modalService.show(WalletFormModalComponent);
+  }
+
+  /**
+   * Open wallet form modal for editing
+   */
+  editWallet(wallet: Wallet): void {
+    this.modalService.show(WalletFormModalComponent, { initialState: { wallet } });
   }
 }
