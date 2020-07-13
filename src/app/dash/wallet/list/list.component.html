@@ -2,7 +2,14 @@
   <div class="row">
     <div class="col-xl-4" *ngFor="let wallet of wallets">
       <div class="card bg-light mt-4">
-        <div class="card-header font-weight-bold">{{ wallet.name }}</div>
+        <div class="card-header font-weight-bold">
+          <!-- Name -->
+          <span>{{ wallet.name }}</span>
+          <!-- Edit -->
+          <a class="ml-auto text-secondary" (click)="editWallet(wallet)">
+            <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+          </a>
+        </div>
         <div class="card-body">
           <span>Balance</span>
           <span class="float-right">
@@ -16,7 +23,7 @@
     <div class="col-xl-4">
       <div class="card bg-light mt-4" [style.height]="'112px'">
         <div class="card-body d-flex align-items-center justify-content-center">
-          <a class="btn btn-light font-weight-bold" routerLink="../../../add">ADD WALLET</a>
+          <div class="btn btn-light font-weight-bold" (click)="addWallet()">ADD WALLET</div>
         </div>
       </div>
     </div>

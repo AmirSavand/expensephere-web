@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Wallet } from '@shared/interfaces/wallet';
+import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
-import { ProfileService } from '@shared/services/profile.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-list',
@@ -11,18 +14,41 @@ import { ProfileService } from '@shared/services/profile.service';
 })
 export class ListComponent implements OnInit {
 
+  readonly faEdit: IconDefinition = faPen;
+
+  /**
+   * Wallet list
+   */
   wallets: Wallet[];
 
   constructor(private api: ApiService,
-              private router: Router) {
+              private router: Router,
+              private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
+    /**
+     * Load wallets
+     */
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
-      if (!data.length) {
-        this.router.navigateByUrl('/dash/wallet/add');
-      }
       this.wallets = data;
+    });
+  }
+
+  /**
+   * Open up wallet form modal
+   */
+  addWallet(): void {
+    this.modalService.show(WalletFormModalComponent, { class: 'modal-sm' });
+  }
+
+  /**
+   * Open wallet form modal for editing
+   */
+  editWallet(wallet: Wallet): void {
+    this.modalService.show(WalletFormModalComponent, {
+      class: 'modal-sm',
+      initialState: { wallet },
     });
   }
 }

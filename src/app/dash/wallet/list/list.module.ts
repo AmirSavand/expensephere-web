@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { ListRoutingModule } from '@app/dash/wallet/list/list-routing.module';
 import { ListComponent } from '@app/dash/wallet/list/list.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { WalletFormModalModule } from '@shared/modules/wallet-form-modal/wallet-form-modal.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -11,6 +14,9 @@ import { ListComponent } from '@app/dash/wallet/list/list.component';
   imports: [
     CommonModule,
     ListRoutingModule,
+    ModalModule.forRoot(),
+    WalletFormModalModule,
+    FontAwesomeModule,
   ],
 })
 export class ListModule {
