@@ -6,8 +6,9 @@
           <!-- Name -->
           <span>{{ wallet.name }}</span>
           <!-- Edit -->
-          <button class="ml-auto btn btn-sm btn-light font-weight-bold"
-                  (click)="editWallet(wallet)">Edit</button>
+          <a class="ml-auto text-secondary" (click)="editWallet(wallet)">
+            <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+          </a>
         </div>
         <div class="card-body">
           <span>Balance</span>

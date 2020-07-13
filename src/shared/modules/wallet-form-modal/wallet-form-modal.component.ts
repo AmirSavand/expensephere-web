@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -7,7 +6,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Color } from '@shared/classes/color';
 import { icons } from '@shared/constants/icons';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
-import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
@@ -17,12 +15,15 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-wallet-form-modal',
   templateUrl: './wallet-form-modal.component.html',
-  styleUrls: ['./wallet-form-modal.component.scss']
+  styleUrls: ['./wallet-form-modal.component.scss'],
 })
 export class WalletFormModalComponent implements OnInit {
 
   readonly faClose: IconDefinition = faTimes;
 
+  /**
+   * Editing walled data
+   */
   @Input() wallet?: Wallet;
 
   /**
@@ -35,6 +36,9 @@ export class WalletFormModalComponent implements OnInit {
    */
   readonly icons: readonly string[] = icons;
 
+  /**
+   * Form data
+   */
   form: ReactiveFormData = {
     error: {},
   };
@@ -59,7 +63,6 @@ export class WalletFormModalComponent implements OnInit {
       color: [null, Validators.required],
       icon: [null, Validators.required],
     });
-
     /**
      * Check if editing
      */
@@ -69,7 +72,7 @@ export class WalletFormModalComponent implements OnInit {
         name: this.wallet.name,
         color: this.wallet.color,
         icon: this.wallet.icon,
-      })
+      });
     }
   }
 
@@ -83,7 +86,7 @@ export class WalletFormModalComponent implements OnInit {
     if (this.isEditing) {
       method = this.api.wallet.update(this.wallet.id, payload);
     }
-    method.subscribe((data:Wallet): void => {
+    method.subscribe((data: Wallet): void => {
       if (this.isEditing) {
         Object.assign(this.wallet, data);
       }

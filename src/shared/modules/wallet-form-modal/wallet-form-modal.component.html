@@ -1,5 +1,5 @@
 <!-- Header -->
-<div class="modal-header bg-special">
+<div class="modal-header">
 
   <!-- Title -->
   <span>{{ isEditing ? 'Edit' : 'Add' }} Wallet</span>
@@ -13,6 +13,7 @@
 <!-- Body -->
 <div class="modal-body pb-0">
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
+
     <!-- Name -->
     <div class="form-group">
       <label for="name">Name</label>
@@ -40,8 +41,7 @@
     <div class="form-group">
       <label for="color">Color</label>
       <div class="input-group">
-        <select id="color" class="custom-select" formControlName="color"
-                [class.is-invalid]="form.error.wallet">
+        <select id="color" class="custom-select" formControlName="color" [class.is-invalid]="form.error.wallet">
           <option [ngValue]="null">Select color</option>
           <option *ngFor="let color of colors" [ngValue]="color">{{ color | titlecase }}</option>
         </select>
