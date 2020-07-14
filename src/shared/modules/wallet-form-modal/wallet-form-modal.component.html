@@ -29,7 +29,7 @@
       <label for="icon">Icon</label>
       <div class="input-group">
         <select id="icon" class="custom-select" formControlName="icon"
-                [class.is-invalid]="form.error.wallet">
+                [class.is-invalid]="form.error.icon">
           <option [ngValue]="null">Select icon</option>
           <option *ngFor="let icon of icons" [ngValue]="icon">{{ icon | titlecase }}</option>
         </select>
@@ -41,7 +41,7 @@
     <div class="form-group">
       <label for="color">Color</label>
       <div class="input-group">
-        <select id="color" class="custom-select" formControlName="color" [class.is-invalid]="form.error.wallet">
+        <select id="color" class="custom-select" formControlName="color" [class.is-invalid]="form.error.color">
           <option [ngValue]="null">Select color</option>
           <option *ngFor="let color of colors" [ngValue]="color">{{ color | titlecase }}</option>
         </select>
