@@ -4,37 +4,31 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Color } from '@shared/classes/color';
-import { icons } from '@shared/constants/icons';
+import { Currency } from '@shared/interfaces/currency';
+import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
-import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
-import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-wallet-form-modal',
-  templateUrl: './wallet-form-modal.component.html',
-  styleUrls: ['./wallet-form-modal.component.scss'],
+  selector: 'app-profile-form-modal',
+  templateUrl: './profile-form-modal.component.html',
+  styleUrls: ['./profile-form-modal.component.scss'],
 })
-export class WalletFormModalComponent implements OnInit {
+export class ProfileFormModalComponent implements OnInit {
 
   readonly faClose: IconDefinition = faTimes;
 
   /**
-   * Editing wallet data
+   * Editing profile data
    */
-  @Input() wallet?: Wallet;
+  @Input() profile?: Profile;
 
   /**
-   * Colors for selection
+   * list of currencies
    */
-  readonly colors: string[] = Color.COLORS;
-
-  /**
-   * Icons for selection
-   */
-  readonly icons: readonly string[] = icons;
+  currencies: Currency[];
 
   /**
    * Form data
@@ -44,7 +38,7 @@ export class WalletFormModalComponent implements OnInit {
   };
 
   /**
-   * If {@see wallet} is given, then the modal is for edit
+   * If {@see profile} is given, then the modal is for edit
    */
   isEditing: boolean;
 
@@ -58,37 +52,42 @@ export class WalletFormModalComponent implements OnInit {
      * Setup the form
      */
     this.form.form = this.formBuilder.group({
-      profile: [ProfileService.profile.id],
-      name: [null, Validators.required],
-      color: [null, Validators.required],
-      icon: [null, Validators.required],
+      name: ['Me', Validators.required],
+      currency: [null, Validators.required],
+      note: [null],
+    });
+    /**
+     * Get list of currencies
+     */
+    this.api.currency.list().subscribe((data: Currency[]): void => {
+      this.currencies = data;
     });
     /**
      * Check if editing
      */
-    if (this.wallet) {
+    if (this.profile) {
       this.isEditing = true;
       this.form.form.patchValue({
-        name: this.wallet.name,
-        color: this.wallet.color,
-        icon: this.wallet.icon,
+        name: this.profile.name,
+        currency: this.profile.currency,
+        note: this.profile.note,
       });
     }
   }
 
   /**
-   * Add new wallet
+   * Add new profile
    */
   submit(): void {
     this.form.loading = true;
-    const payload: Partial<Wallet> = this.form.form.value;
-    let method: Observable<Wallet> = this.api.wallet.create(payload);
+    const payload: Partial<Profile> = this.form.form.value;
+    let method: Observable<Profile> = this.api.profile.create(payload);
     if (this.isEditing) {
-      method = this.api.wallet.update(this.wallet.id, payload);
+      method = this.api.profile.update(this.profile.id, payload);
     }
-    method.subscribe((data: Wallet): void => {
+    method.subscribe((data: Profile): void => {
       if (this.isEditing) {
-        Object.assign(this.wallet, data);
+        Object.assign(this.profile, data);
       }
       this.modal.hide();
     }, ((error: HttpErrorResponse): void => {

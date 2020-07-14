@@ -1,15 +1,21 @@
 <div class="container mb-4">
   <div class="row">
     <div class="col-xl-4" *ngFor="let profile of profiles">
-      <div class="card bg-light mt-4" [title]="profile.note">
+      <div class="card bg-light mt-4" [title]="profile.note || profile.name">
         <div class="card-header">
           <span class="font-weight-bold">{{ profile.name }}</span>
-          <button class="btn btn-sm ml-auto" (click)="select(profile)"
-                  [class.btn-link]="profile.id === profileSelected.id"
-                  [class.btn-primary]="profile.id !== profileSelected.id"
-                  [disabled]="profile.id === profileSelected.id">
-            {{ profile.id === profileSelected.id ? 'Selected' : 'Select' }}
-          </button>
+          <div class="ml-auto">
+            <button class="btn btn-sm mr-2" (click)="select(profile)"
+                    [class.btn-link]="profile.id === profileSelected.id"
+                    [class.btn-primary]="profile.id !== profileSelected.id"
+                    [disabled]="profile.id === profileSelected.id">
+              {{ profile.id === profileSelected.id ? 'Selected' : 'Select' }}
+            </button>
+            <!-- Edit -->
+            <a class="text-secondary" (click)="editProfile(profile)">
+              <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+            </a>
+          </div>
         </div>
         <div class="card-body">
           <div class="mb-2">
@@ -30,7 +36,7 @@
     <div class="col-xl-4">
       <div class="card bg-light mt-4" [style.height]="'156px'">
         <div class="card-body d-flex align-items-center justify-content-center">
-          <a class="btn btn-light font-weight-bold" routerLink="../../../add">ADD PROFILE</a>
+          <div class="btn btn-light font-weight-bold" (click)="addProfile()">ADD PROFILE</div>
         </div>
       </div>
     </div>

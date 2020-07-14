@@ -2,7 +2,7 @@
 <div class="modal-header">
 
   <!-- Title -->
-  <span>{{ isEditing ? 'Edit' : 'Add' }} Wallet</span>
+  <span>{{ isEditing ? 'Edit' : 'Add' }} Profile</span>
 
   <!-- Close -->
   <button class="ml-auto btn btn-light" (click)="modal.hide()">
@@ -24,28 +24,29 @@
       </div>
     </div>
 
-    <!-- Icon -->
+    <!-- Currency -->
     <div class="form-group">
-      <label for="icon">Icon</label>
+      <label for="currency">Currency</label>
       <div class="input-group">
-        <select id="icon" class="custom-select" formControlName="icon"
-                [class.is-invalid]="form.error.icon">
-          <option [ngValue]="null">Select icon</option>
-          <option *ngFor="let icon of icons" [ngValue]="icon">{{ icon | titlecase }}</option>
+        <select id="currency" class="custom-select" formControlName="currency"
+                [class.is-invalid]="form.error.currency">
+          <option [ngValue]="null">Select currency</option>
+          <option *ngFor="let currency of currencies" [ngValue]="currency.code">
+            {{ currency.code }} ({{ currency.name }})
+          </option>
         </select>
-        <div class="invalid-tooltip" *ngIf="form.error.icon">{{ form.error.icon[0] }}</div>
+        <div class="invalid-tooltip" *ngIf="form.error.currency">{{ form.error.currency[0] }}</div>
       </div>
     </div>
 
-    <!-- Color -->
+    <!-- Note -->
     <div class="form-group">
-      <label for="color">Color</label>
+      <label for="note">Note</label>
       <div class="input-group">
-        <select id="color" class="custom-select" formControlName="color" [class.is-invalid]="form.error.color">
-          <option [ngValue]="null">Select color</option>
-          <option *ngFor="let color of colors" [ngValue]="color">{{ color | titlecase }}</option>
-        </select>
-        <div class="invalid-tooltip" *ngIf="form.error.color">{{ form.error.color[0] }}</div>
+        <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
+                  [class.is-invalid]="form.error.note">
+          </textarea>
+        <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[0] }}</div>
       </div>
     </div>
   </form>
