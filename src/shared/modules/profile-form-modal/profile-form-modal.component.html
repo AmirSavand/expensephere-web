@@ -1,0 +1,65 @@
+<!-- Header -->
+<div class="modal-header">
+
+  <!-- Title -->
+  <span>{{ isEditing ? 'Edit' : 'Add' }} Profile</span>
+
+  <!-- Close -->
+  <button class="ml-auto btn btn-light" (click)="modal.hide()">
+    <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
+  </button>
+</div>
+
+<!-- Body -->
+<div class="modal-body pb-0">
+  <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
+
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name">Name</label>
+      <div class="input-group">
+        <input type="text" id="name" class="form-control" formControlName="name"
+               placeholder="Name" [class.is-invalid]="form.error.name">
+        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Currency -->
+    <div class="form-group">
+      <label for="currency">Currency</label>
+      <div class="input-group">
+        <select id="currency" class="custom-select" formControlName="currency"
+                [class.is-invalid]="form.error.currency">
+          <option [ngValue]="null">Select currency</option>
+          <option *ngFor="let currency of currencies" [ngValue]="currency.code">
+            {{ currency.code }} ({{ currency.name }})
+          </option>
+        </select>
+        <div class="invalid-tooltip" *ngIf="form.error.currency">{{ form.error.currency[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="form-group">
+      <label for="note">Note</label>
+      <div class="input-group">
+        <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
+                  [class.is-invalid]="form.error.note">
+          </textarea>
+        <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[0] }}</div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Footer -->
+<div class="modal-footer text-right">
+
+  <!-- Cancel -->
+  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+
+  <!-- Submit -->
+  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+    {{ isEditing ? 'Update' : 'Done' }}
+  </button>
+</div>
