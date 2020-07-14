@@ -20,7 +20,7 @@ export class ProfileFormModalComponent implements OnInit {
   readonly faClose: IconDefinition = faTimes;
 
   /**
-   * Editing walled data
+   * Editing profile data
    */
   @Input() profile?: Profile;
 
