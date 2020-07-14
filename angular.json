@@ -139,5 +139,8 @@
       }
     }
   },
-  "defaultProject": "openexpenses-web"
+  "defaultProject": "openexpenses-web",
+  "cli": {
+    "analytics": false
+  }
 }
