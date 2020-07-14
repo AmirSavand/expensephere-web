@@ -22,7 +22,7 @@ export class WalletFormModalComponent implements OnInit {
   readonly faClose: IconDefinition = faTimes;
 
   /**
-   * Editing walled data
+   * Editing wallet data
    */
   @Input() wallet?: Wallet;
 
