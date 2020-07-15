@@ -1,5 +1,8 @@
 # OpenExpenses (Web)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f49ba946-3381-4e21-9809-84253b354f6d/deploy-status)](https://app.netlify.com/sites/web-openexpenses/deploys)
+![Code Quality](https://github.com/AmirSavand/openexpenses-web/workflows/Code%20Quality/badge.svg)
+
 Web app for OpenExpenses.
 
 ## Development
