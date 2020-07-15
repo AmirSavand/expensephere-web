@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Hind:300,400,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gudea:wght@400;700&display=swap");
 
 @import "./variables";
 
@@ -50,10 +50,6 @@ a, button, .btn {
   background: linear-gradient(90deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
 }
 
-.btn {
-  padding-top: $btn-padding-y + 0.2rem;
-}
-
 .item-icon {
   position: relative;
   border-radius: $border-radius;
@@ -66,10 +62,6 @@ a, button, .btn {
   justify-content: center;
   align-items: center;
   font-size: 1.3rem;
-
-  &.ff {
-    padding-top: 6px;
-  }
 
   > .icon-badge {
     position: absolute;
