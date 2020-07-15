@@ -162,6 +162,7 @@ export class OverviewComponent implements OnInit {
   editCategory(category: Category): void {
     this.modalService.show(CategoryFormModalComponent, {
       class: 'modal-sm',
-      initialState: { category } });
+      initialState: { category }
+    });
   }
 }
