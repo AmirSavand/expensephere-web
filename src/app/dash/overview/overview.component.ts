@@ -10,6 +10,7 @@ import { Category } from '@shared/interfaces/category';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
+import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
@@ -146,5 +147,22 @@ export class OverviewComponent implements OnInit {
    */
   editTransaction(transaction: Transaction): void {
     this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } });
+  }
+
+  /**
+   * Open up category form modal
+   */
+  addCategory(): void {
+    this.modalService.show(CategoryFormModalComponent, { class: 'modal-sm' });
+  }
+
+  /**
+   * Open category form modal for editing
+   */
+  editCategory(category: Category): void {
+    this.modalService.show(CategoryFormModalComponent, {
+      class: 'modal-sm',
+      initialState: { category }
+    });
   }
 }

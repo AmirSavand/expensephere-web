@@ -1,0 +1,78 @@
+<!-- Header -->
+<div class="modal-header">
+
+  <!-- Title -->
+  <span>{{ isEditing ? 'Edit' : 'Add' }} Category</span>
+
+  <!-- Close -->
+  <button class="ml-auto btn btn-light" (click)="modal.hide()">
+    <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
+  </button>
+</div>
+
+<!-- Body -->
+<div class="modal-body pb-0">
+  <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
+
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name">Name</label>
+      <div class="input-group">
+        <input type="text" id="name" class="form-control" formControlName="name"
+               placeholder="Name" [class.is-invalid]="form.error.name">
+        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Kind -->
+    <div class="form-group">
+      <label for="kind">Type</label>
+      <div class="input-group">
+        <select id="kind" class="custom-select" formControlName="kind"
+                [class.is-invalid]="form.error.kind">
+          <option [ngValue]="null">Select type</option>
+          <option [ngValue]="expenseKind.EXPENSE">Expense</option>
+          <option [ngValue]="expenseKind.INCOME">Income</option>
+        </select>
+        <div class="invalid-tooltip" *ngIf="form.error.kind">{{ form.error.kind[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Icon -->
+    <div class="form-group">
+      <label for="icon">Icon</label>
+      <div class="input-group">
+        <select id="icon" class="custom-select" formControlName="icon"
+                [class.is-invalid]="form.error.icon">
+          <option [ngValue]="null">Select icon</option>
+          <option *ngFor="let icon of icons" [ngValue]="icon">{{ icon | titlecase }}</option>
+        </select>
+        <div class="invalid-tooltip" *ngIf="form.error.icon">{{ form.error.icon[0] }}</div>
+      </div>
+    </div>
+
+    <!-- Color -->
+    <div class="form-group">
+      <label for="color">Color</label>
+      <div class="input-group">
+        <select id="color" class="custom-select" formControlName="color" [class.is-invalid]="form.error.color">
+          <option [ngValue]="null">Select color</option>
+          <option *ngFor="let color of colors" [ngValue]="color">{{ color | titlecase }}</option>
+        </select>
+        <div class="invalid-tooltip" *ngIf="form.error.color">{{ form.error.color[0] }}</div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Footer -->
+<div class="modal-footer text-right">
+
+  <!-- Cancel -->
+  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+
+  <!-- Submit -->
+  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+    {{ isEditing ? 'Update' : 'Done' }}
+  </button>
+</div>

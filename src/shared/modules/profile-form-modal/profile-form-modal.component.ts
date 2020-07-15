@@ -3,7 +3,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import { Color } from '@shared/classes/color';
 import { Currency } from '@shared/interfaces/currency';
 import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
