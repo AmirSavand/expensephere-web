@@ -6,6 +6,7 @@ import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { Color } from '@shared/classes/color';
 import { icons } from '@shared/constants/icons';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
@@ -26,6 +27,7 @@ export class WalletFormModalComponent implements OnInit {
   readonly faInfo: IconDefinition = faInfoCircle;
   readonly faPaint: IconDefinition = faPaintBrush;
   readonly faIcons: IconDefinition = faIcons;
+  readonly faTrash: IconDefinition = faTrash;
 
   /**
    * Editing wallet data
@@ -101,5 +103,19 @@ export class WalletFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
+  }
+
+  /**
+   * Delete wallet
+   *
+   * @param wallet Wallet ID
+   */
+  delete(wallet: Wallet): void {
+    if (!confirm('Are you sure you want to delete this wallet?')) {
+      return;
+    }
+    this.api.wallet.delete(wallet.id).subscribe((): void => {
+      this.modal.hide();
+    });
   }
 }
