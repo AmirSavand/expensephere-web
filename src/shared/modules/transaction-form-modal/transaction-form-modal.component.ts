@@ -10,6 +10,7 @@ import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
@@ -39,6 +40,7 @@ export class TransactionFormModalComponent implements OnInit {
   readonly faNote: IconDefinition = faStickyNote;
   readonly faEvent: IconDefinition = faCalendar;
   readonly faCollapse: IconDefinition = faChevronDown;
+  readonly faTrash: IconDefinition = faTrash;
 
   @Input() transaction?: Transaction;
 
@@ -160,5 +162,19 @@ export class TransactionFormModalComponent implements OnInit {
     } else {
       this.form.form.get('category').reset();
     }
+  }
+
+  /**
+   * Delete transaction
+   *
+   * @param transaction Transaction ID
+   */
+  delete(transaction: Transaction): void {
+    if (!confirm('Are you sure you want to delete this transaction?')) {
+      return;
+    }
+    this.api.transaction.delete(transaction.id).subscribe((): void => {
+      this.modal.hide();
+    });
   }
 }
