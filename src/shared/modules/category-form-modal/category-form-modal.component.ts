@@ -7,6 +7,7 @@ import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { Color } from '@shared/classes/color';
 import { icons } from '@shared/constants/icons';
 import { ExpenseKind } from '@shared/enums/kind';
@@ -29,6 +30,7 @@ export class CategoryFormModalComponent implements OnInit {
   readonly faPaint: IconDefinition = faPaintBrush;
   readonly faCube: IconDefinition = faCube;
   readonly faIcons: IconDefinition = faIcons;
+  readonly faTrash: IconDefinition = faTrash;
 
   /**
    * Editing category data
@@ -111,5 +113,19 @@ export class CategoryFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
+  }
+
+  /**
+   * Delete category
+   *
+   * @param category Category ID
+   */
+  delete(category: Category): void {
+    if (!confirm('Are you sure you want to delete this category?')) {
+      return;
+    }
+    this.api.category.delete(category.id).subscribe((): void => {
+      this.modal.hide();
+    });
   }
 }
