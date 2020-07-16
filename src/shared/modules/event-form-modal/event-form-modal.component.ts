@@ -6,7 +6,6 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faClock } from '@fortawesome/free-regular-svg-icons/faClock';
 import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
-import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
 import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
