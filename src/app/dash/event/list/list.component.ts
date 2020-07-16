@@ -18,7 +18,7 @@ export class ListComponent implements OnInit {
   /**
    * Event list
    */
-  events: Event[]
+  events: Event[];
 
   constructor(private api: ApiService,
               private modalService: BsModalService) {
