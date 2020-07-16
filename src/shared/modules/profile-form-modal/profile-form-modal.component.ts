@@ -6,6 +6,7 @@ import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons/faMoneyBill';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { Currency } from '@shared/interfaces/currency';
 import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
@@ -24,6 +25,7 @@ export class ProfileFormModalComponent implements OnInit {
   readonly faInfo: IconDefinition = faInfoCircle;
   readonly faNote: IconDefinition = faStickyNote;
   readonly faCurrency: IconDefinition = faMoneyBill;
+  readonly faTrash: IconDefinition = faTrash;
 
   /**
    * Editing profile data
@@ -99,5 +101,19 @@ export class ProfileFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
+  }
+
+  /**
+   * Delete profile
+   *
+   * @param profile Profile ID
+   */
+  delete(profile: Profile): void {
+    if (!confirm('Are you sure you want to delete this profile?')) {
+      return;
+    }
+    this.api.profile.delete(profile.id).subscribe((): void => {
+      this.modal.hide();
+    });
   }
 }
