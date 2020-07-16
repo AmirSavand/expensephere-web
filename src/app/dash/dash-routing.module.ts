@@ -21,6 +21,10 @@ const routes: Routes = [
         loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule),
       },
       {
+        path: 'event',
+        loadChildren: () => import('./event/event.module').then(m => m.EventModule),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'overview',
