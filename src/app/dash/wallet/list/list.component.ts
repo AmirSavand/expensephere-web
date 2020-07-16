@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Wallet } from '@shared/interfaces/wallet';
@@ -22,7 +21,6 @@ export class ListComponent implements OnInit {
   wallets: Wallet[];
 
   constructor(private api: ApiService,
-              private router: Router,
               private modalService: BsModalService) {
   }
 
