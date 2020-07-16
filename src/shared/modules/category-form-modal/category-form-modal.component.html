@@ -80,6 +80,11 @@
 <!-- Footer -->
 <div class="modal-footer text-right">
 
+  <!-- Delete -->
+  <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(category)">
+    <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
+  </a>
+
   <!-- Cancel -->
   <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
 

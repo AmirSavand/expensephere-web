@@ -11,6 +11,7 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faPiggyBank } from '@fortawesome/free-solid-svg-icons/faPiggyBank';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { Color } from '@shared/classes/color';
 import { icons } from '@shared/constants/icons';
 import { Event } from '@shared/interfaces/event';
@@ -36,6 +37,7 @@ export class EventFormModalComponent implements OnInit {
   readonly faIcons: IconDefinition = faIcons;
   readonly faNote: IconDefinition = faStickyNote;
   readonly faCollapse: IconDefinition = faChevronDown;
+  readonly faTrash: IconDefinition = faTrash;
 
   /**
    * Editing event data
@@ -125,5 +127,19 @@ export class EventFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
+  }
+
+  /**
+   * Delete event
+   *
+   * @param event Event ID
+   */
+  delete(event: Event): void {
+    if (!confirm('Are you sure you want to delete this event?')) {
+      return;
+    }
+    this.api.event.delete(event.id).subscribe((): void => {
+      this.modal.hide();
+    });
   }
 }
