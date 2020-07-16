@@ -117,8 +117,8 @@
           <div class="input-group-prepend">
             <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faNote"></fa-icon>
           </div>
-        <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
-                  [class.is-invalid]="form.error.note">
+          <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
+                    [class.is-invalid]="form.error.note">
           </textarea>
           <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[0] }}</div>
         </div>
@@ -129,6 +129,11 @@
 
 <!-- Footer -->
 <div class="modal-footer text-right">
+
+  <!-- Delete -->
+  <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(event)">
+    <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
+  </a>
 
   <!-- Cancel -->
   <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
