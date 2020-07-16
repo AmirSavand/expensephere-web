@@ -2,6 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
+import { faMoneyBill } from '@fortawesome/free-solid-svg-icons/faMoneyBill';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Currency } from '@shared/interfaces/currency';
 import { Profile } from '@shared/interfaces/profile';
@@ -18,6 +21,9 @@ import { Observable } from 'rxjs';
 export class ProfileFormModalComponent implements OnInit {
 
   readonly faClose: IconDefinition = faTimes;
+  readonly faInfo: IconDefinition = faInfoCircle;
+  readonly faNote: IconDefinition = faStickyNote;
+  readonly faCurrency: IconDefinition = faMoneyBill;
 
   /**
    * Editing profile data

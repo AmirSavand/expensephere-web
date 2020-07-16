@@ -18,6 +18,9 @@
     <div class="form-group">
       <label for="name">Name</label>
       <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
+        </div>
         <input type="text" id="name" class="form-control" formControlName="name"
                placeholder="Name" [class.is-invalid]="form.error.name">
         <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
@@ -28,6 +31,9 @@
     <div class="form-group">
       <label for="icon">Icon</label>
       <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faIcons"></fa-icon>
+        </div>
         <select id="icon" class="custom-select" formControlName="icon"
                 [class.is-invalid]="form.error.icon">
           <option [ngValue]="null">Select icon</option>
@@ -41,6 +47,9 @@
     <div class="form-group">
       <label for="color">Color</label>
       <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faPaint"></fa-icon>
+        </div>
         <select id="color" class="custom-select" formControlName="color" [class.is-invalid]="form.error.color">
           <option [ngValue]="null">Select color</option>
           <option *ngFor="let color of colors" [ngValue]="color">{{ color | titlecase }}</option>

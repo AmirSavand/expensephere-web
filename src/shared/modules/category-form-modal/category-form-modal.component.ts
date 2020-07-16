@@ -2,6 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
+import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
+import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Color } from '@shared/classes/color';
 import { icons } from '@shared/constants/icons';
@@ -21,6 +25,10 @@ import { Observable } from 'rxjs';
 export class CategoryFormModalComponent implements OnInit {
 
   readonly faClose: IconDefinition = faTimes;
+  readonly faInfo: IconDefinition = faInfoCircle;
+  readonly faPaint: IconDefinition = faPaintBrush;
+  readonly faCube: IconDefinition = faCube;
+  readonly faIcons: IconDefinition = faIcons;
 
   /**
    * Editing category data
