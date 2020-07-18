@@ -1,3 +1,4 @@
 export interface Account {
-  display_name: string;
+  display_name?: string;
+  name?: string;
 }
