@@ -1,8 +1,16 @@
 <!-- Form -->
 <form [formGroup]="form.form" (ngSubmit)="submit()">
 
+  <!-- Back -->
+  <p class="text-center mb-0 small"></p>
+
   <!-- Title -->
-  <p class="font-weight-bold text-center mb-5">User <span class="text-primary">Settings</span> 🚀</p>
+  <p class="font-weight-bold mb-5">
+    <a routerLink="/" class="mr-3 text-secondary">
+      <fa-icon [icon]="faBack" [fixedWidth]="true"></fa-icon>
+    </a>
+    <span>Settings</span>
+  </p>
 
   <!-- Email -->
   <div class="form-group">
@@ -28,5 +36,5 @@
   <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
 
   <!-- Button -->
-  <button class="btn btn-block btn-primary" [disabled]="form.loading">Update</button>
+  <button class="btn btn-block btn-primary" [disabled]="form.loading">Save Changes</button>
 </form>
