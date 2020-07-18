@@ -1,0 +1,41 @@
+<!-- Form -->
+<form [formGroup]="form.form" (ngSubmit)="submit()">
+
+  <!-- Title and back link -->
+  <p class="font-weight-bold mb-5">
+
+    <!-- Back link -->
+    <a routerLink="/" class="mr-3 text-secondary">
+      <fa-icon [icon]="faBack" [fixedWidth]="true"></fa-icon>
+    </a>
+
+    <!-- Title -->
+    <span>Settings</span>
+  </p>
+
+  <!-- Email -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" class="form-control" [value]="user.email" readonly>
+  </div>
+
+  <!-- Username -->
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" class="form-control" [value]="user.username" readonly>
+  </div>
+
+  <!-- Display name -->
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" id="name" class="form-control" placeholder="Name"
+           formControlName="display_name" [class.is-invalid]="form.error.display_name">
+    <p class="small text-danger" *ngIf="form.error.display_name">{{ form.error.display_name[0] }}</p>
+  </div>
+
+  <!-- Error -->
+  <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
+
+  <!-- Button -->
+  <button class="btn btn-block btn-primary" [disabled]="form.loading">Save Changes</button>
+</form>

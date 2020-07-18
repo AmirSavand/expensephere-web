@@ -60,7 +60,7 @@
 
       <!-- Name -->
       <div class="font-weight-bold">
-        <div>{{ user.account.display_name || user.username }}</div>
+        <div>{{ user.account.name }}</div>
         <small class="text-muted">{{ user.email }}</small>
       </div>
 
@@ -98,9 +98,9 @@
         <p class="font-weight-bold">My Account</p>
 
         <!-- Settings -->
-        <button class="btn btn-secondary shadow-sm" title="Settings">
+        <a class="btn btn-secondary shadow-sm" title="Settings" routerLink="/user/settings">
           <fa-icon [fixedWidth]="true" [icon]="faSettings"></fa-icon>
-        </button>
+        </a>
 
         <!-- Sign out -->
         <button class="btn btn-secondary shadow-sm ml-2" (click)="auth.signOut()" title="Logout">

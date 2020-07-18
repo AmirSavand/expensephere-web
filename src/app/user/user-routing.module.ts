@@ -21,9 +21,13 @@ const routes: Routes = [
         loadChildren: () => import('./sign-out/sign-out.module').then(m => m.SignOutModule),
       },
       {
+        path: 'settings',
+        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
+      },
+      {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'profile',
+        redirectTo: 'sign-up',
       },
     ],
   },

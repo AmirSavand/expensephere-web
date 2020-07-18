@@ -159,6 +159,9 @@ a, button, .btn {
   .invalid-tooltip {
     right: 0;
   }
+  [readonly] {
+    cursor: not-allowed;
+  }
 }
 
 .oy-scroll {
