@@ -160,6 +160,11 @@ export class OverviewComponent implements OnInit {
    * Open category form modal for editing
    */
   editCategory(category: Category): void {
+    // Transfer categories can't be edit
+    if (category.kind === this.expenseKind.TRANSFER){
+      alert('You can not edit this category!');
+      return;
+    }
     this.modalService.show(CategoryFormModalComponent, {
       class: 'modal-sm',
       initialState: { category }
