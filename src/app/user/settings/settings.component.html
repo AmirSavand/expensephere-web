@@ -1,14 +1,15 @@
 <!-- Form -->
 <form [formGroup]="form.form" (ngSubmit)="submit()">
 
-  <!-- Back -->
-  <p class="text-center mb-0 small"></p>
-
-  <!-- Title -->
+  <!-- Title and back link -->
   <p class="font-weight-bold mb-5">
+
+    <!-- Back link -->
     <a routerLink="/" class="mr-3 text-secondary">
       <fa-icon [icon]="faBack" [fixedWidth]="true"></fa-icon>
     </a>
+
+    <!-- Title -->
     <span>Settings</span>
   </p>
 
