@@ -67,10 +67,7 @@
         <div class="input-group-prepend">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faPaint"></fa-icon>
         </div>
-        <select id="color" class="custom-select" formControlName="color" [class.is-invalid]="form.error.color">
-          <option [ngValue]="null">Select color</option>
-          <option *ngFor="let color of colors" [ngValue]="color">{{ color | titlecase }}</option>
-        </select>
+        <app-select-color id="color" (choose)="form.form.get('color').setValue($event)"></app-select-color>
         <div class="invalid-tooltip" *ngIf="form.error.color">{{ form.error.color[0] }}</div>
       </div>
     </div>

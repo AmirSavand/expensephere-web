@@ -155,7 +155,8 @@ a, button, .btn {
     }
   }
 
-  > app-select {
+  > app-select,
+  > app-select-color {
     width: calc(100% - 44px);
   }
 }

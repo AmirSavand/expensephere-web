@@ -6,7 +6,7 @@ export class Color {
   /**
    * Background color lighten amount
    */
-  private static readonly LIGHTEN_AMOUNT: string = '22';
+  private static readonly LIGHTEN_AMOUNT = '22';
 
   /**
    * Predefined colors for user to select
