@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SelectModule } from '@shared/modules/select/select.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import { TransactionFormModalComponent } from './transaction-form-modal.component';
@@ -12,6 +13,7 @@ import { TransactionFormModalComponent } from './transaction-form-modal.componen
     FontAwesomeModule,
     ReactiveFormsModule,
     CollapseModule,
+    SelectModule,
   ],
   declarations: [
     TransactionFormModalComponent,

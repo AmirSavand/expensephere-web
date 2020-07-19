@@ -1,4 +1,3 @@
-import { Color } from '@shared/classes/color';
 import { Icon } from '@shared/types/icon';
 
 export interface Event {
@@ -6,7 +5,7 @@ export interface Event {
   readonly profile: number;
   name: string;
   budget: number;
-  color: Color;
+  color: string;
   icon: Icon;
   start: string;
   end: string;

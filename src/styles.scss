@@ -66,11 +66,12 @@ a, button, .btn {
   > .icon-badge {
     position: absolute;
     font-size: 0.7rem;
-    margin: -20px;
+    top: -6px;
+    left: -6px;
     width: 20px;
     height: 20px;
     border-radius: 20px;
-    color: $white;
+    color: #fff;
     display: flex;
     justify-content: center;
     place-items: center;
@@ -153,12 +154,17 @@ a, button, .btn {
       height: 100%;
     }
   }
+
+  > app-select {
+    width: calc(100% - 44px);
+  }
 }
 
 .form-group {
   .invalid-tooltip {
     right: 0;
   }
+
   [readonly] {
     cursor: not-allowed;
   }
@@ -173,4 +179,8 @@ a, button, .btn {
     display: flex;
     align-items: center;
   }
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

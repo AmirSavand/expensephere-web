@@ -43,11 +43,11 @@
         <div class="input-group-prepend">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWallet"></fa-icon>
         </div>
-        <select id="wallet" class="custom-select" formControlName="wallet"
-                [class.is-invalid]="form.error.wallet">
-          <option [ngValue]="null">Select wallet</option>
-          <option *ngFor="let wallet of wallets" [ngValue]="wallet.id">{{ wallet.name }}</option>
-        </select>
+        <app-select id="wallet"
+                    selectLabel="Select wallet"
+                    [items]="wallets"
+                    (choose)="form.form.get('wallet').setValue($event.id)">
+        </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.wallet">{{ form.error.wallet[0] }}</div>
       </div>
     </div>
@@ -59,11 +59,11 @@
         <div class="input-group-prepend">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWallet"></fa-icon>
         </div>
-        <select id="into" class="custom-select" formControlName="into"
-                [class.is-invalid]="form.error.into">
-          <option [ngValue]="null">Select wallet to transfer to</option>
-          <option *ngFor="let wallet of wallets" [ngValue]="wallet.id">{{ wallet.name }}</option>
-        </select>
+        <app-select id="into"
+                    selectLabel="Select wallet to transfer into"
+                    [items]="wallets"
+                    (choose)="form.form.get('into').setValue($event.id)">
+        </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.into">{{ form.error.into[0] }}</div>
       </div>
     </div>
@@ -75,13 +75,11 @@
         <div class="input-group-prepend">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faCategory"></fa-icon>
         </div>
-        <select id="category" class="custom-select" formControlName="category"
-                [class.is-invalid]="form.error.category">
-          <option [ngValue]="null">Select category</option>
-          <option *ngFor="let category of categoryGroups[expenseKindSelected]" [ngValue]="category.id">
-            {{ category.name }}
-          </option>
-        </select>
+        <app-select id="category"
+                    selectLabel="Select category"
+                    [items]="categoryGroups[expenseKindSelected]"
+                    (choose)="form.form.get('category').setValue($event.id)">
+        </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.category">{{ form.error.category[0] }}</div>
       </div>
     </div>
@@ -131,11 +129,13 @@
           <div class="input-group-prepend">
             <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faEvent"></fa-icon>
           </div>
-          <select id="event" class="custom-select" formControlName="event"
-                  [class.is-invalid]="form.error.event">
-            <option [ngValue]="null">Select event</option>
-            <option *ngFor="let event of events" [ngValue]="event.id">{{ event.name }}</option>
-          </select>
+          <app-select id="event"
+                      selectLabel="Select event"
+                      [items]="events"
+                      [allowClear]="true"
+                      (choose)="form.form.get('event').setValue($event.id)"
+                      (clear)="form.form.get('event').reset()">
+          </app-select>
           <div class="invalid-tooltip" *ngIf="form.error.event">{{ form.error.event[0] }}</div>
         </div>
       </div>
