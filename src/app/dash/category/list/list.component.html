@@ -1,0 +1,27 @@
+<div class="container mb-4">
+  <div class="row">
+    <div class="col-xl-4" *ngFor="let category of categories">
+      <div class="card bg-light mt-4">
+        <div class="card-header font-weight-bold">
+          <!-- Name -->
+          <span>{{ category.name }}</span>
+          <!-- Edit -->
+          <a class="ml-auto text-secondary" *ngIf="category.kind !== expenseKind.TRANSFER"
+             (click)="editCategory(category)">
+            <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+          </a>
+        </div>
+        <a class="card-body text-dark" [routerLink]="['/dash/category', category.id]">
+          <span>This is Category</span>
+        </a>
+      </div>
+    </div>
+    <div class="col-xl-4">
+      <div class="card bg-light mt-4" [style.height]="'112px'">
+        <div class="card-body d-flex align-items-center justify-content-center">
+          <div class="btn btn-light font-weight-bold" (click)="addCategory()">ADD CATEGORY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
