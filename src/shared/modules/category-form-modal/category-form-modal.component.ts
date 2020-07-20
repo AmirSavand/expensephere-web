@@ -9,10 +9,11 @@ import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { Color } from '@shared/classes/color';
-import { icons } from '@shared/constants/icons';
+import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
+import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -33,11 +34,6 @@ export class CategoryFormModalComponent implements OnInit {
   readonly faTrash: IconDefinition = faTrash;
 
   /**
-   * Editing category data
-   */
-  @Input() category?: Category;
-
-  /**
    * Expense kind for selection
    */
   readonly expenseKind = ExpenseKind;
@@ -50,7 +46,12 @@ export class CategoryFormModalComponent implements OnInit {
   /**
    * Icons for selection
    */
-  readonly icons: readonly string[] = icons;
+  readonly icons: SelectItem[] = Utils.getSelectItemFromIcons();
+
+  /**
+   * Editing category data
+   */
+  @Input() category?: Category;
 
   /**
    * Form data

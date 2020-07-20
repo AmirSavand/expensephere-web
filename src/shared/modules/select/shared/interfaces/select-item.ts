@@ -1,8 +1,6 @@
-import { Icon } from '@shared/types/icon';
-
 export interface SelectItem {
-  id: number;
-  name: string;
-  icon: Icon;
-  color: string;
+  readonly id?: number;
+  readonly name: string;
+  readonly icon: string;
+  readonly color: string;
 }
