@@ -75,7 +75,7 @@ export class CategoryFormModalComponent implements OnInit {
      */
     this.form.form = this.formBuilder.group({
       profile: [ProfileService.profile.id],
-      kind: [ExpenseKind.EXPENSE, Validators.required],
+      kind: [String(ExpenseKind.EXPENSE), Validators.required],
       name: [null, Validators.required],
       color: [null, Validators.required],
       icon: [null, Validators.required],
