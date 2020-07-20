@@ -47,11 +47,11 @@
         <div class="input-group-prepend">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faIcons"></fa-icon>
         </div>
-        <select id="icon" class="custom-select" formControlName="icon"
-                [class.is-invalid]="form.error.icon">
-          <option [ngValue]="null">Select icon</option>
-          <option *ngFor="let icon of icons" [ngValue]="icon">{{ icon | titlecase }}</option>
-        </select>
+        <app-select id="icon"
+                    selectLabel="Select icon"
+                    [items]="icons"
+                    (choose)="form.form.get('icon').setValue($event.icon)">
+        </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.icon">{{ form.error.icon[0] }}</div>
       </div>
     </div>
