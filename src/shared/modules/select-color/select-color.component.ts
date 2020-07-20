@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 
@@ -7,7 +7,7 @@ import { Utils } from '@shared/classes/utils';
   templateUrl: './select-color.component.html',
   styleUrls: ['./select-color.component.scss'],
 })
-export class SelectColorComponent {
+export class SelectColorComponent implements OnInit {
 
   readonly colors: string[] = Color.COLORS;
   readonly lighten = Color.lighten;
@@ -15,7 +15,7 @@ export class SelectColorComponent {
   /**
    * Selected color
    */
-  @Input() selected: string = Utils.getRandomItemFromList(Color.COLORS);
+  @Input() selected: string;
 
   /**
    * On color selection event
@@ -27,4 +27,13 @@ export class SelectColorComponent {
    * Used for color selection status (open or closed).
    */
   isSelecting: boolean;
+
+  ngOnInit(): void {
+    /**
+     * Set default value to random color.
+     */
+    if (!this.selected) {
+      this.selected = Utils.getRandomItemFromList(Color.COLORS);
+    }
+  }
 }
