@@ -14,6 +14,19 @@
 <div class="modal-body pb-0">
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
 
+    <!-- Kind -->
+    <div class="form-group btn-group d-flex justify-content-center text-uppercase" title="Type"
+         btnRadioGroup formControlName="kind">
+      <label class="btn font-weight-bold btn-light mb-0" tabindex="kind"
+             [btnRadio]="expenseKind.INCOME.toString()">
+        <span>Income</span>
+      </label>
+      <label class="btn font-weight-bold btn-light mb-0" tabindex="kind"
+             [btnRadio]="expenseKind.EXPENSE.toString()">
+        <span>Expense</span>
+      </label>
+    </div>
+
     <!-- Name -->
     <div class="form-group">
       <label for="name">Name</label>
@@ -24,23 +37,6 @@
         <input type="text" id="name" class="form-control" formControlName="name"
                placeholder="Name" [class.is-invalid]="form.error.name">
         <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
-      </div>
-    </div>
-
-    <!-- Kind -->
-    <div class="form-group">
-      <label for="kind">Type</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faCube"></fa-icon>
-        </div>
-        <select id="kind" class="custom-select" formControlName="kind"
-                [class.is-invalid]="form.error.kind">
-          <option [ngValue]="null">Select type</option>
-          <option [ngValue]="expenseKind.EXPENSE">Expense</option>
-          <option [ngValue]="expenseKind.INCOME">Income</option>
-        </select>
-        <div class="invalid-tooltip" *ngIf="form.error.kind">{{ form.error.kind[0] }}</div>
       </div>
     </div>
 
