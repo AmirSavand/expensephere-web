@@ -34,13 +34,11 @@
         <div class="input-group-prepend">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faCurrency"></fa-icon>
         </div>
-        <select id="currency" class="custom-select" formControlName="currency"
-                [class.is-invalid]="form.error.currency">
-          <option [ngValue]="null">Select currency</option>
-          <option *ngFor="let currency of currencies" [ngValue]="currency.code">
-            {{ currency.code }} ({{ currency.name }})
-          </option>
-        </select>
+        <app-select id="currency"
+                    selectLabel="Select currency"
+                    [items]="currencies"
+                    (choose)="form.form.get('currency').setValue($event.id)">
+        </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.currency">{{ form.error.currency[0] }}</div>
       </div>
     </div>

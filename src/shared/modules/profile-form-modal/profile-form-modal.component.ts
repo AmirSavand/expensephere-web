@@ -7,9 +7,11 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons/faMoneyBill';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Color } from '@shared/classes/color';
 import { Currency } from '@shared/interfaces/currency';
 import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
+import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ApiService } from '@shared/services/api.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
@@ -35,7 +37,7 @@ export class ProfileFormModalComponent implements OnInit {
   /**
    * list of currencies
    */
-  currencies: Currency[];
+  currencies: SelectItem[] = [];
 
   /**
    * Form data
@@ -67,7 +69,14 @@ export class ProfileFormModalComponent implements OnInit {
      * Get list of currencies
      */
     this.api.currency.list().subscribe((data: Currency[]): void => {
-      this.currencies = data;
+      for (const currency of data) {
+        this.currencies.push({
+          color: Color.COLORS_RESERVED.default,
+          icon: 'money',
+          id: currency.code,
+          name: `${currency.code} (${currency.name})`
+        });
+      }
     });
     /**
      * Check if editing
