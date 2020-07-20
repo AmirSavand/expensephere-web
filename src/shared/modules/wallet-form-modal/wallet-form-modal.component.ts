@@ -8,9 +8,11 @@ import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { Color } from '@shared/classes/color';
+import { Utils } from '@shared/classes/utils';
 import { icons } from '@shared/constants/icons';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Wallet } from '@shared/interfaces/wallet';
+import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -42,7 +44,7 @@ export class WalletFormModalComponent implements OnInit {
   /**
    * Icons for selection
    */
-  readonly icons: readonly string[] = icons;
+  readonly icons: SelectItem[] = Utils.getSelectItemFromIcons();
 
   /**
    * Form data

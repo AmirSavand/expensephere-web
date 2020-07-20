@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SelectColorModule } from '@shared/modules/select-color/select-color.module';
+import { SelectModule } from '@shared/modules/select/select.module';
 import { WalletFormModalComponent } from 'src/shared/modules/wallet-form-modal/wallet-form-modal.component';
 
 
@@ -12,6 +13,7 @@ import { WalletFormModalComponent } from 'src/shared/modules/wallet-form-modal/w
     FontAwesomeModule,
     ReactiveFormsModule,
     SelectColorModule,
+    SelectModule,
   ],
   declarations: [
     WalletFormModalComponent,
