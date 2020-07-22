@@ -29,7 +29,6 @@ export class CategoryFormModalComponent implements OnInit {
   readonly faClose: IconDefinition = faTimes;
   readonly faInfo: IconDefinition = faInfoCircle;
   readonly faPaint: IconDefinition = faPaintBrush;
-  readonly faCube: IconDefinition = faCube;
   readonly faIcons: IconDefinition = faIcons;
   readonly faTrash: IconDefinition = faTrash;
 
