@@ -38,7 +38,7 @@
         <input type="number" id="budget" class="form-control" formControlName="budget"
                [step]="1" [min]="0" placeholder="Enter budget" autocomplete="off"
                [class.is-invalid]="form.error.budget">
-        <div class="input-group-append"><span class="input-group-text font-weight-bold">USD</span></div>
+        <div class="input-group-append"><span class="input-group-text font-weight-bold">{{ currency }}</span></div>
         <div class="invalid-tooltip" *ngIf="form.error.budget">{{ form.error.budget[0] }}</div>
       </div>
     </div>

@@ -98,7 +98,7 @@
         <input type="number" id="amount" class="form-control" formControlName="amount"
                [step]="1" [min]="0" placeholder="Enter amount" autocomplete="off"
                [class.is-invalid]="form.error.amount">
-        <div class="input-group-append"><span class="input-group-text font-weight-bold">USD</span></div>
+        <div class="input-group-append"><span class="input-group-text font-weight-bold">{{ currency }}</span></div>
         <div class="invalid-tooltip" *ngIf="form.error.amount">{{ form.error.amount[0] }}</div>
       </div>
     </div>

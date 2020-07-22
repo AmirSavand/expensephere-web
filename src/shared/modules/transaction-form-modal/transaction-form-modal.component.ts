@@ -19,6 +19,7 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
+import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 
@@ -66,6 +67,11 @@ export class TransactionFormModalComponent implements OnInit {
    */
   isEditing: boolean;
 
+  /**
+   * Current (profile) currency
+   */
+  currency: string;
+
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
               private api: ApiService,
@@ -73,6 +79,10 @@ export class TransactionFormModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /**
+     * Set currency
+     */
+    this.currency = ProfileService.profile.currency;
     /**
      * Load wallets
      */

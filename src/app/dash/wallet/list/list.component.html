@@ -13,9 +13,9 @@
         <div class="card-body">
           <span>Balance</span>
           <span class="float-right">
-            <span title="Expense" class="text-danger">{{ wallet.balance.expense | currency }}</span>
-            <span title="Income" class="mx-3">{{ wallet.balance.income | currency }}</span>
-            <span title="Total" class="text-secondary">{{ wallet.balance.total | currency }}</span>
+            <span title="Expense" class="text-danger">{{ wallet.balance.expense | profileCurrency }}</span>
+            <span title="Income" class="mx-3">{{ wallet.balance.income | profileCurrency }}</span>
+            <span title="Total" class="text-secondary">{{ wallet.balance.total | profileCurrency }}</span>
           </span>
         </div>
       </div>

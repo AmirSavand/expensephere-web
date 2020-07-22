@@ -70,6 +70,11 @@ export class EventFormModalComponent implements OnInit {
    */
   isEditing: boolean;
 
+  /**
+   * Current (profile) currency
+   */
+  currency: string;
+
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
               private api: ApiService,
@@ -77,6 +82,10 @@ export class EventFormModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /**
+     * Set currency
+     */
+    this.currency = ProfileService.profile.currency;
     /**
      * Setup the form
      */

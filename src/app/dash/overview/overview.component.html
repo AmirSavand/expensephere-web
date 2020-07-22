@@ -17,7 +17,7 @@
                   </div>
                   <div class="ml-3 font-weight-bold">
                     <div>Total</div>
-                    <div class="text-dark">{{ profiles[0].balance.total | currency }}</div>
+                    <div class="text-dark">{{ profiles[0].balance.total | profileCurrency }}</div>
                   </div>
                 </div>
               </div>
@@ -30,7 +30,7 @@
                   </div>
                   <div class="ml-3 font-weight-bold">
                     <div>{{ wallet.name }}</div>
-                    <div class="text-dark">{{ wallet.balance.total | currency }}</div>
+                    <div class="text-dark">{{ wallet.balance.total | profileCurrency }}</div>
                   </div>
                 </div>
               </div>
@@ -142,7 +142,7 @@
               <div class="ml-auto font-weight-bold"
                    [class.text-secondary]="transaction.kind === expenseKind.TRANSFER"
                    [class.text-danger]="transaction.kind === expenseKind.EXPENSE">
-                <div class="text-right">{{ transaction.amount | currency }}</div>
+                <div class="text-right">{{ transaction.amount | profileCurrency }}</div>
                 <div class="small" *ngIf="transaction.kind === expenseKind.TRANSFER">
                   +{{ getWallet(transaction.into).name }}
                 </div>
