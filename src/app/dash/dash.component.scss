@@ -106,3 +106,21 @@
     }
   }
 }
+
+/* Responsiveness */
+
+@media screen and (max-width: 991px) {
+  #outer {
+    #sidebar {
+      position: fixed;
+      right: -$sidebar-width;
+      transition: ease-in 150ms;
+      z-index: 2;
+
+      &.opened {
+        right: 0;
+        box-shadow: 0 0 0 1000px rgba($dark, 0.5);
+      }
+    }
+  }
+}

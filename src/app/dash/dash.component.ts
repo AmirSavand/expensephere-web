@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
 import { Navigation } from '@app/dash/shared/interfaces/navigation';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
@@ -13,6 +14,7 @@ import { faRetweet } from '@fortawesome/free-solid-svg-icons/faRetweet';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
 import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
 import { Color } from '@shared/classes/color';
 import { Profile } from '@shared/interfaces/profile';
@@ -44,6 +46,8 @@ export class DashComponent implements OnInit {
   readonly faSettings: IconDefinition = faCog;
   readonly faDropdown: IconDefinition = faChevronDown;
   readonly faWallets: IconDefinition = faLayerGroup;
+  readonly faBars: IconDefinition = faBars;
+  readonly faClose: IconDefinition = faTimes;
 
   readonly faDashboard: IconDefinition = faTachometerAlt;
   readonly faTransactions: IconDefinition = faRetweet;
@@ -70,6 +74,21 @@ export class DashComponent implements OnInit {
    */
   sidebarViewSelected: SidebarView = SidebarView.MAIN;
 
+  /**
+   * Responsive sidebar for small screens
+   */
+  isSideBar = false;
+
+  /**
+   * Check the page width size
+   */
+  innerWidth: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+  }
+
   constructor(public auth: AuthService,
               private api: ApiService,
               private router: Router,
@@ -84,6 +103,10 @@ export class DashComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /**
+     * Check the page width size
+     */
+    this.innerWidth = window.innerWidth;
     /**
      * Watch authentication and user data
      */

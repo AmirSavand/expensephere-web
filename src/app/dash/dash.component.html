@@ -44,6 +44,11 @@
         <!-- Create button -->
         <div class="btn btn-primary ml-auto" (click)="addTransaction()">Create</div>
       </div>
+
+      <!-- Toggler -->
+      <a class="pr-4" (click)="isSideBar = !isSideBar" *ngIf="innerWidth <= 991">
+        <fa-icon [fixedWidth]="true" [icon]="faBars" class="text-dark"></fa-icon>
+      </a>
     </div>
 
     <!-- Page -->
@@ -53,10 +58,14 @@
   </div>
 
   <!-- Sidebar -->
-  <div id="sidebar" *ngIf="user">
+  <div id="sidebar" [class.opened]="isSideBar" *ngIf="user">
 
     <!-- User -->
-    <div id="user" (click)="toggleUserView()">
+    <div id="user" class="mt-2" (click)="toggleUserView()">
+
+      <a class="pr-4" (click)="isSideBar = !isSideBar" *ngIf="innerWidth <= 991">
+        <fa-icon [fixedWidth]="true" [icon]="faClose" class="text-dark"></fa-icon>
+      </a>
 
       <!-- Name -->
       <div class="font-weight-bold">
