@@ -37,6 +37,7 @@
         <app-select id="icon"
                     selectLabel="Select icon"
                     [items]="icons"
+                    [selectedId]="form.form.get('icon').value"
                     (choose)="form.form.get('icon').setValue($event.icon)">
         </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.icon">{{ form.error.icon[0] }}</div>

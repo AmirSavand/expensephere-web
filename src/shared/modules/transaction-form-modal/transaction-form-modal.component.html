@@ -45,6 +45,7 @@
         </div>
         <app-select id="wallet"
                     selectLabel="Select wallet"
+                    [selectedId]="form.form.get('wallet').value"
                     [items]="wallets"
                     (choose)="form.form.get('wallet').setValue($event.id)">
         </app-select>
@@ -61,6 +62,7 @@
         </div>
         <app-select id="into"
                     selectLabel="Select wallet to transfer into"
+                    [selectedId]="form.form.get('into').value"
                     [items]="wallets"
                     (choose)="form.form.get('into').setValue($event.id)">
         </app-select>
@@ -77,6 +79,8 @@
         </div>
         <app-select id="category"
                     selectLabel="Select category"
+                    *ngIf="categories"
+                    [selectedId]="form.form.get('category').value"
                     [items]="categoryGroups[expenseKindSelected]"
                     (choose)="form.form.get('category').setValue($event.id)">
         </app-select>
@@ -131,6 +135,7 @@
           </div>
           <app-select id="event"
                       selectLabel="Select event"
+                      [selectedId]="form.form.get('event').value"
                       [items]="events"
                       [allowClear]="true"
                       (choose)="form.form.get('event').setValue($event.id)"

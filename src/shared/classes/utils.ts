@@ -18,9 +18,10 @@ export class Utils {
     const output: SelectItem[] = [];
     for (const icon of icons) {
       output.push({
+        id: icon,
         color: Color.COLORS_RESERVED.default,
         icon,
-        name: icon.toUpperCase(),
+        name: icon.toUpperCase().replace(/-/g, ' '),
       });
     }
     return output;

@@ -52,6 +52,7 @@
         </div>
         <app-select id="icon"
                     selectLabel="Select icon"
+                    [selectedId]="form.form.get('icon').value"
                     [items]="icons"
                     (choose)="form.form.get('icon').setValue($event.icon)">
         </app-select>
