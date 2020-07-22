@@ -36,7 +36,7 @@ export class Color {
   ];
 
   static readonly COLORS_RESERVED: Record<string, string> = {
-    wallets: '#607d8b',
+    total: '#607d8b',
     default: '#607d8b',
   };
 
