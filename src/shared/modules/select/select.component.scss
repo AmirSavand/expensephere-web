@@ -1,0 +1,13 @@
+.card {
+  display: block;
+  margin-top: 5px;
+  position: absolute;
+  width: calc(100% - 32px);
+  max-width: 300px;
+  z-index: 1;
+
+  > .list-group {
+    max-height: 220px;
+    overflow-y: auto;
+  }
+}

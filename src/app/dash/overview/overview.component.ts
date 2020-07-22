@@ -2,16 +2,12 @@ import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from '@app/app.component';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
 import { Color } from '@shared/classes/color';
-import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
-import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -24,10 +20,6 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 export class OverviewComponent implements OnInit {
 
   readonly style = Color.style;
-  readonly colorsReserved = Color.COLORS_RESERVED;
-  readonly expenseKind = ExpenseKind;
-
-  readonly faWallets: IconDefinition = faLayerGroup;
 
   profiles: Profile[];
 
@@ -77,6 +69,18 @@ export class OverviewComponent implements OnInit {
         return;
       }
       this.wallets = wallets;
+      /**
+       * Add total as a wallet
+       */
+      this.wallets.unshift({
+        id: null,
+        profile: null,
+        archive: false,
+        balance: ProfileService.profile.balance,
+        color: Color.COLORS_RESERVED.total,
+        icon: 'money3',
+        name: 'Total',
+      });
       this.api.category.list().subscribe((data: Category[]): void => {
         this.categories = data;
         this.categoryChartResults = [];
@@ -101,7 +105,7 @@ export class OverviewComponent implements OnInit {
   /**
    * Group transactions by date
    */
-  setupTransactionsGroup() {
+  setupTransactionsGroup(): void {
     this.transactionsGroups = {};
     for (const transaction of this.transactions) {
       const created: Date = new Date(transaction.time);
@@ -111,20 +115,6 @@ export class OverviewComponent implements OnInit {
       }
       this.transactionsGroups[date].push(transaction);
     }
-  }
-
-  /**
-   * @returns Wallet by ID
-   */
-  getWallet(id: number): Wallet {
-    return this.wallets.find(item => item.id === id);
-  }
-
-  /**
-   * @returns Category by ID
-   */
-  getCategory(id: number): Category {
-    return this.categories.find(item => item.id === id);
   }
 
   /**
@@ -143,33 +133,9 @@ export class OverviewComponent implements OnInit {
   }
 
   /**
-   * Open transaction form modal for editing
-   */
-  editTransaction(transaction: Transaction): void {
-    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } });
-  }
-
-  /**
    * Open up category form modal
    */
   addCategory(): void {
     this.modalService.show(CategoryFormModalComponent, { class: 'modal-sm' });
-  }
-
-  /**
-   * Open category form modal for editing
-   */
-  editCategory(category: Category): void {
-    /**
-     * Prevent editing transfer categories
-     */
-    if (category.kind === this.expenseKind.TRANSFER){
-      alert('You can not edit this kind of category.');
-      return;
-    }
-    this.modalService.show(CategoryFormModalComponent, {
-      class: 'modal-sm',
-      initialState: { category }
-    });
   }
 }

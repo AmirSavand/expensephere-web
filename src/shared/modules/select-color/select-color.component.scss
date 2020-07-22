@@ -1,0 +1,40 @@
+@import "src/variables";
+
+$color-size: 30px;
+
+.selected-color-wrapper {
+  padding: 6px;
+  cursor: pointer;
+
+  > .selected-color {
+    box-shadow: 0 0 0 6px;
+    width: 100%;
+    height: 100%;
+    border: 4px solid;
+    display: block;
+  }
+}
+
+.colors {
+  position: absolute;
+  width: calc(100% - 44px);
+  z-index: 1;
+  display: block;
+  text-align: center;
+  max-height: 200px;
+  overflow-y: auto;
+
+  > .color {
+    box-shadow: 0 0 0 6px;
+    width: $color-size;
+    height: $color-size;
+    border-radius: $color-size;
+    display: inline-block;
+    cursor: pointer;
+    transition: $transition-base;
+
+    &:hover {
+      box-shadow: 0 0 0 10px;
+    }
+  }
+}

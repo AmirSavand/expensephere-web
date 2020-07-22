@@ -1,0 +1,14 @@
+<!-- Current color and toggler -->
+<div class="selected-color-wrapper custom-select" (click)="isSelecting =! isSelecting">
+  <div class="selected-color" [style.background]="selected" [style.color]="lighten(selected)"></div>
+</div>
+
+<!-- Color selection -->
+<div class="card card-body shadow-sm colors px-0 mb-3" *ngIf="isSelecting">
+  <div class="color mx-2 my-1"
+       *ngFor="let color of colors"
+       [style.background]="color"
+       [style.color]="lighten(color)"
+       (click)="choose.emit(color); selected = color; isSelecting = false">
+  </div>
+</div>

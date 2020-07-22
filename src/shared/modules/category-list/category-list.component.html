@@ -1,0 +1,17 @@
+<div class="row">
+  <div [classList]="columnClass"
+       *ngFor="let category of categories"
+       [hidden]="hideWithoutTransactions && !category.transactions_count">
+    <div class="mt-3 item-icon-wrapper" (click)="editCategory(category)">
+      <div class="d-flex align-items-center item-icon-action">
+        <div class="item-icon" [ngStyle]="style(category.color)">
+          <i class="icon-{{ category.icon }}"></i>
+        </div>
+        <div class="ml-3">
+          <div>{{ category.name }}</div>
+          <div class="small text-muted">{{ category.transactions_count }} Transactions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

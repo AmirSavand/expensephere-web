@@ -6,7 +6,7 @@ export class Color {
   /**
    * Background color lighten amount
    */
-  private static readonly LIGHTEN_AMOUNT: string = '22';
+  private static readonly LIGHTEN_AMOUNT = '22';
 
   /**
    * Predefined colors for user to select
@@ -36,7 +36,8 @@ export class Color {
   ];
 
   static readonly COLORS_RESERVED: Record<string, string> = {
-    wallets: '#607d8b',
+    total: '#607d8b',
+    default: '#607d8b',
   };
 
   /**

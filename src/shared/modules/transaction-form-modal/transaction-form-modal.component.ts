@@ -12,6 +12,7 @@ import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
+import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
@@ -19,6 +20,7 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
+import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 
@@ -66,6 +68,11 @@ export class TransactionFormModalComponent implements OnInit {
    */
   isEditing: boolean;
 
+  /**
+   * Current (profile) currency
+   */
+  currency: string;
+
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
               private api: ApiService,
@@ -73,6 +80,10 @@ export class TransactionFormModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /**
+     * Set currency
+     */
+    this.currency = ProfileService.profile.currency;
     /**
      * Load wallets
      */
@@ -111,7 +122,7 @@ export class TransactionFormModalComponent implements OnInit {
       into: [null],
       event: [null],
       amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
-      time: [this.date.transform(new Date(), 'yyyy-MM-ddThh:mm'), Validators.required],
+      time: [this.date.transform(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
       note: [''],
     });
     /**
@@ -120,7 +131,7 @@ export class TransactionFormModalComponent implements OnInit {
     if (this.transaction) {
       this.isEditing = true;
       this.form.form.patchValue(Object.assign(this.transaction, {
-        time: this.date.transform(this.transaction.time, 'yyyy-MM-ddThh:mm'),
+        time: this.date.transform(this.transaction.time, Utils.HTML_DATETIME_FORMAT),
       }));
     }
   }
