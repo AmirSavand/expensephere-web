@@ -37,7 +37,7 @@ export class ProfileFormModalComponent implements OnInit {
   /**
    * list of currencies
    */
-  currencies: SelectItem[] = [];
+  currencies: SelectItem[];
 
   /**
    * Form data
@@ -69,6 +69,7 @@ export class ProfileFormModalComponent implements OnInit {
      * Get list of currencies
      */
     this.api.currency.list().subscribe((data: Currency[]): void => {
+      this.currencies = [];
       for (const currency of data) {
         this.currencies.push({
           color: Color.COLORS_RESERVED.default,
