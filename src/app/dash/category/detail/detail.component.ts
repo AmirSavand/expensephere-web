@@ -11,11 +11,11 @@ import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-detail-component',
-  templateUrl: './detail-component.component.html',
-  styleUrls: ['./detail-component.component.scss'],
+  selector: 'app-component',
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.scss'],
 })
-export class DetailComponentComponent implements OnInit {
+export class DetailComponent implements OnInit {
 
   readonly faEdit: IconDefinition = faPen;
   readonly faBack: IconDefinition = faArrowLeft;
@@ -67,10 +67,9 @@ export class DetailComponentComponent implements OnInit {
         /**
          * Load transactions of this category
          */
-        this.api.transaction.list({ category: this.categoryId })
-          .subscribe((data: Transaction[]): void => {
-            this.transactions = data;
-          });
+        this.api.transaction.list({ category: this.categoryId }).subscribe((data: Transaction[]): void => {
+          this.transactions = data;
+        });
       }
     });
   }

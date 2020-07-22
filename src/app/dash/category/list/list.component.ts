@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
@@ -14,49 +12,74 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 })
 export class ListComponent implements OnInit {
 
-  readonly faEdit: IconDefinition = faPen;
+  /**
+   * Kind filter fields
+   */
+  readonly kindFilterFields: { name: string, value: string }[] = [
+    {
+      name: 'All Types',
+      value: '',
+    },
+    {
+      name: 'Incomes',
+      value: String(ExpenseKind.INCOME),
+    },
+    {
+      name: 'Expenses',
+      value: String(ExpenseKind.EXPENSE),
+    },
+  ];
 
-  readonly expenseKind = ExpenseKind;
+  /**
+   * Selected kind filter field
+   */
+  kindFilterField = this.kindFilterFields[0];
+
+  /**
+   * Selected archive filter field
+   */
+  archiveFilterField = false;
+
+  /**
+   * Search field query
+   */
+  searchField = '';
 
   /**
    * category list
    */
   categories: Category[];
 
+
   constructor(private api: ApiService,
               private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
+    this.load();
+  }
+
+  load(): void {
     /**
      * Load categories
      */
-    this.api.category.list().subscribe((data: Category[]): void => {
-      this.categories = data;
+    this.api.category.list({
+      search: this.searchField,
+      ordering: 'name',
+      kind: String(this.kindFilterField.value),
+      archive: String(this.archiveFilterField),
+    }).subscribe((data: Category[]): void => {
+      /**
+       * Filter out transfer types
+       */
+      this.categories = data.filter((item: Category): boolean => item.kind !== ExpenseKind.TRANSFER);
     });
   }
 
   /**
    * Open up category form modal
    */
-  addCategory(): void {
+  create(): void {
     this.modalService.show(CategoryFormModalComponent, { class: 'modal-sm' });
-  }
-
-  /**
-   * Open category form modal for editing
-   */
-  editCategory(category: Category): void {
-    /**
-     * Prevent editing transfer categories
-     */
-    if (category.kind === this.expenseKind.TRANSFER) {
-      alert('You can not edit this kind of category.');
-      return;
-    }
-    this.modalService.show(CategoryFormModalComponent, {
-      class: 'modal-sm',
-      initialState: { category },
-    });
   }
 }

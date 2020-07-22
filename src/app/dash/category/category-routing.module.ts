@@ -14,7 +14,7 @@ const routes: Routes = [
       },
       {
         path: ':id',
-        loadChildren: () => import('./detail-component/detail-component.module').then(m => m.DetailComponentModule),
+        loadChildren: () => import('./detail/detail.module').then(m => m.DetailModule),
       },
       {
         path: '**',

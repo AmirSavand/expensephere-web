@@ -2,19 +2,19 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { DetailComponentRoutingModule } from './detail-component-routing.module';
-import { DetailComponentComponent } from './detail-component.component';
+import { DetailRoutingModule } from './detail-routing.module';
+import { DetailComponent } from './detail.component';
 
 
 @NgModule({
   declarations: [
-    DetailComponentComponent,
+    DetailComponent,
   ],
   imports: [
     CommonModule,
-    DetailComponentRoutingModule,
+    DetailRoutingModule,
     FontAwesomeModule,
   ],
 })
-export class DetailComponentModule {
+export class DetailModule {
 }

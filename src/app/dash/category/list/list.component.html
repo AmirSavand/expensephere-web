@@ -1,27 +1,31 @@
-<div class="container mb-4">
-  <div class="row">
-    <div class="col-xl-4" *ngFor="let category of categories">
-      <div class="card bg-light mt-4">
-        <div class="card-header font-weight-bold">
-          <!-- Name -->
-          <span>{{ category.name }}</span>
-          <!-- Edit -->
-          <a class="ml-auto text-secondary" *ngIf="category.kind !== expenseKind.TRANSFER"
-             (click)="editCategory(category)">
-            <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
-          </a>
-        </div>
-        <a class="card-body text-dark" [routerLink]="['/dash/category', category.id]">
-          <span>This is Category</span>
-        </a>
+<!-- Search, ordering and filters -->
+<div class="container-fluid py-2 bg-tertiary">
+  <div class="container">
+    <div class="d-flex align-items-center">
+
+      <!-- Search -->
+      <input type="text" placeholder="Search" class="form-control"
+             [style.width]="'200px'" [(ngModel)]="searchField"
+             appModelDebounce (debouncedChange)="load()">
+
+      <!-- Kind filter -->
+      <div class="d-inline-block ml-3">
+        <select [(ngModel)]="kindFilterField" (ngModelChange)="load()" class="custom-select">
+          <option *ngFor="let kind of kindFilterFields" [ngValue]="kind">{{ kind.name }}</option>
+        </select>
       </div>
-    </div>
-    <div class="col-xl-4">
-      <div class="card bg-light mt-4" [style.height]="'112px'">
-        <div class="card-body d-flex align-items-center justify-content-center">
-          <div class="btn btn-light font-weight-bold" (click)="addCategory()">ADD CATEGORY</div>
-        </div>
+
+      <!-- Archive filter -->
+      <div class="custom-control custom-switch ml-3">
+        <input type="checkbox" class="custom-control-input" id="archive" [(ngModel)]="archiveFilterField">
+        <label class="custom-control-label" for="archive">Archives</label>
       </div>
     </div>
   </div>
+</div>
+<div class="container mb-3">
+
+
+  <!-- Categories -->
+  <app-category-list columnClass="col-xl-3 col-lg-4 col-sm-12" [categories]="categories"></app-category-list>
 </div>
