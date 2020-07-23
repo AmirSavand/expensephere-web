@@ -8,6 +8,11 @@ $danger: #ff3f34;
 $warning: #ffa801;
 $dark: #1e272e;
 $light: #F9FAFC;
+$tertiary: lighten($secondary, 35);
+
+$theme-colors: (
+  "tertiary": $tertiary
+);
 
 $font-family-base: "Gudea", "Roboto", sans-serif;
 $font-weight-light: 300;
@@ -29,6 +34,8 @@ $popover-border-radius: 0;
 
 $modal-content-border-width: 0;
 $modal-backdrop-bg: $secondary;
+
+$link-hover-decoration: none;
 
 // Icons variables override
 

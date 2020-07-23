@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
+import { GetParams } from '@shared/interfaces/get-params';
 import { PK } from '@shared/types/pk';
 import { Observable } from 'rxjs';
 
@@ -26,7 +27,7 @@ export class Crud<T, LT = T[]> {
   /**
    * Get list of objects
    */
-  list(params: { [key: string]: string } = {}): Observable<LT> {
+  list(params: GetParams = {}): Observable<LT> {
     return this.http.get<LT>(this.endpoint, { params });
   }
 

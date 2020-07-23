@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Color } from '@shared/classes/color';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-category-list',
@@ -13,6 +15,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 export class CategoryListComponent {
 
   readonly style = Color.style;
+  readonly faEdit: IconDefinition = faPen;
 
   @Input() categories: Category[];
 

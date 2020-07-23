@@ -1,0 +1,28 @@
+@import "src/variables";
+
+@media screen and (min-width: 991px) {
+  .filters {
+    display: flex;
+    align-items: center;
+
+    > .filter {
+      margin-right: map_get($spacers, 3);
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .filters {
+    > .filter {
+      margin-bottom: map_get($spacers, 2);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

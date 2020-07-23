@@ -1,0 +1,22 @@
+<!-- Filters -->
+<div class="container mt-3">
+  <div class="p-2 rounded bg-tertiary">
+    <app-filters [filters]="filters" (update)="load($event)"></app-filters>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="container mb-3">
+
+  <!-- Categories -->
+  <app-category-list columnClass="col-xl-3 col-lg-4 col-sm-12"
+                     [categories]="categories"
+                     *ngIf="categories && categories.length">
+  </app-category-list>
+
+  <!-- No data -->
+  <app-no-data classes="mt-3" *ngIf="categories && !categories.length"></app-no-data>
+
+  <!-- Loading -->
+  <app-loading classes="mt-3" *ngIf="!categories"></app-loading>
+</div>
