@@ -6,6 +6,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
+import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -26,6 +27,11 @@ export class DetailComponent implements OnInit {
    * Category data
    */
   category: Category;
+
+  /**
+   * Wallets for transactions
+   */
+  wallets: Wallet[];
 
   /**
    * Category transactions
@@ -65,10 +71,16 @@ export class DetailComponent implements OnInit {
           this.category = data;
         });
         /**
-         * Load transactions of this category
+         * Load wallets for categories
          */
-        this.api.transaction.list({ category: this.categoryId }).subscribe((data: Transaction[]): void => {
-          this.transactions = data;
+        this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
+          this.wallets = wallets;
+          /**
+           * Load transactions of this category
+           */
+          this.api.transaction.list({ category: this.categoryId }).subscribe((data: Transaction[]): void => {
+            this.transactions = data;
+          });
         });
       }
     });
