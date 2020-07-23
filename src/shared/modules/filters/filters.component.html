@@ -1,0 +1,32 @@
+<div class="filters">
+  <div class="filter" *ngFor="let filter of filters">
+
+    <!-- Text type -->
+    <input *ngIf="filter.type === filterType.TEXT"
+           [placeholder]="filter.label"
+           [(ngModel)]="filter.value"
+           (debouncedChange)="onUpdate()"
+           appModelDebounce
+           type="text"
+           class="form-control">
+
+    <!-- List type -->
+    <select *ngIf="filter.type === filterType.LIST"
+            [(ngModel)]="filter.value"
+            [title]="filter.label"
+            (ngModelChange)="onUpdate()"
+            class="custom-select">
+      <option *ngFor="let value of filter.values" [ngValue]="value.value">{{ value.label }}</option>
+    </select>
+
+    <!-- Boolean type -->
+    <div *ngIf="filter.type === filterType.BOOLEAN" class="custom-control custom-switch">
+      <input [(ngModel)]="filter.value"
+             [id]="filter.key"
+             (ngModelChange)="onUpdate()"
+             class="custom-control-input"
+             type="checkbox">
+      <label class="custom-control-label" [for]="filter.key">{{ filter.label }}</label>
+    </div>
+  </div>
+</div>

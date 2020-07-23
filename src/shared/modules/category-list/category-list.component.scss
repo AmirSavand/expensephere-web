@@ -1,0 +1,25 @@
+@import "src/variables";
+
+.category-list {
+  > div > div {
+    cursor: unset;
+
+    .edit {
+      display: none;
+      background: rgba($secondary, 0.15);
+      color: $info;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    &:hover {
+      .item-icon {
+        display: none;
+      }
+
+      .edit {
+        display: flex;
+      }
+    }
+  }
+}

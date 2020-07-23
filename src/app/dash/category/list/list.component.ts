@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
+import { GetParams } from '@shared/interfaces/get-params';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
+import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
+import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
@@ -10,65 +13,45 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
 
-  /**
-   * Kind filter fields
-   */
-  readonly kindFilterFields: { name: string, value: string }[] = [
+  readonly filters: Filter[] = [
     {
-      name: 'All Types',
+      type: FilterType.TEXT,
+      label: 'Search',
+      key: 'search',
       value: '',
     },
     {
-      name: 'Incomes',
-      value: String(ExpenseKind.INCOME),
+      type: FilterType.LIST,
+      label: 'Type',
+      key: 'kind',
+      value: '',
+      values: [
+        { label: 'Any', value: '' },
+        { label: 'Income', value: ExpenseKind.INCOME },
+        { label: 'Expense', value: ExpenseKind.EXPENSE },
+      ],
     },
     {
-      name: 'Expenses',
-      value: String(ExpenseKind.EXPENSE),
+      type: FilterType.BOOLEAN,
+      label: 'Archive',
+      key: 'archive',
+      value: false,
     },
   ];
 
-  /**
-   * Selected kind filter field
-   */
-  kindFilterField = this.kindFilterFields[0];
-
-  /**
-   * Selected archive filter field
-   */
-  archiveFilterField = false;
-
-  /**
-   * Search field query
-   */
-  searchField = '';
-
-  /**
-   * category list
-   */
   categories: Category[];
-
 
   constructor(private api: ApiService,
               private modalService: BsModalService) {
   }
 
-  ngOnInit(): void {
-    this.load();
-  }
-
-  load(): void {
-    /**
-     * Load categories
-     */
-    this.api.category.list({
-      search: this.searchField,
-      ordering: 'name',
-      kind: String(this.kindFilterField.value),
-      archive: String(this.archiveFilterField),
-    }).subscribe((data: Category[]): void => {
+  /**
+   * Load categories with filters
+   */
+  load(params: GetParams): void {
+    this.api.category.list(params).subscribe((data: Category[]): void => {
       /**
        * Filter out transfer types
        */
