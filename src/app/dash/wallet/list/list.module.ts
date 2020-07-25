@@ -6,6 +6,7 @@ import { ListComponent } from '@app/dash/wallet/list/list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-currency.module';
 import { WalletFormModalModule } from '@shared/modules/wallet-form-modal/wallet-form-modal.module';
+import { WalletListModule } from '@shared/modules/wallet-list/wallet-list.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     WalletFormModalModule,
     FontAwesomeModule,
     ProfileCurrencyModule,
+    WalletListModule,
   ],
 })
 export class ListModule {
