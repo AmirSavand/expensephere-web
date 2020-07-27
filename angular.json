@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "openexpenses-web": {
+    "expensephere-web": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/openexpenses-web",
+            "outputPath": "dist/expensephere-web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -26,7 +26,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/404.html",
               "src/_redirects"
             ],
             "styles": [
@@ -76,23 +75,23 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "openexpenses-web:build",
+            "browserTarget": "expensephere-web:build",
             "host": "0.0.0.0",
             "disableHostCheck": true
           },
           "configurations": {
             "production": {
-              "browserTarget": "openexpenses-web:build:production"
+              "browserTarget": "expensephere-web:build:production"
             },
             "dev-prod": {
-              "browserTarget": "openexpenses-web:build:dev-prod"
+              "browserTarget": "expensephere-web:build:dev-prod"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "openexpenses-web:build"
+            "browserTarget": "expensephere-web:build"
           }
         },
         "test": {
@@ -129,18 +128,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "openexpenses-web:serve"
+            "devServerTarget": "expensephere-web:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "openexpenses-web:serve:production"
+              "devServerTarget": "expensephere-web:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "openexpenses-web",
+  "defaultProject": "expensephere-web",
   "cli": {
     "analytics": false
   }
