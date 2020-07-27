@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
       },
       {
+        path: 'transaction',
+        loadChildren: () => import('./transaction/transaction.module').then(m => m.TransactionModule),
+      },
+      {
         path: 'wallet',
         loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule),
       },
