@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ExpenseKind } from '@shared/enums/kind';
 import { GetParams } from '@shared/interfaces/get-params';
 import { Wallet } from '@shared/interfaces/wallet';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
@@ -21,6 +20,12 @@ export class ListComponent {
       label: 'Search',
       key: 'search',
       value: '',
+    },
+    {
+      type: FilterType.BOOLEAN,
+      label: 'Archive',
+      key: 'archive',
+      value: false,
     },
   ];
 
