@@ -1,0 +1,30 @@
+<div class="container my-3" *ngIf="wallet && transactions">
+  <div class="row">
+    <div class="col-lg-6">
+      <p class="font-weight-bold">Wallet</p>
+      <app-wallet-list columnClass="col-xl-6" [wallets]="[wallet]"></app-wallet-list>
+      <hr>
+      <p class="font-weight-bold">Transactions</p>
+      <div>{{ transactions.length | number }}</div>
+      <hr>
+      <div>
+        <span class="font-weight-bold">Expense:</span>
+        <span class="text-danger ml-2">{{ wallet.balance.expense | profileCurrency }}</span>
+      </div>
+      <div>
+        <span class="font-weight-bold">Income</span>
+        <span class="text-success ml-2">{{ wallet.balance.income | profileCurrency }}</span>
+      </div>
+      <hr>
+      <p class="font-weight-bold">Total</p>
+      <div>{{ wallet.balance.total | profileCurrency }}</div>
+    </div>
+    <div class="col-lg-6">
+      <app-transaction-list [wallets]="[wallet]"
+                            [categories]="categories"
+                            [transactions]="transactions"
+                            columnClass="col-12">
+      </app-transaction-list>
+    </div>
+  </div>
+</div>
