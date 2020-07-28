@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { Component } from '@angular/core';
 import { ExpenseKind } from '@shared/enums/kind';
 import { GetParams } from '@shared/interfaces/get-params';
 import { Wallet } from '@shared/interfaces/wallet';
@@ -43,7 +41,7 @@ export class ListComponent {
       this.wallets = data;
     });
   }
-  
+
   /**
    * Open up wallet form modal
    */
