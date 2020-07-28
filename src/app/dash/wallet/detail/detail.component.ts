@@ -84,8 +84,8 @@ export class DetailComponent implements OnInit {
           /**
            * Load transactions of this wallet
            */
-          this.api.transaction.list({ wallet: this.walletId }).subscribe((data: Transaction[]): void => {
-            this.transactions = data;
+          this.api.transaction.list({ wallet: this.walletId }).subscribe((transaction: Transaction[]): void => {
+            this.transactions = transaction;
           });
         });
       }
