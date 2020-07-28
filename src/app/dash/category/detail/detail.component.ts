@@ -19,7 +19,6 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 export class DetailComponent implements OnInit {
 
   readonly faEdit: IconDefinition = faPen;
-  readonly faBack: IconDefinition = faArrowLeft;
 
   readonly expenseKind = ExpenseKind;
 
