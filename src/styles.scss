@@ -85,7 +85,7 @@ a, button, .btn {
   }
 }
 
-.item-icon-wrapper:hover {
+.item-icon-wrapper {
   &:hover,
   &:focus {
     background: #fff;
@@ -97,11 +97,37 @@ a, button, .btn {
       background: none;
       box-shadow: none;
     }
+
+    > .item-icon {
+      > .icon-badge {
+        opacity: 1;
+      }
+    }
   }
 
-  > .item-icon {
-    > .icon-badge {
-      opacity: 1;
+  > div {
+    cursor: unset;
+
+    .edit {
+      display: none;
+      background: rgba($secondary, 0.15);
+      color: $info;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba($secondary, 0.25);
+      }
+    }
+
+    &:hover {
+      .item-icon {
+        display: none;
+      }
+
+      .edit {
+        display: flex;
+      }
     }
   }
 }

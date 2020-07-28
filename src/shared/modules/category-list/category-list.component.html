@@ -3,7 +3,7 @@
        *ngFor="let category of categories"
        [hidden]="hideWithoutTransactions && !category.transactions_count">
     <div class="mt-3 item-icon-wrapper">
-      <div class="d-flex align-items-center item-icon-action">
+      <div class="d-flex align-items-center">
         <div class="item-icon" [ngStyle]="style(category.color)">
           <i class="icon-{{ category.icon }}"></i>
         </div>
