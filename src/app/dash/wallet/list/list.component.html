@@ -1,3 +1,13 @@
+<!-- Filters -->
 <div class="container mt-3">
+  <div class="p-2 rounded bg-tertiary">
+    <app-filters [filters]="filters" (update)="load($event)"></app-filters>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="container mt-3">
+
+  <!-- Wallets -->
   <app-wallet-list [wallets]="wallets"></app-wallet-list>
 </div>
