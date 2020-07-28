@@ -24,6 +24,11 @@ export class DetailComponent implements OnInit {
   wallet: Wallet;
 
   /**
+   * Wallet list
+   */
+  wallets: Wallet[];
+
+  /**
    * Categories for transaction
    */
   categories: Category[];
@@ -64,6 +69,12 @@ export class DetailComponent implements OnInit {
          */
         this.api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
           this.wallet = data;
+        });
+        /**
+         * Load wallet list
+         */
+        this.api.wallet.list().subscribe((data: Wallet[]): void => {
+          this.wallets = data;
         });
         /**
          * Load categories for transaction

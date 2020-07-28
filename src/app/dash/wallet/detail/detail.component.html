@@ -20,7 +20,7 @@
       <div>{{ wallet.balance.total | profileCurrency }}</div>
     </div>
     <div class="col-lg-6">
-      <app-transaction-list [wallets]="[wallet]"
+      <app-transaction-list [wallets]="wallets"
                             [categories]="categories"
                             [transactions]="transactions"
                             columnClass="col-12">
