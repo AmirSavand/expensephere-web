@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faClock } from '@fortawesome/free-regular-svg-icons/faClock';
 import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
@@ -78,7 +79,8 @@ export class EventFormModalComponent implements OnInit {
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
               private api: ApiService,
-              private date: DatePipe) {
+              private date: DatePipe,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -130,6 +132,9 @@ export class EventFormModalComponent implements OnInit {
       method = this.api.event.update(this.event.id, payload);
     }
     method.subscribe((data: Event): void => {
+      if (!this.isEditing) {
+        this.router.navigate(['/dash/event/', data.id]);
+      }
       if (this.isEditing) {
         Object.assign(this.event, data);
       }
