@@ -123,6 +123,7 @@ export class TransactionFormModalComponent implements OnInit {
       event: [null],
       amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
       time: [this.date.transform(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
+      archive: [null],
       note: [''],
     });
     /**
