@@ -80,6 +80,7 @@ export class CategoryFormModalComponent implements OnInit {
       name: [null, Validators.required],
       color: [null, Validators.required],
       icon: [null, Validators.required],
+      archive: [null],
     });
     /**
      * Check if editing
@@ -91,6 +92,7 @@ export class CategoryFormModalComponent implements OnInit {
         name: this.category.name,
         color: this.category.color,
         icon: this.category.icon,
+        archive: this.category.archive,
       });
     }
   }
