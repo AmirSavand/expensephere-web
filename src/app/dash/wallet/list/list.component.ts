@@ -39,7 +39,7 @@ export class ListComponent {
   }
 
   /**
-   * Load categories with filters
+   * Load wallets with filters
    */
   load(params: GetParams): void {
     this.api.wallet.list(params).subscribe((data: Wallet[]): void => {
