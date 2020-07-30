@@ -14,6 +14,7 @@ const routes: Routes = [
     path: 'dash',
     loadChildren: () => import('./dash/dash.module').then(m => m.DashModule),
   },
+  { path: 'detail', loadChildren: () => import('./dash/wallet/detail/detail.module').then(m => m.DetailModule) },
   {
     path: '**',
     pathMatch: 'full',

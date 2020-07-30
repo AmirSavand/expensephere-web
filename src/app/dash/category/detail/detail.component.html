@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-lg-6">
       <p class="font-weight-bold m-0">Category</p>
-      <app-category-list [categories]="[category]"></app-category-list>
+      <app-category-list columnClass="col-12" [categories]="[category]"></app-category-list>
       <hr>
       <p class="font-weight-bold">Transactions</p>
       <div>{{ category.transactions_count | number }}</div>
       <hr>
       <p class="font-weight-bold">Total Spent</p>
-      <div>{{ category.transactions_total | profileCurrency }}</div>
+      <div>{{ category.transactions_total || 0 | profileCurrency }}</div>
     </div>
     <div class="col-lg-6">
       <app-transaction-list [categories]="[category]"

@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons/faCalendar';
 import { faClock } from '@fortawesome/free-regular-svg-icons/faClock';
@@ -76,7 +77,8 @@ export class TransactionFormModalComponent implements OnInit {
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
               private api: ApiService,
-              private date: DatePipe) {
+              private date: DatePipe,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -123,6 +125,7 @@ export class TransactionFormModalComponent implements OnInit {
       event: [null],
       amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
       time: [this.date.transform(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
+      archive: [null],
       note: [''],
     });
     /**
@@ -149,6 +152,9 @@ export class TransactionFormModalComponent implements OnInit {
       method = this.api.transaction.update(this.transaction.id, payload);
     }
     method.subscribe((data: Transaction): void => {
+      if (!this.isEditing) {
+        this.router.navigate(['/dash/transaction/', data.id]);
+      }
       if (this.isEditing) {
         Object.assign(this.transaction, data);
       }

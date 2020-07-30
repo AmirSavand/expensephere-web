@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
-import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
@@ -12,7 +10,7 @@ import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-component',
+  selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss'],
 })
@@ -20,27 +18,30 @@ export class DetailComponent implements OnInit {
 
   readonly faEdit: IconDefinition = faPen;
 
-  readonly expenseKind = ExpenseKind;
-
   /**
-   * Category data
+   * Wallet data
    */
-  category: Category;
+  wallet: Wallet;
 
   /**
-   * Wallets for transactions
+   * Wallet list
    */
   wallets: Wallet[];
 
   /**
-   * Category transactions
+   * Categories for transaction
+   */
+  categories: Category[];
+
+  /**
+   * Wallet transactions
    */
   transactions: Transaction[];
 
   /**
-   * Category ID from param
+   * Wallet ID from param
    */
-  categoryId: string;
+  walletId: string;
 
   constructor(private api: ApiService,
               private route: ActivatedRoute,
@@ -49,36 +50,42 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     /**
-     * Get category id from param
+     * Get wallet id from param
      */
     this.route.paramMap.subscribe((params: ParamMap): void => {
       if (!params.has('id')) {
         return;
       }
       /**
-       * If category ID changes
+       * If wallet ID changes
        */
-      if (this.categoryId !== params.get('id')) {
+      if (this.walletId !== params.get('id')) {
         /**
-         * Get category ID from params
+         * Get wallet ID from params
          */
-        this.categoryId = params.get('id');
+        this.walletId = params.get('id');
         /**
-         * Load category data
+         * Load wallet data
          */
-        this.api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
-          this.category = data;
+        this.api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
+          this.wallet = data;
         });
         /**
-         * Load wallets for categories
+         * Load wallet list
          */
-        this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
-          this.wallets = wallets;
+        this.api.wallet.list().subscribe((data: Wallet[]): void => {
+          this.wallets = data;
+        });
+        /**
+         * Load categories for transaction
+         */
+        this.api.category.list().subscribe((data: Category[]): void => {
+          this.categories = data;
           /**
-           * Load transactions of this category
+           * Load transactions of this wallet
            */
-          this.api.transaction.list({ category: this.categoryId }).subscribe((data: Transaction[]): void => {
-            this.transactions = data;
+          this.api.transaction.list({ wallet: this.walletId }).subscribe((transaction: Transaction[]): void => {
+            this.transactions = transaction;
           });
         });
       }
@@ -91,11 +98,4 @@ export class DetailComponent implements OnInit {
   editTransaction(transaction: Transaction): void {
     this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } });
   }
-
-  // /**
-  //  * Open up transaction form modal
-  //  */
-  // addTransaction(): void {
-  //   this.modalService.show(TransactionFormModalComponent);
-  // }
 }

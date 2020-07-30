@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { Component } from '@angular/core';
+import { GetParams } from '@shared/interfaces/get-params';
 import { Wallet } from '@shared/interfaces/wallet';
+import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
+import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -11,9 +12,22 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
 
-  readonly faEdit: IconDefinition = faPen;
+  readonly filters: Filter[] = [
+    {
+      type: FilterType.TEXT,
+      label: 'Search',
+      key: 'search',
+      value: '',
+    },
+    {
+      type: FilterType.BOOLEAN,
+      label: 'Archive',
+      key: 'archive',
+      value: false,
+    },
+  ];
 
   /**
    * Wallet list
@@ -24,11 +38,11 @@ export class ListComponent implements OnInit {
               private modalService: BsModalService) {
   }
 
-  ngOnInit(): void {
-    /**
-     * Load wallets
-     */
-    this.api.wallet.list().subscribe((data: Wallet[]): void => {
+  /**
+   * Load categories with filters
+   */
+  load(params: GetParams): void {
+    this.api.wallet.list(params).subscribe((data: Wallet[]): void => {
       this.wallets = data;
     });
   }
@@ -38,15 +52,5 @@ export class ListComponent implements OnInit {
    */
   addWallet(): void {
     this.modalService.show(WalletFormModalComponent, { class: 'modal-sm' });
-  }
-
-  /**
-   * Open wallet form modal for editing
-   */
-  editWallet(wallet: Wallet): void {
-    this.modalService.show(WalletFormModalComponent, {
-      class: 'modal-sm',
-      initialState: { wallet },
-    });
   }
 }

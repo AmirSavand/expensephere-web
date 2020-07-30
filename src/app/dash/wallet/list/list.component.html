@@ -1,31 +1,19 @@
-<div class="container mb-4">
-  <div class="row">
-    <div class="col-xl-4" *ngFor="let wallet of wallets">
-      <div class="card bg-light mt-4">
-        <div class="card-header font-weight-bold">
-          <!-- Name -->
-          <span>{{ wallet.name }}</span>
-          <!-- Edit -->
-          <a class="ml-auto text-secondary" (click)="editWallet(wallet)">
-            <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
-          </a>
-        </div>
-        <div class="card-body">
-          <span>Balance</span>
-          <span class="float-right">
-            <span title="Expense" class="text-danger">{{ wallet.balance.expense | profileCurrency }}</span>
-            <span title="Income" class="mx-3">{{ wallet.balance.income | profileCurrency }}</span>
-            <span title="Total" class="text-secondary">{{ wallet.balance.total | profileCurrency }}</span>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4">
-      <div class="card bg-light mt-4" [style.height]="'112px'">
-        <div class="card-body d-flex align-items-center justify-content-center">
-          <div class="btn btn-light font-weight-bold" (click)="addWallet()">ADD WALLET</div>
-        </div>
-      </div>
-    </div>
+<!-- Filters -->
+<div class="container mt-3">
+  <div class="p-2 rounded bg-tertiary">
+    <app-filters [filters]="filters" (update)="load($event)"></app-filters>
   </div>
+</div>
+
+<!-- Content -->
+<div class="container mb-3">
+
+  <!-- Wallets -->
+  <app-wallet-list [wallets]="wallets"></app-wallet-list>
+
+  <!-- No data -->
+  <app-no-data classes="mt-3" *ngIf="wallets && !wallets.length"></app-no-data>
+
+  <!-- Loading -->
+  <app-loading classes="mt-3" *ngIf="!wallets"></app-loading>
 </div>
