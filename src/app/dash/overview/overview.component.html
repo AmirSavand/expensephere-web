@@ -14,11 +14,7 @@
 
       <!-- Categories -->
       <div class="card bg-light mt-4">
-        <div class="card-header font-weight-bold">
-          <span>My Categories</span>
-          <!-- Create button -->
-          <div class="btn btn-primary ml-auto" (click)="addCategory()">Create</div>
-        </div>
+        <div class="card-header font-weight-bold">My Categories</div>
         <div class="card-body oy-scroll pt-0 pb-3" [style.height]="205 + 'px'">
           <app-category-list [categories]="categories" [hideWithoutTransactions]="true"></app-category-list>
         </div>
@@ -65,7 +61,7 @@
       <!-- My transactions -->
       <div class="card bg-light overflow-hidden mt-4">
         <div class="card-header font-weight-bold">My Transactions</div>
-        <div class="card-body oy-scroll pt-0" [style.height]="783 + 'px'">
+        <div class="card-body oy-scroll pt-0" [style.height]="769 + 'px'">
 
           <!-- Transaction groups -->
           <div *ngFor="let transactionGroup of transactionsGroups | keyvalue:orderByDate">

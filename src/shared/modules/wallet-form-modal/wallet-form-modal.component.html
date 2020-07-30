@@ -56,6 +56,15 @@
         <div class="invalid-tooltip" *ngIf="form.error.color">{{ form.error.color[0] }}</div>
       </div>
     </div>
+
+    <!-- Archive -->
+    <div class="form-group">
+      <label for="archive">Archive</label>
+      <div class="custom-control custom-switch">
+        <input class="custom-control-input" type="checkbox" formControlName="archive" id="archive">
+        <label class="custom-control-label" for="archive"></label>
+      </div>
+    </div>
   </form>
 </div>
 

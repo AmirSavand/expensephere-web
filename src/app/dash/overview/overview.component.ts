@@ -7,7 +7,6 @@ import { Category } from '@shared/interfaces/category';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
-import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -37,8 +36,7 @@ export class OverviewComponent implements OnInit {
   categoryChartColors: { name: string; value: string }[] = [];
 
   constructor(private api: ApiService,
-              private router: Router,
-              private modalService: BsModalService) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -130,12 +128,5 @@ export class OverviewComponent implements OnInit {
       return -1;
     }
     return 0;
-  }
-
-  /**
-   * Open up category form modal
-   */
-  addCategory(): void {
-    this.modalService.show(CategoryFormModalComponent, { class: 'modal-sm' });
   }
 }

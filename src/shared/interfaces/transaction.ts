@@ -12,4 +12,5 @@ export interface Transaction {
   time: string;
   created: string;
   updated: string;
+  archive: boolean;
 }

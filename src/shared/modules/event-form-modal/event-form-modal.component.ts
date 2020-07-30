@@ -14,7 +14,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
-import { icons } from '@shared/constants/icons';
 import { Event } from '@shared/interfaces/event';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
@@ -97,6 +96,7 @@ export class EventFormModalComponent implements OnInit {
       color: [null, Validators.required],
       icon: [null, Validators.required],
       budget: [null],
+      archive: [null],
       note: [''],
     });
     /**
@@ -112,6 +112,7 @@ export class EventFormModalComponent implements OnInit {
         icon: this.event.icon,
         budget: this.event.budget,
         note: this.event.note,
+        archive: this.event.archive,
       });
     }
   }
