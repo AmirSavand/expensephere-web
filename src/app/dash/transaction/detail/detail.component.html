@@ -1,5 +1,70 @@
-<div class="container mt-3">
-  <p class="font-weight-bold text-center">Transaction ID is:
-    <span class="text-primary">{{ transaction.id }}</span>
-  </p>
+<!-- Wrapper (with category color as background) -->
+<div class="wrapper" [style.background]="category.color" *ngIf="category">
+
+  <!-- Container -->
+  <div class="container shadow">
+
+    <!-- Category info and transaction amount -->
+    <div class="d-flex align-items-center">
+
+      <!-- Category icon -->
+      <a class="d-flex" [routerLink]="['../../../../category', category.id]">
+        <i [style.background]="category.color" class="category-icon icon-{{ category.icon }}"></i>
+      </a>
+
+      <!-- Category name and transactions_total -->
+      <div class="ml-4">
+        <h1 class="font-weight-bold m-0">{{ category.name }}</h1>
+        <p class="m-0 text-secondary">{{ category.transactions_total | profileCurrency }} in this category</p>
+      </div>
+
+      <!-- Transaction amount -->
+      <div class="ml-auto d-none d-lg-block">
+        <h1 class="font-weight-bold mb-0 text-secondary"
+            [class.text-danger]="category.kind === expenseKind.EXPENSE"
+            [class.text-success]="category.kind === expenseKind.INCOME">
+          {{ transaction.amount | profileCurrency }}
+        </h1>
+      </div>
+    </div>
+
+    <!-- Transaction note -->
+    <div class="row mt-5">
+
+      <!-- Wallet -->
+      <div class="col-xl-4 mb-3" *ngIf="wallet">
+        <div class="d-flex align-items-center">
+          <fa-icon [fixedWidth]="true" class="text-secondary" size="3x" [icon]="faWallet"></fa-icon>
+          <div class="ml-3">
+            <h3 class="m-0">
+              <a class="text-dark" [routerLink]="['../../../../wallet', wallet.id]">{{ wallet.name }}</a>
+            </h3>
+            <div>Transaction wallet</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction time -->
+      <div class="col-xl-4 mb-3">
+        <div class="d-flex align-items-center">
+          <fa-icon [fixedWidth]="true" class="text-secondary" size="3x" [icon]="faTime"></fa-icon>
+          <div class="ml-3">
+            <h3 class="m-0">Date</h3>
+            <div>{{ transaction.time | date:'d MMM, yyyy - hh:mm aa' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction note -->
+      <div class="col-xl-4 mb-3">
+        <div class="d-flex align-items-center">
+          <fa-icon [fixedWidth]="true" class="text-secondary" size="3x" [icon]="faNote"></fa-icon>
+          <div class="ml-3">
+            <h3 class="m-0">Note</h3>
+            <div>{{ transaction.note || 'Nothing here.' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

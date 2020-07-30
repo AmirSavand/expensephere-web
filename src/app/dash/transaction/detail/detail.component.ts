@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { faClock } from '@fortawesome/free-regular-svg-icons/faClock';
+import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
+import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
+import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { Transaction } from '@shared/interfaces/transaction';
@@ -17,7 +19,16 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 })
 export class DetailComponent implements OnInit {
 
-  readonly faEdit: IconDefinition = faPen;
+  readonly expenseKind = ExpenseKind;
+
+  readonly faTime = faClock;
+  readonly faNote = faStickyNote;
+  readonly faWallet = faWallet;
+
+  /**
+   * Transaction ID from param
+   */
+  id: string;
 
   /**
    * Transaction data
@@ -25,24 +36,24 @@ export class DetailComponent implements OnInit {
   transaction: Transaction;
 
   /**
-   * Category list
+   * Transaction wallet
    */
-  categories: Category[];
+  wallet: Wallet;
 
   /**
-   * Wallet list
+   * Transaction wallet into
    */
-  wallets: Wallet[];
+  into: Wallet;
 
   /**
-   * Event list
+   * Transaction category
    */
-  events: Event[];
+  category: Category;
 
   /**
-   * Transaction ID from param
+   * Transaction event
    */
-  transactionId: string;
+  event: Event;
 
   constructor(private api: ApiService,
               private route: ActivatedRoute,
@@ -60,34 +71,44 @@ export class DetailComponent implements OnInit {
       /**
        * If transaction ID changes
        */
-      if (this.transactionId !== params.get('id')) {
+      if (this.id !== params.get('id')) {
         /**
          * Get transaction ID from params
          */
-        this.transactionId = params.get('id');
+        this.id = params.get('id');
         /**
          * Load transaction data
          */
-        this.api.transaction.retrieve(this.transactionId).subscribe((data: Transaction): void => {
-          this.transaction = data;
-        });
-        /**
-         * Load wallet list
-         */
-        this.api.wallet.list().subscribe((data: Wallet[]): void => {
-          this.wallets = data;
-        });
-        /**
-         * Load category list
-         */
-        this.api.category.list().subscribe((data: Category[]): void => {
-          this.categories = data;
-        });
-        /**
-         * Load event list
-         */
-        this.api.event.list().subscribe((data: Event[]): void => {
-          this.events = data;
+        this.api.transaction.retrieve(this.id).subscribe((transaction: Transaction): void => {
+          this.transaction = transaction;
+          /**
+           * Load transaction wallet
+           */
+          this.api.wallet.retrieve(transaction.wallet).subscribe((data: Wallet): void => {
+            this.wallet = data;
+          });
+          /**
+           * Load transaction wallet into
+           */
+          if (transaction.into) {
+            this.api.wallet.retrieve(transaction.into).subscribe((data: Wallet): void => {
+              this.into = data;
+            });
+          }
+          /**
+           * Load transaction category
+           */
+          this.api.category.retrieve(transaction.category).subscribe((data: Category): void => {
+            this.category = data;
+          });
+          /**
+           * Load transaction event
+           */
+          if (transaction.event) {
+            this.api.event.retrieve(transaction.event).subscribe((data: Event): void => {
+              this.event = data;
+            });
+          }
         });
       }
     });

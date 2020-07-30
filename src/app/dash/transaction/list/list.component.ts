@@ -28,7 +28,7 @@ export class ListComponent implements OnInit {
       key: 'wallet',
       value: '',
       values: [
-        { label: 'Any', value: '' },
+        { label: 'Wallet', value: '' },
       ],
     },
     {
@@ -37,7 +37,7 @@ export class ListComponent implements OnInit {
       key: 'category',
       value: '',
       values: [
-        { label: 'Any', value: '' },
+        { label: 'Category', value: '' },
       ],
     },
     {
@@ -46,8 +46,14 @@ export class ListComponent implements OnInit {
       key: 'event',
       value: '',
       values: [
-        { label: 'Any', value: '' },
+        { label: 'Event', value: '' },
       ],
+    },
+    {
+      type: FilterType.BOOLEAN,
+      label: 'Archive',
+      key: 'archive',
+      value: false,
     },
   ];
 
