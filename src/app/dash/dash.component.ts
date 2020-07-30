@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
-import { Navigation } from '@app/dash/shared/interfaces/navigation';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
-import { faMeteor } from '@fortawesome/free-solid-svg-icons/faMeteor';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons/faRetweet';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
 import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
-import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
 import { Color } from '@shared/classes/color';
 import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
 import { Wallet } from '@shared/interfaces/wallet';
+import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
+import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
+import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
@@ -124,5 +124,26 @@ export class DashComponent implements OnInit {
    */
   addTransaction(): void {
     this.modalService.show(TransactionFormModalComponent);
+  }
+
+  /**
+   * Open up wallet form modal
+   */
+  addWallet(): void {
+    this.modalService.show(WalletFormModalComponent);
+  }
+
+  /**
+   * Open up category form modal
+   */
+  addCategory(): void {
+    this.modalService.show(CategoryFormModalComponent);
+  }
+
+  /**
+   * Open up event form modal
+   */
+  addEvent(): void {
+    this.modalService.show(EventFormModalComponent);
   }
 }

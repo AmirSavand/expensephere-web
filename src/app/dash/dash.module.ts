@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-currency.module';
 import { TransactionFormModalModule } from '@shared/modules/transaction-form-modal/transaction-form-modal.module';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
@@ -22,6 +23,7 @@ import { DashComponent } from './dash.component';
     ModalModule.forRoot(),
     TransactionFormModalModule,
     ProfileCurrencyModule,
+    BsDropdownModule.forRoot(),
   ],
 })
 export class DashModule {
