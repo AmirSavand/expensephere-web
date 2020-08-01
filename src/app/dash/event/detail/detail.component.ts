@@ -5,14 +5,18 @@ import { Event } from '@shared/interfaces/event';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit {
+
+  /**
+   * Event ID from param
+   */
+  eventId: string;
 
   /**
    * Event data
@@ -34,14 +38,8 @@ export class DetailComponent implements OnInit {
    */
   transactions: Transaction[];
 
-  /**
-   * Event ID from param
-   */
-  eventId: string;
-
   constructor(private api: ApiService,
-              private route: ActivatedRoute,
-              private modalService: BsModalService) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -73,7 +71,7 @@ export class DetailComponent implements OnInit {
           this.wallets = data;
         });
         /**
-         * Load categories
+         * Load category list
          */
         this.api.category.list().subscribe((data: Category[]): void => {
           this.categories = data;

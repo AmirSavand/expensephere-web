@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
-import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-component',
@@ -17,8 +12,6 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit {
-
-  readonly faEdit: IconDefinition = faPen;
 
   readonly expenseKind = ExpenseKind;
 
@@ -43,8 +36,7 @@ export class DetailComponent implements OnInit {
   categoryId: string;
 
   constructor(private api: ApiService,
-              private route: ActivatedRoute,
-              private modalService: BsModalService) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -84,18 +76,4 @@ export class DetailComponent implements OnInit {
       }
     });
   }
-
-  /**
-   * Open transaction form modal for editing
-   */
-  editTransaction(transaction: Transaction): void {
-    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } });
-  }
-
-  // /**
-  //  * Open up transaction form modal
-  //  */
-  // addTransaction(): void {
-  //   this.modalService.show(TransactionFormModalComponent);
-  // }
 }
