@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
 import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
@@ -67,7 +68,8 @@ export class CategoryFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
-              private api: ApiService) {
+              private api: ApiService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -80,6 +82,7 @@ export class CategoryFormModalComponent implements OnInit {
       name: [null, Validators.required],
       color: [null, Validators.required],
       icon: [null, Validators.required],
+      archive: [null],
     });
     /**
      * Check if editing
@@ -91,6 +94,7 @@ export class CategoryFormModalComponent implements OnInit {
         name: this.category.name,
         color: this.category.color,
         icon: this.category.icon,
+        archive: this.category.archive,
       });
     }
   }
@@ -106,6 +110,9 @@ export class CategoryFormModalComponent implements OnInit {
       method = this.api.category.update(this.category.id, payload);
     }
     method.subscribe((data: Category): void => {
+      if (!this.isEditing) {
+        this.router.navigate(['/dash/category/', data.id]);
+      }
       if (this.isEditing) {
         Object.assign(this.category, data);
       }

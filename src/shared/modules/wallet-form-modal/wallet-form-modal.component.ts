@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
@@ -9,7 +10,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
-import { icons } from '@shared/constants/icons';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Wallet } from '@shared/interfaces/wallet';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
@@ -60,7 +60,8 @@ export class WalletFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
-              private api: ApiService) {
+              private api: ApiService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -72,6 +73,7 @@ export class WalletFormModalComponent implements OnInit {
       name: [null, Validators.required],
       color: [null, Validators.required],
       icon: [null, Validators.required],
+      archive: [null],
     });
     /**
      * Check if editing
@@ -82,6 +84,7 @@ export class WalletFormModalComponent implements OnInit {
         name: this.wallet.name,
         color: this.wallet.color,
         icon: this.wallet.icon,
+        archive: this.wallet.archive,
       });
     }
   }
@@ -97,6 +100,9 @@ export class WalletFormModalComponent implements OnInit {
       method = this.api.wallet.update(this.wallet.id, payload);
     }
     method.subscribe((data: Wallet): void => {
+      if (!this.isEditing) {
+        this.router.navigate(['/dash/wallet/', data.id]);
+      }
       if (this.isEditing) {
         Object.assign(this.wallet, data);
       }

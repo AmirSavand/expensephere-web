@@ -1,0 +1,22 @@
+<!-- filter -->
+<div class="container mt-3">
+  <div class="p-2 rounded bg-tertiary">
+    <app-filters [filters]="filters" (update)="load($event)"></app-filters>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="container mb-3">
+
+  <!-- Transactions -->
+  <app-transaction-list [transactions]="transactions"
+                        [categories]="categories"
+                        [wallets]="wallets">
+  </app-transaction-list>
+
+  <!-- No data -->
+  <app-no-data classes="mt-3" *ngIf="transactions && !transactions.length"></app-no-data>
+
+  <!-- Loading -->
+  <app-loading classes="mt-3" *ngIf="!transactions"></app-loading>
+</div>

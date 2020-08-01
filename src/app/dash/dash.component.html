@@ -41,8 +41,22 @@
           </a>
         </div>
 
-        <!-- Create button -->
-        <div class="btn btn-primary ml-auto" (click)="addTransaction()">Create</div>
+        <!-- Dropdown create buttons -->
+        <div class="dropdown ml-auto" dropdown>
+          <!-- Create button -->
+          <button class="btn btn-primary dropdown-toggle" dropdownToggle>Create</button>
+          <!-- Buttons -->
+          <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+            <!-- Transaction -->
+            <a class="dropdown-item" (click)="addTransaction()">Transaction</a>
+            <!-- Wallet -->
+            <a class="dropdown-item" (click)="addWallet()">Wallet</a>
+            <!-- Category -->
+            <a class="dropdown-item" (click)="addCategory()">Category</a>
+            <!-- Event -->
+            <a class="dropdown-item" (click)="addEvent()">Event</a>
+          </div>
+        </div>
       </div>
     </div>
 

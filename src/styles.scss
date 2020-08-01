@@ -85,6 +85,15 @@ a, button, .btn {
   }
 }
 
+.item-icon-action {
+  &:hover,
+  &:focus {
+    .icon-badge {
+      opacity: 1;
+    }
+  }
+}
+
 .item-icon-wrapper {
   &:hover,
   &:focus {
@@ -96,12 +105,6 @@ a, button, .btn {
     &:active {
       background: none;
       box-shadow: none;
-    }
-
-    > .item-icon {
-      > .icon-badge {
-        opacity: 1;
-      }
     }
   }
 
