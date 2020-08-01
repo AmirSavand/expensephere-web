@@ -1,22 +1,22 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-currency.module';
-import { TransactionListComponent } from './transaction-list.component';
+
+import { DetailRoutingModule } from './detail-routing.module';
+import { DetailComponent } from './detail.component';
 
 
 @NgModule({
-  declarations: [TransactionListComponent],
+  declarations: [
+    DetailComponent,
+  ],
   imports: [
     CommonModule,
+    DetailRoutingModule,
     ProfileCurrencyModule,
     FontAwesomeModule,
-    RouterModule,
-  ],
-  exports: [
-    TransactionListComponent,
   ],
 })
-export class TransactionListModule {
+export class DetailModule {
 }

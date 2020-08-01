@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Color } from '@shared/classes/color';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
@@ -15,6 +17,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 export class TransactionListComponent {
 
   readonly style = Color.style;
+  readonly faEdit: IconDefinition = faPen;
   readonly expenseKind = ExpenseKind;
 
   @Input() transactions: Transaction[];
