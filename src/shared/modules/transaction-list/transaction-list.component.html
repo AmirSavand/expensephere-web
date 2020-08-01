@@ -1,28 +1,38 @@
-<div class="row">
+<div class="row transaction-list">
   <div *ngFor="let transaction of transactions" [classList]="columnClass">
-    <div class="d-flex align-items-center mt-3 item-icon-wrapper"
-         (click)="editTransaction(transaction)"
-         [title]="transaction.note">
-      <!-- Icon and wallet -->
-      <div class="item-icon" [ngStyle]="style(getCategory(transaction.category).color)">
-        <i class="icon-{{ getCategory(transaction.category).icon }}"></i>
-        <i class="icon-{{ getWallet(transaction.wallet).icon }} icon-badge"
-           [title]="getWallet(transaction.wallet).name"
-           [style.background]="getWallet(transaction.wallet).color"></i>
-      </div>
-      <!-- Name and time -->
-      <div class="ml-3">
-        <div>{{ getCategory(transaction.category).name }}</div>
-        <div class="small text-muted">{{ transaction.time | date:'hh:mm aa' }}</div>
-      </div>
-      <!-- Amount and (to wallet) -->
-      <div class="ml-auto font-weight-bold"
-           [class.text-secondary]="transaction.kind === expenseKind.TRANSFER"
-           [class.text-danger]="transaction.kind === expenseKind.EXPENSE">
-        <div class="text-right">{{ transaction.amount | profileCurrency }}</div>
-        <div class="small" *ngIf="transaction.kind === expenseKind.TRANSFER">
-          +{{ getWallet(transaction.into).name }}
+    <div class="mt-3 item-icon-wrapper">
+      <div class="d-flex item-icon-action"
+           [title]="transaction.note">
+        <!-- Category Icon -->
+        <div class="item-icon" [ngStyle]="style(getCategory(transaction.category).color)">
+          <i class="icon-{{ getCategory(transaction.category).icon }}"></i>
         </div>
+        <!-- Edit -->
+        <div class="item-icon edit" (click)="editTransaction(transaction)" title="Edit transaction">
+          <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+          <!-- Wallet icon -->
+          <i class="icon-{{ getWallet(transaction.wallet).icon }} icon-badge"
+             [title]="getWallet(transaction.wallet).name"
+             [style.background]="getWallet(transaction.wallet).color"></i>
+        </div>
+        <a class="pl-3 d-flex align-items-center text-dark w-100" title="View transaction"
+           [routerLink]="['/dash', 'transaction', transaction.id]">
+          <div>
+            <!-- Name -->
+            <div>{{ getCategory(transaction.category).name }}</div>
+            <!-- Time -->
+            <div class="small text-muted">{{ transaction.time | date:'hh:mm aa' }}</div>
+          </div>
+          <!-- Amount and (to wallet) -->
+          <div class="ml-auto font-weight-bold"
+               [class.text-secondary]="transaction.kind === expenseKind.TRANSFER"
+               [class.text-danger]="transaction.kind === expenseKind.EXPENSE">
+            <div class="text-right">{{ transaction.amount | profileCurrency }}</div>
+            <div class="small" *ngIf="transaction.kind === expenseKind.TRANSFER">
+              +{{ getWallet(transaction.into).name }}
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   </div>

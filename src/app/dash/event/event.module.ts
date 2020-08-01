@@ -12,6 +12,9 @@ import { EventComponent } from './event.component';
     CommonModule,
     EventRoutingModule,
   ],
+  exports: [
+    EventComponent,
+  ],
 })
 export class EventModule {
 }
