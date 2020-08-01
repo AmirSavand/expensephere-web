@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons/faCalendar';
 import { faClock } from '@fortawesome/free-regular-svg-icons/faClock';
+import { faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons/faMoneyBillAlt';
 import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
+import { faArchive } from '@fortawesome/free-solid-svg-icons/faArchive';
 import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
@@ -21,9 +25,12 @@ export class DetailComponent implements OnInit {
 
   readonly expenseKind = ExpenseKind;
 
-  readonly faTime = faClock;
-  readonly faNote = faStickyNote;
-  readonly faWallet = faWallet;
+  readonly faTime: IconDefinition = faClock;
+  readonly faNote: IconDefinition = faStickyNote;
+  readonly faWallet: IconDefinition = faWallet;
+  readonly faAmount: IconDefinition = faMoneyBillAlt;
+  readonly faEvent: IconDefinition = faCalendar;
+  readonly faArchive: IconDefinition = faArchive;
 
   /**
    * Transaction ID from param
@@ -117,7 +124,7 @@ export class DetailComponent implements OnInit {
   /**
    * Open transaction form modal for editing
    */
-  editTransaction(transaction: Transaction): void {
-    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } });
+  edit(): void {
+    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction: this.transaction } });
   }
 }

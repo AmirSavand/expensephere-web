@@ -1,15 +1,17 @@
 @import "src/variables";
 
 .wrapper {
-  height: 100vh;
   width: 100%;
+  min-height: 100%;
   padding: 100px map_get($spacers, 5) 0;
 
   > .container {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 190px);
     background: white;
     color: $dark;
     border-radius: $border-radius-lg $border-radius-lg 0 0;
-    height: 100%;
     padding: map_get($spacers, 4);
   }
 }
