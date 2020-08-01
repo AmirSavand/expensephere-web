@@ -13,6 +13,10 @@ const routes: Routes = [
         loadChildren: () => import('./list/list.module').then(m => m.ListModule),
       },
       {
+        path: ':id',
+        loadChildren: () => import('./detail/detail.module').then(m => m.DetailModule),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'list',

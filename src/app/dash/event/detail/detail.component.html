@@ -1,0 +1,52 @@
+<div class="container my-3" *ngIf="event && transactions">
+  <div class="row">
+
+    <!-- Left -->
+    <div class="col-lg-6">
+
+      <!-- Event -->
+      <p class="font-weight-bold m-0">Event</p>
+      <app-event-list columnClass="col-12" [events]="[event]"></app-event-list>
+
+      <!-- Budget -->
+      <hr>
+      <p class="font-weight-bold">Budget</p>
+      <p>{{ event.budget | profileCurrency }}</p>
+
+      <!-- Transactions (count) -->
+      <hr>
+      <p class="font-weight-bold">Transactions</p>
+      <p>{{ event.transactions_count | number }}</p>
+
+      <!-- Date (start and end) -->
+      <hr>
+      <p class="font-weight-bold">Date</p>
+      <p>
+        <span>From </span>
+        <abbr [title]="event.start | date:'short'">{{ event.start | date }} </abbr>
+        <span>to </span>
+        <abbr [title]="event.end | date:'short'">{{ event.end | date }}</abbr>
+        <span>.</span>
+      </p>
+
+      <!-- Archive message -->
+      <div *ngIf="event.archive" class="text-warning">
+        <hr>
+        <p class="font-weight-bold">Archived</p>
+        <p>This event is archived.</p>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="col-lg-6">
+
+      <!-- Transactions (list) -->
+      <app-transaction-list *ngIf="categories && wallets"
+                            [categories]="categories"
+                            [transactions]="transactions"
+                            [wallets]="wallets"
+                            columnClass="col-12">
+      </app-transaction-list>
+    </div>
+  </div>
+</div>
