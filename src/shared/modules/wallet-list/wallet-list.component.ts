@@ -33,4 +33,12 @@ export class WalletListComponent {
       initialState: { wallet },
     });
   }
+
+  getWalletLink(wallet: Wallet): (string | number)[] {
+    const output: (string | number)[] = ['/dash', 'wallet'];
+    if (wallet.id) {
+      output.push(wallet.id);
+    }
+    return output;
+  }
 }
