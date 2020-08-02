@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
@@ -21,6 +22,18 @@ export class ListComponent implements OnInit {
       label: 'Search',
       key: 'search',
       value: '',
+    },
+    {
+      type: FilterType.LIST,
+      label: 'Type',
+      key: 'category__kind',
+      value: '',
+      values: [
+        { label: 'Type', value: '' },
+        { label: 'Income', value: ExpenseKind.INCOME },
+        { label: 'Expense', value: ExpenseKind.EXPENSE },
+        { label: 'Transfer', value: ExpenseKind.TRANSFER },
+      ],
     },
     {
       type: FilterType.LIST,
@@ -97,7 +110,7 @@ export class ListComponent implements OnInit {
       this.wallets = data;
       // Set transaction list to filter
       for (const wallet of data) {
-        this.filters[1].values.push({
+        this.filters[2].values.push({
           label: wallet.name,
           value: wallet.id,
         });
@@ -110,7 +123,7 @@ export class ListComponent implements OnInit {
       this.categories = data;
       // Set category list to filter
       for (const category of data) {
-        this.filters[2].values.push({
+        this.filters[3].values.push({
           label: category.name,
           value: category.id,
         });
@@ -122,7 +135,7 @@ export class ListComponent implements OnInit {
     this.api.event.list().subscribe((data: Event[]): void => {
       // Set event list to filter
       for (const event of data) {
-        this.filters[3].values.push({
+        this.filters[4].values.push({
           label: event.name,
           value: event.id,
         });

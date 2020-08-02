@@ -28,9 +28,10 @@ export class ListComponent {
       key: 'kind',
       value: '',
       values: [
-        { label: 'Any', value: '' },
+        { label: 'Type', value: '' },
         { label: 'Income', value: ExpenseKind.INCOME },
         { label: 'Expense', value: ExpenseKind.EXPENSE },
+        { label: 'Transfer', value: ExpenseKind.TRANSFER },
       ],
     },
     {

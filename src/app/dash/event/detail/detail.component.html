@@ -18,6 +18,11 @@
       <p class="font-weight-bold">Transactions</p>
       <p>{{ event.transactions_count | number }}</p>
 
+      <!-- Transactions total -->
+      <hr>
+      <p class="font-weight-bold">Total Spent</p>
+      <p>{{ event.transactions_total | profileCurrency }}</p>
+
       <!-- Date (start and end) -->
       <hr>
       <p class="font-weight-bold">Date</p>
