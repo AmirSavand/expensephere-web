@@ -1,6 +1,10 @@
 name: Code Quality
 
-on: push
+on:
+  push:
+    branches:
+      - '**'
+      - '!production'
 
 jobs:
   lint:
