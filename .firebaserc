@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "expensephere",
+    "production": "expensephere"
+  }
+}
