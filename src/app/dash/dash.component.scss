@@ -61,15 +61,6 @@
       flex-direction: row;
       align-items: center;
       justify-content: end;
-      cursor: pointer;
-
-      &:hover {
-        background: rgba(0, 0, 0, 0.05);
-      }
-
-      &:active {
-        background: rgba(0, 0, 0, 0.075);
-      }
     }
   }
 
@@ -103,6 +94,20 @@
           display: none;
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  #sidebar {
+    position: fixed;
+    top: 0;
+    right: -$sidebar-width;
+    transition: $transition-base;
+
+    &.open {
+      right: 0;
+      box-shadow: $box-shadow-lg;
     }
   }
 }

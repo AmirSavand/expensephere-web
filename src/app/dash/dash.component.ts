@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
@@ -39,6 +40,7 @@ export class DashComponent implements OnInit {
   readonly profileService = ProfileService;
 
   readonly faView: IconDefinition = faChevronDown;
+  readonly faSidebarToggle: IconDefinition = faBars;
   readonly faBack: IconDefinition = faChevronUp;
   readonly faSignOut: IconDefinition = faSignOutAlt;
   readonly faSettings: IconDefinition = faCog;
@@ -69,6 +71,11 @@ export class DashComponent implements OnInit {
    * What other view that sidebar is showing
    */
   sidebarViewSelected: SidebarView = SidebarView.MAIN;
+
+  /**
+   * Sidebar toggle status (used for mobile only)
+   */
+  sidebarClose: boolean = true;
 
   constructor(public auth: AuthService,
               private api: ApiService,

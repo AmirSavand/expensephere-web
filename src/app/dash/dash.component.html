@@ -10,7 +10,7 @@
       <!-- Container -->
       <div class="container d-flex align-items-center">
 
-        <!-- Wallets -->
+        <!-- Wallets button (popover) -->
         <div class="d-inline-block" *ngIf="profiles">
           <a class="text-dark d-flex align-items-center" title="Current wallet"
              *ngIf="wallets" [popover]="walletsTemplate" placement="bottom" [outsideClick]="true">
@@ -41,7 +41,7 @@
           </a>
         </div>
 
-        <!-- Dropdown create buttons -->
+        <!-- Create button (dropdown) -->
         <div class="dropdown ml-auto" dropdown>
           <!-- Create button -->
           <button class="btn btn-primary dropdown-toggle" dropdownToggle>Create</button>
@@ -57,6 +57,11 @@
             <a class="dropdown-item" (click)="addEvent()">Event</a>
           </div>
         </div>
+
+        <!-- Sidebar toggle button (mobile only) -->
+        <button class="btn btn-light ml-2 d-block d-lg-none" (click)="sidebarClose = !sidebarClose">
+          <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
+        </button>
       </div>
     </div>
 
@@ -67,10 +72,15 @@
   </div>
 
   <!-- Sidebar -->
-  <div id="sidebar" *ngIf="user">
+  <div id="sidebar" [class.open]="!sidebarClose" *ngIf="user">
 
     <!-- User -->
-    <div id="user" (click)="toggleUserView()">
+    <div id="user">
+
+      <!-- Sidebar toggle button (mobile only) -->
+      <button class="btn btn-light mr-3 d-block d-lg-none" (click)="sidebarClose = true">
+        <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
+      </button>
 
       <!-- Name -->
       <div class="font-weight-bold">
@@ -79,9 +89,9 @@
       </div>
 
       <!-- Icon -->
-      <fa-icon [fixedWidth]="true" class="ml-auto text-secondary"
-               [icon]="sidebarViewSelected === sidebarView.USER ? faBack : faView">
-      </fa-icon>
+      <div class="btn btn-light ml-auto" (click)="toggleUserView()">
+        <fa-icon [fixedWidth]="true" [icon]="sidebarViewSelected === sidebarView.USER ? faBack : faView"></fa-icon>
+      </div>
     </div>
 
     <!-- Sidebar view: User -->
