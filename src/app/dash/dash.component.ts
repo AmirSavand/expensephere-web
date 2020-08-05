@@ -75,7 +75,7 @@ export class DashComponent implements OnInit {
   /**
    * Sidebar toggle status (used for mobile only)
    */
-  sidebarClose: boolean = true;
+  sidebarClose = true;
 
   constructor(public auth: AuthService,
               private api: ApiService,
