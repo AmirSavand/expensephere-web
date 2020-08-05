@@ -111,3 +111,10 @@
     }
   }
 }
+
+@media screen and (max-width: $sidebar-width + 100px) {
+  #sidebar {
+    min-width: $sidebar-mobile-width !important;
+    right: -$sidebar-mobile-width;
+  }
+}

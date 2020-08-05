@@ -11,7 +11,7 @@
 </div>
 
 <!-- Body -->
-<div class="modal-body pb-0" *ngIf="wallets && wallets.length">
+<div class="modal-body pb-0" *ngIf="!noWallets">
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
 
     <!-- Kind -->
@@ -172,7 +172,7 @@
 </div >
 
 <!-- Footer -->
-<div class="modal-footer text-right" *ngIf="wallets && wallets.length">
+<div class="modal-footer text-right" *ngIf="!noWallets">
 
   <!-- Delete -->
   <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(transaction)">
@@ -189,7 +189,7 @@
 </div >
 
 <!-- Body (when no wallets) -->
-<div class="modal-body">
+<div class="modal-body" *ngIf="noWallets">
   <p class="font-weight-bold text-warning">No Wallets 😮</p>
   <p>You don't have any wallets for your profile.</p>
   <button class="btn btn-primary" (click)="addWallet(); modal.hide();">Add Wallet</button>

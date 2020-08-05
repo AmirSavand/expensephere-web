@@ -75,6 +75,11 @@ export class TransactionFormModalComponent implements OnInit {
    */
   currency: string;
 
+  /**
+   * No wallet, used to show alert to add wallet
+   */
+  noWallets = false;
+
   constructor(public modal: BsModalRef,
               private modalService: BsModalService,
               private formBuilder: FormBuilder,
@@ -96,6 +101,8 @@ export class TransactionFormModalComponent implements OnInit {
       // Select first wallet
       if (data.length) {
         this.form.form.get('wallet').setValue(data[0].id);
+      } else {
+        this.noWallets = true;
       }
     });
     /**
