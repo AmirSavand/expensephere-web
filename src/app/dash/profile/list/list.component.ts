@@ -4,7 +4,6 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Profile } from '@shared/interfaces/profile';
 import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
@@ -21,15 +20,15 @@ export class ListComponent implements OnInit {
 
   profileSelected = ProfileService.profile;
 
-  constructor(private api: ApiService,
+  constructor(private profile: ProfileService,
               private router: Router,
               private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
-    this.api.profile.list().subscribe((data: Profile[]): void => {
+    this.profile.load().subscribe((data: Profile[]): void => {
       if (!data.length) {
-        this.router.navigateByUrl('/dash/profile/add');
+        this.addProfile();
       }
       this.profiles = data;
     });

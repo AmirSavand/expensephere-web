@@ -5,21 +5,19 @@
   <div id="page-wrapper">
 
     <!-- Header -->
-    <div id="header">
+    <div id="header" *ngIf="profileService.profile">
 
       <!-- Container -->
       <div class="container d-flex align-items-center">
 
-        <!-- Wallets button (popover) -->
+        <!-- Total -->
         <div class="text-dark d-flex align-items-center">
           <div class="item-icon" [ngStyle]="style(total.color)">
             <span class="icon-{{ total.icon }}"></span>
           </div>
           <div class="ml-3">
             <div class="font-weight-bold">{{ total.name }}</div>
-            <div class="text-muted small">
-              {{ total.balance.total | profileCurrency }}
-            </div>
+            <div class="text-muted small">{{ total.balance.total | profileCurrency }}</div>
           </div>
         </div>
 
@@ -86,7 +84,9 @@
         <p class="font-weight-bold">My Profiles</p>
 
         <!-- Profile -->
-        <div class="card shadow-sm" *ngFor="let profile of profiles; let last = last" [class.mb-3]="!last">
+        <div class="card shadow-sm"
+             *ngFor="let profile of profileService.profiles; let last = last"
+             [class.mb-3]="!last">
           <div class="card-body">
             <span class="font-weight-bold">{{ profile.name }}</span>
             <span class="float-right" title="Balance">
@@ -125,7 +125,7 @@
     <div *ngIf="sidebarViewSelected === sidebarView.MAIN">
 
       <!-- Links -->
-      <div class="links">
+      <div class="links" *ngIf="profileService.profile">
         <a routerLinkActive="active" routerLink="/dash/overview">
           <fa-icon [fixedWidth]="true" [icon]="faDashboard"></fa-icon>
           <span>Dashboard</span>
@@ -145,6 +145,14 @@
         <a routerLinkActive="active" routerLink="/dash/event">
           <fa-icon [fixedWidth]="true" [icon]="faEvents"></fa-icon>
           <span>Events</span>
+        </a>
+      </div>
+
+      <!-- Links -->
+      <div class="links" *ngIf="!profileService.profile">
+        <a routerLinkActive="active" routerLink="/dash/profile">
+          <fa-icon [fixedWidth]="true" [icon]="faProfile"></fa-icon>
+          <span>Profiles</span>
         </a>
       </div>
     </div>

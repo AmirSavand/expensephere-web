@@ -7,6 +7,7 @@ import { Category } from '@shared/interfaces/category';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
+import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -36,7 +37,8 @@ export class OverviewComponent implements OnInit {
   categoryChartColors: { name: string; value: string }[] = [];
 
   constructor(private api: ApiService,
-              private router: Router) {
+              private router: Router,
+              private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
@@ -63,7 +65,7 @@ export class OverviewComponent implements OnInit {
     });
     this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
       if (!wallets.length) {
-        this.router.navigateByUrl('/dash/wallet/add');
+        this.modalService.show(WalletFormModalComponent);
         return;
       }
       this.wallets = wallets;

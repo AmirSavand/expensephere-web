@@ -73,7 +73,7 @@ export class WalletFormModalComponent implements OnInit {
       name: [null, Validators.required],
       color: [null, Validators.required],
       icon: [null, Validators.required],
-      archive: [null],
+      archive: [false],
     });
     /**
      * Check if editing

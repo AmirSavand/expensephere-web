@@ -20,9 +20,10 @@ import { Event } from '@shared/interfaces/event';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
+import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -75,6 +76,7 @@ export class TransactionFormModalComponent implements OnInit {
   currency: string;
 
   constructor(public modal: BsModalRef,
+              private modalService: BsModalService,
               private formBuilder: FormBuilder,
               private api: ApiService,
               private date: DatePipe,
@@ -92,7 +94,9 @@ export class TransactionFormModalComponent implements OnInit {
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
       this.wallets = data;
       // Select first wallet
-      this.form.form.get('wallet').setValue(data[0].id);
+      if (data.length) {
+        this.form.form.get('wallet').setValue(data[0].id);
+      }
     });
     /**
      * Load categories
@@ -125,7 +129,7 @@ export class TransactionFormModalComponent implements OnInit {
       event: [null],
       amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
       time: [this.date.transform(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
-      archive: [null],
+      archive: [false],
       note: [''],
     });
     /**
@@ -193,5 +197,13 @@ export class TransactionFormModalComponent implements OnInit {
     this.api.transaction.delete(transaction.id).subscribe((): void => {
       this.modal.hide();
     });
+  }
+
+
+  /**
+   * Open up wallet form modal
+   */
+  addWallet(): void {
+    this.modalService.show(WalletFormModalComponent);
   }
 }

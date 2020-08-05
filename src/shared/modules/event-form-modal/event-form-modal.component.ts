@@ -98,7 +98,7 @@ export class EventFormModalComponent implements OnInit {
       color: [null, Validators.required],
       icon: [null, Validators.required],
       budget: [null],
-      archive: [null],
+      archive: [false],
       note: [''],
     });
     /**

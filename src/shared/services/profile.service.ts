@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Profile } from '@shared/interfaces/profile';
+import { ApiService } from '@shared/services/api.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +33,26 @@ export class ProfileService {
   static clear() {
     localStorage.removeItem('profile');
     localStorage.removeItem('profiles');
+  }
+
+  constructor(private api: ApiService) {
+  }
+
+  /**
+   * Load and save profiles to localStorage.
+   * If there's no selected profile, select the first one.
+   */
+  load(): Observable<Profile[]> {
+    return this.api.profile.list().pipe(map((data: Profile[]): Profile[] => {
+      if (data.length) {
+        ProfileService.profiles = data;
+        if (!ProfileService.profile) {
+          ProfileService.profile = ProfileService.profiles[0];
+        }
+      } else {
+        ProfileService.clear();
+      }
+      return data;
+    }));
   }
 }

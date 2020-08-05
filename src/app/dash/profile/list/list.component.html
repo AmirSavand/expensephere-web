@@ -6,10 +6,10 @@
           <span class="font-weight-bold">{{ profile.name }}</span>
           <div class="ml-auto">
             <button class="btn btn-sm mr-2" (click)="select(profile)"
-                    [class.btn-link]="profile.id === profileSelected.id"
-                    [class.btn-primary]="profile.id !== profileSelected.id"
-                    [disabled]="profile.id === profileSelected.id">
-              {{ profile.id === profileSelected.id ? 'Selected' : 'Select' }}
+                    [class.btn-link]="profileSelected && profile.id === profileSelected.id"
+                    [class.btn-primary]="!profileSelected || profile.id !== profileSelected.id"
+                    [disabled]="profileSelected && profile.id === profileSelected.id">
+              {{ profileSelected && profile.id === profileSelected.id ? 'Selected' : 'Select' }}
             </button>
             <!-- Edit -->
             <a class="text-secondary" (click)="editProfile(profile)">

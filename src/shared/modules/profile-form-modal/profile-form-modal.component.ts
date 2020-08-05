@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
@@ -13,6 +14,7 @@ import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ApiService } from '@shared/services/api.service';
+import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 
@@ -52,6 +54,7 @@ export class ProfileFormModalComponent implements OnInit {
   isEditing: boolean;
 
   constructor(public modal: BsModalRef,
+              private router: Router,
               private formBuilder: FormBuilder,
               private api: ApiService) {
   }
@@ -75,7 +78,7 @@ export class ProfileFormModalComponent implements OnInit {
           color: Color.COLORS_RESERVED.default,
           icon: 'money',
           id: currency.code,
-          name: `${currency.code} (${currency.name})`
+          name: `${currency.code} (${currency.name})`,
         });
       }
     });
@@ -103,9 +106,26 @@ export class ProfileFormModalComponent implements OnInit {
       method = this.api.profile.update(this.profile.id, payload);
     }
     method.subscribe((data: Profile): void => {
+      const profiles = ProfileService.profiles;
       if (this.isEditing) {
         Object.assign(this.profile, data);
+        /**
+         * Save profile
+         */
+        const profile = profiles.find((item: Profile): boolean => item.id === data.id);
+        Object.assign(profile, this.profile);
+        ProfileService.profiles = profiles;
+      } else {
+        /**
+         * Add profiles
+         */
+        profiles.push(data);
+        ProfileService.profiles = profiles;
+        if (!ProfileService.profile) {
+          ProfileService.profile = data;
+        }
       }
+      this.router.navigate(['/dash', 'profile', data.id]);
       this.modal.hide();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;

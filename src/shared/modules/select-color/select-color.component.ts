@@ -34,6 +34,7 @@ export class SelectColorComponent implements OnInit {
      */
     if (!this.selected) {
       this.selected = Utils.getRandomItemFromList(Color.COLORS);
+      this.choose.emit(this.selected);
     }
   }
 }

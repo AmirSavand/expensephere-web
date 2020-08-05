@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
+import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
@@ -13,7 +14,6 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
 import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
 import { Color } from '@shared/classes/color';
-import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
 import { Wallet } from '@shared/interfaces/wallet';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
@@ -23,7 +23,6 @@ import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wall
 import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
-import { WalletService } from '@shared/services/wallet.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -48,6 +47,7 @@ export class DashComponent implements OnInit {
   readonly faTransactions: IconDefinition = faRetweet;
   readonly faCategories: IconDefinition = faTags;
   readonly faEvents: IconDefinition = faCalendarAlt;
+  readonly faProfile: IconDefinition = faUser;
 
   /**
    * Total balance as wallet
@@ -56,7 +56,11 @@ export class DashComponent implements OnInit {
     id: null,
     profile: null,
     archive: false,
-    balance: ProfileService.profile.balance,
+    balance: {
+      total: 0,
+      expense: 0,
+      income: 0,
+    },
     color: Color.COLORS_RESERVED.total,
     icon: 'money3',
     name: 'Total',
@@ -66,11 +70,6 @@ export class DashComponent implements OnInit {
    * Authenticated user data
    */
   user: User;
-
-  /**
-   * List of profiles
-   */
-  profiles: Profile[] = ProfileService.profiles;
 
   /**
    * What other view that sidebar is showing
