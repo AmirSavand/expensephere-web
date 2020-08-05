@@ -8,7 +8,7 @@
     <div class="d-flex align-items-center">
 
       <!-- Category icon -->
-      <a class="d-flex" [routerLink]="['../../../../category', category.id]">
+      <a class="d-flex" [routerLink]="['/dash/category', category.id]">
         <i [style.background]="category.color" class="category-icon icon-{{ category.icon }}"></i>
       </a>
 
@@ -58,7 +58,7 @@
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faWallet"></fa-icon>
             <div class="ml-3">
               <p class="font-weight-bold m-0">
-                <a class="text-dark" [routerLink]="['../../../../wallet', wallet.id]">{{ wallet.name }}</a>
+                <a class="text-dark" [routerLink]="['/dash/wallet', wallet.id]">{{ wallet.name }}</a>
               </p>
               <div>Transaction wallet</div>
             </div>
@@ -71,7 +71,7 @@
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faWallet"></fa-icon>
             <div class="ml-3">
               <p class="font-weight-bold m-0">
-                <a class="text-dark" [routerLink]="['../../../../wallet', into.id]">{{ into.name }}</a>
+                <a class="text-dark" [routerLink]="['/dash/wallet', into.id]">{{ into.name }}</a>
               </p>
               <div>Transferred into wallet</div>
             </div>
@@ -106,7 +106,7 @@
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faEvent"></fa-icon>
             <div class="ml-3">
               <p class="font-weight-bold m-0">
-                <a class="text-dark" [routerLink]="['../../../../event', event.id]">{{ event.name }}</a>
+                <a class="text-dark" [routerLink]="['/dash/event', event.id]">{{ event.name }}</a>
               </p>
               <div>Transaction wallet</div>
             </div>
@@ -134,8 +134,8 @@
 
       <!-- Buttons -->
       <button class="btn btn-secondary mr-2 mb-2" (click)="edit()">Edit Transaction</button>
-      <a class="btn btn-secondary mr-2 mb-2" [routerLink]="['../../../../category', category.id]">View Category</a>
-      <a class="btn btn-secondary mr-2 mb-2" [routerLink]="['../../../../event', event.id]" *ngIf="event">View Event</a>
+      <a class="btn btn-secondary mr-2 mb-2" [routerLink]="['/dash/category', category.id]">View Category</a>
+      <a class="btn btn-secondary mr-2 mb-2" [routerLink]="['/dash/event', event.id]" *ngIf="event">View Event</a>
     </div>
   </div>
 </div>

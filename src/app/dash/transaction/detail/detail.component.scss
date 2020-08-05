@@ -25,3 +25,19 @@
   position: relative;
   margin-top: -75px;
 }
+
+@media screen and (max-width: 1200px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .category-icon {
+    font-size: 1.5rem;
+    padding: 20px;
+    margin-top: 0;
+    margin-left: -60px;
+    margin-right: -15px;
+  }
+}
