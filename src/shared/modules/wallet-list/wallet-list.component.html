@@ -1,7 +1,7 @@
 <div class="row">
   <div [classList]="columnClass" *ngFor="let wallet of wallets">
     <div class="mt-3 card item-icon-wrapper" [ngStyle]="style(wallet.color)">
-      <div class="card-body d-flex align-items-center">
+      <div class="card-body d-flex align-items-center" [class.no-edit]="!wallet.id">
         <div class="item-icon">
           <i class="icon-{{ wallet.icon }}"></i>
         </div>

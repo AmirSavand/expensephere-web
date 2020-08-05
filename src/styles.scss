@@ -123,7 +123,7 @@ a, button, .btn {
       }
     }
 
-    &:hover {
+    &:hover:not(.no-edit) {
       .item-icon {
         display: none;
       }

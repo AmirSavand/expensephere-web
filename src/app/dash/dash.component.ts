@@ -35,8 +35,6 @@ export class DashComponent implements OnInit {
 
   readonly sidebarView = SidebarView;
   readonly style = Color.style;
-  readonly colorsReserved = Color.COLORS_RESERVED;
-  readonly walletService = WalletService;
   readonly profileService = ProfileService;
 
   readonly faView: IconDefinition = faChevronDown;
@@ -44,13 +42,25 @@ export class DashComponent implements OnInit {
   readonly faBack: IconDefinition = faChevronUp;
   readonly faSignOut: IconDefinition = faSignOutAlt;
   readonly faSettings: IconDefinition = faCog;
-  readonly faDropdown: IconDefinition = faChevronDown;
   readonly faWallets: IconDefinition = faLayerGroup;
 
   readonly faDashboard: IconDefinition = faTachometerAlt;
   readonly faTransactions: IconDefinition = faRetweet;
   readonly faCategories: IconDefinition = faTags;
   readonly faEvents: IconDefinition = faCalendarAlt;
+
+  /**
+   * Total balance as wallet
+   */
+  readonly total: Wallet = {
+    id: null,
+    profile: null,
+    archive: false,
+    balance: ProfileService.profile.balance,
+    color: Color.COLORS_RESERVED.total,
+    icon: 'money3',
+    name: 'Total',
+  };
 
   /**
    * Authenticated user data
@@ -61,11 +71,6 @@ export class DashComponent implements OnInit {
    * List of profiles
    */
   profiles: Profile[] = ProfileService.profiles;
-
-  /**
-   * List of wallets
-   */
-  wallets: Wallet[];
 
   /**
    * What other view that sidebar is showing
@@ -83,35 +88,12 @@ export class DashComponent implements OnInit {
               private modalService: BsModalService) {
   }
 
-  /**
-   * @returns Selected wallet data
-   */
-  get walletSelected(): Wallet {
-    return this.wallets.find((wallet: Wallet): boolean => wallet.id === WalletService.wallet);
-  }
-
   ngOnInit(): void {
     /**
      * Watch authentication and user data
      */
     AuthService.user.subscribe((user: User): void => {
       this.user = user;
-      /**
-       * If user is authenticated
-       */
-      if (AuthService.isAuth()) {
-        /**
-         * If a profile is selected
-         */
-        if (ProfileService.profile) {
-          /**
-           * Get wallets
-           */
-          this.api.wallet.list().subscribe((data: Wallet[]): void => {
-            this.wallets = data;
-          });
-        }
-      }
     });
   }
 

@@ -5,7 +5,6 @@ import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-
 import { TransactionFormModalModule } from '@shared/modules/transaction-form-modal/transaction-form-modal.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import { DashRoutingModule } from './dash-routing.module';
 import { DashComponent } from './dash.component';
@@ -19,7 +18,6 @@ import { DashComponent } from './dash.component';
     CommonModule,
     DashRoutingModule,
     FontAwesomeModule,
-    PopoverModule.forRoot(),
     ModalModule.forRoot(),
     TransactionFormModalModule,
     ProfileCurrencyModule,

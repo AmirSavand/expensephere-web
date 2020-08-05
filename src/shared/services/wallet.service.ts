@@ -9,6 +9,7 @@ export class WalletService {
     if (localStorage.getItem('wallet')) {
       return Number(localStorage.getItem('wallet'));
     }
+    return null;
   }
 
   static set wallet(value: number) {

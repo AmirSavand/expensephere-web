@@ -11,34 +11,16 @@
       <div class="container d-flex align-items-center">
 
         <!-- Wallets button (popover) -->
-        <div class="d-inline-block" *ngIf="profiles">
-          <a class="text-dark d-flex align-items-center" title="Current wallet"
-             *ngIf="wallets" [popover]="walletsTemplate" placement="bottom" [outsideClick]="true">
-            <div class="item-icon" [ngStyle]="style(colorsReserved.wallets)" *ngIf="!walletSelected">
-              <fa-icon [fixedWidth]="true" [icon]="faWallets"></fa-icon>
+        <div class="text-dark d-flex align-items-center">
+          <div class="item-icon" [ngStyle]="style(total.color)">
+            <span class="icon-{{ total.icon }}"></span>
+          </div>
+          <div class="ml-3">
+            <div class="font-weight-bold">{{ total.name }}</div>
+            <div class="text-muted small">
+              {{ total.balance.total | profileCurrency }}
             </div>
-            <div class="ml-3" *ngIf="!walletSelected">
-              <div>
-                <span class="font-weight-bold">Total</span>
-                <fa-icon [icon]="faDropdown" size="sm" class="ml-2 text-muted"></fa-icon>
-              </div>
-              <div class="text-muted small">
-                {{ profiles[0].balance.total | profileCurrency:profiles[0].currency }}
-              </div>
-            </div>
-            <div class="item-icon" [ngStyle]="style(walletSelected.color)" *ngIf="walletSelected">
-              <span class="icon-{{ walletSelected.icon }}"></span>
-            </div>
-            <div class="ml-3" *ngIf="walletSelected">
-              <div>
-                <span class="font-weight-bold">{{ walletSelected.name }}</span>
-                <fa-icon [icon]="faDropdown" size="sm" class="ml-2 text-muted"></fa-icon>
-              </div>
-              <div class="text-muted small">
-                {{ walletSelected.balance.total | profileCurrency }}
-              </div>
-            </div>
-          </a>
+          </div>
         </div>
 
         <!-- Create button (dropdown) -->
@@ -162,32 +144,3 @@
     </div>
   </div>
 </div>
-
-<!-- Wallet popover -->
-<ng-template #walletsTemplate>
-  <a class="align-items-center d-flex mb-3" (click)="walletService.clear()" *ngIf="walletSelected">
-    <div class="item-icon" [ngStyle]="style(colorsReserved.wallets)">
-      <fa-icon [fixedWidth]="true" [icon]="faWallets"></fa-icon>
-    </div>
-    <div class="ml-3">
-      <div class="font-weight-bold" [class.text-primary]="!walletSelected">Total</div>
-      <div class="text-muted small">
-        {{ profileService.profile.balance.total | profileCurrency }}
-      </div>
-    </div>
-  </a>
-  <a class="align-items-center mb-3"
-     *ngFor="let wallet of wallets"
-     (click)="walletService.wallet = wallet.id"
-     [class.d-flex]="walletService.wallet !== wallet.id"
-     [hidden]="walletService.wallet === wallet.id">
-    <div class="item-icon" [ngStyle]="style(wallet.color)">
-      <span class="icon-{{ wallet.icon }}"></span>
-    </div>
-    <div class="ml-3">
-      <div class="font-weight-bold">{{ wallet.name }}</div>
-      <div class="text-muted small">{{ wallet.balance.total | profileCurrency }}</div>
-    </div>
-  </a>
-  <a class="btn btn-primary btn-block btn-sm" routerLink="/user/wallet/add">New Wallet</a>
-</ng-template>
