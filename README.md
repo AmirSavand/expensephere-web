@@ -30,10 +30,10 @@ Code quality.
 
 Here's what the project is build with:
 
-- [Angular](https://angular.io/)
-- [Bootstrap](https://getbootstrap.com/)
+- [angular.io](https://angular.io/)
+- [getbootstrap.com](https://getbootstrap.com/)
 - [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
-- [Font Awesome](https://fontawesome.com/)
+- [fontawesome.com](https://fontawesome.com/)
 
 ### Routes
 
