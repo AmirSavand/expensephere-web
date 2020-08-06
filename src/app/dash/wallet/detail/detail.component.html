@@ -1,22 +1,56 @@
-<div class="container my-3" *ngIf="wallet && transactions">
+<!-- Loading -->
+<app-loading classes="my-5" *ngIf="!wallet"></app-loading>
+
+<!-- Data -->
+<div class="container my-3" *ngIf="wallet">
   <div class="row">
+
+    <!-- Info (left) -->
     <div class="col-lg-6">
-      <p class="font-weight-bold">Wallet</p>
+
+      <!-- Wallet -->
+      <p class="font-weight-bold m-0">Wallet</p>
       <app-wallet-list columnClass="col-12" [wallets]="[wallet]"></app-wallet-list>
-      <hr>
-      <p class="font-weight-bold">Transactions</p>
-      <div>{{ transactions.length | number }}</div>
-      <hr>
-      <p class="font-weight-bold">Expenses</p>
-      <div>{{ wallet.balance.expense | profileCurrency }}</div>
-      <hr>
-      <p class="font-weight-bold">Income</p>
-      <div>{{ wallet.balance.income | profileCurrency }}</div>
+
+      <!-- Total -->
       <hr>
       <p class="font-weight-bold">Total</p>
       <div>{{ wallet.balance.total | profileCurrency }}</div>
+
+      <!-- Expenses -->
+      <hr>
+      <p class="font-weight-bold">Expenses</p>
+      <div>{{ wallet.balance.expense | profileCurrency }}</div>
+
+      <!-- Income -->
+      <hr>
+      <p class="font-weight-bold">Income</p>
+      <div>{{ wallet.balance.income | profileCurrency }}</div>
+
+      <!-- Archive message -->
+      <div *ngIf="wallet.archive" class="text-warning">
+        <hr>
+        <p class="font-weight-bold">Archived</p>
+        <p>This wallet is archived.</p>
+      </div>
+
+      <!-- Responsive separator -->
+      <hr class="d-lg-none">
     </div>
+
+    <!-- Transactions (right) -->
     <div class="col-lg-6">
+
+      <!-- Header -->
+      <p class="font-weight-bold mb-0">Transactions</p>
+
+      <!-- Loading -->
+      <app-loading *ngIf="!transactions"></app-loading>
+
+      <!-- No data -->
+      <app-no-data *ngIf="transactions && !transactions.length"></app-no-data>
+
+      <!-- Transactions -->
       <app-transaction-list [wallets]="wallets"
                             [categories]="categories"
                             [transactions]="transactions"

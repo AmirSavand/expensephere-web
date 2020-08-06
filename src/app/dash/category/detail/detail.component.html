@@ -1,16 +1,49 @@
-<div class="container my-3" *ngIf="category && transactions">
+<!-- Loading -->
+<app-loading classes="my-5" *ngIf="!category"></app-loading>
+
+<!-- Data -->
+<div class="container my-3" *ngIf="category">
   <div class="row">
     <div class="col-lg-6">
+
+      <!-- Category -->
       <p class="font-weight-bold m-0">Category</p>
       <app-category-list columnClass="col-12" [categories]="[category]"></app-category-list>
+
+      <!-- Transactions count -->
       <hr>
       <p class="font-weight-bold">Transactions</p>
       <div>{{ category.transactions_count | number }}</div>
+
+      <!-- Total spent -->
       <hr>
       <p class="font-weight-bold">Total Spent</p>
       <div>{{ category.transactions_total || 0 | profileCurrency }}</div>
+
+      <!-- Archive message -->
+      <div *ngIf="category.archive" class="text-warning">
+        <hr>
+        <p class="font-weight-bold">Archived</p>
+        <p>This event is archived.</p>
+      </div>
+
+      <!-- Responsive separator -->
+      <hr class="d-lg-none">
     </div>
+
+    <!-- Transactions (right) -->
     <div class="col-lg-6">
+
+      <!-- Header -->
+      <p class="font-weight-bold mb-0">Transactions</p>
+
+      <!-- Loading -->
+      <app-loading *ngIf="!transactions"></app-loading>
+
+      <!-- No data -->
+      <app-no-data *ngIf="transactions && !transactions.length"></app-no-data>
+
+      <!-- Transactions -->
       <app-transaction-list [categories]="[category]"
                             [transactions]="transactions"
                             [wallets]="wallets"

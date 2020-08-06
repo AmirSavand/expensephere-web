@@ -26,7 +26,7 @@
              (ngModelChange)="onUpdate()"
              class="custom-control-input"
              type="checkbox">
-      <label class="custom-control-label" [for]="filter.key">{{ filter.label }}</label>
+      <label class="custom-control-label" [for]="'filter-' + filter.key">{{ filter.label }}</label>
     </div>
   </div>
 </div>

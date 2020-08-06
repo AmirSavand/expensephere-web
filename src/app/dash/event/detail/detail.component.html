@@ -1,7 +1,11 @@
-<div class="container my-3" *ngIf="event && transactions">
+<!-- Loading -->
+<app-loading classes="my-5" *ngIf="!event"></app-loading>
+
+<!-- Data -->
+<div class="container my-3" *ngIf="event">
   <div class="row">
 
-    <!-- Left -->
+    <!-- Info (left) -->
     <div class="col-lg-6">
 
       <!-- Event -->
@@ -40,12 +44,24 @@
         <p class="font-weight-bold">Archived</p>
         <p>This event is archived.</p>
       </div>
+
+      <!-- Responsive separator -->
+      <hr class="d-lg-none">
     </div>
 
-    <!-- Right -->
+    <!-- Transactions (right) -->
     <div class="col-lg-6">
 
-      <!-- Transactions (list) -->
+      <!-- Header -->
+      <p class="font-weight-bold mb-0">Transactions</p>
+
+      <!-- Loading -->
+      <app-loading *ngIf="!transactions"></app-loading>
+
+      <!-- No data -->
+      <app-no-data *ngIf="transactions && !transactions.length"></app-no-data>
+
+      <!-- Transactions -->
       <app-transaction-list *ngIf="categories && wallets"
                             [categories]="categories"
                             [transactions]="transactions"
