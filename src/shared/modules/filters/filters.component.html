@@ -22,7 +22,7 @@
     <!-- Boolean type -->
     <div *ngIf="filter.type === filterType.BOOLEAN" class="custom-control custom-switch">
       <input [(ngModel)]="filter.value"
-             [id]="filter.key"
+             [id]="'filter-' + filter.key"
              (ngModelChange)="onUpdate()"
              class="custom-control-input"
              type="checkbox">
