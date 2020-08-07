@@ -1,7 +1,5 @@
 <div class="row category-list">
-  <div [classList]="columnClass"
-       *ngFor="let category of categories"
-       [hidden]="hideWithoutTransactions && !category.transactions_count">
+  <div [classList]="columnClass" *ngFor="let category of categories">
     <div class="mt-3 item-icon-wrapper">
       <div class="d-flex align-items-center">
         <div class="item-icon" [ngStyle]="style(category.color)">
