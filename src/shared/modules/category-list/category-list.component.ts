@@ -21,8 +21,6 @@ export class CategoryListComponent {
 
   @Input() columnClass = 'col-xl-4';
 
-  @Input() hideWithoutTransactions: boolean;
-
   constructor(private modalService: BsModalService) {
   }
 

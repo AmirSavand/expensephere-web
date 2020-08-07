@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CategoryFormModalModule } from '@shared/modules/category-form-modal/category-form-modal.module';
 import { CategoryListModule } from '@shared/modules/category-list/category-list.module';
+import { LoadingModule } from '@shared/modules/loading/loading.module';
+import { NoDataModule } from '@shared/modules/no-data/no-data.module';
 import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-currency.module';
 import { TransactionFormModalModule } from '@shared/modules/transaction-form-modal/transaction-form-modal.module';
 import { TransactionListModule } from '@shared/modules/transaction-list/transaction-list.module';
@@ -28,6 +30,8 @@ import { OverviewComponent } from './overview.component';
     CategoryListModule,
     TransactionListModule,
     WalletListModule,
+    LoadingModule,
+    NoDataModule,
   ],
 })
 export class OverviewModule {

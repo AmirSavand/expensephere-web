@@ -1,4 +1,4 @@
-<div class="container" *ngIf="profiles && profiles.length && wallets && categories && transactions">
+<div class="container">
   <div class="row mb-4">
 
     <!-- Left -->
@@ -6,17 +6,46 @@
 
       <!-- Wallets -->
       <div class="card bg-light mt-4">
-        <div class="card-header font-weight-bold">My Wallets</div>
+
+        <!-- Header -->
+        <a class="card-header font-weight-bold text-dark" routerLink="../../wallet/list">
+          <span>My Wallets</span>
+          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
+        </a>
+
+        <!-- Body -->
         <div class="card-body oy-scroll pt-0 pb-3" [style.height]="120 + 'px'">
-          <app-wallet-list *ngIf="wallets && profiles" [wallets]="wallets"></app-wallet-list>
+
+          <!-- Loading -->
+          <app-loading classes="mt-5" *ngIf="!wallets"></app-loading>
+
+          <!-- Data -->
+          <app-wallet-list *ngIf="wallets" [wallets]="wallets"></app-wallet-list>
         </div>
       </div>
 
       <!-- Categories -->
       <div class="card bg-light mt-4">
-        <div class="card-header font-weight-bold">My Categories</div>
+
+        <!-- Header -->
+        <a class="card-header font-weight-bold text-dark" routerLink="../../category/list">
+          <span>My Categories</span>
+          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
+        </a>
+
+        <!-- Body -->
         <div class="card-body oy-scroll pt-0 pb-3" [style.height]="205 + 'px'">
-          <app-category-list [categories]="categories" [hideWithoutTransactions]="true"></app-category-list>
+
+          <!-- Loading -->
+          <app-loading classes="mt-5" *ngIf="!categories"></app-loading>
+
+          <!-- No data -->
+          <p class="m-3 text-info text-center font-weight-bold" *ngIf="categories && !categoriesToShow.length">
+            📋 When you start adding expenses, their categories will show up here.
+          </p>
+
+          <!-- Data -->
+          <app-category-list [categories]="categoriesToShow"></app-category-list>
         </div>
       </div>
 
@@ -24,11 +53,23 @@
       <div class="row">
 
         <!-- Transactions overview -->
-        <div class="col-lg-6" *ngIf="balanceChartResults">
+        <div class="col-lg-6">
           <div class="card bg-light mt-4">
             <div class="card-header font-weight-bold">Transactions Overview</div>
             <div class="card-body chart-wrapper p-0">
-              <ngx-charts-pie-chart [results]="balanceChartResults"
+
+              <!-- Loading -->
+              <app-loading *ngIf="!transactions" classes="mt-5"></app-loading>
+
+              <!-- No data -->
+              <p class="m-3 text-info text-center font-weight-bold"
+                 *ngIf="transactions && !transactions.length">
+                📋 When you start adding transactions, statistical chart will show up here.
+              </p>
+
+              <!-- Data -->
+              <ngx-charts-pie-chart *ngIf="transactions && transactions.length && balanceChartResults"
+                                    [results]="balanceChartResults"
                                     [customColors]="balanceChartColors"
                                     [doughnut]="true"
                                     [arcWidth]="0.25"
@@ -39,11 +80,23 @@
         </div>
 
         <!-- Categories overview -->
-        <div class="col-lg-6" *ngIf="categoryChartResults">
+        <div class="col-lg-6">
           <div class="card bg-light mt-4">
             <div class="card-header font-weight-bold">Categories Overview</div>
             <div class="card-body chart-wrapper p-0">
-              <ngx-charts-pie-chart [results]="categoryChartResults"
+
+              <!-- Loading -->
+              <app-loading *ngIf="!transactions" classes="mt-5"></app-loading>
+
+              <!-- No data -->
+              <p class="m-3 text-info text-center font-weight-bold"
+                 *ngIf="categories && !categoryChartResults.length">
+                📋 When you start adding expenses, statistical chart will show up here.
+              </p>
+
+              <!-- Data -->
+              <ngx-charts-pie-chart *ngIf="categories && categoryChartResults.length"
+                                    [results]="categoryChartResults"
                                     [customColors]="categoryChartColors"
                                     [doughnut]="true"
                                     [arcWidth]="0.25"
@@ -60,8 +113,25 @@
 
       <!-- My transactions -->
       <div class="card bg-light overflow-hidden mt-4">
-        <div class="card-header font-weight-bold">My Transactions</div>
+
+        <!-- Header -->
+        <a class="card-header font-weight-bold text-dark" routerLink="../../transaction/list">
+          <span>My Transactions</span>
+          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
+        </a>
+
+        <!-- Body -->
         <div class="card-body oy-scroll pt-0" [style.height]="769 + 'px'">
+
+          <!-- Loading -->
+          <app-loading classes="mt-5"
+                       *ngIf="!transactionsGroups && (!transactions || !categories || !wallets)">
+          </app-loading>
+
+          <!-- No data -->
+          <p class="m-3 text-info text-center font-weight-bold" *ngIf="transactions && !transactions.length">
+            📋 When you start adding transactions, they will show up here.
+          </p>
 
           <!-- Transaction groups -->
           <div *ngFor="let transactionGroup of transactionsGroups | keyvalue:orderByDate">
@@ -77,7 +147,8 @@
             </div>
 
             <!-- Transactions -->
-            <app-transaction-list [transactions]="transactionGroup.value"
+            <app-transaction-list *ngIf="transactions && categories && wallets"
+                                  [transactions]="transactionGroup.value"
                                   [categories]="categories"
                                   [wallets]="wallets"
                                   columnClass="col-xl-12 col-lg-6">
