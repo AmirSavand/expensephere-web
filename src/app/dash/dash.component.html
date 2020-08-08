@@ -10,15 +10,15 @@
       <!-- Container -->
       <div class="container d-flex align-items-center">
 
+        <!-- Logo -->
+        <a routerLink="/" title="Expensephere">
+          <img src="assets/favicon/favicon.ico" class="mr-3" [width]="28">
+        </a>
+
         <!-- Total -->
-        <div class="text-dark d-flex align-items-center">
-          <div class="item-icon" [ngStyle]="style(total.color)">
-            <span class="icon-{{ total.icon }}"></span>
-          </div>
-          <div class="ml-3">
-            <div class="font-weight-bold">{{ total.name }}</div>
-            <div class="text-muted small">{{ total.balance.total | profileCurrency }}</div>
-          </div>
+        <div class="text-dark" title="Total balance">
+          <div class="font-weight-bold">{{ total.name }}</div>
+          <div class="text-muted small">{{ total.balance.total | profileCurrency }}</div>
         </div>
 
         <!-- Create button (dropdown) -->
@@ -46,7 +46,7 @@
     </div>
 
     <!-- Page -->
-    <div id="page">
+    <div id="page" (click)="sidebarClose = true">
       <router-outlet></router-outlet>
     </div>
   </div>

@@ -204,6 +204,15 @@ a, button, .btn {
   overflow-y: auto;
 }
 
+@media screen and (max-width: map_get($grid-breakpoints, xl)) {
+  .oy-scroll {
+    overflow-y: unset !important;
+    height: unset !important;
+    min-height: unset !important;
+    max-height: unset !important;
+  }
+}
+
 .card {
   > .card-header {
     display: flex;

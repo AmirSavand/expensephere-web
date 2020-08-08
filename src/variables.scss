@@ -1,4 +1,20 @@
-// Bootstrap variables override
+/* Custom variables */
+
+$sidebar-color: #F9FAFC;
+$sidebar-width: 350px;
+$sidebar-mobile-width: 250px;
+$header-height: 90px;
+$scrollbar-size: 6px;
+
+/* Bootstrap variables override */
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px + 200px
+);
 
 $primary: #474787;
 $secondary: #808e9b;
@@ -7,7 +23,7 @@ $success: #0be881;
 $danger: #ff5252;
 $warning: #ffa801;
 $dark: #1e272e;
-$light: #F9FAFC;
+$light: $sidebar-color;
 $tertiary: lighten($secondary, 35);
 
 $theme-colors: (
@@ -37,21 +53,11 @@ $modal-backdrop-bg: $secondary;
 
 $link-hover-decoration: none;
 
-$border-radius-lg: 1rem;
-
-// Icons variables override
+/* Icons variables override */
 
 $icomoon-font-path: 'src/assets/icon/fonts';
 
-// Custom variables
-
-$sidebar-color: $light;
-$sidebar-width: 350px;
-$sidebar-mobile-width: 250px;
-$header-height: 90px;
-$scrollbar-size: 6px;
-
-// Bootstrap variables
+/* Bootstrap variables */
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";

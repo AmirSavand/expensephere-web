@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
@@ -93,6 +93,12 @@ export class DashComponent implements OnInit {
      */
     AuthService.user.subscribe((user: User): void => {
       this.user = user;
+    });
+    /**
+     * Watch route changes to close sidebar
+     */
+    this.router.events.subscribe((): void => {
+      this.sidebarClose = true;
     });
   }
 
