@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthResponse } from '@shared/interfaces/auth-response';
 import { AuthToken } from '@shared/interfaces/auth-token';
+import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
@@ -17,24 +18,20 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router) {
     /**
-     * Check if user is authenticated
+     * Is user authenticated?
+     * And is user authentication data old?
+     * Refresh it then (by redirecting user to refresh page).
      */
-    if (AuthService.isAuth()) {
-      /**
-       * Sign user out if authentication version is old
-       */
-      if (AuthService.STORAGE_VERSION !== Number(localStorage.getItem(AuthService.STORAGE_VERSION_KEY))) {
-        alert('Client authentication version is old, signing out.');
-        this.signOut();
-        return;
-      }
+    if (AuthService.isAuth() &&
+      AuthService.STORAGE_VERSION !== Number(localStorage.getItem(AuthService.STORAGE_VERSION_KEY))) {
+      this.router.navigateByUrl(AuthService.OLD_AUTHENTICATION_REDIRECT);
     }
   }
 
   /**
-   * Storage version to use to force user to sign in again (should only be increased)
+   * Storage version to use to force to reload authentication data in storage
    */
-  private static readonly STORAGE_VERSION = 2;
+  private static readonly STORAGE_VERSION = 3;
 
   /**
    * Storage key for storage version
@@ -60,6 +57,11 @@ export class AuthService {
    * Where to redirect after sign in without profiles
    */
   static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/dash/profile/list';
+
+  /**
+   * Where to redirect after sign in without profiles
+   */
+  static readonly OLD_AUTHENTICATION_REDIRECT = '/user/refresh';
 
   /**
    * Authentication user subject
@@ -131,14 +133,32 @@ export class AuthService {
   }
 
   /**
+   * Save user data and profiles
+   */
+  saveUserAndProfile(user: User, profiles: Profile[]): void {
+    // Store user
+    AuthService.setUser(user);
+    // Store storage version
+    localStorage.setItem(AuthService.STORAGE_VERSION_KEY, String(AuthService.STORAGE_VERSION));
+    // Check profiles
+    if (profiles.length) {
+      // Store a profile as selected profile
+      ProfileService.profile.next(profiles[0]);
+      this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT);
+    } else {
+      this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT_NO_PROFILE);
+    }
+  }
+
+  /**
    * Un-authenticate and redirect
    */
   signOut(redirect: boolean = true): void {
-    AuthService.userSubject.next(null);
-    localStorage.clear();
     if (redirect) {
       this.router.navigateByUrl(AuthService.SIGN_OUT_REDIRECT);
     }
+    AuthService.userSubject.next(null);
+    localStorage.clear();
   }
 
   /**
@@ -149,20 +169,9 @@ export class AuthService {
   signIn(payload: { username: string, password: string }): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${ApiService.BASE}auth/`, payload).pipe(
       map((data: AuthResponse): AuthResponse => {
-        // Store token
+        // Store token, user and profile
         AuthService.token = data.token;
-        // Store user
-        AuthService.setUser(data.user);
-        // Store storage version
-        localStorage.setItem(AuthService.STORAGE_VERSION_KEY, String(AuthService.STORAGE_VERSION));
-        // Check profiles
-        if (data.profiles.length) {
-          // Store a profile as selected profile
-          ProfileService.profile.next(data.profiles[0]);
-          this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT);
-        } else {
-          this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT_NO_PROFILE);
-        }
+        this.saveUserAndProfile(data.user, data.profiles);
         return data;
       }),
     );

@@ -21,6 +21,10 @@ const routes: Routes = [
         loadChildren: () => import('./sign-out/sign-out.module').then(m => m.SignOutModule),
       },
       {
+        path: 'refresh',
+        loadChildren: () => import('./refresh/refresh.module').then(m => m.RefreshModule),
+      },
+      {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
       },
