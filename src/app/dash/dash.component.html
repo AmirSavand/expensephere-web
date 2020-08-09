@@ -5,7 +5,7 @@
   <div id="page-wrapper">
 
     <!-- Header -->
-    <div id="header" *ngIf="profileService.profile">
+    <div id="header" *ngIf="profile">
 
       <!-- Container -->
       <div class="container d-flex align-items-center">
@@ -16,9 +16,9 @@
         </a>
 
         <!-- Total -->
-        <div class="text-dark" title="Total balance">
-          <div class="font-weight-bold">{{ total.name }}</div>
-          <div class="text-muted small">{{ total.balance.total | profileCurrency }}</div>
+        <div class="text-dark" title="Total balance" *ngIf="profile">
+          <div class="font-weight-bold">Total</div>
+          <div class="text-muted small">{{ profile.balance.total | profileCurrency }}</div>
         </div>
 
         <!-- Create button (dropdown) -->
@@ -78,21 +78,17 @@
     <div *ngIf="sidebarViewSelected === sidebarView.USER">
 
       <!-- My profile -->
-      <div class="my profiles">
+      <div class="my profiles" *ngIf="profile">
 
         <!-- Header -->
         <p class="font-weight-bold">My Profiles</p>
 
         <!-- Profile -->
-        <div class="card shadow-sm"
-             *ngFor="let profile of profileService.profiles; let last = last"
-             [class.mb-3]="!last">
+        <div class="card shadow-sm" *ngFor="let item of profiles || [profile]; let last = last" [class.mb-3]="!last">
           <div class="card-body">
-            <span class="font-weight-bold">{{ profile.name }}</span>
-            <span class="float-right" title="Balance">
-              {{ profile.balance.total | profileCurrency:profile.currency }}
-            </span>
-            <div *ngIf="profile.note" class="text-muted small">{{ profile.note }}</div>
+            <span class="font-weight-bold">{{ item.name }}</span>
+            <span class="float-right" title="Balance">{{ item.balance.total | profileCurrency:item.currency }}</span>
+            <div *ngIf="item.note" class="text-muted small">{{ item.note }}</div>
           </div>
         </div>
       </div>
@@ -116,7 +112,12 @@
 
       <!-- App info -->
       <div class="mt-auto text-secondary small">
-        <p>Expensephere v0.1 Beta &bull; <a href="mailto:expensephere@savandbros.com">Feedback</a></p>
+        <p>
+          <span>Expensephere v0.2 Beta &bull; </span>
+          <a href="https://expensephere.savandbros.com">Website</a>
+          <span> &bull; </span>
+          <a href="mailto:expensephere@savandbros.com">Feedback</a>
+        </p>
         <p>2020 &copy; <a href="https://savandbros.com" target="_blank">SavandBros</a></p>
       </div>
     </div>
@@ -125,7 +126,7 @@
     <div *ngIf="sidebarViewSelected === sidebarView.MAIN">
 
       <!-- Links -->
-      <div class="links" *ngIf="profileService.profile">
+      <div class="links" *ngIf="profile">
         <a routerLinkActive="active" routerLink="/dash/overview">
           <fa-icon [fixedWidth]="true" [icon]="faDashboard"></fa-icon>
           <span>Dashboard</span>
@@ -149,7 +150,7 @@
       </div>
 
       <!-- Links -->
-      <div class="links" *ngIf="!profileService.profile">
+      <div class="links" *ngIf="!profile">
         <a routerLinkActive="active" routerLink="/dash/profile">
           <fa-icon [fixedWidth]="true" [icon]="faProfile"></fa-icon>
           <span>Profiles</span>

@@ -25,6 +25,5 @@ export class ModelDebounceDirective implements OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }
 

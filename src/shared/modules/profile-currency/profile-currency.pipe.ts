@@ -7,6 +7,6 @@ import { ProfileService } from '@shared/services/profile.service';
 })
 export class ProfileCurrencyPipe extends CurrencyPipe implements PipeTransform {
   transform(value: number, currency?: string): string {
-    return super.transform(value, currency || ProfileService.profile.currency, 'symbol-narrow');
+    return super.transform(value, currency || ProfileService.profile.value.currency, 'symbol-narrow');
   }
 }

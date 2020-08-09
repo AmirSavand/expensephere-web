@@ -1,34 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Profile } from '@shared/interfaces/profile';
 import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
+import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
+
+  private subscription: Subscription;
 
   readonly faEdit: IconDefinition = faPen;
 
+  profile: Profile;
+
   profiles: Profile[];
 
-  profileSelected = ProfileService.profile;
-
-  constructor(private profile: ProfileService,
+  constructor(private api: ApiService,
               private router: Router,
               private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
-    this.profile.load().subscribe((data: Profile[]): void => {
+    /**
+     * Watch selected profile
+     */
+    this.subscription = ProfileService.profile.subscribe((data: Profile): void => {
+      this.profile = data;
+    });
+    /**
+     * Load profile list
+     */
+    this.api.profile.list().subscribe((data: Profile[]): void => {
       if (!data.length) {
-        this.addProfile();
+        this.add();
       }
       this.profiles = data;
     });
@@ -38,24 +51,28 @@ export class ListComponent implements OnInit {
    * Select a profile and go to dashboard
    */
   select(profile: Profile): void {
-    ProfileService.profile = profile;
+    ProfileService.profile.next(profile);
     this.router.navigateByUrl('/');
   }
 
   /**
-   * Open up wallet form modal
+   * Open up profile form modal for adding
    */
-  addProfile(): void {
+  add(): void {
     this.modalService.show(ProfileFormModalComponent, { class: 'modal-sm' });
   }
 
   /**
-   * Open wallet form modal for editing
+   * Open profile form modal for editing
    */
-  editProfile(profile: Profile): void {
+  edit(profile: Profile): void {
     this.modalService.show(ProfileFormModalComponent, {
       class: 'modal-sm',
       initialState: { profile },
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -28,10 +28,10 @@ export class HttpInterceptorService implements HttpInterceptor {
        */
       const params: { [p: string]: string } = {};
       if (request.method === 'GET') {
-        if (ProfileService.profile && HttpInterceptorService.PROFILE_ENDPOINTS.some((substr: string): boolean => (
-          request.url.includes(substr)
-        ))) {
-          params.profile = String(ProfileService.profile.id);
+        if (ProfileService.profile.value &&
+          HttpInterceptorService.PROFILE_ENDPOINTS.some((substr: string): boolean => request.url.includes(substr)) &&
+          request.url.split('/').length === 5) {
+          params.profile = String(ProfileService.profile.value.id);
         }
         if (WalletService.wallet && request.url.includes('transaction')) {
           params.wallet = String(WalletService.wallet);

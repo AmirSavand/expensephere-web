@@ -69,7 +69,7 @@ export class WalletFormModalComponent implements OnInit {
      * Setup the form
      */
     this.form.form = this.formBuilder.group({
-      profile: [ProfileService.profile.id],
+      profile: [ProfileService.profile.value.id],
       name: [null, Validators.required],
       color: [null, Validators.required],
       icon: [null, Validators.required],

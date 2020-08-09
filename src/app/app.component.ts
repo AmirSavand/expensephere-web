@@ -20,15 +20,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     /**
+     * Load profile data
+     */
+    ProfileService.initiate();
+    /**
      * Watch authentication and user data
      */
     AuthService.user.subscribe((): void => {
-      if (AuthService.isAuth() && !ProfileService.profile) {
-        if (ProfileService.profiles.length) {
-          this.router.navigateByUrl('/dash/profile/list');
-        } else {
-          this.router.navigateByUrl('/dash/profile/add');
-        }
+      if (AuthService.isAuth() && !ProfileService.profile.value) {
+        this.router.navigateByUrl('/dash/profile/add');
       }
     });
   }

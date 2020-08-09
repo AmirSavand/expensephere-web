@@ -82,6 +82,7 @@ export class TransactionFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private modalService: BsModalService,
+              private profileService: ProfileService,
               private formBuilder: FormBuilder,
               private api: ApiService,
               private date: DatePipe,
@@ -92,7 +93,7 @@ export class TransactionFormModalComponent implements OnInit {
     /**
      * Set currency
      */
-    this.currency = ProfileService.profile.currency;
+    this.currency = ProfileService.profile.value.currency;
     /**
      * Load wallets
      */
@@ -170,6 +171,10 @@ export class TransactionFormModalComponent implements OnInit {
         Object.assign(this.transaction, data);
       }
       this.modal.hide();
+      /**
+       * This change effects profile balance, so let's refresh profile
+       */
+      this.profileService.refresh();
     }, (error: HttpErrorResponse): void => {
       this.form.loading = false;
       this.form.error = error.error;
@@ -203,6 +208,10 @@ export class TransactionFormModalComponent implements OnInit {
     }
     this.api.transaction.delete(transaction.id).subscribe((): void => {
       this.modal.hide();
+      /**
+       * This change effects profile balance, so let's refresh profile
+       */
+      this.profileService.refresh();
     });
   }
 

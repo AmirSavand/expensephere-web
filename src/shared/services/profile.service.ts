@@ -1,14 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Profile } from '@shared/interfaces/profile';
 import { ApiService } from '@shared/services/api.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
 
+  /**
+   * Storage key for selected profile
+   */
+  private static readonly STORAGE_KEY_PROFILE = 'profile';
+
+  /**
+   * Selected profile
+   */
+  static readonly profile: BehaviorSubject<Profile> = new BehaviorSubject<Profile>(null);
+
+  /**
+   * @returns Profile list data
+   */
   static get profiles(): Profile[] {
     if (localStorage.getItem('profiles')) {
       return JSON.parse(localStorage.getItem('profiles'));
@@ -16,43 +28,38 @@ export class ProfileService {
     return [];
   }
 
-  static set profiles(value: Profile[]) {
-    localStorage.setItem('profiles', JSON.stringify(value));
-  }
-
-  static get profile(): Profile {
-    if (ProfileService.profiles && localStorage.getItem('profile')) {
-      return ProfileService.profiles.find(profile => profile.id === Number(localStorage.getItem('profile')));
+  /**
+   * Must be called 1 time to load data from storage
+   */
+  static initiate() {
+    /**
+     * Load current profile data from storage for profile subject.
+     */
+    const profile: string = localStorage.getItem(ProfileService.STORAGE_KEY_PROFILE);
+    if (profile) {
+      ProfileService.profile.next(JSON.parse(profile));
     }
-  }
-
-  static set profile(value: Profile) {
-    localStorage.setItem('profile', String(value.id));
-  }
-
-  static clear() {
-    localStorage.removeItem('profile');
-    localStorage.removeItem('profiles');
+    /**
+     * Watch profile updates and save it to storage
+     */
+    ProfileService.profile.subscribe((data: Profile): void => {
+      if (data) {
+        localStorage.setItem(ProfileService.STORAGE_KEY_PROFILE, JSON.stringify(data));
+      } else {
+        localStorage.removeItem(ProfileService.STORAGE_KEY_PROFILE);
+      }
+    });
   }
 
   constructor(private api: ApiService) {
   }
 
   /**
-   * Load and save profiles to localStorage.
-   * If there's no selected profile, select the first one.
+   * Refresh selected profile data from API
    */
-  load(): Observable<Profile[]> {
-    return this.api.profile.list().pipe(map((data: Profile[]): Profile[] => {
-      if (data.length) {
-        ProfileService.profiles = data;
-        if (!ProfileService.profile) {
-          ProfileService.profile = ProfileService.profiles[0];
-        }
-      } else {
-        ProfileService.clear();
-      }
-      return data;
-    }));
+  refresh(): void {
+    this.api.profile.retrieve(ProfileService.profile.value.id).subscribe((profile: Profile): void => {
+      ProfileService.profile.next(profile);
+    });
   }
 }

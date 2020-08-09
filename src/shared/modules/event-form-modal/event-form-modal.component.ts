@@ -86,12 +86,12 @@ export class EventFormModalComponent implements OnInit {
     /**
      * Set currency
      */
-    this.currency = ProfileService.profile.currency;
+    this.currency = ProfileService.profile.value.currency;
     /**
      * Setup the form
      */
     this.form.form = this.formBuilder.group({
-      profile: [ProfileService.profile.id],
+      profile: [ProfileService.profile.value.id],
       name: [null, Validators.required],
       start: [null, Validators.required],
       end: [null, Validators.required],
@@ -108,8 +108,8 @@ export class EventFormModalComponent implements OnInit {
       this.isEditing = true;
       this.form.form.patchValue({
         name: this.event.name,
-        start: this.date.transform(this.event.start, 'yyyy-MM-ddThh:mm'),
-        end: this.date.transform(this.event.end, 'yyyy-MM-ddThh:mm'),
+        start: this.date.transform(this.event.start, Utils.HTML_DATETIME_FORMAT),
+        end: this.date.transform(this.event.end, Utils.HTML_DATETIME_FORMAT),
         color: this.event.color,
         icon: this.event.icon,
         budget: this.event.budget,

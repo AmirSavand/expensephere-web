@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
@@ -14,8 +14,8 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
 import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
 import { Color } from '@shared/classes/color';
+import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
-import { Wallet } from '@shared/interfaces/wallet';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
@@ -24,17 +24,19 @@ import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dash',
   templateUrl: './dash.component.html',
   styleUrls: ['./dash.component.scss'],
 })
-export class DashComponent implements OnInit {
+export class DashComponent implements OnInit, OnDestroy {
+
+  private subscription: Subscription;
 
   readonly sidebarView = SidebarView;
   readonly style = Color.style;
-  readonly profileService = ProfileService;
 
   readonly faView: IconDefinition = faChevronDown;
   readonly faSidebarToggle: IconDefinition = faBars;
@@ -50,26 +52,19 @@ export class DashComponent implements OnInit {
   readonly faProfile: IconDefinition = faUser;
 
   /**
-   * Total balance as wallet
-   */
-  readonly total: Wallet = {
-    id: null,
-    profile: null,
-    archive: false,
-    balance: {
-      total: 0,
-      expense: 0,
-      income: 0,
-    },
-    color: Color.COLORS_RESERVED.total,
-    icon: 'money3',
-    name: 'Total',
-  };
-
-  /**
    * Authenticated user data
    */
   user: User;
+
+  /**
+   * Selected profile data
+   */
+  profile: Profile;
+
+  /**
+   * Profile list
+   */
+  profiles: Profile[];
 
   /**
    * What other view that sidebar is showing
@@ -95,6 +90,18 @@ export class DashComponent implements OnInit {
       this.user = user;
     });
     /**
+     * Watch selected profile data
+     */
+    this.subscription = ProfileService.profile.subscribe((data: Profile): void => {
+      this.profile = data;
+      /**
+       * Update the profile list in user view in sidebar if it's loaded
+       */
+      if (this.profiles) {
+        Object.assign(this.profiles.find((profile: Profile): boolean => profile.id === data.id), data);
+      }
+    });
+    /**
      * Watch route changes to close sidebar
      */
     this.router.events.subscribe((): void => {
@@ -110,6 +117,14 @@ export class DashComponent implements OnInit {
       this.sidebarViewSelected = SidebarView.MAIN;
     } else {
       this.sidebarViewSelected = SidebarView.USER;
+      /**
+       * Load list of profiles for first time toggling the view
+       */
+      if (!this.profiles) {
+        this.api.profile.list().subscribe((profiles: Profile[]): void => {
+          this.profiles = profiles;
+        });
+      }
     }
   }
 
@@ -139,5 +154,9 @@ export class DashComponent implements OnInit {
    */
   addEvent(): void {
     this.modalService.show(EventFormModalComponent);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

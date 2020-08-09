@@ -9,7 +9,8 @@
 <div class="container mb-3">
 
   <!-- Transactions -->
-  <app-transaction-list [transactions]="transactions"
+  <app-transaction-list *ngIf="categories && wallets"
+                        [transactions]="transactions"
                         [categories]="categories"
                         [wallets]="wallets">
   </app-transaction-list>
@@ -18,5 +19,5 @@
   <app-no-data classes="mt-3" *ngIf="transactions && !transactions.length"></app-no-data>
 
   <!-- Loading -->
-  <app-loading classes="mt-3" *ngIf="!transactions"></app-loading>
+  <app-loading classes="mt-3" *ngIf="!transactions || !wallets || !transactions"></app-loading>
 </div>

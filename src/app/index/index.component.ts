@@ -15,39 +15,27 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     /**
-     * Is authenticated
+     * Is authenticated?
      */
     if (AuthService.isAuth()) {
       /**
-       * Has profiles
+       * Has selected profile.
+       * Go to dashboard.
        */
-      if (ProfileService.profiles.length) {
-        /**
-         * Has selected profile
-         * Go to dashboard
-         */
-        if (ProfileService.profile) {
-          this.router.navigateByUrl('/dash');
-        }
-        /**
-         * Has no selected profile
-         * Go to profile list to select one
-         */
-        else {
-          this.router.navigateByUrl('/dash/profile/list');
-        }
+      if (ProfileService.profile.value) {
+        this.router.navigateByUrl('/dash');
       }
       /**
-       * Has no profiles
-       * Go to profile form to add one
+       * Has no profiles.
+       * Go to profile form to add one.
        */
       else {
         this.router.navigateByUrl('/dash/profile/add');
       }
     }
     /**
-     * Is not authenticated
-     * Go to sign up
+     * Is not authenticated.
+     * Go to sign up.
      */
     else {
       this.router.navigateByUrl('/user/sign-up');

@@ -3,7 +3,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
 import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
@@ -13,6 +12,7 @@ import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
+import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ApiService } from '@shared/services/api.service';
@@ -30,7 +30,6 @@ export class CategoryFormModalComponent implements OnInit {
   readonly faClose: IconDefinition = faTimes;
   readonly faInfo: IconDefinition = faInfoCircle;
   readonly faPaint: IconDefinition = faPaintBrush;
-  readonly faCube: IconDefinition = faCube;
   readonly faIcons: IconDefinition = faIcons;
   readonly faTrash: IconDefinition = faTrash;
 
@@ -77,7 +76,7 @@ export class CategoryFormModalComponent implements OnInit {
      * Setup the form
      */
     this.form.form = this.formBuilder.group({
-      profile: [ProfileService.profile.id],
+      profile: [ProfileService.profile.value.id],
       kind: [ExpenseKind.EXPENSE, Validators.required],
       name: [null, Validators.required],
       color: [null, Validators.required],

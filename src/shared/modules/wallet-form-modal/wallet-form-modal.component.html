@@ -11,8 +11,8 @@
 </div>
 
 <!-- Body -->
-<div class="modal-body pb-0">
-  <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
+<div class="modal-body pb-0" *ngIf="form.form">
+  <form [formGroup]="form.form" (ngSubmit)="submit()">
 
     <!-- Name -->
     <div class="form-group">
@@ -69,7 +69,7 @@
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-right">
+<div class="modal-footer text-right" *ngIf="form.form">
 
   <!-- Delete -->
   <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(wallet)">

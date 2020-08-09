@@ -106,24 +106,22 @@ export class ProfileFormModalComponent implements OnInit {
       method = this.api.profile.update(this.profile.id, payload);
     }
     method.subscribe((data: Profile): void => {
-      const profiles = ProfileService.profiles;
+      /**
+       * Is editing?
+       * Update selected profile if it's being updated.
+       */
       if (this.isEditing) {
         Object.assign(this.profile, data);
-        /**
-         * Save profile
-         */
-        const profile = profiles.find((item: Profile): boolean => item.id === data.id);
-        Object.assign(profile, this.profile);
-        ProfileService.profiles = profiles;
-      } else {
-        /**
-         * Add profiles
-         */
-        profiles.push(data);
-        ProfileService.profiles = profiles;
-        if (!ProfileService.profile) {
-          ProfileService.profile = data;
+        if (data.id === ProfileService.profile.value.id) {
+          ProfileService.profile.next(data);
         }
+      }
+      /**
+       * Is creating and there's no selected profile?
+       * Save it as selected profile.
+       */
+      else if (!ProfileService.profile.value) {
+        ProfileService.profile.next(data);
       }
       this.router.navigate(['/dash', 'profile', data.id]);
       this.modal.hide();
@@ -139,6 +137,9 @@ export class ProfileFormModalComponent implements OnInit {
    * @param profile Profile ID
    */
   delete(profile: Profile): void {
+    if (ProfileService.profile.value && ProfileService.profile.value.id === profile.id) {
+      return alert('You can not delete a selected profile.\n\nSelect another profile then delete this one.');
+    }
     if (!confirm('Are you sure you want to delete this profile?')) {
       return;
     }

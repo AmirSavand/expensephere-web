@@ -34,7 +34,7 @@ export class AuthService {
   /**
    * Storage version to use to force user to sign in again (should only be increased)
    */
-  private static readonly STORAGE_VERSION = 1;
+  private static readonly STORAGE_VERSION = 2;
 
   /**
    * Storage key for storage version
@@ -59,7 +59,7 @@ export class AuthService {
   /**
    * Where to redirect after sign in without profiles
    */
-  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/dash/profile/add';
+  static readonly SIGN_IN_REDIRECT_NO_PROFILE = '/dash/profile/list';
 
   /**
    * Authentication user subject
@@ -157,16 +157,12 @@ export class AuthService {
         localStorage.setItem(AuthService.STORAGE_VERSION_KEY, String(AuthService.STORAGE_VERSION));
         // Check profiles
         if (data.profiles.length) {
-          // Store profiles and profile
-          ProfileService.profiles = data.profiles;
-          ProfileService.profile = ProfileService.profiles[0];
-          // Redirect
+          // Store a profile as selected profile
+          ProfileService.profile.next(data.profiles[0]);
           this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT);
         } else {
-          // Redirect to profile selection
           this.router.navigateByUrl(AuthService.SIGN_IN_REDIRECT_NO_PROFILE);
         }
-        // Return response
         return data;
       }),
     );
