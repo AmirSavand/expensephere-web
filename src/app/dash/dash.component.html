@@ -81,7 +81,10 @@
       <div class="my profiles" *ngIf="profile">
 
         <!-- Header -->
-        <p class="font-weight-bold">My Profiles</p>
+        <a class="font-weight-bold mb-3 text-dark d-flex" routerLink="./profile/list">
+          <span>My Profiles</span>
+          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
+        </a>
 
         <!-- Profile -->
         <div class="card shadow-sm" *ngFor="let item of profiles || [profile]; let last = last"
