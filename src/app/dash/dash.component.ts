@@ -5,6 +5,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
@@ -50,6 +51,7 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly faCategories: IconDefinition = faTags;
   readonly faEvents: IconDefinition = faCalendarAlt;
   readonly faProfile: IconDefinition = faUser;
+  readonly faSelected: IconDefinition = faCheckCircle;
 
   /**
    * Authenticated user data
@@ -107,6 +109,14 @@ export class DashComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((): void => {
       this.sidebarClose = true;
     });
+  }
+
+  /**
+   * Select a profile
+   */
+  select(profile: Profile): void {
+    ProfileService.profile.next(profile);
+    this.router.navigateByUrl('/');
   }
 
   /**

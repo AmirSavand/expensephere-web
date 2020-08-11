@@ -84,10 +84,15 @@
         <p class="font-weight-bold">My Profiles</p>
 
         <!-- Profile -->
-        <div class="card shadow-sm" *ngFor="let item of profiles || [profile]; let last = last" [class.mb-3]="!last">
+        <div class="card shadow-sm" *ngFor="let item of profiles || [profile]; let last = last"
+             [class.mb-3]="!last" (click)="select(item)">
           <div class="card-body">
-            <span class="font-weight-bold">{{ item.name }}</span>
-            <span class="float-right" title="Balance">{{ item.balance.total | profileCurrency:item.currency }}</span>
+            <div class="d-flex">
+              <span class="font-weight-bold">{{ item.name }}</span>
+              <span class="ml-auto" title="Balance">{{ item.balance.total | profileCurrency:item.currency }}</span>
+              <fa-icon class="ml-2 text-primary" [icon]="faSelected"
+                       *ngIf="profile && item.id === profile.id"></fa-icon>
+            </div>
             <div *ngIf="item.note" class="text-muted small">{{ item.note }}</div>
           </div>
         </div>
