@@ -17,10 +17,19 @@ Run the server.
 
 ```bash
 > npm run serve
+> npm run serve-stag
 > npm run serve-prod
 ```
 
-Code quality.
+Build the app.
+
+```bash
+> npm run build
+> npm run build-staging
+> npm run build-prodduction
+```
+
+Check code quality.
 
 ```bash
 > npm run lint
@@ -54,6 +63,7 @@ Here are the app routes to follow:
 /dash/profile/<id>
 
 /dash/wallet/list
+/dash/wallet/add
 /dash/wallet/<id>
 
 /dash/category/list
