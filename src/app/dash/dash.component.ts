@@ -19,6 +19,7 @@ import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
+import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
@@ -136,6 +137,13 @@ export class DashComponent implements OnInit, OnDestroy {
         });
       }
     }
+  }
+
+  /**
+   * Open up profile form modal for adding
+   */
+  addProfile(): void {
+    this.modalService.show(ProfileFormModalComponent, { class: 'modal-sm' });
   }
 
   /**
