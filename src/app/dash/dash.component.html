@@ -88,7 +88,7 @@
 
         <!-- Profile -->
         <div class="card shadow-sm" *ngFor="let item of profiles || [profile]; let last = last"
-             [class.mb-3]="!last" (click)="select(item)">
+             [class.mb-3]="!last" [class.cursor-pointer]="profile && item.id !== profile.id" (click)="select(item)">
           <div class="card-body">
             <div class="d-flex">
               <span class="font-weight-bold">{{ item.name }}</span>
