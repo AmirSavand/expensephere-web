@@ -29,6 +29,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   private static MAX_CATEGORIES_IN_CHART = 7;
 
   private subscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   readonly faLink: IconDefinition = faArrowRight;
 
@@ -88,9 +89,22 @@ export class OverviewComponent implements OnInit, OnDestroy {
      */
     this.subscription = ProfileService.profile.subscribe((profile: Profile): void => {
       /**
+       * Reset data and stop all API calls
+       */
+      this.wallets = null;
+      this.categories = null;
+      this.categoriesToShow = null;
+      this.transactionsGroups = null;
+      this.transactions = null;
+      this.subscriptions.forEach((subscription: Subscription): void => subscription.unsubscribe());
+      /**
        * If there's a selected profile
        */
       if (profile) {
+        /**
+         * We use this to push to subscriptions list
+         */
+        let subscription: Subscription;
         /**
          * Setup income/expense chart data
          */
@@ -111,7 +125,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         /**
          * Load wallet list
          */
-        this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
+        subscription = this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
           /**
            * There are no wallets for this profile,
            * open the wallet form modal so user creates one.
@@ -140,7 +154,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
            * Load category list
            * We need all categories for transactions list and for creating the chart.
            */
-          this.api.category.list().subscribe((data: Category[]): void => {
+          subscription = this.api.category.list().subscribe((data: Category[]): void => {
             /**
              * Store categories and sort them by transactions count
              */
@@ -173,14 +187,17 @@ export class OverviewComponent implements OnInit, OnDestroy {
               });
             }
           });
+          this.subscriptions.push(subscription);
           /**
            * Load transactions list
            */
-          this.api.transaction.list().subscribe((data: Transaction[]): void => {
+          subscription = this.api.transaction.list().subscribe((data: Transaction[]): void => {
             this.transactions = data;
             this.setupTransactionsGroup();
           });
+          this.subscriptions.push(subscription);
         });
+        this.subscriptions.push(subscription);
       }
     });
   }

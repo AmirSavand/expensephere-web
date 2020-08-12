@@ -31,7 +31,11 @@ export class HttpInterceptorService implements HttpInterceptor {
         if (ProfileService.profile.value &&
           HttpInterceptorService.PROFILE_ENDPOINTS.some((substr: string): boolean => request.url.includes(substr)) &&
           request.url.split('/').length === 5) {
-          params.profile = String(ProfileService.profile.value.id);
+          let key = 'profile';
+          if (request.url.includes('transaction')) {
+            key = 'wallet__profile';
+          }
+          params[key] = String(ProfileService.profile.value.id);
         }
         if (WalletService.wallet && request.url.includes('transaction')) {
           params.wallet = String(WalletService.wallet);
