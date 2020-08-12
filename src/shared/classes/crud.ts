@@ -20,8 +20,7 @@ export class Crud<T, LT = T[]> {
   }
 
   constructor(public http: HttpClient,
-              public name: string,
-              public profile?: boolean) {
+              public name: string) {
   }
 
   /**

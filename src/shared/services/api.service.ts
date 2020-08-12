@@ -27,10 +27,10 @@ export class ApiService {
   readonly account = new Crud<Account>(this.http, 'account');
   readonly currency = new Crud<Currency>(this.http, 'currency');
   readonly profile = new Crud<Profile>(this.http, 'profile');
-  readonly wallet = new Crud<Wallet>(this.http, 'wallet', true);
-  readonly category = new Crud<Category>(this.http, 'category', true);
-  readonly event = new Crud<Event>(this.http, 'event', true);
-  readonly transaction = new Crud<Transaction>(this.http, 'transaction', true);
+  readonly wallet = new Crud<Wallet>(this.http, 'wallet');
+  readonly category = new Crud<Category>(this.http, 'category');
+  readonly event = new Crud<Event>(this.http, 'event');
+  readonly transaction = new Crud<Transaction>(this.http, 'transaction');
 
   constructor(private http: HttpClient) {
   }
