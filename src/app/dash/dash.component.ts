@@ -5,8 +5,10 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
+import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons/faRetweet';
@@ -18,6 +20,7 @@ import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
+import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
@@ -50,6 +53,8 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly faCategories: IconDefinition = faTags;
   readonly faEvents: IconDefinition = faCalendarAlt;
   readonly faProfile: IconDefinition = faUser;
+  readonly faSelected: IconDefinition = faCheckCircle;
+  readonly faNotSelected: IconDefinition = faCircle;
 
   /**
    * Authenticated user data
@@ -94,12 +99,6 @@ export class DashComponent implements OnInit, OnDestroy {
      */
     this.subscription = ProfileService.profile.subscribe((data: Profile): void => {
       this.profile = data;
-      /**
-       * Update the profile list in user view in sidebar if it's loaded
-       */
-      if (this.profiles) {
-        Object.assign(this.profiles.find((profile: Profile): boolean => profile.id === data.id), data);
-      }
     });
     /**
      * Watch route changes to close sidebar
@@ -110,6 +109,16 @@ export class DashComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Select a profile
+   */
+  select(profile: Profile): void {
+    if (this.profile.id !== profile.id) {
+      ProfileService.profile.next(profile);
+      this.router.navigate(['/']);
+    }
+  }
+
+  /**
    * Go to user sidebar view or get out of it
    */
   toggleUserView(): void {
@@ -117,15 +126,18 @@ export class DashComponent implements OnInit, OnDestroy {
       this.sidebarViewSelected = SidebarView.MAIN;
     } else {
       this.sidebarViewSelected = SidebarView.USER;
-      /**
-       * Load list of profiles for first time toggling the view
-       */
-      if (!this.profiles) {
-        this.api.profile.list().subscribe((profiles: Profile[]): void => {
-          this.profiles = profiles;
-        });
-      }
+      this.api.profile.list().subscribe((profiles: Profile[]): void => {
+        this.profiles = profiles;
+      });
     }
+  }
+
+  /**
+   * Open up profile form modal for adding
+   */
+  addProfile(): void {
+    this.toggleUserView();
+    this.modalService.show(ProfileFormModalComponent, { class: 'modal-sm' });
   }
 
   /**

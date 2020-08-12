@@ -59,7 +59,12 @@ export class ListComponent implements OnInit, OnDestroy {
    * Open up profile form modal for adding
    */
   add(): void {
-    this.modalService.show(ProfileFormModalComponent, { class: 'modal-sm' });
+    this.modalService.show(ProfileFormModalComponent, {
+      class: 'modal-sm',
+      initialState: {
+        redirectToDetailsOnCreate: true,
+      },
+    });
   }
 
   /**
