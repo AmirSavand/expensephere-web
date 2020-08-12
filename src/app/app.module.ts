@@ -2,6 +2,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '@environments/environment';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { ApiService } from '@shared/services/api.service';
@@ -23,6 +25,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     LoadingBarModule,
     LoadingBarHttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: !environment.development }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
