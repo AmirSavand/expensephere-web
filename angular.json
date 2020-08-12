@@ -24,8 +24,10 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/assets",
-              "src/manifest.webmanifest"
+              "src/assets/favicon",
+              "src/assets/icon/fonts",
+              "src/assets/img",
+              "src/assets/manifest"
             ],
             "styles": [
               "src/styles.scss"
@@ -148,8 +150,10 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/assets",
-              "src/manifest.webmanifest"
+              "src/assets/favicon",
+              "src/assets/icon/fonts",
+              "src/assets/img",
+              "src/assets/manifest"
             ],
             "styles": [
               "src/styles.css"
