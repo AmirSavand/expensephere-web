@@ -37,6 +37,11 @@ export class ProfileFormModalComponent implements OnInit {
   @Input() profile?: Profile;
 
   /**
+   * Where to new profile on create?
+   */
+  @Input() redirectToDetailsOnCreate?: boolean;
+
+  /**
    * list of currencies
    */
   currencies: SelectItem[];
@@ -117,13 +122,18 @@ export class ProfileFormModalComponent implements OnInit {
         }
       }
       /**
-       * Is creating and there's no selected profile?
+       * Is creating?
        * Save it as selected profile.
        */
-      else if (!ProfileService.profile.value) {
+      else {
         ProfileService.profile.next(data);
+        /**
+         * Redirect to profile page on create?
+         */
+        if (this.redirectToDetailsOnCreate) {
+          this.router.navigate(['/dash', 'profile', data.id]);
+        }
       }
-      this.router.navigate(['/dash', 'profile', data.id]);
       this.modal.hide();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;

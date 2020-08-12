@@ -81,26 +81,47 @@
       <div class="my profiles" *ngIf="profile">
 
         <!-- Header -->
-        <a class="font-weight-bold mb-3 text-dark d-flex" routerLink="./profile/list">
-          <span>My Profiles</span>
-          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
-        </a>
+        <a class="font-weight-bold mb-3 d-block" routerLink="./profile/list">My Profiles</a>
+
+        <!-- Loading -->
+        <app-loading *ngIf="!profiles" classes="mb-2"></app-loading>
 
         <!-- Profile -->
-        <div class="card shadow-sm" *ngFor="let item of profiles || [profile]; let last = last"
-             [class.mb-3]="!last" [class.cursor-pointer]="profile && item.id !== profile.id" (click)="select(item)">
-          <div class="card-body">
-            <div class="d-flex">
-              <span class="font-weight-bold">{{ item.name }}</span>
-              <span class="ml-auto" title="Balance">{{ item.balance.total | profileCurrency:item.currency }}</span>
-              <fa-icon class="ml-2 text-primary" [icon]="faSelected"
-                       *ngIf="profile && item.id === profile.id"></fa-icon>
+        <div class="card shadow-sm mb-2"
+             *ngFor="let item of profiles; let last = last"
+             [class.cursor-pointer]="profile && item.id !== profile.id"
+             (click)="select(item)">
+          <div class="card-body py-2">
+            <div class="d-flex align-items-center">
+
+              <!-- Profile name and total balance -->
+              <div class="mr-auto">
+                <div class="font-weight-bold">{{ item.name }}</div>
+                <div class="small text-secondary" title="Total balance">
+                  {{ item.balance.total | profileCurrency:item.currency }}
+                </div>
+              </div>
+
+              <!-- Selected icon -->
+              <fa-icon *ngIf="profile.id === item.id"
+                       [fixedWidth]="true"
+                       [icon]="faSelected"
+                       class="text-primary">
+              </fa-icon>
+
+              <!-- Not selected icon -->
+              <fa-icon *ngIf="profile.id !== item.id"
+                       [fixedWidth]="true"
+                       [icon]="faNotSelected"
+                       class="text-tertiary">
+              </fa-icon>
             </div>
             <div *ngIf="item.note" class="text-muted small">{{ item.note }}</div>
           </div>
         </div>
+
         <!-- Add profile -->
-        <button class="btn btn-primary btn-sm btn-block font-weight-bold mt-2" (click)="addProfile()">ADD PROFILE</button>
+        <button class="btn btn-link text-secondary font-weight-bold ml-2" (click)="addProfile()">Add Profile</button>
       </div>
 
       <!-- My account -->

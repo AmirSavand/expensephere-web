@@ -4,11 +4,11 @@ import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
+import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons/faRetweet';
@@ -54,7 +54,7 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly faEvents: IconDefinition = faCalendarAlt;
   readonly faProfile: IconDefinition = faUser;
   readonly faSelected: IconDefinition = faCheckCircle;
-  readonly faLink: IconDefinition = faArrowRight;
+  readonly faNotSelected: IconDefinition = faCircle;
 
   /**
    * Authenticated user data
@@ -99,12 +99,6 @@ export class DashComponent implements OnInit, OnDestroy {
      */
     this.subscription = ProfileService.profile.subscribe((data: Profile): void => {
       this.profile = data;
-      /**
-       * Update the profile list in user view in sidebar if it's loaded
-       */
-      if (this.profiles) {
-        Object.assign(this.profiles.find((profile: Profile): boolean => profile.id === data.id), data);
-      }
     });
     /**
      * Watch route changes to close sidebar
@@ -118,8 +112,10 @@ export class DashComponent implements OnInit, OnDestroy {
    * Select a profile
    */
   select(profile: Profile): void {
-    ProfileService.profile.next(profile);
-    this.router.navigateByUrl('/');
+    if (this.profile.id !== profile.id) {
+      ProfileService.profile.next(profile);
+      this.router.navigate(['/']);
+    }
   }
 
   /**
@@ -130,14 +126,9 @@ export class DashComponent implements OnInit, OnDestroy {
       this.sidebarViewSelected = SidebarView.MAIN;
     } else {
       this.sidebarViewSelected = SidebarView.USER;
-      /**
-       * Load list of profiles for first time toggling the view
-       */
-      if (!this.profiles) {
-        this.api.profile.list().subscribe((profiles: Profile[]): void => {
-          this.profiles = profiles;
-        });
-      }
+      this.api.profile.list().subscribe((profiles: Profile[]): void => {
+        this.profiles = profiles;
+      });
     }
   }
 
@@ -145,6 +136,7 @@ export class DashComponent implements OnInit, OnDestroy {
    * Open up profile form modal for adding
    */
   addProfile(): void {
+    this.toggleUserView();
     this.modalService.show(ProfileFormModalComponent, { class: 'modal-sm' });
   }
 
