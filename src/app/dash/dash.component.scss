@@ -11,6 +11,7 @@
   > #sidebar {
     flex-direction: column;
     min-width: $sidebar-width;
+    max-width: $sidebar-width;
     overflow-y: auto;
     background: $light;
 
@@ -98,7 +99,7 @@
   }
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: map_get($grid-breakpoints, lg) - 1) {
   #sidebar {
     position: fixed;
     top: 0;
@@ -112,9 +113,22 @@
   }
 }
 
-@media screen and (max-width: $sidebar-width + 100px) {
+@media screen and (max-width: $sidebar-width + 30) {
   #sidebar {
     min-width: $sidebar-mobile-width !important;
+    max-width: $sidebar-mobile-width !important;
     right: -$sidebar-mobile-width;
+
+    > #user {
+      > .btn {
+        padding-left: 5px;
+        padding-right: 5px;
+
+        &:first-child {
+          margin-right: 10px !important;
+          margin-left: -10px !important;
+        }
+      }
+    }
   }
 }
