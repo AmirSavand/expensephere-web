@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.savandbros.expensephere",
+      "sha256_cert_fingerprints": [
+        "71:FE:35:8A:1F:77:C3:CA:31:BB:09:AF:C8:29:43:6C:CA:E5:19:FA:8B:AB:A1:D0:BD:74:D5:72:8E:34:CC:7E"
+      ]
+    }
+  }
+]

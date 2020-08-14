@@ -27,7 +27,12 @@
               "src/assets/favicon",
               "src/assets/icon/fonts",
               "src/assets/img",
-              "src/assets/manifest"
+              "src/assets/manifest",
+              {
+                "glob": "assetslinks.json",
+                "input": "src/assets/",
+                "output": "/.well-known/"
+              }
             ],
             "styles": [
               "src/styles.scss"
