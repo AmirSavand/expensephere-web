@@ -7,7 +7,8 @@
       "namespace": "android_app",
       "package_name": "com.savandbros.expensephere",
       "sha256_cert_fingerprints": [
-        "71:FE:35:8A:1F:77:C3:CA:31:BB:09:AF:C8:29:43:6C:CA:E5:19:FA:8B:AB:A1:D0:BD:74:D5:72:8E:34:CC:7E"
+        "71:FE:35:8A:1F:77:C3:CA:31:BB:09:AF:C8:29:43:6C:CA:E5:19:FA:8B:AB:A1:D0:BD:74:D5:72:8E:34:CC:7E",
+        "7F:74:07:73:34:EA:B2:37:95:E3:99:33:49:B7:88:5B:FB:42:F9:5F:7D:A2:4A:E0:54:5A:DE:FE:1D:AB:6B:63"
       ]
     }
   }
