@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { SelectColorComponent } from './select-color.component';
 
@@ -9,6 +10,7 @@ import { SelectColorComponent } from './select-color.component';
   ],
   imports: [
     CommonModule,
+    FontAwesomeModule,
   ],
   exports: [
     SelectColorComponent,

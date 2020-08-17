@@ -1,3 +1,5 @@
+@import "src/variables";
+
 .card {
   display: block;
   margin-top: 5px;
@@ -9,5 +11,29 @@
   > .list-group {
     max-height: 220px;
     overflow-y: auto;
+  }
+}
+
+@media screen and (max-width: map_get($grid-breakpoints, lg)) {
+  .card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    border-radius: 0;
+    width: 100%;
+    max-width: unset;
+    height: 100%;
+    z-index: 10;
+    overflow-y: auto;
+    border: none !important;
+
+    >.card-body {
+      border-bottom: 1px solid $border-color;
+    }
+
+    > .list-group {
+      max-height: calc(100% - 123px);
+    }
   }
 }

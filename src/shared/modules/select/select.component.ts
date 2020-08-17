@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Color } from '@shared/classes/color';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 
@@ -12,6 +13,7 @@ export class SelectComponent implements OnChanges {
 
   readonly style = Color.style;
   readonly faSelected = faCheckCircle;
+  readonly faClose = faTimes;
 
   /**
    * Input name

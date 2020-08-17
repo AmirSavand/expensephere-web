@@ -1,4 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 
@@ -8,6 +10,8 @@ import { Utils } from '@shared/classes/utils';
   styleUrls: ['./select-color.component.scss'],
 })
 export class SelectColorComponent implements OnInit {
+
+  readonly faClose: IconDefinition = faTimes;
 
   readonly colors: string[] = Color.COLORS;
   readonly lighten = Color.lighten;

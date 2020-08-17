@@ -38,3 +38,36 @@ $color-size: 30px;
     }
   }
 }
+
+@media screen and (max-width: map_get($grid-breakpoints, lg)) {
+
+  .colors-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: $light;
+    font-weight: $font-weight-bold;
+    display: flex;
+    align-items: center;
+  }
+
+  .colors {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 70px);
+    max-height: unset;
+    z-index: 10;
+    border-radius: 0 !important;
+
+    > .color {
+      border-radius: 15px;
+      box-shadow: inset 0 -8px rgba(0, 0, 0, 0.2);
+      width: $color-size * 2.5;
+      height: $color-size * 2.5;
+    }
+  }
+}
