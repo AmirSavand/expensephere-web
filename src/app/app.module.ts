@@ -11,6 +11,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { HttpInterceptorService } from '@shared/services/http-interceptor.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { WalletService } from '@shared/services/wallet.service';
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,8 @@ import { AppComponent } from './app.component';
     LoadingBarModule,
     LoadingBarHttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: !environment.development }),
+    NgxGoogleAnalyticsModule.forRoot(environment.googleAnalytics),
+    NgxGoogleAnalyticsRouterModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
