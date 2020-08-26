@@ -8,4 +8,5 @@ export interface Wallet {
   icon: string;
   archive: boolean;
   balance: Balance;
+  initial_balance: number;
 }
