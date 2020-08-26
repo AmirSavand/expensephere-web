@@ -146,6 +146,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
             profile: null,
             archive: false,
             balance: profile.balance,
+            initial_balance: null,
             color: Color.COLORS_RESERVED.total,
             icon: 'money3',
             name: 'Total',
