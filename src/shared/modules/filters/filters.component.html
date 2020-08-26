@@ -20,7 +20,7 @@
     </select>
 
     <!-- Boolean type -->
-    <div *ngIf="filter.type === filterType.BOOLEAN" class="custom-control custom-switch">
+    <div *ngIf="filter.type === filterType.BOOLEAN" class="custom-control custom-switch position-static">
       <input [(ngModel)]="filter.value"
              [id]="'filter-' + filter.key"
              (ngModelChange)="onUpdate()"
