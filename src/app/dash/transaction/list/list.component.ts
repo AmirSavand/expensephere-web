@@ -68,6 +68,12 @@ export class ListComponent implements OnInit {
       key: 'archive',
       value: false,
     },
+    {
+      type: FilterType.BOOLEAN,
+      label: 'Exclude',
+      key: 'exclude',
+      value: false,
+    },
   ];
 
   /**

@@ -13,4 +13,5 @@ export interface Transaction {
   created: string;
   updated: string;
   archive: boolean;
+  exclude: boolean;
 }
