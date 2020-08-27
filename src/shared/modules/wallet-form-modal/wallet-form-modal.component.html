@@ -27,6 +27,21 @@
       </div>
     </div>
 
+    <!-- Initial balance -->
+    <div class="form-group" *ngIf="!isEditing">
+      <label for="initial_balance">Initial Balance</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
+        </div>
+        <input type="number" id="initial_balance" class="form-control" formControlName="initial_balance"
+               placeholder="Enter amount" autocomplete="off"
+               [class.is-invalid]="form.error.amount">
+        <div class="input-group-append"><span class="input-group-text font-weight-bold">{{ currency }}</span></div>
+        <div class="invalid-tooltip" *ngIf="form.error.initial_balance">{{ form.error.initial_balance[0] }}</div>
+      </div>
+    </div>
+
     <!-- Icon -->
     <div class="form-group">
       <label for="icon">Icon</label>
@@ -60,9 +75,10 @@
     <!-- Archive -->
     <div class="form-group">
       <label for="archive">Archive</label>
-      <div class="custom-control custom-switch">
+      <div class="custom-control custom-switch position-static">
         <input class="custom-control-input" type="checkbox" formControlName="archive" id="archive">
         <label class="custom-control-label" for="archive"></label>
+        <span class="text-secondary">Archive and hide from the list</span>
       </div>
     </div>
   </form>

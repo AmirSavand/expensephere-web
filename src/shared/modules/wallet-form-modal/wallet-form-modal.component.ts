@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons/faMoneyBillAlt';
 import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
@@ -30,6 +31,7 @@ export class WalletFormModalComponent implements OnInit {
   readonly faPaint: IconDefinition = faPaintBrush;
   readonly faIcons: IconDefinition = faIcons;
   readonly faTrash: IconDefinition = faTrash;
+  readonly faAmount: IconDefinition = faMoneyBillAlt;
 
   /**
    * Editing wallet data
@@ -54,6 +56,11 @@ export class WalletFormModalComponent implements OnInit {
   };
 
   /**
+   * Current (profile) currency
+   */
+  currency: string;
+
+  /**
    * If {@see wallet} is given, then the modal is for edit
    */
   isEditing: boolean;
@@ -66,11 +73,16 @@ export class WalletFormModalComponent implements OnInit {
 
   ngOnInit(): void {
     /**
+     * Set currency
+     */
+    this.currency = ProfileService.profile.value.currency;
+    /**
      * Setup the form
      */
     this.form.form = this.formBuilder.group({
       profile: [ProfileService.profile.value.id],
       name: [null, Validators.required],
+      initial_balance: [null],
       color: [null, Validators.required],
       icon: [null, Validators.required],
       archive: [false],
