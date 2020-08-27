@@ -31,15 +31,8 @@ export class CategoryListComponent {
     /**
      * Prevent editing protected categories
      */
-    if (category.protect === true) {
-      alert('You can not edit this kind of category.');
-      return;
-    }
-    /**
-     * Prevent editing transfer categories
-     */
-    if (category.kind === ExpenseKind.TRANSFER) {
-      alert('You can not edit this kind of category.');
+    if (category.protect) {
+      alert('This is an automated category, you can not modify it.');
       return;
     }
     this.modalService.show(CategoryFormModalComponent, {
