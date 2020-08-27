@@ -11,7 +11,7 @@
 </div>
 
 <!-- Body -->
-<div class="modal-body pb-0">
+<div class="modal-body pb-0" *ngIf="!(isEditing && category.protect)">
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
 
     <!-- Kind -->
@@ -87,7 +87,7 @@
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-right">
+<div class="modal-footer text-right" *ngIf="!(isEditing && category.protect)">
 
   <!-- Delete -->
   <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(category)">
@@ -101,4 +101,20 @@
   <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
+</div>
+
+<!-- Body (protect) -->
+<div class="modal-body pb-0" *ngIf="isEditing && category.protect">
+
+  <!-- Protected message -->
+  <p class="text-warning font-weight-bold">
+    This is an automated category and also used by the system therefore it can not be modified.
+  </p>
+</div>
+
+<!-- Footer (protected) -->
+<div class="modal-footer text-right" *ngIf="isEditing && category.protect">
+
+  <!-- Cancel -->
+  <button class="btn btn-light ml-auto" (click)="modal.hide()">Close</button>
 </div>
