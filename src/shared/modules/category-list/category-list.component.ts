@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Color } from '@shared/classes/color';
-import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-category-list',
@@ -28,13 +27,6 @@ export class CategoryListComponent {
    * Open category form modal for editing
    */
   editCategory(category: Category): void {
-    /**
-     * Prevent editing transfer categories
-     */
-    if (category.kind === ExpenseKind.TRANSFER) {
-      alert('You can not edit this kind of category.');
-      return;
-    }
     this.modalService.show(CategoryFormModalComponent, {
       class: 'modal-sm',
       initialState: { category },
