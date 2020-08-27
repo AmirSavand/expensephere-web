@@ -29,6 +29,13 @@ export class CategoryListComponent {
    */
   editCategory(category: Category): void {
     /**
+     * Prevent editing protected categories
+     */
+    if (category.protect === true) {
+      alert('You can not edit this kind of category.');
+      return;
+    }
+    /**
      * Prevent editing transfer categories
      */
     if (category.kind === ExpenseKind.TRANSFER) {
