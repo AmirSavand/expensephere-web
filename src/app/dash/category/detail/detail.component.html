@@ -44,8 +44,9 @@
       <app-no-data *ngIf="transactions && !transactions.length"></app-no-data>
 
       <!-- Transactions -->
-      <app-transaction-list [categories]="[category]"
+      <app-transaction-list *ngIf="transactions && category && wallets"
                             [transactions]="transactions"
+                            [categories]="[category]"
                             [wallets]="wallets"
                             columnClass="col-12">
       </app-transaction-list>

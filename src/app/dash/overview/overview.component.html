@@ -124,36 +124,20 @@
         <div class="card-body oy-scroll pt-0" [style.height]="769 + 'px'">
 
           <!-- Loading -->
-          <app-loading classes="mt-5"
-                       *ngIf="!transactionsGroups && (!transactions || !categories || !wallets)">
-          </app-loading>
+          <app-loading classes="mt-5" *ngIf="!transactions || !categories || !wallets"></app-loading>
 
           <!-- No data -->
           <p class="m-3 text-info text-center font-weight-bold" *ngIf="transactions && !transactions.length">
             📋 When you start adding transactions, they will show up here.
           </p>
 
-          <!-- Transaction groups -->
-          <div *ngFor="let transactionGroup of transactionsGroups | keyvalue:orderByDate">
-
-            <!-- Date -->
-            <div class="mt-4 d-flex align-items-center text-secondary border-bottom pb-2">
-              <h3 class="mb-0 mr-2 text-dark">{{ transactionGroup.key | date:'d' }}</h3>
-              <div class="small">
-                <div>{{ transactionGroup.key | date:'EEEE' }}</div>
-                <div>{{ transactionGroup.key | date:'MMM yyyy' }}</div>
-              </div>
-              <div class="ml-auto mt-auto small">{{ transactionGroup.value.length }} Transactions</div>
-            </div>
-
-            <!-- Transactions -->
-            <app-transaction-list *ngIf="transactions && categories && wallets"
-                                  [transactions]="transactionGroup.value"
-                                  [categories]="categories"
-                                  [wallets]="wallets"
-                                  columnClass="col-xl-12 col-lg-6">
-            </app-transaction-list>
-          </div>
+          <!-- Transactions -->
+          <app-transaction-list *ngIf="transactions && categories && wallets"
+                                [transactions]="transactions"
+                                [categories]="categories"
+                                [wallets]="wallets"
+                                columnClass="col-xl-12 col-lg-6">
+          </app-transaction-list>
         </div>
       </div>
     </div>

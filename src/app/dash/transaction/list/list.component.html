@@ -9,7 +9,7 @@
 <div class="container mb-3">
 
   <!-- Transactions -->
-  <app-transaction-list *ngIf="categories && wallets"
+  <app-transaction-list *ngIf="transactions && categories && wallets"
                         [transactions]="transactions"
                         [categories]="categories"
                         [wallets]="wallets">
