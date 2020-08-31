@@ -54,11 +54,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
   transactions: Transaction[];
 
   /**
-   * Transaction group list
-   */
-  transactionsGroups: Record<string, Transaction[]>;
-
-  /**
    * Expense/income chart data
    */
   balanceChartResults: { name: string; value: number }[];
@@ -94,7 +89,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
       this.wallets = null;
       this.categories = null;
       this.categoriesToShow = null;
-      this.transactionsGroups = null;
       this.transactions = null;
       this.subscriptions.forEach((subscription: Subscription): void => subscription.unsubscribe());
       /**
@@ -193,43 +187,12 @@ export class OverviewComponent implements OnInit, OnDestroy {
            */
           subscription = this.api.transaction.list().subscribe((data: Transaction[]): void => {
             this.transactions = data;
-            this.setupTransactionsGroup();
           });
           this.subscriptions.push(subscription);
         });
         this.subscriptions.push(subscription);
       }
     });
-  }
-
-  /**
-   * Group transactions by date
-   */
-  setupTransactionsGroup(): void {
-    this.transactionsGroups = {};
-    for (const transaction of this.transactions) {
-      const created: Date = new Date(transaction.time);
-      const date: string = new Date(created.getFullYear(), created.getMonth(), created.getDate()).toString();
-      if (!this.transactionsGroups[date]) {
-        this.transactionsGroups[date] = [];
-      }
-      this.transactionsGroups[date].push(transaction);
-    }
-  }
-
-  /**
-   * Order dict by date
-   */
-  orderByDate(a: KeyValue<string, Transaction[]>, b: KeyValue<string, Transaction[]>): number {
-    const aDate: number = new Date(a.key).getTime();
-    const bDate: number = new Date(b.key).getTime();
-    if (aDate < bDate) {
-      return 1;
-    }
-    if (aDate > bDate) {
-      return -1;
-    }
-    return 0;
   }
 
   ngOnDestroy(): void {

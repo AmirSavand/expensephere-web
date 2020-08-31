@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
@@ -14,7 +15,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.scss'],
 })
-export class TransactionListComponent {
+export class TransactionListComponent implements OnInit {
 
   readonly style = Color.style;
   readonly faEdit: IconDefinition = faPen;
@@ -28,7 +29,46 @@ export class TransactionListComponent {
 
   @Input() categories: Category[];
 
+  /**
+   * Transaction group list
+   */
+  transactionsGroups: Record<string, Transaction[]>;
+
   constructor(private modalService: BsModalService) {
+  }
+
+  ngOnInit(): void {
+    this.setupTransactionsGroup();
+  }
+
+  /**
+   * Group transactions by date
+   */
+  setupTransactionsGroup(): void {
+    this.transactionsGroups = {};
+    for (const transaction of this.transactions) {
+      const created: Date = new Date(transaction.time);
+      const date: string = new Date(created.getFullYear(), created.getMonth(), created.getDate()).toString();
+      if (!this.transactionsGroups[date]) {
+        this.transactionsGroups[date] = [];
+      }
+      this.transactionsGroups[date].push(transaction);
+    }
+  }
+
+  /**
+   * Order dict by date
+   */
+  orderByDate(a: KeyValue<string, Transaction[]>, b: KeyValue<string, Transaction[]>): number {
+    const aDate: number = new Date(a.key).getTime();
+    const bDate: number = new Date(b.key).getTime();
+    if (aDate < bDate) {
+      return 1;
+    }
+    if (aDate > bDate) {
+      return -1;
+    }
+    return 0;
   }
 
   /**

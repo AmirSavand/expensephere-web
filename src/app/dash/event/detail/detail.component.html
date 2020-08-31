@@ -62,7 +62,7 @@
       <app-no-data *ngIf="transactions && !transactions.length"></app-no-data>
 
       <!-- Transactions -->
-      <app-transaction-list *ngIf="categories && wallets"
+      <app-transaction-list *ngIf="transactions && categories && wallets"
                             [categories]="categories"
                             [transactions]="transactions"
                             [wallets]="wallets"
