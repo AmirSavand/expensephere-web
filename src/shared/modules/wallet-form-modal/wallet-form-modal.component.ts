@@ -67,6 +67,7 @@ export class WalletFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
+              private profileService: ProfileService,
               private api: ApiService,
               private router: Router) {
   }
@@ -119,6 +120,10 @@ export class WalletFormModalComponent implements OnInit {
         Object.assign(this.wallet, data);
       }
       this.modal.hide();
+      /**
+       * This change effects profile balance, so let's refresh profile
+       */
+      this.profileService.refresh();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;
       this.form.loading = false;
