@@ -53,10 +53,7 @@ export class ListComponent {
    */
   load(params: GetParams): void {
     this.api.category.list(params).subscribe((data: Category[]): void => {
-      /**
-       * Filter out transfer types
-       */
-      this.categories = data.filter((item: Category): boolean => item.kind !== ExpenseKind.TRANSFER);
+      this.categories = data;
     });
   }
 
