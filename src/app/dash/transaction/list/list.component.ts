@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
@@ -100,6 +100,24 @@ export class ListComponent implements OnInit {
    * Load transactions with filters
    */
   load(params: GetParams): void {
+    const typeSelected = Number(params.category__kind);
+    if (typeSelected >= 0 && this.categories) {
+      // Empty the category list of filter
+      this.filters[3].values = [
+        { label: 'Category', value: '' },
+      ];
+      // Filter categories by selected type
+      const categories = this.categories.filter((category: Category) => {
+        return category.kind === typeSelected;
+      });
+      // Set category list to filter
+      for (const category of categories) {
+        this.filters[3].values.push({
+          label: category.name,
+          value: category.id,
+        });
+      }
+    }
     this.api.transaction.list(params).subscribe((data: Transaction[]): void => {
       /**
        * Filter out transfer types
