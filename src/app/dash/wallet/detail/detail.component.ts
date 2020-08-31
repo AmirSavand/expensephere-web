@@ -43,6 +43,11 @@ export class DetailComponent implements OnInit {
    */
   walletId: string;
 
+  /**
+   * Page error
+   */
+  error = false;
+
   constructor(private api: ApiService,
               private route: ActivatedRoute,
               private modalService: BsModalService) {
@@ -69,6 +74,8 @@ export class DetailComponent implements OnInit {
          */
         this.api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
           this.wallet = data;
+        }, (): void => {
+          this.error = true;
         });
         /**
          * Load wallet list

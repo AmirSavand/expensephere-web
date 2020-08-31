@@ -35,6 +35,11 @@ export class DetailComponent implements OnInit {
    */
   categoryId: string;
 
+  /**
+   * Page error
+   */
+  error = false;
+
   constructor(private api: ApiService,
               private route: ActivatedRoute) {
   }
@@ -60,6 +65,8 @@ export class DetailComponent implements OnInit {
          */
         this.api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
           this.category = data;
+        }, (): void => {
+          this.error = true;
         });
         /**
          * Load wallets for categories

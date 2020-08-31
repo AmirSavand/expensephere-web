@@ -1,5 +1,10 @@
-<!-- Loading -->
-<app-loading classes="my-5" *ngIf="!wallet"></app-loading>
+<div class="container mb-3">
+  <!-- Loading -->
+  <app-loading classes="my-3" *ngIf="!wallet && !error"></app-loading>
+
+  <!-- Not found -->
+  <app-not-found classes="my-3" name="wallet" *ngIf="!wallet && error"></app-not-found>
+</div>
 
 <!-- Data -->
 <div class="container my-3" *ngIf="wallet">

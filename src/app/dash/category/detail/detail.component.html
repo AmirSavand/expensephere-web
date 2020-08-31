@@ -1,5 +1,10 @@
-<!-- Loading -->
-<app-loading classes="my-5" *ngIf="!category"></app-loading>
+<div class="container mb-3">
+  <!-- Loading -->
+  <app-loading classes="my-3" *ngIf="!category && !error"></app-loading>
+
+  <!-- Not found -->
+  <app-not-found classes="my-3" name="category" *ngIf="!category && error"></app-not-found>
+</div>
 
 <!-- Data -->
 <div class="container my-3" *ngIf="category">
