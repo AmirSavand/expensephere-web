@@ -107,6 +107,9 @@ export class WalletFormModalComponent implements OnInit {
    */
   submit(): void {
     this.form.loading = true;
+    if (this.isEditing) {
+      this.form.form.removeControl('initial_balance');
+    }
     const payload: Partial<Wallet> = this.form.form.value;
     let method: Observable<Wallet> = this.api.wallet.create(payload);
     if (this.isEditing) {
