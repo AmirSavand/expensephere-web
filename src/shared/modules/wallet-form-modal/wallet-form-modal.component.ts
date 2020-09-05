@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -37,6 +37,11 @@ export class WalletFormModalComponent implements OnInit {
    * Editing wallet data
    */
   @Input() wallet?: Wallet;
+
+  /**
+   * Update wallet instantly in list
+   */
+  @Output() updateWallet = new EventEmitter<Wallet>();
 
   /**
    * Colors for selection
@@ -124,6 +129,10 @@ export class WalletFormModalComponent implements OnInit {
       }
       this.modal.hide();
       /**
+       * Update wallet data instantly in list
+       */
+      this.updateWallet.emit(data);
+      /**
        * This change effects profile balance, so let's refresh profile
        */
       this.profileService.refresh();
@@ -144,6 +153,14 @@ export class WalletFormModalComponent implements OnInit {
     }
     this.api.wallet.delete(wallet.id).subscribe((): void => {
       this.modal.hide();
+      /**
+       * Delete wallet, instantly in list
+       */
+      this.updateWallet.emit();
+      /**
+       * This change effects profile balance, so let's refresh profile
+       */
+      this.profileService.refresh();
     });
   }
 }

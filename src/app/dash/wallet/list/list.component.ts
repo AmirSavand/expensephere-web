@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GetParams } from '@shared/interfaces/get-params';
 import { Wallet } from '@shared/interfaces/wallet';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
@@ -28,6 +28,8 @@ export class ListComponent {
       value: false,
     },
   ];
+
+  @Input() updateWallet?: Wallet;
 
   /**
    * Wallet list

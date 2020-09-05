@@ -4,7 +4,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Color } from '@shared/classes/color';
 import { Wallet } from '@shared/interfaces/wallet';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-wallet-list',
@@ -28,9 +28,31 @@ export class WalletListComponent {
    * Open wallet form modal for editing
    */
   editWallet(wallet: Wallet): void {
-    this.modalService.show(WalletFormModalComponent, {
+    const modalRef: BsModalRef = this.modalService.show(WalletFormModalComponent, {
       class: 'modal-sm',
       initialState: { wallet },
+    });
+    (modalRef.content as WalletFormModalComponent).updateWallet.subscribe((data: Wallet): void => {
+      /**
+       * Delete wallet, instantly in list
+       */
+      if (!data) {
+        this.wallets.splice(this.wallets.indexOf(wallet), 1);
+        return;
+      }
+      /**
+       * Find the updated wallet
+       */
+      const find: Wallet = this.wallets.find((item: Wallet): boolean => item.id === data.id);
+      if (!find) {
+        return;
+      }
+      /**
+       * Update wallet data instantly in list
+       */
+      Object.keys(data).forEach((key: string): void => {
+        find[key] = data[key];
+      });
     });
   }
 
