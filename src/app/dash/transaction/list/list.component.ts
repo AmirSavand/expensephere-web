@@ -101,21 +101,28 @@ export class ListComponent implements OnInit {
    */
   load(params: GetParams): void {
     const typeSelected = Number(params.category__kind);
+    const categoryFilter = this.filters[3];
     if (typeSelected >= 0 && this.categories) {
-      // Empty the category list of filter
-      this.filters[3].values = [
+      /**
+       * Empty the category list of filter
+       */
+      categoryFilter.values = [
         { label: 'Category', value: '' },
       ];
-      // Filter categories by selected type
-      const categories = this.categories.filter((category: Category) => {
-        return category.kind === typeSelected;
-      });
-      // Set category list to filter
-      for (const category of categories) {
-        this.filters[3].values.push({
-          label: category.name,
-          value: category.id,
-        });
+      /**
+       * Empty the selected category
+       */
+      categoryFilter.value = '';
+      for (const category of this.categories) {
+        /**
+         * Filter categories by selected type
+         */
+        if (category.kind === typeSelected) {
+          categoryFilter.values.push({
+            label: category.name,
+            value: category.id,
+          });
+        }
       }
     }
     this.api.transaction.list(params).subscribe((data: Transaction[]): void => {
