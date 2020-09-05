@@ -1,3 +1,11 @@
+<div class="container mb-3">
+  <!-- Loading -->
+  <app-loading classes="my-3" *ngIf="!category && !error"></app-loading>
+
+  <!-- Not found -->
+  <app-not-found classes="my-3" name="transaction" *ngIf="!category && error"></app-not-found>
+</div>
+
 <!-- Wrapper (with category color as background) -->
 <div class="wrapper" [style.background]="category.color" *ngIf="category">
 

@@ -62,6 +62,11 @@ export class DetailComponent implements OnInit {
    */
   event: Event;
 
+  /**
+   * Page error
+   */
+  error = false;
+
   constructor(private api: ApiService,
               private route: ActivatedRoute,
               private modalService: BsModalService) {
@@ -116,6 +121,8 @@ export class DetailComponent implements OnInit {
               this.event = data;
             });
           }
+        }, (): void => {
+          this.error = true;
         });
       }
     });

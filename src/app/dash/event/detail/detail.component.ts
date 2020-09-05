@@ -38,6 +38,11 @@ export class DetailComponent implements OnInit {
    */
   transactions: Transaction[];
 
+  /**
+   * Page error
+   */
+  error = false;
+
   constructor(private api: ApiService,
               private route: ActivatedRoute) {
   }
@@ -63,6 +68,8 @@ export class DetailComponent implements OnInit {
          */
         this.api.event.retrieve(this.eventId).subscribe((data: Event): void => {
           this.event = data;
+        }, (): void => {
+          this.error = true;
         });
         /**
          * Load wallet list

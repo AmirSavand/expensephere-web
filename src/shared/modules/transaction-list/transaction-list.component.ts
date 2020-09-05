@@ -1,5 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Color } from '@shared/classes/color';
@@ -15,7 +15,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.scss'],
 })
-export class TransactionListComponent implements OnInit {
+export class TransactionListComponent implements OnInit, OnChanges {
 
   readonly style = Color.style;
   readonly faEdit: IconDefinition = faPen;
@@ -39,6 +39,13 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupTransactionsGroup();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.transactions.currentValue) {
+      this.transactions = changes.transactions.currentValue;
+      this.setupTransactionsGroup();
+    }
   }
 
   /**

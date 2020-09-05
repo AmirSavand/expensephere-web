@@ -1,5 +1,10 @@
-<!-- Loading -->
-<app-loading classes="my-5" *ngIf="!event"></app-loading>
+<div class="container mb-3">
+  <!-- Loading -->
+  <app-loading classes="my-3" *ngIf="!event && !error"></app-loading>
+
+  <!-- Not found -->
+  <app-not-found classes="my-3" name="event" *ngIf="!event && error"></app-not-found>
+</div>
 
 <!-- Data -->
 <div class="container my-3" *ngIf="event">
