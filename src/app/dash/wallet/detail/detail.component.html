@@ -1,4 +1,5 @@
-<div class="container mb-3">
+<div class="container py-3" *ngIf="(!wallet && !error) || (!wallet && error)">
+
   <!-- Loading -->
   <app-loading classes="my-3" *ngIf="!wallet && !error"></app-loading>
 
