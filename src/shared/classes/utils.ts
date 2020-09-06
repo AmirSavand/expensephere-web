@@ -10,6 +10,11 @@ export class Utils {
   static readonly HTML_DATETIME_FORMAT = 'yyyy-MM-ddTHH:mm';
 
   /**
+   * API datetime format for filtering
+   */
+  static readonly API_DATE_FORMAT = 'yyyy-MM-dd';
+
+  /**
    * @returns A random item from the given list
    */
   static getRandomItemFromList<T>(list: T[]): T {

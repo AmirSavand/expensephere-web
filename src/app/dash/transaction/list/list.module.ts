@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FiltersModule } from '@shared/modules/filters/filters.module';
 import { LoadingModule } from '@shared/modules/loading/loading.module';
 import { NoDataModule } from '@shared/modules/no-data/no-data.module';
@@ -18,6 +19,7 @@ import { ListComponent } from 'src/app/dash/transaction/list/list.component';
     TransactionListModule,
     NoDataModule,
     LoadingModule,
+    FontAwesomeModule,
   ],
 })
 export class ListModule { }

@@ -1,7 +1,62 @@
-<!-- filter -->
-<div class="container mt-3">
-  <div class="p-2 rounded bg-tertiary">
-    <app-filters [filters]="filters" (update)="load($event)"></app-filters>
+<!-- Filter -->
+<div class="bg-tertiary py-3">
+  <div class="container">
+    <app-filters [filters]="filters" (update)="filtersSelected = $event; load()"></app-filters>
+  </div>
+</div>
+
+<!-- Time selector -->
+<div class="bg-light py-3 border-bottom border-tertiary">
+  <div class="container d-flex align-items-center justify-content-center">
+
+    <!-- Label -->
+    <div class="font-weight-bold mr-auto d-sm-block"
+         [class.d-none]="monthSelected !== null">
+      <fa-icon [fixedWidth]="true" [icon]="faTimeSelector" class="mr-2"></fa-icon>
+      <span>Time Selector</span>
+    </div>
+
+    <!-- Month selector -->
+    <div class="d-flex align-items-center mr-auto mr-sm-0" *ngIf="monthSelected !== null">
+
+      <!-- Switch to prev month -->
+      <button class="btn btn-link"
+              [disabled]="!months[monthSelected - 1]"
+              (click)="monthSelected = monthSelected - 1; load()">
+        <fa-icon [fixedWidth]="true" [icon]="faPrev"></fa-icon>
+      </button>
+
+      <!-- Selected month -->
+      <div class="font-weight-bold mx-2">
+      <span *ngIf="months[monthSelected].getMonth() < now.getMonth() - 1">
+        {{ months[monthSelected] | date:'MMMM' }}
+      </span>
+        <span *ngIf="months[monthSelected].getMonth() === now.getMonth()">This Month</span>
+        <span *ngIf="months[monthSelected].getMonth() === now.getMonth() - 1">Last Month</span>
+      </div>
+
+      <!-- Switch to next month -->
+      <button class="btn btn-link"
+              [disabled]="!months[monthSelected + 1]"
+              (click)="monthSelected = monthSelected + 1; load()">
+        <fa-icon [fixedWidth]="true" [icon]="faNext"></fa-icon>
+      </button>
+    </div>
+
+    <!-- This month -->
+    <button class="btn btn-light ml-2"
+            *ngIf="monthSelected === null"
+            (click)="monthSelected = this.months.length - 1; load()">
+      This Month
+    </button>
+
+    <!-- All time -->
+    <div class="btn ml-2"
+         (click)="monthSelected = null; load()"
+         [class.btn-primary]="monthSelected === null"
+         [class.btn-light]="monthSelected !== null">
+      All Time
+    </div>
   </div>
 </div>
 
@@ -16,8 +71,8 @@
   </app-transaction-list>
 
   <!-- No data -->
-  <app-no-data classes="mt-3" *ngIf="transactions && !transactions.length"></app-no-data>
+  <app-no-data classes="my-5" *ngIf="transactions && !transactions.length"></app-no-data>
 
   <!-- Loading -->
-  <app-loading classes="mt-3" *ngIf="!transactions || !wallets"></app-loading>
+  <app-loading classes="my-5" *ngIf="!transactions || !wallets"></app-loading>
 </div>
