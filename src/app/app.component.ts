@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   /**
    * Primary color of the app
    */
-  static readonly PRIMARY_COLOR = getComputedStyle(document.body).getPropertyValue('--primary');
+  static readonly PRIMARY_COLOR = '#474787';
 
   constructor(private router: Router) {
   }
