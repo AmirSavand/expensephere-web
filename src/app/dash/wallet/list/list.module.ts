@@ -11,6 +11,7 @@ import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-
 import { WalletFormModalModule } from '@shared/modules/wallet-form-modal/wallet-form-modal.module';
 import { WalletListModule } from '@shared/modules/wallet-list/wallet-list.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ListSelectionModule } from 'src/shared/modules/list-selection/list-selection.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     NoDataModule,
     LoadingModule,
     FiltersModule,
+    ListSelectionModule,
   ],
 })
 export class ListModule {

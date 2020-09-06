@@ -9,4 +9,8 @@ export interface Wallet {
   icon: string;
   archive: boolean;
   balance: Balance;
+  /**
+   * Extra properties
+   */
+  select?: boolean;
 }

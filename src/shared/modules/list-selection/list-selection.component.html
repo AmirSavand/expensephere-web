@@ -1,0 +1,30 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">
+      <!-- Select: Select input -->
+      <div class="checkbox" *ngIf="list.length">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="select"
+                 [(ngModel)]="select" (change)="onToggleSelect()" [indeterminate]="isSelectIndeterminate">
+          <label class="custom-control-label" for="select"></label>
+        </div>
+      </div>
+    </th>
+    <th scope="col">Name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let object of list">
+    <!-- Select -->
+    <th class="checkbox">
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" [id]="object.id"
+                 [(ngModel)]="object.select" (ngModelChange)="onObjectSelect()">
+        <label class="custom-control-label" [for]="object.id"></label>
+      </div>
+    </th>
+    <td>{{ object.name }}</td>
+  </tr>
+  </tbody>
+</table>

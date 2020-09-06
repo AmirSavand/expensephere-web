@@ -9,7 +9,9 @@
 <div class="container mb-3">
 
   <!-- Wallets -->
-  <app-wallet-list [wallets]="wallets"></app-wallet-list>
+<!--  <app-wallet-list [wallets]="wallets"></app-wallet-list>-->
+
+  <app-list-selection [list]="selection" (update)="selectionEvent($event)"></app-list-selection>
 
   <!-- No data -->
   <app-no-data classes="mt-3" *ngIf="wallets && !wallets.length"></app-no-data>
