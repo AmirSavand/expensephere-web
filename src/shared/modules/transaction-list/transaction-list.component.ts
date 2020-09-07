@@ -21,6 +21,9 @@ export class TransactionListComponent implements OnInit, OnChanges {
   readonly faEdit: IconDefinition = faPen;
   readonly expenseKind = ExpenseKind;
 
+  readonly categoryDict: Record<number, Category> = {};
+  readonly walletDict: Record<number, Wallet> = {};
+
   @Input() transactions: Transaction[];
 
   @Input() columnClass = 'col-xl-4';
@@ -52,7 +55,22 @@ export class TransactionListComponent implements OnInit, OnChanges {
    * Group transactions by date
    */
   setupTransactionsGroup(): void {
+    /**
+     * Clear transactions groups
+     */
     this.transactionsGroups = {};
+    /**
+     * Store category and wallet into dictionary for better access by transactions.
+     */
+    for (const wallet of this.wallets) {
+      this.walletDict[wallet.id] = wallet;
+    }
+    for (const category of this.categories) {
+      this.categoryDict[category.id] = category;
+    }
+    /**
+     * Loop through transactions to add them to their groups and update them.
+     */
     for (const transaction of this.transactions) {
       /**
        * Generate transaction title based on category name and its note.
@@ -93,19 +111,5 @@ export class TransactionListComponent implements OnInit, OnChanges {
    */
   editTransaction(transaction: Transaction): void {
     this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } });
-  }
-
-  /**
-   * @returns Wallet by ID
-   */
-  getWallet(id: number): Wallet {
-    return this.wallets.find(item => item.id === id);
-  }
-
-  /**
-   * @returns Category by ID
-   */
-  getCategory(id: number): Category {
-    return this.categories.find(item => item.id === id);
   }
 }

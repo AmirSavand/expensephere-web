@@ -16,16 +16,16 @@
       <div class="mt-3 item-icon-wrapper">
         <div class="d-flex item-icon-action">
           <!-- Category Icon -->
-          <div class="item-icon" [ngStyle]="style(getCategory(transaction.category).color)">
-            <i class="icon-{{ getCategory(transaction.category).icon }}"></i>
+          <div class="item-icon" [ngStyle]="style(categoryDict[transaction.category].color)">
+            <i class="icon-{{ categoryDict[transaction.category].icon }}"></i>
           </div>
           <!-- Edit -->
           <div class="item-icon edit" (click)="editTransaction(transaction)" title="Edit transaction">
             <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
             <!-- Wallet icon -->
-            <i class="icon-{{ getWallet(transaction.wallet).icon }} icon-badge"
-               [title]="getWallet(transaction.wallet).name"
-               [style.background]="getWallet(transaction.wallet).color"></i>
+            <i class="icon-{{ walletDict[transaction.wallet].icon }} icon-badge"
+               [title]="walletDict[transaction.wallet].name"
+               [style.background]="walletDict[transaction.wallet].color"></i>
           </div>
           <a class="pl-3 d-flex align-items-center text-dark w-100" title="View transaction"
              [routerLink]="['/dash', 'transaction', transaction.id]">
@@ -41,7 +41,7 @@
                  [class.text-danger]="transaction.kind === expenseKind.EXPENSE">
               <div class="text-right">{{ transaction.amount | profileCurrency }}</div>
               <div class="small" *ngIf="transaction.kind === expenseKind.TRANSFER">
-                +{{ getWallet(transaction.into).name }}
+                +{{ walletDict[transaction.wallet].name }}
               </div>
             </div>
           </a>
