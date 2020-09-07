@@ -9,6 +9,7 @@
     "build": "ng build",
     "build-staging": "ng build -c staging",
     "build-production": "ng build -c production",
+    "deploy": "firebase deploy --only hosting",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
