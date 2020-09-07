@@ -14,8 +14,7 @@
   <div class="row transaction-list">
     <div *ngFor="let transaction of transactionGroup.value" [classList]="columnClass">
       <div class="mt-3 item-icon-wrapper">
-        <div class="d-flex item-icon-action"
-             [title]="transaction.note">
+        <div class="d-flex item-icon-action">
           <!-- Category Icon -->
           <div class="item-icon" [ngStyle]="style(getCategory(transaction.category).color)">
             <i class="icon-{{ getCategory(transaction.category).icon }}"></i>
@@ -32,7 +31,7 @@
              [routerLink]="['/dash', 'transaction', transaction.id]">
             <div>
               <!-- Name -->
-              <div>{{ getCategory(transaction.category).name }}</div>
+              <div [title]="transaction.note">{{ transaction.title }}</div>
               <!-- Time -->
               <div class="small text-muted">{{ transaction.time | date:'hh:mm aa' }}</div>
             </div>

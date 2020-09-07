@@ -14,4 +14,8 @@ export interface Transaction {
   updated: string;
   archive: boolean;
   exclude: boolean;
+  /**
+   * Extra properties
+   */
+  title?: string;
 }

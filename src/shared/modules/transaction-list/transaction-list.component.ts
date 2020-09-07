@@ -54,6 +54,16 @@ export class TransactionListComponent implements OnInit, OnChanges {
   setupTransactionsGroup(): void {
     this.transactionsGroups = {};
     for (const transaction of this.transactions) {
+      /**
+       * Generate transaction title based on category name and its note.
+       */
+      transaction.title = this.categoryDict[transaction.category].name;
+      if (transaction.note) {
+        transaction.title = transaction.note.split('\n')[0];
+        if (transaction.title.length > 21) {
+          transaction.title = transaction.title.substring(0, 21) + '...';
+        }
+      }
       const created: Date = new Date(transaction.time);
       const date: string = new Date(created.getFullYear(), created.getMonth(), created.getDate()).toString();
       if (!this.transactionsGroups[date]) {
