@@ -23,6 +23,7 @@ $color-size: 30px;
   text-align: center;
   max-height: 200px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 
   > .color {
     box-shadow: 0 0 0 6px;
