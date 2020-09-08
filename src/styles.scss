@@ -270,3 +270,19 @@ a, button, .btn {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.custom-checkbox {
+  .custom-control-label::before {
+    border: 1px solid $primary;
+  }
+}
+
+.table {
+  > thead {
+    > tr {
+      > th {
+        border-top: none;
+      }
+    }
+  }
+}

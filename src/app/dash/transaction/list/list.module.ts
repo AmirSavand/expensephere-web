@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FiltersModule } from '@shared/modules/filters/filters.module';
 import { LoadingModule } from '@shared/modules/loading/loading.module';
@@ -8,6 +9,7 @@ import { TransactionListModule } from '@shared/modules/transaction-list/transact
 
 import { ListRoutingModule } from 'src/app/dash/transaction/list/list-routing.module';
 import { ListComponent } from 'src/app/dash/transaction/list/list.component';
+import { ProfileCurrencyModule } from 'src/shared/modules/profile-currency/profile-currency.module';
 
 
 @NgModule({
@@ -20,6 +22,8 @@ import { ListComponent } from 'src/app/dash/transaction/list/list.component';
     NoDataModule,
     LoadingModule,
     FontAwesomeModule,
+    ProfileCurrencyModule,
+    FormsModule,
   ],
 })
 export class ListModule { }

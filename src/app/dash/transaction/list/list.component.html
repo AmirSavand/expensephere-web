@@ -5,19 +5,12 @@
   </div>
 </div>
 
-<!-- Time selector -->
-<div class="bg-light py-3 border-bottom border-tertiary">
+<!-- Time and view -->
+<div class="bg-light py-2 border-bottom border-top border-tertiary">
   <div class="container d-flex align-items-center justify-content-center">
 
-    <!-- Label -->
-    <div class="font-weight-bold mr-auto d-sm-block"
-         [class.d-none]="monthSelected !== null">
-      <fa-icon [fixedWidth]="true" [icon]="faTimeSelector" class="mr-2"></fa-icon>
-      <span>Time Selector</span>
-    </div>
-
     <!-- Month selector -->
-    <div class="d-flex align-items-center mr-auto mr-sm-0" *ngIf="monthSelected !== null">
+    <div class="d-flex align-items-center" *ngIf="monthSelected !== null">
 
       <!-- Switch to prev month -->
       <button class="btn btn-link"
@@ -44,18 +37,25 @@
     </div>
 
     <!-- This month -->
-    <button class="btn btn-light ml-2"
+    <button class="btn btn-light"
             *ngIf="monthSelected === null"
             (click)="monthSelected = this.months.length - 1; load()">
       This Month
     </button>
 
     <!-- All time -->
-    <div class="btn ml-2"
-         (click)="monthSelected = null; load()"
-         [class.btn-primary]="monthSelected === null"
-         [class.btn-light]="monthSelected !== null">
+    <div class="btn btn-light ml-2" (click)="monthSelected = null; load()" [class.active]="monthSelected === null">
       All Time
+    </div>
+
+    <!-- View switcher -->
+    <div class="btn-group ml-auto">
+      <div class="btn btn-outline-tertiary text-dark" [class.active]="listView" (click)="listView = true">
+        <fa-icon [fixedWidth]="true" [icon]="faListView"></fa-icon>
+      </div>
+      <div class="btn btn-outline-tertiary text-dark" [class.active]="!listView" (click)="listView = false">
+        <fa-icon [fixedWidth]="true" [icon]="faGridView"></fa-icon>
+      </div>
     </div>
   </div>
 </div>
@@ -63,11 +63,70 @@
 <!-- Content -->
 <div class="container mb-3">
 
+  <!-- Transactions table -->
+  <div class="table-responsive my-3"
+       *ngIf="transactions && transactions.length && categoryDict && walletDict && listView">
+    <table class="table table-borderless table-striped">
+      <thead>
+      <tr>
+        <th class="text-center" *ngIf="implemented">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="selection"
+                   [indeterminate]="selection.indeterminate"
+                   [checked]="selection.deselected === 0"
+                   (change)="selection.selectDeselectAll()">
+            <label class="custom-control-label" for="selection"></label>
+          </div>
+        </th>
+        <th>Transaction</th>
+        <th>Category</th>
+        <th>Wallet</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th class="text-right">Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let transaction of transactions">
+        <td class="text-center" *ngIf="implemented">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" [id]="transaction.id"
+                   [(ngModel)]="selection.selection[transaction.id]"
+                   (ngModelChange)="selection.count()">
+            <label class="custom-control-label" [for]="transaction.id"></label>
+          </div>
+        </td>
+        <td><a class="text-dark" [routerLink]="['../../../', transaction.id]">{{ transaction.title }}</a></td>
+        <td>
+          <a class="text-dark" [routerLink]="['../../../../category', transaction.category]">
+            {{ categoryDict[transaction.category].name }}
+          </a>
+        </td>
+        <td>
+          <a class="text-dark" [routerLink]="['../../../../wallet', transaction.wallet]">
+            {{ walletDict[transaction.wallet].name }}
+          </a>
+        </td>
+        <td>{{ transaction.created | date }}</td>
+        <td>{{ transaction.created | date:'hh:mm aa' }}</td>
+        <td class="text-right"
+            [class.text-secondary]="transaction.kind === expenseKind.TRANSFER"
+            [class.text-danger]="transaction.kind === expenseKind.EXPENSE">
+          {{ transaction.amount | profileCurrency }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- Transactions -->
   <app-transaction-list *ngIf="transactions && categories && wallets"
+                        [hidden]="listView"
                         [transactions]="transactions"
                         [categories]="categories"
-                        [wallets]="wallets">
+                        [wallets]="wallets"
+                        (categoryDictSet)="categoryDict = $event"
+                        (walletDictSet)="walletDict = $event">
   </app-transaction-list>
 
   <!-- No data -->

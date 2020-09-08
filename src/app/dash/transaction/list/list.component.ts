@@ -1,9 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons/faCalendar';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
+import { faThLarge } from '@fortawesome/free-solid-svg-icons/faThLarge';
+import { Selection } from '@shared/classes/selection';
+import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
@@ -12,8 +16,8 @@ import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
+import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
 import { ApiService } from '@shared/services/api.service';
-import { Utils } from 'src/shared/classes/utils';
 
 @Component({
   selector: 'app-list',
@@ -37,9 +41,18 @@ export class ListComponent implements OnInit {
    */
   private static readonly STORAGE_KEY_ALL_TIME = 'all-time';
 
+  readonly expenseKind = ExpenseKind;
+
   readonly faTimeSelector: IconDefinition = faCalendar;
   readonly faPrev: IconDefinition = faArrowLeft;
   readonly faNext: IconDefinition = faArrowRight;
+  readonly faListView: IconDefinition = faBars;
+  readonly faGridView: IconDefinition = faThLarge;
+
+  /**
+   * @todo Once selection is done, remove me and my usage.
+   */
+  readonly implemented: false = false;
 
   /**
    * Current time which is used for generating dates
@@ -152,8 +165,31 @@ export class ListComponent implements OnInit {
    */
   categories: Category[];
 
+  /**
+   * List view instead of grid view?
+   */
+  listView = false;
+
+  /**
+   * Selection for multi-select
+   */
+  selection: Selection<Transaction>;
+
+  /**
+   * Dict of transactions categories
+   * {@see TransactionListComponent.categoryDictSet
+   */
+  categoryDict: TransactionListComponent['categoryDict'];
+
+  /**
+   * Dict of wallet categories.
+   * @see TransactionListComponent.walletDictSet
+   */
+  walletDict: TransactionListComponent['walletDict'];
+
   constructor(private api: ApiService,
-              private date: DatePipe) {
+              private date: DatePipe,
+              private changeDetectorRef: ChangeDetectorRef) {
   }
 
   /**
@@ -214,6 +250,14 @@ export class ListComponent implements OnInit {
      */
     this.api.transaction.list(this.filtersSelected).subscribe((data: Transaction[]): void => {
       this.transactions = data;
+      /**
+       * Setup selection instance
+       */
+      this.selection = new Selection(this.transactions);
+      /**
+       * Detect changes for transaction.title that is set in <app-transaction-list>
+       */
+      this.changeDetectorRef.detectChanges();
     });
   }
 

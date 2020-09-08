@@ -1,5 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Color } from '@shared/classes/color';
@@ -23,6 +23,9 @@ export class TransactionListComponent implements OnInit, OnChanges {
 
   readonly categoryDict: Record<number, Category> = {};
   readonly walletDict: Record<number, Wallet> = {};
+
+  @Output() categoryDictSet = new EventEmitter<TransactionListComponent['categoryDict']>();
+  @Output() walletDictSet = new EventEmitter<TransactionListComponent['walletDict']>();
 
   @Input() transactions: Transaction[];
 
@@ -68,6 +71,11 @@ export class TransactionListComponent implements OnInit, OnChanges {
     for (const category of this.categories) {
       this.categoryDict[category.id] = category;
     }
+    /**
+     * Trigger category and wallet dict update
+     */
+    this.categoryDictSet.emit(this.categoryDict);
+    this.walletDictSet.emit(this.walletDict);
     /**
      * Loop through transactions to add them to their groups and update them.
      */
