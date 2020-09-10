@@ -3,6 +3,10 @@
  */
 export class Selection<T> {
 
+  /**
+   * @param items List of original items to setup selection for.
+   * @param id Item unique property key to store selection by.
+   */
   constructor(public items: T[], public id: string = 'id') {
   }
 
@@ -28,6 +32,13 @@ export class Selection<T> {
    * Is selection indeterminate?
    */
   indeterminate: boolean;
+
+  /**
+   * @returns List of original items that are selected
+   */
+  get selectedItems(): T[] {
+    return this.items.filter((item: T): boolean => this.selection[item[this.id]]);
+  }
 
   /**
    * Update selected and deselected numbers.
@@ -70,7 +81,6 @@ export class Selection<T> {
     for (const item of this.items) {
       this.select(item);
     }
-    this.count();
   }
 
   /**
@@ -80,7 +90,6 @@ export class Selection<T> {
     for (const item of this.items) {
       this.deselect(item);
     }
-    this.count();
   }
 
   /**

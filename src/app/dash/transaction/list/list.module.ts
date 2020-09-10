@@ -9,6 +9,7 @@ import { TransactionListModule } from '@shared/modules/transaction-list/transact
 
 import { ListRoutingModule } from 'src/app/dash/transaction/list/list-routing.module';
 import { ListComponent } from 'src/app/dash/transaction/list/list.component';
+import { ActionsModule } from 'src/shared/modules/actions/actions.module';
 import { ProfileCurrencyModule } from 'src/shared/modules/profile-currency/profile-currency.module';
 
 
@@ -24,6 +25,7 @@ import { ProfileCurrencyModule } from 'src/shared/modules/profile-currency/profi
     FontAwesomeModule,
     ProfileCurrencyModule,
     FormsModule,
+    ActionsModule,
   ],
 })
 export class ListModule { }

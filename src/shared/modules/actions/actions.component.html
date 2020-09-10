@@ -1,0 +1,21 @@
+<!-- Actions -->
+<ng-container *ngFor="let action of actions">
+
+  <!-- Dropdown action -->
+  <div class="action dropdown" *ngIf="action.values" dropdown>
+    <button class="btn btn-tertiary dropdown-toggle" [disabled]="disable" dropdownToggle>{{ action.label }}</button>
+    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+      <a class="dropdown-item" (click)="select(action, value.value)" *ngFor="let value of action.values">
+        {{ value.label }}
+      </a>
+    </div>
+  </div>
+
+  <!-- Button action -->
+  <button class="action btn btn-tertiary"
+          (click)="select(action)"
+          [disabled]="disable"
+          *ngIf="!action.values">
+    {{ action.label }}
+  </button>
+</ng-container>

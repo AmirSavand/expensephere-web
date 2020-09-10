@@ -14,10 +14,13 @@ import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
+import { Action } from '@shared/modules/actions/shared/interfaces/action';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
 import { ApiService } from '@shared/services/api.service';
+import { Observable, forkJoin } from 'rxjs';
+import { ActionData } from 'src/shared/modules/actions/shared/interfaces/action-data';
 
 @Component({
   selector: 'app-list',
@@ -50,11 +53,6 @@ export class ListComponent implements OnInit {
   readonly faGridView: IconDefinition = faThLarge;
 
   /**
-   * @todo Once selection is done, remove me and my usage.
-   */
-  readonly implemented: false = false;
-
-  /**
    * Current time which is used for generating dates
    * and template for comparing the selected date to
    * show "This Month" and "Last Month".
@@ -63,7 +61,7 @@ export class ListComponent implements OnInit {
 
   /**
    * List of available filters for user. We feed this
-   * to the app-filters component.
+   * to the <app-filters>.
    */
   readonly filters: Filter[] = [
     {
@@ -123,6 +121,28 @@ export class ListComponent implements OnInit {
       key: 'exclude',
       value: false,
     },
+  ];
+
+  /**
+   * List of available actions for multi-select. We
+   * feed this to the <app-actions>.
+   */
+  readonly actions: Action[] = [
+    {
+      label: 'Archive',
+      values: [
+        { label: 'Yes', value: true },
+        { label: 'No', value: false },
+      ],
+    },
+    {
+      label: 'Exclude',
+      values: [
+        { label: 'Yes', value: true },
+        { label: 'No', value: false },
+      ],
+    },
+    { label: 'Delete' },
   ];
 
   /**
@@ -186,6 +206,11 @@ export class ListComponent implements OnInit {
    * @see TransactionListComponent.walletDictSet
    */
   walletDict: TransactionListComponent['walletDict'];
+
+  /**
+   * API loading indicator for actions
+   */
+  loadingAction: boolean;
 
   constructor(private api: ApiService,
               private date: DatePipe,
@@ -323,5 +348,52 @@ export class ListComponent implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Triggered via <app-actions> when user clicks on an action
+   * for multi-select.
+   */
+  onAction(data: ActionData): void {
+    /**
+     * Function to call for each kind of action with special API and payload.
+     * @param method Method to call for this action.
+     */
+    const call = (method: (transaction: Transaction) => Observable<any>): void => {
+      const observables: Observable<Transaction>[] = [];
+      for (const transaction of this.selection.selectedItems) {
+        observables.push(method(transaction));
+      }
+      forkJoin(observables).subscribe((): void => {
+        this.loadingAction = false;
+        this.load();
+      });
+    };
+    /**
+     * Each action (based on label) does something else.
+     */
+    switch (data.action.label) {
+      case 'Exclude': {
+        call((transaction: Transaction): Observable<Transaction> => {
+          return this.api.transaction.update(transaction.id, { exclude: data.value });
+        });
+        break;
+      }
+      case 'Archive': {
+        call((transaction: Transaction): Observable<Transaction> => {
+          return this.api.transaction.update(transaction.id, { archive: data.value });
+        });
+        break;
+      }
+      case 'Delete': {
+        if (!confirm(`Are you sure you want to delete ${this.selection.selected} transactions?`)) {
+          return;
+        }
+        call((transaction: Transaction): Observable<void> => {
+          return this.api.transaction.delete(transaction.id);
+        });
+        break;
+      }
+    }
   }
 }
