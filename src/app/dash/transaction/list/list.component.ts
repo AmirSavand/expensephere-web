@@ -146,7 +146,7 @@ export class ListComponent implements OnInit {
     {
       label: 'Export',
       values: [
-        { label: 'EXCEL File', value: 'excel' },
+        { label: 'EXCEL File', value: 'xlxs' },
         { label: 'CSV File', value: 'csv' },
         { label: 'PDF File', value: 'pdf' },
         { label: 'Public Page', value: 'page' },
@@ -399,16 +399,19 @@ export class ListComponent implements OnInit {
         break;
       }
       case 'Export': {
+        const file = `Expensephere_Transactions_${this.date.transform(new Date(), 'yyyy-MM-dd')}`;
+        const params: GetParams = {
+          ids: Object.keys(this.selection.selection).filter((id: string): boolean => (
+            this.selection.selection[id]
+          )).join(),
+        };
         switch (data.value) {
+          case 'xlxs': {
+            this.api.transaction.download('xlsx', file, params);
+            return;
+          }
           case 'csv': {
-            this.api.transaction.csv(
-              `Expensephere_Transactions_${this.date.transform(new Date(), 'yyyy-MM-dd')}`,
-              {
-                ids: Object.keys(this.selection.selection).filter((id: string): boolean => (
-                  this.selection.selection[id]
-                )).join(),
-              },
-            );
+            this.api.transaction.download('csv', file, params);
             return;
           }
         }

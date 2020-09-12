@@ -59,13 +59,13 @@ export class Crud<T, LT = T[]> {
   }
 
   /**
-   * Download CSV file
+   * Download action endpoint file from API
    */
-  csv(file: string, params: GetParams = {}): void {
-    this.http.get(`${this.endpoint}csv/`, { responseType: 'blob', params }).subscribe((data: Blob): void => {
+  download(action: 'csv' | 'xlsx', file: string, params: GetParams = {}): void {
+    this.http.get(`${this.endpoint}${action}/`, { responseType: 'blob', params }).subscribe((data: Blob): void => {
       const a: HTMLAnchorElement = document.createElement('a');
       a.href = URL.createObjectURL(data);
-      a.download = `${file}.csv`;
+      a.download = `${file}.${action}`;
       a.click();
       a.remove();
     });
