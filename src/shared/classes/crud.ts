@@ -57,4 +57,17 @@ export class Crud<T, LT = T[]> {
   delete(pk: PK): Observable<void> {
     return this.http.delete<void>(`${this.endpoint}${pk}/`);
   }
+
+  /**
+   * Download CSV file
+   */
+  csv(file: string, params: GetParams = {}): void {
+    this.http.get(`${this.endpoint}csv/`, { responseType: 'blob', params }).subscribe((data: Blob): void => {
+      const a: HTMLAnchorElement = document.createElement('a');
+      a.href = URL.createObjectURL(data);
+      a.download = `${file}.csv`;
+      a.click();
+      a.remove();
+    });
+  }
 }

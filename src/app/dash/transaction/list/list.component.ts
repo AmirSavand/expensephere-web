@@ -21,12 +21,13 @@ import { TransactionListComponent } from '@shared/modules/transaction-list/trans
 import { ApiService } from '@shared/services/api.service';
 import { Observable, forkJoin } from 'rxjs';
 import { ActionData } from 'src/shared/modules/actions/shared/interfaces/action-data';
+import { ProfileCurrencyPipe } from 'src/shared/modules/profile-currency/profile-currency.pipe';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
-  providers: [DatePipe],
+  providers: [DatePipe, ProfileCurrencyPipe],
 })
 export class ListComponent implements OnInit {
 
@@ -142,6 +143,15 @@ export class ListComponent implements OnInit {
         { label: 'No', value: false },
       ],
     },
+    {
+      label: 'Export',
+      values: [
+        { label: 'EXCEL File', value: 'excel' },
+        { label: 'CSV File', value: 'csv' },
+        { label: 'PDF File', value: 'pdf' },
+        { label: 'Public Page', value: 'page' },
+      ],
+    },
     { label: 'Delete' },
   ];
 
@@ -214,6 +224,7 @@ export class ListComponent implements OnInit {
 
   constructor(private api: ApiService,
               private date: DatePipe,
+              private profileCurrency: ProfileCurrencyPipe,
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
@@ -357,6 +368,8 @@ export class ListComponent implements OnInit {
   onAction(data: ActionData): void {
     /**
      * Function to call for each kind of action with special API and payload.
+     * Used for all actions except "Export".
+     *
      * @param method Method to call for this action.
      */
     const call = (method: (transaction: Transaction) => Observable<any>): void => {
@@ -383,6 +396,23 @@ export class ListComponent implements OnInit {
         call((transaction: Transaction): Observable<Transaction> => {
           return this.api.transaction.update(transaction.id, { archive: data.value });
         });
+        break;
+      }
+      case 'Export': {
+        switch (data.value) {
+          case 'csv': {
+            this.api.transaction.csv(
+              `Expensephere_Transactions_${this.date.transform(new Date(), 'yyyy-MM-dd')}`,
+              {
+                ids: Object.keys(this.selection.selection).filter((id: string): boolean => (
+                  this.selection.selection[id]
+                )).join(),
+              },
+            );
+            return;
+          }
+        }
+        alert('This feature is coming soon 💖');
         break;
       }
       case 'Delete': {
