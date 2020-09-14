@@ -15,13 +15,14 @@ import { GetParams } from '@shared/interfaces/get-params';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { Action } from '@shared/modules/actions/shared/interfaces/action';
+import { ActionData } from '@shared/modules/actions/shared/interfaces/action-data';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
+import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
 import { ApiService } from '@shared/services/api.service';
 import { Observable, forkJoin } from 'rxjs';
-import { ActionData } from 'src/shared/modules/actions/shared/interfaces/action-data';
-import { ProfileCurrencyPipe } from 'src/shared/modules/profile-currency/profile-currency.pipe';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-list',
@@ -298,6 +299,10 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const doc = new jsPDF();
+    doc.text('Hello world!', 10, 10);
+    doc.save('a4.pdf');
+
     /**
      * Generate months
      */
