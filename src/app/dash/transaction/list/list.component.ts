@@ -229,7 +229,7 @@ export class ListComponent implements OnInit {
   }
 
   /**
-   * @returns Date of last day of selected date
+   * @returns Date of last day of selected month
    */
   private getEndOfSelectedMonth(): Date {
     const date = this.months[this.monthSelected];

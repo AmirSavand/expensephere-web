@@ -24,9 +24,9 @@
 
         <!-- Selected month -->
         <div class="font-weight-bold mx-2">
-        <span *ngIf="months[monthSelected].getMonth() < now.getMonth() - 1">
-          {{ months[monthSelected] | date:'MMMM' }}
-        </span>
+          <span *ngIf="months[monthSelected].getMonth() < now.getMonth() - 1">
+            {{ months[monthSelected] | date:'MMMM' }}
+          </span>
           <span *ngIf="months[monthSelected].getMonth() === now.getMonth()">This Month</span>
           <span *ngIf="months[monthSelected].getMonth() === now.getMonth() - 1">Last Month</span>
         </div>

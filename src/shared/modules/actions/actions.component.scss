@@ -3,6 +3,10 @@
 .action {
   margin-right: map_get($spacers, 2);
 
+  .pointer-events-none {
+    pointer-events: none;
+  }
+
   &:last-child {
     margin-right: 0;
   }

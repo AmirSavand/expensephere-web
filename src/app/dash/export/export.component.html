@@ -1,0 +1,50 @@
+<div>
+  <!-- Filter -->
+  <div class="bg-tertiary py-3">
+    <div class="container">
+      <app-filters [filters]="filters" (update)="filtersSelected = $event; load()"></app-filters>
+    </div>
+  </div>
+
+  <!-- Time, view and actions -->
+  <div class="bg-light py-2 border-bottom border-top border-tertiary">
+    <div class="container">
+
+      <div class="d-flex align-items-center">
+
+        <!-- Date picker -->
+        <div class="d-flex">
+
+          <!-- Start -->
+          <div class="input-group">
+            <input type="datetime-local" id="start" class="form-control bg-white"
+                   [(ngModel)]="startDate" (change)="load()">
+          </div>
+
+          <span class="mx-2 align-self-center">To</span>
+
+          <!-- End -->
+          <div class="input-group">
+            <input type="datetime-local" id="end" class="form-control bg-white"
+                   [(ngModel)]="endDate" (change)="load()">
+          </div>
+
+          <!-- All time -->
+          <div class="btn btn-light input-group ml-2" (click)="startDate = null; endDate = null; load()"
+               [class.disabled]="!startDate && !endDate">All Time
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <app-actions class="d-flex ml-auto"
+                     [actions]="actions"
+                     [disableAction]="disableAction"
+                     [disable]="loadingAction"
+                     (selection)="onAction($event)">
+        </app-actions>
+      </div>
+    </div>
+  </div>
+</div>
+
+

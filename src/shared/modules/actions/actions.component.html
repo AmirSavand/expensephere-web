@@ -3,7 +3,8 @@
 
   <!-- Dropdown action -->
   <div class="action dropdown" *ngIf="action.values" dropdown>
-    <button class="btn btn-tertiary dropdown-toggle" [disabled]="disable" dropdownToggle>{{ action.label }}</button>
+    <button class="btn btn-tertiary dropdown-toggle" [ngClass]="{'pointer-events-none disabled': !disableAction}"
+            [disabled]="disable" dropdownToggle>{{ action.label }}</button>
     <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
       <a class="dropdown-item" (click)="select(action, value.value)" *ngFor="let value of action.values">
         {{ value.label }}
