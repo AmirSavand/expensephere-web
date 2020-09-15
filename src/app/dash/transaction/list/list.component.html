@@ -47,9 +47,12 @@
       </button>
 
       <!-- All time -->
-      <div class="btn btn-light ml-2" (click)="monthSelected = null; load()" [class.active]="monthSelected === null">
+      <button class="btn btn-light ml-2 pointer-events-none"
+              (click)="monthSelected = null; load()"
+              [class.active]="monthSelected === null"
+              [class.pointer-events-none]="monthSelected === null">
         All Time
-      </div>
+      </button>
 
       <!-- View switcher -->
       <div class="btn-group ml-auto">

@@ -4,7 +4,7 @@
   display: block;
   margin-top: 5px;
   position: absolute;
-  width: calc(100% - 32px);
+  width: 224px;
   max-width: 300px;
   z-index: 1;
 
@@ -29,7 +29,7 @@
     -webkit-overflow-scrolling: touch;
     border: none !important;
 
-    >.card-body {
+    > .card-body {
       border-bottom: 1px solid $border-color;
     }
 
