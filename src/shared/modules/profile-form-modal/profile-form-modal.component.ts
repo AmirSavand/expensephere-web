@@ -83,7 +83,7 @@ export class ProfileFormModalComponent implements OnInit {
           color: Color.COLORS_RESERVED.default,
           icon: 'money',
           id: currency.code,
-          name: `${currency.code} (${currency.name})`,
+          name: `${currency.code}`,
         });
       }
     });
