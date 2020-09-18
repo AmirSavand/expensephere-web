@@ -286,3 +286,23 @@ a, button, .btn {
     }
   }
 }
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.input-group {
+  > .input-group-prepend {
+    > .input-group-text {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.custom-select,
+.form-control {
+  display: flex;
+  align-items: center;
+}
+

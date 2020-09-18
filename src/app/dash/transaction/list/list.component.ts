@@ -15,13 +15,17 @@ import { GetParams } from '@shared/interfaces/get-params';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { Action } from '@shared/modules/actions/shared/interfaces/action';
+import { ActionData } from '@shared/modules/actions/shared/interfaces/action-data';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
+import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
 import { ApiService } from '@shared/services/api.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable, forkJoin } from 'rxjs';
-import { ActionData } from 'src/shared/modules/actions/shared/interfaces/action-data';
-import { ProfileCurrencyPipe } from 'src/shared/modules/profile-currency/profile-currency.pipe';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-list',
@@ -46,6 +50,12 @@ export class ListComponent implements OnInit {
   private static readonly STORAGE_KEY_ALL_TIME = 'all-time';
 
   readonly expenseKind = ExpenseKind;
+
+  readonly expenseKindLabel: Record<ExpenseKind, string> = {
+    [ExpenseKind.INCOME]: 'Income',
+    [ExpenseKind.EXPENSE]: 'Expense',
+    [ExpenseKind.TRANSFER]: 'Transfer',
+  };
 
   readonly faTimeSelector: IconDefinition = faCalendar;
   readonly faPrev: IconDefinition = faArrowLeft;
@@ -236,67 +246,6 @@ export class ListComponent implements OnInit {
     return new Date(date.getFullYear(), date.getMonth() + 1);
   }
 
-  /**
-   * Load transactions with filters
-   */
-  load(): void {
-    /**
-     * Update the available category filter values based on the
-     * selected kind value to show categories of selected kind.
-     */
-    const kindSelected = Number(this.filtersSelected.category__kind);
-    const categoryFilter = this.filters[3];
-    if (kindSelected >= 0 && this.categories) {
-      // Clear out the category filter values
-      categoryFilter.values = [
-        { label: 'Category', value: '' },
-      ];
-      // Clear the selected category filter
-      categoryFilter.value = '';
-      for (const category of this.categories) {
-        // Filter category filter values by kind (selected kind filter)
-        if (category.kind === kindSelected) {
-          categoryFilter.values.push({
-            label: category.name,
-            value: category.id,
-          });
-        }
-      }
-    }
-    /**
-     * Add time filter (range) based on month selector.
-     *
-     * If there's a selected month, then update the filters
-     * and update storage about "All Time" being selected.
-     *
-     * If there's no selected month, then remove the filters
-     * and update storage about "All Time" being selected.
-     */
-    if (this.monthSelected !== null) {
-      this.filtersSelected.time_after = this.date.transform(this.months[this.monthSelected], Utils.API_DATE_FORMAT);
-      this.filtersSelected.time_before = this.date.transform(this.getEndOfSelectedMonth(), Utils.API_DATE_FORMAT);
-      localStorage.removeItem(ListComponent.STORAGE_KEY_ALL_TIME);
-    } else {
-      delete this.filtersSelected.time_after;
-      delete this.filtersSelected.time_before;
-      localStorage.setItem(ListComponent.STORAGE_KEY_ALL_TIME, String(true));
-    }
-    /**
-     * Finally, get list of transactions based on filters and selected month.
-     */
-    this.api.transaction.list(this.filtersSelected).subscribe((data: Transaction[]): void => {
-      this.transactions = data;
-      /**
-       * Setup selection instance
-       */
-      this.selection = new Selection(this.transactions);
-      /**
-       * Detect changes for transaction.title that is set in <app-transaction-list>
-       */
-      this.changeDetectorRef.detectChanges();
-    });
-  }
-
   ngOnInit(): void {
     /**
      * Generate months
@@ -362,6 +311,67 @@ export class ListComponent implements OnInit {
   }
 
   /**
+   * Load transactions with filters
+   */
+  load(): void {
+    /**
+     * Update the available category filter values based on the
+     * selected kind value to show categories of selected kind.
+     */
+    const kindSelected = Number(this.filtersSelected.category__kind);
+    const categoryFilter = this.filters[3];
+    if (kindSelected >= 0 && this.categories) {
+      // Clear out the category filter values
+      categoryFilter.values = [
+        { label: 'Category', value: '' },
+      ];
+      // Clear the selected category filter
+      categoryFilter.value = '';
+      for (const category of this.categories) {
+        // Filter category filter values by kind (selected kind filter)
+        if (category.kind === kindSelected) {
+          categoryFilter.values.push({
+            label: category.name,
+            value: category.id,
+          });
+        }
+      }
+    }
+    /**
+     * Add time filter (range) based on month selector.
+     *
+     * If there's a selected month, then update the filters
+     * and update storage about "All Time" being selected.
+     *
+     * If there's no selected month, then remove the filters
+     * and update storage about "All Time" being selected.
+     */
+    if (this.monthSelected !== null) {
+      this.filtersSelected.time_after = this.date.transform(this.months[this.monthSelected], Utils.API_DATE_FORMAT);
+      this.filtersSelected.time_before = this.date.transform(this.getEndOfSelectedMonth(), Utils.API_DATE_FORMAT);
+      localStorage.removeItem(ListComponent.STORAGE_KEY_ALL_TIME);
+    } else {
+      delete this.filtersSelected.time_after;
+      delete this.filtersSelected.time_before;
+      localStorage.setItem(ListComponent.STORAGE_KEY_ALL_TIME, String(true));
+    }
+    /**
+     * Finally, get list of transactions based on filters and selected month.
+     */
+    this.api.transaction.list(this.filtersSelected).subscribe((data: Transaction[]): void => {
+      this.transactions = data;
+      /**
+       * Setup selection instance
+       */
+      this.selection = new Selection(this.transactions);
+      /**
+       * Detect changes for transaction.title that is set in <app-transaction-list>
+       */
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  /**
    * Triggered via <app-actions> when user clicks on an action
    * for multi-select.
    */
@@ -406,6 +416,77 @@ export class ListComponent implements OnInit {
           )).join(),
         };
         switch (data.value) {
+          case 'pdf': {
+            // Row margin
+            const margin: number[] = [0, 5, 0, 5];
+            // Table body
+            const body = [
+              [
+                { text: 'Category', style: 'header', margin },
+                { text: 'Type', style: ['header', 'center'], margin },
+                { text: 'Amount', style: ['header', 'right'], margin },
+                { text: 'Date', style: ['header', 'center'], margin },
+                { text: 'Time', style: ['header', 'center'], margin },
+                { text: 'Note', style: 'header', margin },
+              ],
+            ];
+            // Setup data structure to feed to pdfMake
+            const config = {
+              content: [
+                {
+                  layout: 'lightHorizontalLines',
+                  pageSize: 'A4',
+                  table: {
+                    headerRows: 1,
+                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', '*'],
+                    body,
+                  },
+                },
+              ],
+              defaultStyle: { fontSize: 9 },
+              styles: {
+                header: { bold: true },
+                center: { alignment: 'center' },
+                right: { alignment: 'right' },
+                red: { color: '#ff5252' },
+              },
+            };
+            // Add rows
+            for (const transaction of this.selection.selectedItems) {
+              // Style of amount column
+              const style = transaction.kind === ExpenseKind.EXPENSE ? ['right', 'red'] : 'right';
+              (body as any[]).push([
+                { text: this.categoryDict[transaction.category].name, margin },
+                { text: this.expenseKindLabel[transaction.kind], style: 'center', margin },
+                { text: this.profileCurrency.transform(transaction.amount), style, margin },
+                { text: this.date.transform(transaction.time, 'mediumDate'), style: ['center'], margin },
+                { text: this.date.transform(transaction.time, 'h:mm a'), style: 'center', margin },
+                { text: transaction.note, margin },
+              ]);
+            }
+            // Feed the data and download the PDF
+            pdfMake.createPdf({
+              content: [
+                {
+                  layout: 'lightHorizontalLines',
+                  pageSize: 'A4',
+                  table: {
+                    headerRows: 1,
+                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', '*'],
+                    body,
+                  },
+                },
+              ],
+              defaultStyle: { fontSize: 9 },
+              styles: {
+                header: { bold: true },
+                center: { alignment: 'center' },
+                right: { alignment: 'right' },
+                red: { color: '#ff5252' },
+              },
+            }).download(file);
+            return;
+          }
           case 'xlxs': {
             this.api.transaction.download('xlsx', file, params);
             return;

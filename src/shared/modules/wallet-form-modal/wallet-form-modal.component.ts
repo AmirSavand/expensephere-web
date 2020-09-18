@@ -107,10 +107,21 @@ export class WalletFormModalComponent implements OnInit {
    */
   submit(): void {
     this.form.loading = true;
+    /**
+     * Initial balance is only for creation, so let's remove
+     * it from edition form.
+     */
     if (this.isEditing) {
       this.form.form.removeControl('initial_balance');
     }
     const payload: Partial<Wallet> = this.form.form.value;
+    /**
+     * Initial balance should only be sent if it has a value.
+     * That means no `""`, no `null` and no `0`.
+     */
+    if (!(Math.abs(payload.initial_balance) > 0)) {
+      delete payload.initial_balance;
+    }
     let method: Observable<Wallet> = this.api.wallet.create(payload);
     if (this.isEditing) {
       method = this.api.wallet.update(this.wallet.id, payload);
