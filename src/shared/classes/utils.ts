@@ -7,7 +7,7 @@ import { Transaction } from '@shared/interfaces/transaction';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { ProfileCurrencyPipe } from '@/shared/modules/profile-currency/profile-currency.pipe';
+import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 

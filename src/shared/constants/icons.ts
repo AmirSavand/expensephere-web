@@ -1,6 +1,6 @@
 /**
  * All available item icons and used to show user list of icons.
- * @see '@/assets/icon/'
+ * @see 'src/assets/icon/'
  */
 export const icons = [
   'arrows',

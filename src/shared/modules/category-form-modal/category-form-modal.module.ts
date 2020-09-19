@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SelectColorModule } from '@shared/modules/select-color/select-color.module';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { SelectModule } from '@shared/modules/select/select.module';
-import { CategoryFormModalComponent } from '@/shared/modules/category-form-modal/category-form-modal.component';
+import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 
 
 @NgModule({
