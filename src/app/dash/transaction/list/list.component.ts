@@ -8,6 +8,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faThLarge } from '@fortawesome/free-solid-svg-icons/faThLarge';
 import { Selection } from '@shared/classes/selection';
 import { Utils } from '@shared/classes/utils';
+import { ExportFile } from '@shared/enums/export-file';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
@@ -21,11 +22,7 @@ import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
 import { ApiService } from '@shared/services/api.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable, forkJoin } from 'rxjs';
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-list',
@@ -50,12 +47,6 @@ export class ListComponent implements OnInit {
   private static readonly STORAGE_KEY_ALL_TIME = 'all-time';
 
   readonly expenseKind = ExpenseKind;
-
-  readonly expenseKindLabel: Record<ExpenseKind, string> = {
-    [ExpenseKind.INCOME]: 'Income',
-    [ExpenseKind.EXPENSE]: 'Expense',
-    [ExpenseKind.TRANSFER]: 'Transfer',
-  };
 
   readonly faTimeSelector: IconDefinition = faCalendar;
   readonly faPrev: IconDefinition = faArrowLeft;
@@ -156,10 +147,10 @@ export class ListComponent implements OnInit {
     {
       label: 'Export',
       values: [
-        { label: 'EXCEL File', value: 'xlxs' },
-        { label: 'CSV File', value: 'csv' },
-        { label: 'PDF File', value: 'pdf' },
-        { label: 'Public Page', value: 'page' },
+        { label: 'Public Page', value: ExportFile.PAGE },
+        { label: 'PDF File', value: ExportFile.PDF },
+        { label: 'EXCEL File', value: ExportFile.XLSX },
+        { label: 'CSV File', value: ExportFile.CSV },
       ],
     },
     { label: 'Delete' },
@@ -230,7 +221,7 @@ export class ListComponent implements OnInit {
   /**
    * API loading indicator for actions
    */
-  loadingAction: boolean;
+  loadingAction = false;
 
   constructor(private api: ApiService,
               private date: DatePipe,
@@ -415,88 +406,29 @@ export class ListComponent implements OnInit {
             this.selection.selection[id]
           )).join(),
         };
-        switch (data.value) {
-          case 'pdf': {
-            // Row margin
-            const margin: number[] = [0, 5, 0, 5];
-            // Table body
-            const body = [
-              [
-                { text: 'Category', style: 'header', margin },
-                { text: 'Type', style: ['header', 'center'], margin },
-                { text: 'Amount', style: ['header', 'right'], margin },
-                { text: 'Date', style: ['header', 'center'], margin },
-                { text: 'Time', style: ['header', 'center'], margin },
-                { text: 'Note', style: 'header', margin },
-              ],
-            ];
-            // Setup data structure to feed to pdfMake
-            const config = {
-              content: [
-                {
-                  layout: 'lightHorizontalLines',
-                  pageSize: 'A4',
-                  table: {
-                    headerRows: 1,
-                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', '*'],
-                    body,
-                  },
-                },
-              ],
-              defaultStyle: { fontSize: 9 },
-              styles: {
-                header: { bold: true },
-                center: { alignment: 'center' },
-                right: { alignment: 'right' },
-                red: { color: '#ff5252' },
-              },
-            };
-            // Add rows
-            for (const transaction of this.selection.selectedItems) {
-              // Style of amount column
-              const style = transaction.kind === ExpenseKind.EXPENSE ? ['right', 'red'] : 'right';
-              (body as any[]).push([
-                { text: this.categoryDict[transaction.category].name, margin },
-                { text: this.expenseKindLabel[transaction.kind], style: 'center', margin },
-                { text: this.profileCurrency.transform(transaction.amount), style, margin },
-                { text: this.date.transform(transaction.time, 'mediumDate'), style: ['center'], margin },
-                { text: this.date.transform(transaction.time, 'h:mm a'), style: 'center', margin },
-                { text: transaction.note, margin },
-              ]);
-            }
-            // Feed the data and download the PDF
-            pdfMake.createPdf({
-              content: [
-                {
-                  layout: 'lightHorizontalLines',
-                  pageSize: 'A4',
-                  table: {
-                    headerRows: 1,
-                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', '*'],
-                    body,
-                  },
-                },
-              ],
-              defaultStyle: { fontSize: 9 },
-              styles: {
-                header: { bold: true },
-                center: { alignment: 'center' },
-                right: { alignment: 'right' },
-                red: { color: '#ff5252' },
-              },
-            }).download(file);
+        switch (data.value as ExportFile) {
+          case ExportFile.PDF: {
+            Utils.exportTransactionsToPDF(
+              this.selection.selectedItems,
+              file,
+              this.categoryDict,
+              this.date,
+              this.profileCurrency,
+            );
             return;
           }
-          case 'xlxs': {
-            this.api.transaction.download('xlsx', file, params);
+          case ExportFile.XLSX:
+          case ExportFile.CSV: {
+            this.loadingAction = true;
+            this.api.transaction.download(data.value as ExportFile, file, params).subscribe((): void => {
+              this.loadingAction = false;
+            });
             return;
           }
-          case 'csv': {
-            this.api.transaction.download('csv', file, params);
-            return;
+          case ExportFile.PAGE: {
+            alert('This feature is coming soon 💖');
           }
         }
-        alert('This feature is coming soon 💖');
         break;
       }
       case 'Delete': {

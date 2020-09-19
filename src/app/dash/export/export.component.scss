@@ -1,0 +1,17 @@
+@import "src/variables";
+
+:host ::ng-deep {
+  app-filters {
+    .filters {
+      display: block;
+
+      > .filter {
+        margin-bottom: map_get($spacers, 2);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
