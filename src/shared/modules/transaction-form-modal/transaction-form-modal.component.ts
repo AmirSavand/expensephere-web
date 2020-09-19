@@ -100,9 +100,9 @@ export class TransactionFormModalComponent implements OnInit {
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
       this.wallets = data;
       // Select first wallet
-      if (data.length) {
+      if (data.length && !this.isEditing) {
         this.form.form.get('wallet').setValue(data[0].id);
-      } else {
+      } else if (!data.length) {
         this.noWallets = true;
       }
     });
