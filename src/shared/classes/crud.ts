@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
+import { ExportFile } from '@shared/enums/export-file';
 import { GetParams } from '@shared/interfaces/get-params';
 import { PK } from '@shared/types/pk';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * CRUD API model
@@ -61,13 +63,17 @@ export class Crud<T, LT = T[]> {
   /**
    * Download action endpoint file from API
    */
-  download(action: 'csv' | 'xlsx', file: string, params: GetParams = {}): void {
-    this.http.get(`${this.endpoint}${action}/`, { responseType: 'blob', params }).subscribe((data: Blob): void => {
+  download(action: ExportFile, file: string, params: GetParams = {}): Observable<Blob> {
+    return this.http.get(
+      `${this.endpoint}${action}/`,
+      { responseType: 'blob', params },
+    ).pipe(map((data: Blob): Blob => {
       const a: HTMLAnchorElement = document.createElement('a');
       a.href = URL.createObjectURL(data);
       a.download = `${file}.${action}`;
       a.click();
       a.remove();
-    });
+      return data;
+    }));
   }
 }

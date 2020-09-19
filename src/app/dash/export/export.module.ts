@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ActionsModule } from 'src/shared/modules/actions/actions.module';
-import { FiltersModule } from 'src/shared/modules/filters/filters.module';
+import { FiltersModule } from '@shared/modules/filters/filters.module';
 
 import { ExportRoutingModule } from './export-routing.module';
 import { ExportComponent } from './export.component';
@@ -17,7 +16,6 @@ import { ExportComponent } from './export.component';
     CommonModule,
     ExportRoutingModule,
     FiltersModule,
-    ActionsModule,
     FontAwesomeModule,
     FormsModule,
   ],

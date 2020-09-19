@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ListComponent } from '@app/dash/wallet/list/list.component';
+import { ListComponent } from './list.component';
 
 const routes: Routes = [{ path: '', component: ListComponent }];
 

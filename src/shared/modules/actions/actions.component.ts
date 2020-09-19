@@ -11,8 +11,6 @@ export class ActionsComponent implements OnChanges {
 
   @Input() actions: Action[];
 
-  @Input() disableAction: boolean;
-
   @Input() disable: boolean;
 
   @Output() selection = new EventEmitter<ActionData>();

@@ -1,27 +1,40 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faClock } from '@fortawesome/free-regular-svg-icons/faClock';
-import { Utils } from 'src/shared/classes/utils';
-import { ExpenseKind } from 'src/shared/enums/kind';
-import { Category } from 'src/shared/interfaces/category';
-import { Event } from 'src/shared/interfaces/event';
-import { GetParams } from 'src/shared/interfaces/get-params';
-import { Transaction } from 'src/shared/interfaces/transaction';
-import { Wallet } from 'src/shared/interfaces/wallet';
-import { Action } from 'src/shared/modules/actions/shared/interfaces/action';
-import { ActionData } from 'src/shared/modules/actions/shared/interfaces/action-data';
-import { FilterType } from 'src/shared/modules/filters/shared/enums/filter-type';
-import { Filter } from 'src/shared/modules/filters/shared/interfaces/filter';
-import { ApiService } from 'src/shared/services/api.service';
+import { ExportOption } from '@app/dash/export/shared/interfaces/export-option';
+import { Utils } from '@shared/classes/utils';
+import { ExportFile } from '@shared/enums/export-file';
+import { ExpenseKind } from '@shared/enums/kind';
+import { Category } from '@shared/interfaces/category';
+import { Event } from '@shared/interfaces/event';
+import { GetParams } from '@shared/interfaces/get-params';
+import { Transaction } from '@shared/interfaces/transaction';
+import { Wallet } from '@shared/interfaces/wallet';
+import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
+import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
+import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
+import { ApiService } from '@shared/services/api.service';
 
 @Component({
   selector: 'app-export',
   templateUrl: './export.component.html',
   styleUrls: ['./export.component.scss'],
-  providers: [DatePipe],
+  providers: [DatePipe, ProfileCurrencyPipe],
 })
 export class ExportComponent implements OnInit {
+
+  /**
+   * Last transaction list pulled for counting.
+   *
+   * It will be used for exporting PDF so we don't
+   * have to fetch it from the back-end again.
+   */
+  private transactions: Transaction[];
+
+  /**
+   * Category dict used for exporting PDF
+   * via exportTransactionsToPDF.
+   */
+  private categoryDict: Record<number, Category> = {};
 
   /**
    * List of available filters for user. We feed this
@@ -82,19 +95,13 @@ export class ExportComponent implements OnInit {
   ];
 
   /**
-   * List of available actions for multi-select. We
-   * feed this to the <app-actions>.
+   * List of available export options.
    */
-  readonly actions: Action[] = [
-    {
-      label: 'Export',
-      values: [
-        { label: 'EXCEL File', value: 'xlxs' },
-        { label: 'CSV File', value: 'csv' },
-        { label: 'PDF File', value: 'pdf' },
-        { label: 'Public Page', value: 'page' },
-      ],
-    },
+  readonly options: ExportOption[] = [
+    { label: 'Public Page', value: ExportFile.PAGE },
+    { label: 'PDF File', value: ExportFile.PDF },
+    { label: 'EXCEL File', value: ExportFile.XLSX },
+    { label: 'CSV File', value: ExportFile.CSV },
   ];
 
   /**
@@ -103,32 +110,54 @@ export class ExportComponent implements OnInit {
   filtersSelected: GetParams = {};
 
   /**
-   * Transaction list
+   * Number of transactions with current filters.
    */
-  transactions: Transaction[];
+  count: number;
 
   /**
-   * Start date
+   * From date (date range).
    */
-  startDate: Date;
+  from: Date;
 
   /**
-   * End date
+   * To date (date range).
    */
-  endDate: Date;
+  to: Date;
 
   /**
    * Disable action button
    */
-  disableAction: boolean;
-
-  /**
-   * API loading indicator for actions
-   */
-  loadingAction: boolean;
+  loading: boolean;
 
   constructor(private api: ApiService,
-              private date: DatePipe) {
+              private date: DatePipe,
+              private profileCurrency: ProfileCurrencyPipe) {
+  }
+
+  /**
+   * @returns Selected filters combined with date range values.
+   */
+  private get filtersSelectedWithDates(): GetParams {
+    /**
+     * Add/remove start date.
+     */
+    if (this.from) {
+      this.filtersSelected.time_after = this.date.transform(this.from, Utils.API_DATE_FORMAT);
+    } else {
+      delete this.filtersSelected.time_after;
+    }
+    /**
+     * Add/remove end date.
+     * End date must be a day after the selected for BE support.
+     */
+    if (this.to) {
+      const to = new Date(this.to);
+      to.setDate(to.getDate() + 1);
+      this.filtersSelected.time_before = this.date.transform(to, Utils.API_DATE_FORMAT);
+    } else {
+      delete this.filtersSelected.time_before;
+    }
+    return this.filtersSelected;
   }
 
   /**
@@ -136,43 +165,22 @@ export class ExportComponent implements OnInit {
    */
   load(): void {
     /**
-     * We shouldn't let user to export transactions, while both of datepicker are not empty or not filled yet.
+     * Get list of transactions based on filters for count.
+     *
+     * Also store it for PDF export.
+     * @see transactions
      */
-    this.disableAction = !!(this.startDate && this.endDate || !this.startDate && !this.endDate);
-    /**
-     * Filter with time
-     */
-    if (this.startDate && this.endDate) {
-      /**
-       * We're increasing the date of selected end date here,
-       * because BE doesn't responding the real selected end date.
-       * (BE responding due the day before selected end date).
-       */
-      const endDate = new Date(this.endDate);
-      endDate.setDate(endDate.getDate() + 1);
-      /**
-       * Setting the selected dates
-       */
-      this.filtersSelected.time_after = this.date.transform(this.startDate, Utils.API_DATE_FORMAT);
-      this.filtersSelected.time_before = this.date.transform(endDate, Utils.API_DATE_FORMAT);
-    } else {
-      delete this.filtersSelected.time_after;
-      delete this.filtersSelected.time_before;
-    }
-    /**
-     * Get list of transactions based on filters
-     */
-    this.api.transaction.list(this.filtersSelected).subscribe((data: Transaction[]): void => {
+    this.api.transaction.list(this.filtersSelectedWithDates).subscribe((data: Transaction[]): void => {
+      this.count = data.length;
       this.transactions = data;
     });
   }
 
   ngOnInit(): void {
     /**
-     * Load wallets
+     * Load wallets for filters
      */
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
-      // Set transaction list to filter
       for (const wallet of data) {
         this.filters[1].values.push({
           label: wallet.name,
@@ -181,22 +189,21 @@ export class ExportComponent implements OnInit {
       }
     });
     /**
-     * Load categories
+     * Load categories for filters and {@see categoryDict}
      */
     this.api.category.list().subscribe((data: Category[]): void => {
-      // Set category list to filter
       for (const category of data) {
         this.filters[2].values.push({
           label: category.name,
           value: category.id,
         });
+        this.categoryDict[category.id] = category;
       }
     });
     /**
-     * Load events
+     * Load events for filters
      */
     this.api.event.list().subscribe((data: Event[]): void => {
-      // Set event list to filter
       for (const event of data) {
         this.filters[3].values.push({
           label: event.name,
@@ -204,30 +211,34 @@ export class ExportComponent implements OnInit {
         });
       }
     });
+    /**
+     * Initial count
+     */
+    this.load();
   }
 
   /**
-   * Triggered via <app-actions> when user clicks on an action
-   * for multi-select.
+   * Export the transactions with the selected filters and options.
    */
-  onAction(data: ActionData): void {
-    switch (data.action.label) {
-      case 'Export': {
-        const file = `Expensephere_Transactions_${this.date.transform(new Date(), 'yyyy-MM-dd')}`;
-        switch (data.value) {
-          case 'xlxs': {
-            this.api.transaction.download('xlsx', file, this.filtersSelected);
-            return;
-          }
-          case 'csv': {
-            this.api.transaction.download('csv', file, this.filtersSelected);
-            return;
-          }
-        }
+  submit(option: ExportOption): void {
+    const file = `Expensephere_Transactions_${this.date.transform(new Date(), 'yyyy-MM-dd')}`;
+    switch (option.value) {
+      case ExportFile.PDF: {
+        Utils.exportTransactionsToPDF(this.transactions, file, this.categoryDict, this.date, this.profileCurrency);
+        return;
+      }
+      case ExportFile.XLSX:
+      case ExportFile.CSV: {
+        this.loading = true;
+        this.api.transaction.download(option.value, file, this.filtersSelectedWithDates).subscribe((): void => {
+          this.loading = false;
+        });
+        return;
+      }
+      case ExportFile.PAGE: {
         alert('This feature is coming soon 💖');
-        break;
+        return;
       }
     }
   }
-
 }

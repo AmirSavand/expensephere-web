@@ -69,7 +69,7 @@
     <div class="d-flex align-items-center" *ngIf="selection && selection.selected">
 
       <!-- Selected -->
-      <div>{{ selection.selected }} Selected</div>
+      <div>{{ selection.selected }} Selected {{loadingAction}}</div>
 
       <!-- Action buttons -->
       <app-actions class="d-flex ml-auto"

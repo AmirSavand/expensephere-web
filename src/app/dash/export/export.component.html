@@ -1,47 +1,76 @@
 <div>
-  <!-- Filter -->
-  <div class="bg-tertiary py-3">
-    <div class="container">
-      <app-filters [filters]="filters" (update)="filtersSelected = $event; load()"></app-filters>
+  <div class="container pt-4">
+
+    <!-- Header -->
+    <div class="d-flex align-items-center mb-4">
+
+      <!-- Title -->
+      <p class="font-weight-bold mb-0">Export Transactions</p>
+
+      <!-- Info -->
+      <div class="ml-auto badge badge-info badge-pill px-3"
+           title="Number of transactions by your selected filters and dates.">
+        <b>{{ count >= 0 ? (count | number) : '...' }}</b> Selected
+      </div>
     </div>
-  </div>
 
-  <!-- Time, view and actions -->
-  <div class="bg-light py-2 border-bottom border-top border-tertiary">
-    <div class="container">
+    <!-- Cards -->
+    <div class="row">
 
-      <div class="d-flex align-items-center">
-
-        <!-- Date picker -->
-        <div class="d-flex">
-
-          <!-- Start -->
-          <div class="input-group">
-            <input type="datetime-local" id="start" class="form-control bg-white"
-                   [(ngModel)]="startDate" (change)="load()">
-          </div>
-
-          <span class="mx-2 align-self-center">To</span>
-
-          <!-- End -->
-          <div class="input-group">
-            <input type="datetime-local" id="end" class="form-control bg-white"
-                   [(ngModel)]="endDate" (change)="load()">
-          </div>
-
-          <!-- All time -->
-          <div class="btn btn-light input-group ml-2" (click)="startDate = null; endDate = null; load()"
-               [class.disabled]="!startDate && !endDate">All Time
+      <!-- Filters -->
+      <div class="col-lg-4">
+        <div class="card mb-4 border border-tertiary">
+          <div class="card-header font-weight-bold">Select Filters</div>
+          <div class="card-body">
+            <p>Filter what transactions you want to include for exporting.</p>
+            <app-filters [filters]="filters" (update)="filtersSelected = $event; load()"></app-filters>
+            <button class="btn btn-light btn-block mt-3" (click)="filtersSelected = {}; load()">
+              Clear Filters
+            </button>
           </div>
         </div>
+      </div>
 
-        <!-- Action buttons -->
-        <app-actions class="d-flex ml-auto"
-                     [actions]="actions"
-                     [disableAction]="disableAction"
-                     [disable]="loadingAction"
-                     (selection)="onAction($event)">
-        </app-actions>
+      <!-- Date -->
+      <div class="col-lg-4">
+        <div class="card mb-4 border border-tertiary">
+          <div class="card-header font-weight-bold">Select Date Range</div>
+          <div class="card-body">
+
+            <p>Include transactions between specific dates. Dates are ignored if they are not set.</p>
+
+            <div class="form-group">
+              <label for="from">From</label>
+              <input type="date" id="from" class="form-control"
+                     [(ngModel)]="from" (change)="load()">
+            </div>
+
+            <div class="form-group">
+              <label for="to">To</label>
+              <input type="date" id="to" class="form-control"
+                     [(ngModel)]="to" (change)="load()">
+            </div>
+
+            <button class="btn btn-light btn-block"
+                    (click)="from = null; to = null; load()"
+                    [disabled]="!from && !to">
+              Clear Dates
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Export -->
+      <div class="col-lg-4">
+        <div class="card mb-4 border border-tertiary">
+          <div class="card-header font-weight-bold">Select Export Type</div>
+          <div class="card-body">
+            <p>Select what kind of file you want to export your transactions to.</p>
+            <button class="btn btn-primary btn-block" *ngFor="let option of options" (click)="submit(option)">
+              {{ option.label }}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
