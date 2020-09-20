@@ -48,7 +48,7 @@ export class TransactionListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.transactions.currentValue) {
+    if (changes.transactions && changes.transactions.currentValue) {
       this.transactions = changes.transactions.currentValue;
       this.setupTransactionsGroup();
     }

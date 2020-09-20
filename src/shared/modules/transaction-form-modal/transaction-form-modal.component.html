@@ -47,7 +47,7 @@
                     selectLabel="Select wallet"
                     [selectedId]="form.form.get('wallet').value"
                     [items]="wallets"
-                    (choose)="form.form.get('wallet').setValue($event.id)">
+                    (choose)="form.form.get('wallet').setValue($event.id); walletInlineStorage.value = $event.id">
         </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.wallet">{{ form.error.wallet[0] }}</div>
       </div>

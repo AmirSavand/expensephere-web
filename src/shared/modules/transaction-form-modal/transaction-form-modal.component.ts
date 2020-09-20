@@ -26,6 +26,7 @@ import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { InlineStorage } from 'src/shared/classes/inline-storage';
 
 @Component({
   selector: 'app-transaction-form-modal',
@@ -46,6 +47,8 @@ export class TransactionFormModalComponent implements OnInit {
   readonly faEvent: IconDefinition = faCalendar;
   readonly faCollapse: IconDefinition = faChevronDown;
   readonly faTrash: IconDefinition = faTrash;
+
+  readonly walletInlineStorage = new InlineStorage('last-wallet');
 
   @Input() transaction?: Transaction;
 
@@ -102,7 +105,7 @@ export class TransactionFormModalComponent implements OnInit {
       this.wallets = data;
       // Select first wallet
       if (data.length && !this.isEditing) {
-        this.form.form.get('wallet').setValue(data[0].id);
+        this.form.form.get('wallet').setValue(Number(this.walletInlineStorage.getValue(String(data[0].id))));
       } else if (!data.length) {
         this.noWallets = true;
       }
