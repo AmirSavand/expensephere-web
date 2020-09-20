@@ -80,9 +80,11 @@
         <app-select id="category"
                     selectLabel="Select category"
                     *ngIf="categories"
+                    [showAdd]="true"
                     [selectedId]="form.form.get('category').value"
                     [items]="categoryGroups[expenseKindSelected]"
-                    (choose)="form.form.get('category').setValue($event.id)">
+                    (choose)="form.form.get('category').setValue($event.id)"
+                    (add)="addCategory()">
         </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.category">{{ form.error.category[0] }}</div>
       </div>
@@ -180,7 +182,7 @@
       </div>
     </div>
   </form>
-</div >
+</div>
 
 <!-- Footer -->
 <div class="modal-footer text-right" *ngIf="!noWallets">
@@ -197,7 +199,7 @@
   <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
-</div >
+</div>
 
 <!-- Body (when no wallets) -->
 <div class="modal-body" *ngIf="noWallets">

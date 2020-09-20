@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Color } from '@shared/classes/color';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
@@ -12,8 +14,10 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 export class SelectComponent implements OnChanges {
 
   readonly style = Color.style;
-  readonly faSelected = faCheckCircle;
-  readonly faClose = faTimes;
+
+  readonly faSelected: IconDefinition = faCheckCircle;
+  readonly faClose: IconDefinition = faTimes;
+  readonly faAdd: IconDefinition = faPlus;
 
   /**
    * Input name
@@ -36,6 +40,11 @@ export class SelectComponent implements OnChanges {
   @Input() allowClear = false;
 
   /**
+   * Show add button
+   */
+  @Input() showAdd = false;
+
+  /**
    * On data selection
    */
   @Output() choose = new EventEmitter<SelectItem>();
@@ -44,6 +53,11 @@ export class SelectComponent implements OnChanges {
    * On data clear
    */
   @Output() clear = new EventEmitter<void>();
+
+  /**
+   * On click on add button
+   */
+  @Output() add = new EventEmitter<void>();
 
   /**
    * Item that is selected
@@ -72,6 +86,10 @@ export class SelectComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedId && changes.selectedId.currentValue) {
       this.selectedId = changes.selectedId.currentValue;
+      /**
+       * If selected item has changed, close the selection.
+       */
+      this.edit = false;
     }
     if (changes.items && changes.items.currentValue) {
       this.items = changes.items.currentValue;

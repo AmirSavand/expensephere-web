@@ -20,6 +20,7 @@ import { Event } from '@shared/interfaces/event';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
+import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
@@ -222,5 +223,21 @@ export class TransactionFormModalComponent implements OnInit {
    */
   addWallet(): void {
     this.modalService.show(WalletFormModalComponent);
+  }
+
+  /**
+   * On click on add on category selection.
+   */
+  addCategory(): void {
+    const modal: BsModalRef = this.modalService.show(CategoryFormModalComponent, {
+      initialState: {
+        redirect: false,
+      },
+    });
+    modal.content.submitted.subscribe((category: Category): void => {
+      this.categories.unshift(category);
+      this.categoryGroups[category.kind].unshift(category);
+      this.form.form.get('category').patchValue(category.id);
+    });
   }
 }

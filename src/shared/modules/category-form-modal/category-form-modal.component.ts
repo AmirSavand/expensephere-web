@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -53,6 +53,17 @@ export class CategoryFormModalComponent implements OnInit {
   @Input() category?: Category;
 
   /**
+   * Redirect after creation?
+   */
+  @Input() redirect = true;
+
+  /**
+   * Triggered when category is created or modified
+   * API call completed (successfully).
+   */
+  @Output() readonly submitted = new EventEmitter<Category>();
+
+  /**
    * Form data
    */
   form: ReactiveFormData = {
@@ -98,7 +109,7 @@ export class CategoryFormModalComponent implements OnInit {
   }
 
   /**
-   * Add new wallet
+   * Form submission
    */
   submit(): void {
     this.form.loading = true;
@@ -108,12 +119,13 @@ export class CategoryFormModalComponent implements OnInit {
       method = this.api.category.update(this.category.id, payload);
     }
     method.subscribe((data: Category): void => {
-      if (!this.isEditing) {
+      if (this.redirect && !this.isEditing) {
         this.router.navigate(['/dash/category/', data.id]);
       }
       if (this.isEditing) {
         Object.assign(this.category, data);
       }
+      this.submitted.emit(data);
       this.modal.hide();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;
