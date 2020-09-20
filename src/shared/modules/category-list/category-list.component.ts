@@ -28,7 +28,6 @@ export class CategoryListComponent {
    */
   editCategory(category: Category): void {
     this.modalService.show(CategoryFormModalComponent, {
-      class: 'modal-sm',
       initialState: { category },
     });
   }

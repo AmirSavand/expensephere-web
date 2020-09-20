@@ -61,6 +61,6 @@ export class ListComponent {
    * Open up category form modal
    */
   create(): void {
-    this.modalService.show(CategoryFormModalComponent, { class: 'modal-sm' });
+    this.modalService.show(CategoryFormModalComponent);
   }
 }
