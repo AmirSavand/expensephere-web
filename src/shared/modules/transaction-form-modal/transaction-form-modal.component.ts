@@ -34,6 +34,11 @@ import { Observable } from 'rxjs';
 })
 export class TransactionFormModalComponent implements OnInit {
 
+  /**
+   * Last wallet key of last transaction
+   */
+  private static readonly LAST_WALLET_KEY = 'last-wallet';
+
   readonly expenseKind = ExpenseKind;
 
   readonly faClose: IconDefinition = faTimes;
@@ -100,8 +105,13 @@ export class TransactionFormModalComponent implements OnInit {
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
       this.wallets = data;
       // Select first wallet
+      const lastWallet = JSON.parse(localStorage.getItem(TransactionFormModalComponent.LAST_WALLET_KEY));
       if (data.length && !this.isEditing) {
-        this.form.form.get('wallet').setValue(data[0].id);
+        if (lastWallet) {
+          this.form.form.get('wallet').setValue(lastWallet);
+        } else {
+          this.form.form.get('wallet').setValue(data[0].id);
+        }
       } else if (!data.length) {
         this.noWallets = true;
       }
@@ -166,6 +176,7 @@ export class TransactionFormModalComponent implements OnInit {
     }
     method.subscribe((data: Transaction): void => {
       if (!this.isEditing) {
+        localStorage.setItem(TransactionFormModalComponent.LAST_WALLET_KEY, JSON.stringify(data.wallet));
         this.router.navigate(['/dash/transaction/', data.id]);
       }
       if (this.isEditing) {
