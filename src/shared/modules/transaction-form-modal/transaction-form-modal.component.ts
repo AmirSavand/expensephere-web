@@ -27,6 +27,7 @@ import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { InlineStorage } from 'src/shared/classes/inline-storage';
+import { EventFormModalComponent } from 'src/shared/modules/event-form-modal/event-form-modal.component';
 
 @Component({
   selector: 'app-transaction-form-modal',
@@ -220,12 +221,35 @@ export class TransactionFormModalComponent implements OnInit {
     });
   }
 
+  /**
+   * Open up icon form modal
+   */
+  addEvent(): void {
+    const modal: BsModalRef = this.modalService.show(EventFormModalComponent, {
+      initialState: {
+        redirect: false,
+      },
+    });
+    modal.content.submitted.subscribe((event: Event): void => {
+      this.events.unshift(event);
+      this.form.form.get('event').patchValue(event.id);
+    });
+  }
+
 
   /**
    * Open up wallet form modal
    */
   addWallet(): void {
-    this.modalService.show(WalletFormModalComponent);
+    const modal: BsModalRef = this.modalService.show(WalletFormModalComponent, {
+      initialState: {
+        redirect: false,
+      },
+    });
+    modal.content.submitted.subscribe((wallet: Wallet): void => {
+      this.wallets.unshift(wallet);
+      this.form.form.get('wallet').patchValue(wallet.id);
+    });
   }
 
   /**

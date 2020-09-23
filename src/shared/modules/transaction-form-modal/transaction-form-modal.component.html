@@ -45,8 +45,10 @@
         </div>
         <app-select id="wallet"
                     selectLabel="Select wallet"
-                    [selectedId]="form.form.get('wallet').value"
+                    [showAdd]="true"
                     [items]="wallets"
+                    (add)="addWallet()"
+                    [selectedId]="form.form.get('wallet').value"
                     (choose)="form.form.get('wallet').setValue($event.id); walletInlineStorage.value = $event.id">
         </app-select>
         <div class="invalid-tooltip" *ngIf="form.error.wallet">{{ form.error.wallet[0] }}</div>
@@ -159,6 +161,8 @@
                       selectLabel="Select event"
                       [selectedId]="form.form.get('event').value"
                       [items]="events"
+                      [showAdd]="true"
+                      (add)="addEvent()"
                       [allowClear]="true"
                       (choose)="form.form.get('event').setValue($event.id)"
                       (clear)="form.form.get('event').reset()">
