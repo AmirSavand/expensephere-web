@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -22,6 +22,7 @@ import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { Wallet } from 'src/shared/interfaces/wallet';
 
 @Component({
   selector: 'app-event-form-modal',
@@ -47,6 +48,11 @@ export class EventFormModalComponent implements OnInit {
   @Input() event?: Event;
 
   /**
+   * Redirect after creation?
+   */
+  @Input() redirect = true;
+
+  /**
    * Colors for selection
    */
   readonly colors: string[] = Color.COLORS;
@@ -55,6 +61,12 @@ export class EventFormModalComponent implements OnInit {
    * Icons for selection
    */
   readonly icons: SelectItem[] = Utils.getSelectItemFromIcons();
+
+  /**
+   * Triggered when event is created or modified
+   * API call completed (successfully).
+   */
+  @Output() readonly submitted = new EventEmitter<Event>();
 
   /**
    * Form data
@@ -133,12 +145,13 @@ export class EventFormModalComponent implements OnInit {
       method = this.api.event.update(this.event.id, payload);
     }
     method.subscribe((data: Event): void => {
-      if (!this.isEditing) {
+      if (this.redirect && !this.isEditing) {
         this.router.navigate(['/dash/event/', data.id]);
       }
       if (this.isEditing) {
         Object.assign(this.event, data);
       }
+      this.submitted.emit(data);
       this.modal.hide();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;

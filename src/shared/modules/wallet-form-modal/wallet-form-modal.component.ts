@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -18,6 +18,7 @@ import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { Category } from 'src/shared/interfaces/category';
 
 @Component({
   selector: 'app-wallet-form-modal',
@@ -39,6 +40,11 @@ export class WalletFormModalComponent implements OnInit {
   @Input() wallet?: Wallet;
 
   /**
+   * Redirect after creation?
+   */
+  @Input() redirect = true;
+
+  /**
    * Colors for selection
    */
   readonly colors: string[] = Color.COLORS;
@@ -47,6 +53,12 @@ export class WalletFormModalComponent implements OnInit {
    * Icons for selection
    */
   readonly icons: SelectItem[] = Utils.getSelectItemFromIcons();
+
+  /**
+   * Triggered when wallet is created or modified
+   * API call completed (successfully).
+   */
+  @Output() readonly submitted = new EventEmitter<Wallet>();
 
   /**
    * Form data
@@ -127,12 +139,13 @@ export class WalletFormModalComponent implements OnInit {
       method = this.api.wallet.update(this.wallet.id, payload);
     }
     method.subscribe((data: Wallet): void => {
-      if (!this.isEditing) {
+      if (this.redirect && !this.isEditing) {
         this.router.navigate(['/dash/wallet/', data.id]);
       }
       if (this.isEditing) {
         Object.assign(this.wallet, data);
       }
+      this.submitted.emit(data);
       this.modal.hide();
       /**
        * This change effects profile balance, so let's refresh profile
