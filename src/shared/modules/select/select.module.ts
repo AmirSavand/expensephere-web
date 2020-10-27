@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FilterModule } from '@shared/modules/filter/filter.module';
 import { AutoFocusModule } from 'src/shared/modules/auto-focus/auto-focus.module';
+import { NoDataModule } from 'src/shared/modules/no-data/no-data.module';
 
 import { SelectComponent } from './select.component';
 
@@ -20,6 +21,7 @@ import { SelectComponent } from './select.component';
     FilterModule,
     FontAwesomeModule,
     AutoFocusModule,
+    NoDataModule,
   ],
 })
 export class SelectModule {

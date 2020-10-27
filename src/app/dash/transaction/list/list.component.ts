@@ -78,7 +78,6 @@ export class ListComponent implements OnInit {
       key: 'category__kind',
       value: '',
       values: [
-        { label: 'Type', value: '' },
         { label: 'Income', value: ExpenseKind.INCOME },
         { label: 'Expense', value: ExpenseKind.EXPENSE },
         { label: 'Transfer', value: ExpenseKind.TRANSFER },
@@ -89,27 +88,18 @@ export class ListComponent implements OnInit {
       label: 'Wallet',
       key: 'wallet',
       value: '',
-      values: [
-        { label: 'Wallet', value: '' },
-      ],
     },
     {
       type: FilterType.LIST,
       label: 'Category',
       key: 'category',
       value: '',
-      values: [
-        { label: 'Category', value: '' },
-      ],
     },
     {
       type: FilterType.LIST,
       label: 'Event',
       key: 'event',
       value: '',
-      values: [
-        { label: 'Event', value: '' },
-      ],
     },
     {
       type: FilterType.BOOLEAN,
@@ -268,6 +258,9 @@ export class ListComponent implements OnInit {
       this.wallets = data;
       // Set transaction list to filter
       for (const wallet of data) {
+        if (!this.filters[2].values) {
+          this.filters[2].values = [];
+        }
         this.filters[2].values.push({
           label: wallet.name,
           value: wallet.id,
@@ -281,6 +274,9 @@ export class ListComponent implements OnInit {
       this.categories = data;
       // Set category list to filter
       for (const category of data) {
+        if (!this.filters[3].values) {
+          this.filters[3].values = [];
+        }
         this.filters[3].values.push({
           label: category.name,
           value: category.id,
@@ -293,6 +289,9 @@ export class ListComponent implements OnInit {
     this.api.event.list().subscribe((data: Event[]): void => {
       // Set event list to filter
       for (const event of data) {
+        if (!this.filters[4].values) {
+          this.filters[4].values = [];
+        }
         this.filters[4].values.push({
           label: event.name,
           value: event.id,

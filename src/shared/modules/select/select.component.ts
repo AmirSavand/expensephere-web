@@ -27,7 +27,31 @@ export class SelectComponent implements OnChanges {
   /**
    * Item list for selection
    */
-  @Input() items: SelectItem[];
+  @Input() items: SelectItem[] = [];
+
+  /**
+   * Raw item list for generation of main item list.
+   */
+  @Input() set rawItems(items: Record<string, any>[]) {
+    if (items) {
+      for (const item of items) {
+        this.items.push({
+          id: item[this.rawItemIdKey],
+          name: item[this.rawItemLabelKey],
+        });
+      }
+    }
+  }
+
+  /**
+   * Raw item key name for generating "item.id".
+   */
+  @Input() rawItemIdKey = 'id';
+
+  /**
+   * Raw item key name for generating "item.value".
+   */
+  @Input() rawItemLabelKey = 'name';
 
   /**
    * Item ID that is selected
@@ -84,6 +108,9 @@ export class SelectComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    /**
+     * Generate items from rawItems.
+     */
     if (changes.selectedId && changes.selectedId.currentValue) {
       this.selectedId = changes.selectedId.currentValue;
       /**

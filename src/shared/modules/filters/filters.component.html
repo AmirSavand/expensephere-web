@@ -10,14 +10,16 @@
            type="text"
            class="form-control">
 
-    <!-- List type -->
-    <select *ngIf="filter.type === filterType.LIST"
-            [(ngModel)]="filter.value"
-            [title]="filter.label"
-            (ngModelChange)="onUpdate()"
-            class="custom-select">
-      <option *ngFor="let value of filter.values" [ngValue]="value.value">{{ value.label }}</option>
-    </select>
+    <!-- List type  -->
+    <app-select *ngIf="filter.type === filterType.LIST && (!filter.values || filter.values.length)"
+                rawItemIdKey="value"
+                rawItemLabelKey="label"
+                [rawItems]="filter.values"
+                [selectLabel]="filter.label"
+                [title]="filter.label"
+                [allowClear]="true"
+                (choose)="filter.value = $event.id; onUpdate()">
+    </app-select>
 
     <!-- Boolean type -->
     <div *ngIf="filter.type === filterType.BOOLEAN" class="custom-control custom-switch position-static">

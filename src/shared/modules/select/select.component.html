@@ -37,11 +37,14 @@
     <div class="list-group-item list-group-item-action border-0 d-flex align-items-center cursor-pointer"
          *ngFor="let item of items | filter:search:'name'"
          (click)="select(item)">
-      <div class="item-icon" [ngStyle]="style(item.color)">
+      <div class="item-icon" [ngStyle]="style(item.color)" *ngIf="item.icon">
         <span class="icon-{{ item.icon }}"></span>
       </div>
-      <div class="ml-3">{{ item.name }}</div>
+      <div [class.ml-3]="item.icon">{{ item.name }}</div>
       <fa-icon *ngIf="selected === item" [icon]="faSelected" class="ml-auto text-primary"></fa-icon>
     </div>
   </div>
+
+  <!-- No data -->
+  <app-no-data classes="my-3" *ngIf="!items || !items.length"></app-no-data>
 </div>

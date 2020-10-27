@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ExportOption } from '@app/dash/export/shared/interfaces/export-option';
 import { Utils } from '@shared/classes/utils';
 import { ExportFile } from '@shared/enums/export-file';
@@ -47,7 +47,6 @@ export class ExportComponent implements OnInit {
       key: 'category__kind',
       value: '',
       values: [
-        { label: 'Type', value: '' },
         { label: 'Income', value: ExpenseKind.INCOME },
         { label: 'Expense', value: ExpenseKind.EXPENSE },
         { label: 'Transfer', value: ExpenseKind.TRANSFER },
@@ -58,27 +57,18 @@ export class ExportComponent implements OnInit {
       label: 'Wallet',
       key: 'wallet',
       value: '',
-      values: [
-        { label: 'Wallet', value: '' },
-      ],
     },
     {
       type: FilterType.LIST,
       label: 'Category',
       key: 'category',
       value: '',
-      values: [
-        { label: 'Category', value: '' },
-      ],
     },
     {
       type: FilterType.LIST,
       label: 'Event',
       key: 'event',
       value: '',
-      values: [
-        { label: 'Event', value: '' },
-      ],
     },
     {
       type: FilterType.BOOLEAN,
@@ -131,6 +121,7 @@ export class ExportComponent implements OnInit {
 
   constructor(private api: ApiService,
               private date: DatePipe,
+              private cdr: ChangeDetectorRef,
               private profileCurrency: ProfileCurrencyPipe) {
   }
 
@@ -182,6 +173,9 @@ export class ExportComponent implements OnInit {
      */
     this.api.wallet.list().subscribe((data: Wallet[]): void => {
       for (const wallet of data) {
+        if (!this.filters[1].values) {
+          this.filters[1].values = [];
+        }
         this.filters[1].values.push({
           label: wallet.name,
           value: wallet.id,
@@ -193,6 +187,9 @@ export class ExportComponent implements OnInit {
      */
     this.api.category.list().subscribe((data: Category[]): void => {
       for (const category of data) {
+        if (!this.filters[2].values) {
+          this.filters[2].values = [];
+        }
         this.filters[2].values.push({
           label: category.name,
           value: category.id,
@@ -205,6 +202,9 @@ export class ExportComponent implements OnInit {
      */
     this.api.event.list().subscribe((data: Event[]): void => {
       for (const event of data) {
+        if (!this.filters[3].values) {
+          this.filters[3].values = [];
+        }
         this.filters[3].values.push({
           label: event.name,
           value: event.id,
