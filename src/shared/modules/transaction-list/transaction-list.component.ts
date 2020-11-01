@@ -36,9 +36,14 @@ export class TransactionListComponent implements OnInit, OnChanges {
   @Input() categories: Category[];
 
   /**
-   * Transaction group list
+   * Transaction groups transaction list
    */
   transactionsGroups: Record<string, Transaction[]>;
+
+  /**
+   * Transaction groups total value
+   */
+  transactionsGroupsTotal: Record<string, number> = {};
 
   constructor(private modalService: BsModalService) {
   }
@@ -96,6 +101,27 @@ export class TransactionListComponent implements OnInit, OnChanges {
         this.transactionsGroups[date] = [];
       }
       this.transactionsGroups[date].push(transaction);
+    }
+    /**
+     * Generate total value for each transactions group
+     */
+    for (const key of Object.keys(this.transactionsGroups)) {
+      this.transactionsGroupsTotal[key] = 0;
+      for (const transaction of this.transactionsGroups[key]) {
+        let factor: number;
+        switch (transaction.kind) {
+          case ExpenseKind.INCOME:
+            factor = 1;
+            break;
+          case ExpenseKind.EXPENSE:
+            factor = -1;
+            break;
+          case ExpenseKind.TRANSFER:
+            factor = 0;
+            break;
+        }
+        this.transactionsGroupsTotal[key] += (transaction.amount * factor);
+      }
     }
   }
 

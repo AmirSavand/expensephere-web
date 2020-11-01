@@ -8,7 +8,10 @@
       <div>{{ transactionGroup.key | date:'EEEE' }}</div>
       <div>{{ transactionGroup.key | date:'MMM yyyy' }}</div>
     </div>
-    <div class="ml-auto mt-auto small">{{ transactionGroup.value.length }} Transactions</div>
+    <div class="ml-auto mt-auto small">
+      <div>{{ transactionGroup.value.length }} Transactions</div>
+      <div class="text-right">{{ transactionsGroupsTotal[transactionGroup.key] | profileCurrency }}</div>
+    </div>
   </div>
 
   <div class="row transaction-list">
