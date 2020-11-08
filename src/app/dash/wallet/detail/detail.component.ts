@@ -8,6 +8,7 @@ import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { WalletFormModalComponent } from 'src/shared/modules/wallet-form-modal/wallet-form-modal.component';
 
 @Component({
   selector: 'app-detail',
@@ -55,6 +56,12 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     /**
+     * Watch for modal changes.
+     */
+    WalletFormModalComponent.CHANGE.subscribe((): void => {
+      this.loadWallet();
+    });
+    /**
      * Get wallet id from param
      */
     this.route.paramMap.subscribe((params: ParamMap): void => {
@@ -72,11 +79,7 @@ export class DetailComponent implements OnInit {
         /**
          * Load wallet data
          */
-        this.api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
-          this.wallet = data;
-        }, (): void => {
-          this.error = true;
-        });
+        this.loadWallet();
         /**
          * Load wallet list
          */
@@ -96,6 +99,18 @@ export class DetailComponent implements OnInit {
           });
         });
       }
+    });
+  }
+
+  /**
+   * Load wallet data
+   */
+  loadWallet(): void {
+    this.api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
+      this.wallet = data;
+    }, (): void => {
+      delete this.wallet;
+      this.error = true;
     });
   }
 

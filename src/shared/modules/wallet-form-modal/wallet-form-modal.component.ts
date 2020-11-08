@@ -27,6 +27,11 @@ import { Category } from 'src/shared/interfaces/category';
 })
 export class WalletFormModalComponent implements OnInit {
 
+  /**
+   * Triggered when data is deleted, updated or created.
+   */
+  static readonly CHANGE: EventEmitter<void> = new EventEmitter();
+
   readonly faClose: IconDefinition = faTimes;
   readonly faInfo: IconDefinition = faInfoCircle;
   readonly faPaint: IconDefinition = faPaintBrush;
@@ -147,6 +152,7 @@ export class WalletFormModalComponent implements OnInit {
       }
       this.submitted.emit(data);
       this.modal.hide();
+      WalletFormModalComponent.CHANGE.emit();
       /**
        * This change effects profile balance, so let's refresh profile
        */
@@ -168,6 +174,7 @@ export class WalletFormModalComponent implements OnInit {
     }
     this.api.wallet.delete(wallet.id).subscribe((): void => {
       this.modal.hide();
+      WalletFormModalComponent.CHANGE.emit();
     });
   }
 }
