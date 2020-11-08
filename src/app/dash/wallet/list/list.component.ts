@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GetParams } from '@shared/interfaces/get-params';
 import { Wallet } from '@shared/interfaces/wallet';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
@@ -12,7 +12,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
 
   readonly filters: Filter[] = [
     {
@@ -34,15 +34,26 @@ export class ListComponent {
    */
   wallets: Wallet[];
 
+  /**
+   * Params to filter data.
+   */
+  params: GetParams;
+
   constructor(private api: ApiService,
               private modalService: BsModalService) {
+  }
+
+  ngOnInit(): void {
+    WalletFormModalComponent.CHANGE.subscribe((): void => {
+      this.load();
+    });
   }
 
   /**
    * Load wallets with filters
    */
-  load(params: GetParams): void {
-    this.api.wallet.list(params).subscribe((data: Wallet[]): void => {
+  load(): void {
+    this.api.wallet.list(this.params).subscribe((data: Wallet[]): void => {
       this.wallets = data;
     });
   }
