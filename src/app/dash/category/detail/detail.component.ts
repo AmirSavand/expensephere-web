@@ -73,7 +73,7 @@ export class DetailComponent implements OnInit {
          */
         this.load();
         /**
-         * Load wallets for categories
+         * Load wallets for transactions
          */
         this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
           this.wallets = wallets;
