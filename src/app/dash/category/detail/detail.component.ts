@@ -51,7 +51,7 @@ export class DetailComponent implements OnInit {
      * Watch for modal changes.
      */
     CategoryFormModalComponent.CHANGE.subscribe((): void => {
-      this.loadCategory();
+      this.load();
     });
     /**
      * Get category id from param
@@ -71,7 +71,7 @@ export class DetailComponent implements OnInit {
         /**
          * Load category data
          */
-        this.loadCategory();
+        this.load();
         /**
          * Load wallets for categories
          */
@@ -91,7 +91,7 @@ export class DetailComponent implements OnInit {
   /**
    * Load category data.
    */
-  loadCategory(): void {
+  load(): void {
     this.api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
       this.category = data;
     }, (): void => {
