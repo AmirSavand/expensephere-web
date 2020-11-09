@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { GetParams } from '@shared/interfaces/get-params';
@@ -13,7 +13,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
 
   readonly filters: Filter[] = [
     {
@@ -43,15 +43,26 @@ export class ListComponent {
 
   categories: Category[];
 
+  /**
+   * Params to filter data.
+   */
+  params: GetParams;
+
   constructor(private api: ApiService,
               private modalService: BsModalService) {
+  }
+
+  ngOnInit(): void {
+    CategoryFormModalComponent.CHANGE.subscribe((): void => {
+      this.load();
+    });
   }
 
   /**
    * Load categories with filters
    */
-  load(params: GetParams): void {
-    this.api.category.list(params).subscribe((data: Category[]): void => {
+  load(): void {
+    this.api.category.list(this.params).subscribe((data: Category[]): void => {
       this.categories = data;
     });
   }

@@ -14,6 +14,7 @@ import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
+import { CategoryFormModalComponent } from 'src/shared/modules/category-form-modal/category-form-modal.component';
 
 @Component({
   selector: 'app-overview',
@@ -87,6 +88,12 @@ export class OverviewComponent implements OnInit, OnDestroy {
      * Load all overview data on wallet changes.
      */
     WalletFormModalComponent.CHANGE.subscribe((): void => {
+      this.loadData();
+    });
+    /**
+     * Load all overview data on category changes.
+     */
+    CategoryFormModalComponent.CHANGE.subscribe((): void => {
       this.loadData();
     });
     /**

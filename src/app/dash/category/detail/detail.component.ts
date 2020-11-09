@@ -5,6 +5,8 @@ import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
+import { CategoryFormModalComponent } from 'src/shared/modules/category-form-modal/category-form-modal.component';
+import { WalletFormModalComponent } from 'src/shared/modules/wallet-form-modal/wallet-form-modal.component';
 
 @Component({
   selector: 'app-component',
@@ -46,6 +48,12 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     /**
+     * Watch for modal changes.
+     */
+    CategoryFormModalComponent.CHANGE.subscribe((): void => {
+      this.loadCategory();
+    });
+    /**
      * Get category id from param
      */
     this.route.paramMap.subscribe((params: ParamMap): void => {
@@ -63,11 +71,7 @@ export class DetailComponent implements OnInit {
         /**
          * Load category data
          */
-        this.api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
-          this.category = data;
-        }, (): void => {
-          this.error = true;
-        });
+        this.loadCategory();
         /**
          * Load wallets for categories
          */
@@ -81,6 +85,18 @@ export class DetailComponent implements OnInit {
           });
         });
       }
+    });
+  }
+
+  /**
+   * Load category data.
+   */
+  loadCategory(): void {
+    this.api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
+      this.category = data;
+    }, (): void => {
+      delete this.category;
+      this.error = true;
     });
   }
 }
