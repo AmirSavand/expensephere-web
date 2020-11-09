@@ -26,6 +26,11 @@ import { Observable } from 'rxjs';
 })
 export class CategoryFormModalComponent implements OnInit {
 
+  /**
+   * Triggered when data is deleted, updated or created.
+   */
+  static readonly CHANGE: EventEmitter<void> = new EventEmitter();
+
   readonly faClose: IconDefinition = faTimes;
   readonly faInfo: IconDefinition = faInfoCircle;
   readonly faPaint: IconDefinition = faPaintBrush;
@@ -127,6 +132,7 @@ export class CategoryFormModalComponent implements OnInit {
       }
       this.submitted.emit(data);
       this.modal.hide();
+      CategoryFormModalComponent.CHANGE.emit();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;
       this.form.loading = false;
@@ -144,6 +150,7 @@ export class CategoryFormModalComponent implements OnInit {
     }
     this.api.category.delete(category.id).subscribe((): void => {
       this.modal.hide();
+      CategoryFormModalComponent.CHANGE.emit();
     });
   }
 }
