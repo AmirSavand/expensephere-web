@@ -32,6 +32,11 @@ import { Wallet } from 'src/shared/interfaces/wallet';
 })
 export class EventFormModalComponent implements OnInit {
 
+  /**
+   * Triggered when data is deleted, updated or created.
+   */
+  static readonly CHANGE: EventEmitter<void> = new EventEmitter();
+
   readonly faClose: IconDefinition = faTimes;
   readonly faTime: IconDefinition = faClock;
   readonly faInfo: IconDefinition = faInfoCircle;
@@ -153,6 +158,7 @@ export class EventFormModalComponent implements OnInit {
       }
       this.submitted.emit(data);
       this.modal.hide();
+      EventFormModalComponent.CHANGE.emit();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;
       this.form.loading = false;
@@ -170,6 +176,7 @@ export class EventFormModalComponent implements OnInit {
     }
     this.api.event.delete(event.id).subscribe((): void => {
       this.modal.hide();
+      EventFormModalComponent.CHANGE.emit();
     });
   }
 }

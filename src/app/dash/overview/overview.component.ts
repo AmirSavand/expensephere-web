@@ -15,6 +15,7 @@ import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { CategoryFormModalComponent } from 'src/shared/modules/category-form-modal/category-form-modal.component';
+import { EventFormModalComponent } from 'src/shared/modules/event-form-modal/event-form-modal.component';
 
 @Component({
   selector: 'app-overview',
@@ -94,6 +95,12 @@ export class OverviewComponent implements OnInit, OnDestroy {
      * Load all overview data on category changes.
      */
     CategoryFormModalComponent.CHANGE.subscribe((): void => {
+      this.loadData();
+    });
+    /**
+     * Load all overview data on event changes.
+     */
+    EventFormModalComponent.CHANGE.subscribe((): void => {
       this.loadData();
     });
     /**
