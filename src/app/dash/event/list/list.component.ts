@@ -15,7 +15,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
 
   readonly faEdit: IconDefinition = faPen;
 
@@ -39,15 +39,26 @@ export class ListComponent {
    */
   events: Event[];
 
+  /**
+   * Params to filter data.
+   */
+  params: GetParams;
+
   constructor(private api: ApiService,
               private modalService: BsModalService) {
+  }
+
+  ngOnInit(): void {
+    EventFormModalComponent.CHANGE.subscribe((): void => {
+      this.load();
+    });
   }
 
   /**
    * Load event with filters
    */
-  load(params: GetParams): void {
-    this.api.event.list(params).subscribe((data: Event[]): void => {
+  load(): void {
+    this.api.event.list(this.params).subscribe((data: Event[]): void => {
       this.events = data;
     });
   }

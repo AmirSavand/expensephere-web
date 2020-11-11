@@ -5,6 +5,7 @@ import { Event } from '@shared/interfaces/event';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
+import { EventFormModalComponent } from 'src/shared/modules/event-form-modal/event-form-modal.component';
 
 @Component({
   selector: 'app-detail',
@@ -49,6 +50,12 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     /**
+     * Watch for modal changes.
+     */
+    EventFormModalComponent.CHANGE.subscribe((): void => {
+      this.load();
+    });
+    /**
      * Get event id from param
      */
     this.route.paramMap.subscribe((params: ParamMap): void => {
@@ -66,11 +73,7 @@ export class DetailComponent implements OnInit {
         /**
          * Load event data
          */
-        this.api.event.retrieve(this.eventId).subscribe((data: Event): void => {
-          this.event = data;
-        }, (): void => {
-          this.error = true;
-        });
+        this.load();
         /**
          * Load wallet list
          */
@@ -90,6 +93,18 @@ export class DetailComponent implements OnInit {
           this.transactions = data;
         });
       }
+    });
+  }
+
+  /**
+   * Load event data
+   */
+  load(): void {
+    this.api.event.retrieve(this.eventId).subscribe((data: Event): void => {
+      this.event = data;
+    }, (): void => {
+      delete this.event;
+      this.error = true;
     });
   }
 }
