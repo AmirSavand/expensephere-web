@@ -1,0 +1,88 @@
+@import "src/variables";
+
+:host ::ng-deep {
+
+  *:focus {
+    outline: none !important;
+  }
+
+  .cal-header {
+    &.cal-cell-row,
+    > .cal-cell {
+      background: none !important;
+      font-size: $font-size-sm;
+      color: $secondary;
+    }
+  }
+
+  .cal-cell-row,
+  .cal-cell,
+  .cal-days {
+    border-color: $border-color !important;
+    background: none;
+
+    &.cal-days {
+      border-right: none;
+    }
+  }
+
+  .cal-month-view {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    > .cal-days {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      > div {
+        height: 100%;
+
+        > .cal-cell-row {
+          height: 100%;
+          background: none;
+
+          > .cal-cell {
+            background: none;
+            min-height: 0;
+
+            > .cal-cell-top {
+              min-height: 0;
+
+              .cal-day-badge {
+                display: none;
+              }
+
+              .cal-day-number {
+                opacity: 1;
+                font-size: $font-size-sm;
+                color: $secondary;
+                width: 100%;
+                text-align: center;
+                margin: map_get($spacers, 2) 0;
+              }
+            }
+
+            > .cal-events {
+              margin: map_get($spacers, 2) !important;
+              place-content: center;
+              align-content: flex-start;
+
+              > .cal-event {
+                width: 14px;
+                height: 14px;
+                border-radius: $border-radius-sm;
+              }
+            }
+
+            &.cal-today .cal-day-number {
+              color: $warning;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+}

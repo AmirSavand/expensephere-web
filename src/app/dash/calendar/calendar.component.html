@@ -1,0 +1,36 @@
+<!-- Calendar -->
+<mwl-calendar-month-view [events]="events"
+                         [viewDate]="viewDate"
+                         [headerTemplate]="headerTemplate"
+                         (eventClicked)="onEventClick($event)"
+                         (dayClicked)="onDayClick($event)">
+</mwl-calendar-month-view>
+
+<!-- Calendar header component -->
+<ng-template #headerTemplate let-days="days">
+
+  <!-- Current date -->
+  <div class="container-fluid text-center py-2 border-bottom bg-light d-flex align-items-center">
+
+    <!-- Prev month button -->
+    <button class="btn btn-link" (click)="viewDate.add(-1, 'month'); load()">
+      <fa-icon [fixedWidth]="true" [icon]="faPrev"></fa-icon>
+    </button>
+
+    <!-- Current month and year -->
+    <h4 class="my-0 mx-auto">
+      <span class="font-weight-bold">{{ viewDate.toDate() | date:'MMMM' }}</span>
+      <span class="small text-secondary">, {{ viewDate.toDate() | date:'yyyy' }}</span>
+    </h4>
+
+    <!-- Next month button -->
+    <button class="btn btn-link" (click)="viewDate.add(1, 'month'); load()">
+      <fa-icon [fixedWidth]="true" [icon]="faNext"></fa-icon>
+    </button>
+  </div>
+
+  <!-- Week days -->
+  <div class="cal-cell-row cal-header">
+    <div class="cal-cell" *ngFor="let day of days">{{ day.date | date:'EEE' }}</div>
+  </div>
+</ng-template>

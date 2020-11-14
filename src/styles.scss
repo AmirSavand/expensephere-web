@@ -306,3 +306,8 @@ a, button, .btn {
   align-items: center;
 }
 
+select.no-style {
+  padding: 0;
+  background: none;
+  border: none;
+}

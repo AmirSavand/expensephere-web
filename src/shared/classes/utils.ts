@@ -22,6 +22,7 @@ export class Utils {
    * API datetime format for filtering.
    */
   static readonly API_DATE_FORMAT = 'yyyy-MM-dd';
+  static readonly API_DATE_FORMAT_MOMENT = 'yyyy-MM-DD';
 
   /**
    * List of all expense kinds with their label.

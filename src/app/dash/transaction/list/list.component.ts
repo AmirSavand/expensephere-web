@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons/faCalendar';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
@@ -22,6 +23,8 @@ import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
 import { ApiService } from '@shared/services/api.service';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 import { Observable, forkJoin } from 'rxjs';
 
 @Component({
@@ -192,6 +195,12 @@ export class ListComponent implements OnInit {
   listView = false;
 
   /**
+   * If day filter is set in query params.
+   * Can be set by calendar page on day click.
+   */
+  viewingDay?: Moment;
+
+  /**
    * Selection for multi-select
    */
   selection: Selection<Transaction>;
@@ -215,6 +224,7 @@ export class ListComponent implements OnInit {
 
   constructor(private api: ApiService,
               private date: DatePipe,
+              private route: ActivatedRoute,
               private profileCurrency: ProfileCurrencyPipe,
               private changeDetectorRef: ChangeDetectorRef) {
   }
@@ -228,6 +238,20 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /**
+     * Get and watch query params.
+     */
+    this.route.queryParams.subscribe((data: Params): void => {
+      const isFirstTime: boolean = !Boolean(this.viewingDay);
+      /**
+       * Check for day filter in query params.
+       * Day is set when user clicks on a day in calendar page.
+       */
+      this.viewingDay = moment(new Date(data.day));
+      if (!isFirstTime) {
+        this.load();
+      }
+    });
     /**
      * Generate months
      */
@@ -328,7 +352,10 @@ export class ListComponent implements OnInit {
       }
     }
     /**
-     * Add time filter (range) based on month selector.
+     * Add time filter (range).
+     *
+     * If viewing date is set (from calendar page) then
+     * set min and max to that day.
      *
      * If there's a selected month, then update the filters
      * and update storage about "All Time" being selected.
@@ -336,7 +363,10 @@ export class ListComponent implements OnInit {
      * If there's no selected month, then remove the filters
      * and update storage about "All Time" being selected.
      */
-    if (this.monthSelected !== null) {
+    if (this.viewingDay?.isValid()) {
+      this.filtersSelected.time_after = this.viewingDay.format(Utils.API_DATE_FORMAT_MOMENT);
+      this.filtersSelected.time_before = moment(this.viewingDay).add(1, 'day').format(Utils.API_DATE_FORMAT_MOMENT);
+    } else if (this.monthSelected !== null) {
       this.filtersSelected.time_after = this.date.transform(this.months[this.monthSelected], Utils.API_DATE_FORMAT);
       this.filtersSelected.time_before = this.date.transform(this.getEndOfSelectedMonth(), Utils.API_DATE_FORMAT);
       localStorage.removeItem(ListComponent.STORAGE_KEY_ALL_TIME);

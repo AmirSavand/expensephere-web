@@ -5,6 +5,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
+import { faCalendarDay } from '@fortawesome/free-solid-svg-icons/faCalendarDay';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
@@ -53,6 +54,7 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly faDashboard: IconDefinition = faTachometerAlt;
   readonly faTransactions: IconDefinition = faRetweet;
   readonly faCategories: IconDefinition = faTags;
+  readonly faCalendar: IconDefinition = faCalendarDay;
   readonly faEvents: IconDefinition = faCalendarAlt;
   readonly faProfile: IconDefinition = faUser;
   readonly faSelected: IconDefinition = faCheckCircle;
