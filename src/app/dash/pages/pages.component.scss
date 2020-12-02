@@ -1,0 +1,18 @@
+@import "src/variables";
+
+@media screen and (min-width: map_get($grid-breakpoints, md)) {
+  .card {
+    height: 100%;
+
+    .badge, .btn-light {
+      transition: $transition-base;
+      opacity: 0;
+    }
+
+    &:hover {
+      .badge, .btn-light {
+        opacity: 1;
+      }
+    }
+  }
+}

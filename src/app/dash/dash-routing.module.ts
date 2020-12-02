@@ -41,6 +41,10 @@ const routes: Routes = [
         loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule),
       },
       {
+        path: 'pages',
+        loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'overview',

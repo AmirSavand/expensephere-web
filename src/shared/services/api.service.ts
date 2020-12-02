@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Crud } from '@shared/classes/crud';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Currency } from '@shared/interfaces/currency';
 import { Event } from '@shared/interfaces/event';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
+import { TransactionsPage } from '@shared/interfaces/transactions-page';
 import { User } from '@shared/interfaces/user';
 import { Wallet } from '@shared/interfaces/wallet';
 
@@ -31,6 +33,9 @@ export class ApiService {
   readonly category = new Crud<Category>(this.http, 'category');
   readonly event = new Crud<Event>(this.http, 'event');
   readonly transaction = new Crud<Transaction>(this.http, 'transaction');
+  readonly transactionsPage = new Crud<TransactionsPage, ApiResponse<TransactionsPage>>(
+    this.http, 'transactions-page',
+  );
 
   constructor(private http: HttpClient) {
   }

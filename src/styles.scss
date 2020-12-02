@@ -109,7 +109,9 @@ a, button, .btn {
   }
 
   > div {
-    cursor: unset;
+    &:not(.no-action) {
+      cursor: default;
+    }
 
     .edit {
       display: none;
@@ -310,4 +312,9 @@ select.no-style {
   padding: 0;
   background: none;
   border: none;
+}
+
+.text-pre {
+  white-space: pre-line;
+  word-break: break-word;
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
+import { environment } from '@environments/environment';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
@@ -42,6 +43,7 @@ export class DashComponent implements OnInit, OnDestroy {
 
   readonly sidebarView = SidebarView;
   readonly style = Color.style;
+  readonly home = environment.home;
 
   readonly faView: IconDefinition = faChevronDown;
   readonly faSidebarToggle: IconDefinition = faBars;
