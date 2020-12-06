@@ -4,6 +4,7 @@ import { environment } from '@environments/environment';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt';
 import { Color } from '@shared/classes/color';
 import { ExpenseKind } from '@shared/enums/kind';
 import { TransactionsPage } from '@shared/interfaces/transactions-page';
@@ -24,6 +25,7 @@ export class TransactionsComponent implements OnInit {
   readonly shareUrl = location.href;
   readonly faCopy: IconDefinition = faCopy;
   readonly faCopied: IconDefinition = faCheck;
+  readonly faShare: IconDefinition = faShareAlt;
 
   page: TransactionsPage;
   error: boolean;

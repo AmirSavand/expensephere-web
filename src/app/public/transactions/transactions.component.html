@@ -48,9 +48,11 @@
       </p>
       <hr>
       <!-- Share for mobile -->
-      <button class="btn btn-light btn-block" (click)="share()" *ngIf="isSharingEnabled">Share</button>
+      <button class="btn btn-secondary btn-block" (click)="share()" *ngIf="isSharingEnabled">
+        <fa-icon [fixedWidth]="true" [icon]="faShare"></fa-icon> Share
+      </button>
       <!-- Copy for desktop -->
-      <div class="input-group">
+      <div class="input-group" *ngIf="!isSharingEnabled">
         <div class="input-group-prepend">
           <button class="btn btn-secondary" (click)="share()">
             <fa-icon [fixedWidth]="true" [icon]="copied ? faCopied : faCopy"></fa-icon>
