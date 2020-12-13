@@ -73,58 +73,69 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    TransactionFormModalComponent.CHANGE.subscribe((): void => {
+      this.load();
+    });
     /**
-     * Get transaction id from param
+     * Get transaction id from param.
      */
     this.route.paramMap.subscribe((params: ParamMap): void => {
       if (!params.has('id')) {
         return;
       }
       /**
-       * If transaction ID changes
+       * If transaction ID changes.
        */
       if (this.id !== params.get('id')) {
         /**
-         * Get transaction ID from params
+         * Get transaction ID from params.
          */
         this.id = params.get('id');
         /**
-         * Load transaction data
+         * Load transaction data.
          */
-        this.api.transaction.retrieve(this.id).subscribe((transaction: Transaction): void => {
-          this.transaction = transaction;
-          /**
-           * Load transaction wallet
-           */
-          this.api.wallet.retrieve(transaction.wallet).subscribe((data: Wallet): void => {
-            this.wallet = data;
-          });
-          /**
-           * Load transaction wallet into
-           */
-          if (transaction.into) {
-            this.api.wallet.retrieve(transaction.into).subscribe((data: Wallet): void => {
-              this.into = data;
-            });
-          }
-          /**
-           * Load transaction category
-           */
-          this.api.category.retrieve(transaction.category).subscribe((data: Category): void => {
-            this.category = data;
-          });
-          /**
-           * Load transaction event
-           */
-          if (transaction.event) {
-            this.api.event.retrieve(transaction.event).subscribe((data: Event): void => {
-              this.event = data;
-            });
-          }
-        }, (): void => {
-          this.error = true;
+        this.load();
+      }
+    });
+  }
+
+  /**
+   * Load transaction data.
+   */
+  load(): void {
+    this.api.transaction.retrieve(this.id).subscribe((transaction: Transaction): void => {
+      this.transaction = transaction;
+      /**
+       * Load transaction wallet
+       */
+      this.api.wallet.retrieve(transaction.wallet).subscribe((data: Wallet): void => {
+        this.wallet = data;
+      });
+      /**
+       * Load transaction wallet into
+       */
+      if (transaction.into) {
+        this.api.wallet.retrieve(transaction.into).subscribe((data: Wallet): void => {
+          this.into = data;
         });
       }
+      /**
+       * Load transaction category
+       */
+      this.api.category.retrieve(transaction.category).subscribe((data: Category): void => {
+        this.category = data;
+      });
+      /**
+       * Load transaction event
+       */
+      if (transaction.event) {
+        this.api.event.retrieve(transaction.event).subscribe((data: Event): void => {
+          this.event = data;
+        });
+      }
+    }, (): void => {
+      delete this.category;
+      this.error = true;
     });
   }
 

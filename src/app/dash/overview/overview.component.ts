@@ -16,6 +16,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { CategoryFormModalComponent } from 'src/shared/modules/category-form-modal/category-form-modal.component';
 import { EventFormModalComponent } from 'src/shared/modules/event-form-modal/event-form-modal.component';
+import { TransactionFormModalComponent } from 'src/shared/modules/transaction-form-modal/transaction-form-modal.component';
 
 @Component({
   selector: 'app-overview',
@@ -85,6 +86,12 @@ export class OverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    /**
+     * Load all overview data on transaction changes.
+     */
+    TransactionFormModalComponent.CHANGE.subscribe((): void => {
+      this.loadData();
+    });
     /**
      * Load all overview data on wallet changes.
      */
