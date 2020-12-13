@@ -26,6 +26,7 @@ import { ApiService } from '@shared/services/api.service';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { Observable, forkJoin } from 'rxjs';
+import { TransactionFormModalComponent } from 'src/shared/modules/transaction-form-modal/transaction-form-modal.component';
 
 @Component({
   selector: 'app-list',
@@ -238,6 +239,9 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    TransactionFormModalComponent.CHANGE.subscribe((): void => {
+      this.load();
+    });
     /**
      * Get and watch query params.
      */
