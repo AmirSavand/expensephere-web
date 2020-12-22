@@ -1,20 +1,20 @@
 <div class="container">
-  <div class="row mb-4">
+  <div class="row">
 
     <!-- Left -->
-    <div class="col-xl-8">
+    <div class="col-xl-8 mb-4">
 
       <!-- Wallets -->
       <div class="card bg-light mt-4">
 
         <!-- Header -->
-          <a class="card-header font-weight-bold text-dark" routerLink="../wallet/list">
+          <a class="card-header" routerLink="../wallet/list">
           <span>My Wallets</span>
           <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
         </a>
 
         <!-- Body -->
-        <div class="card-body oy-scroll pt-0 pb-3" [style.height]="120 + 'px'">
+        <div class="card-body pt-0 pb-3">
 
           <!-- Loading -->
           <app-loading classes="mt-5" *ngIf="!wallets"></app-loading>
@@ -28,13 +28,13 @@
       <div class="card bg-light mt-4">
 
         <!-- Header -->
-        <a class="card-header font-weight-bold text-dark" routerLink="../category/list">
+        <a class="card-header" routerLink="../category/list">
           <span>My Categories</span>
           <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
         </a>
 
         <!-- Body -->
-        <div class="card-body oy-scroll pt-0 pb-3" [style.height]="210 + 'px'">
+        <div class="card-body pt-0 pb-3">
 
           <!-- Loading -->
           <app-loading classes="mt-5" *ngIf="!categories"></app-loading>
@@ -55,7 +55,7 @@
         <!-- Transactions overview -->
         <div class="col-lg-6">
           <div class="card bg-light mt-4">
-            <div class="card-header font-weight-bold">Transactions Overview</div>
+            <div class="card-header">Transactions Overview</div>
             <div class="card-body chart-wrapper p-0">
 
               <!-- Loading -->
@@ -82,7 +82,7 @@
         <!-- Categories overview -->
         <div class="col-lg-6">
           <div class="card bg-light mt-4">
-            <div class="card-header font-weight-bold">Categories Overview</div>
+            <div class="card-header">Categories Overview</div>
             <div class="card-body chart-wrapper p-0">
 
               <!-- Loading -->
@@ -109,19 +109,19 @@
     </div>
 
     <!-- Right -->
-    <div class="col-xl-4">
+    <div class="col-xl-4 mb-4">
 
       <!-- My transactions -->
       <div class="card bg-light overflow-hidden mt-4">
 
         <!-- Header -->
-        <a class="card-header font-weight-bold text-dark" routerLink="../transaction/list">
+        <a class="card-header" routerLink="../transaction/list">
           <span>My Transactions</span>
           <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
         </a>
 
         <!-- Body -->
-        <div class="card-body oy-scroll pt-0" [style.height]="769 + 'px'">
+        <div class="card-body pt-0">
 
           <!-- Loading -->
           <app-loading classes="mt-5" *ngIf="!transactions || !categories || !wallets"></app-loading>
