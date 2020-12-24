@@ -37,6 +37,11 @@ export class ImportComponent implements OnInit {
     ':(?:1[6-9]|[2-9]\\d)?\\d{2})$'].join(''));
 
   /**
+   * An extra check for validation a date.
+   */
+  private readonly extraDateRegex: RegExp = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
+
+  /**
    * Make a view query and get input native element reference which it's type is {@link ElementRef}.
    */
   @ViewChild('fileElement', { static: false }) private fileElement: ElementRef;
@@ -62,6 +67,9 @@ export class ImportComponent implements OnInit {
   }, {
     label: 'Date',
     field: 'date',
+  }, {
+    label: 'Note',
+    field: 'note',
   }];
 
   /**
@@ -225,7 +233,7 @@ export class ImportComponent implements OnInit {
           /**
            * Check if value is a valid date.
            */
-          if (this.dateRegex.test(value.trim())) {
+          if (this.dateRegex.test(value.trim()) || this.extraDateRegex.test(value.trim())) {
             validDates++;
           }
           /**
@@ -281,6 +289,51 @@ export class ImportComponent implements OnInit {
         }
       });
     };
+  }
+
+  /**
+   * Start converting the CSV into JSON.
+   */
+  build(): void {
+    if (this.dataSource.filter((field: CsvFieldMapModel): boolean => field.foundDuplicate).length > 0) {
+      /**
+       * Present a snackbar which will let user know that we found duplicated mapped fields
+       * @todo Show toaster - Oops! found duplicated mapped fields.
+       */
+      return;
+    }
+    /**
+     * @description
+     *
+     * Contains list of unwanted fields indexes
+     *
+     * Loop into [header fields]{@link headers} and filter them to get 'DONT_MAP_FIELD'.
+     */
+    const indexList: number[] = [];
+    /**
+     * Generate CSV header columns based on mapped fields
+     */
+    this.headers = this.dataSource
+      .sort((a: CsvFieldMapModel, b: CsvFieldMapModel): number => {
+        return (a.index > b.index) ? 1 : -1;
+      })
+      .map<string>((field: CsvFieldMapModel, index: number): string => {
+        if (field.mapField === 'DONT_MAP_FIELD') {
+          indexList.push(index);
+        }
+        return field.mapField ? field.mapField : field.name;
+      });
+
+    /**
+     * New file lines.
+     */
+    let newFileLines: string[][] = [...[this.headers], ...this.dataSet];
+    /**
+     * Loop into each line and keep those who are not included in {@link indexList}.
+     */
+    newFileLines = newFileLines.map((line: string[]): string[] => {
+      return line.filter((value: string, index: number): boolean => !indexList.includes(index));
+    });
   }
 
   /**
