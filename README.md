@@ -49,6 +49,8 @@ Here's what the project is build with:
 Here are the app routes to follow:
 
 ```
+/public/transactions/<id>
+
 /user/sign-in
 /user/sign-up
 /user/sign-out
@@ -58,6 +60,7 @@ Here are the app routes to follow:
 /dash/overview
 /dash/calendar
 /dash/statistics
+/dash/pages
 
 /dash/profile/list
 /dash/profile/<id>
@@ -74,6 +77,9 @@ Here are the app routes to follow:
 
 /dash/transaction/list
 /dash/transaction/<id>
+
+/dash/import
+/dash/export
 ```
 
 ### Modals

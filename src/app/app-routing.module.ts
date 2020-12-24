@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./dash/dash.module').then(m => m.DashModule),
   },
   {
+    path: 'public',
+    loadChildren: () => import('./public/public.module').then(m => m.PublicModule),
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: '',

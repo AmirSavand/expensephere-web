@@ -1,0 +1,61 @@
+<div class="container py-3">
+
+  <!-- Header -->
+  <div class="font-weight-bold d-flex align-items-center mb-3">
+    <a class="text-secondary" routerLink="../export">Export Transactions</a>
+    <fa-icon [fixedWidth]="true" [icon]="faBreadcrumbArrow" class="small mx-1 text-secondary"></fa-icon>
+    <span>Public Transactions Pages</span>
+  </div>
+
+  <!-- Loading -->
+  <app-loading *ngIf="!pages"></app-loading>
+
+  <!-- No data -->
+  <div class="row justify-content-center" *ngIf="pages && !pages.length">
+    <div class="col-lg-4">
+      <div class="alert alert-info">
+        <p class="font-weight-bold text-center">Public Transactions Pages</p>
+        <p class="d-flex align-items-center">
+          <fa-icon class="mr-3" size="lg" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
+          <span>You can share a group of transactions as a page.</span>
+        </p>
+        <p class="d-flex align-items-center">
+          <fa-icon class="mr-3" size="lg" [fixedWidth]="true" [icon]="faShare"></fa-icon>
+          <span>Each shared page has a unique link to be shared with people.</span>
+        </p>
+        <p class="d-flex align-items-center">
+          <fa-icon class="mr-3" size="lg" [fixedWidth]="true" [icon]="faCreate"></fa-icon>
+          <span>You don't have any shared pages currently. Click on the button below to go to the export page.</span>
+        </p>
+        <a routerLink="../export" class="btn btn-info btn-block">Create Public Page</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pages -->
+  <ng-container *ngIf="pages && pages.length">
+    <div class="row">
+      <div class="col-lg-4 mb-3" *ngFor="let page of pages">
+        <div class="card">
+          <div class="card-header">
+            <b>{{ page.created | date }}</b>
+            <span class="badge badge-pill badge-info ml-auto">{{ page.transactions.length }}</span>
+          </div>
+          <div class="card-body text-pre">{{ page.note || "No note is set." }}</div>
+          <div class="card-footer d-flex align-items-center">
+            <a [routerLink]="['/public/transactions', page.id]"
+               target="_blank" class="btn btn-primary">
+              View Page
+            </a>
+            <a class="text-danger ml-auto" [hidden]="loading" (click)="delete(page)">
+              <fa-icon [fixedWidth]="true" [icon]="faDelete"></fa-icon>
+            </a>
+            <a class="ml-3" [hidden]="loading" (click)="update(page)">
+              <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

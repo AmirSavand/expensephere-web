@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faFilter } from '@fortawesome/free-solid-svg-icons/faFilter';
 import { GetParams } from '@shared/interfaces/get-params';
 import { FilterType } from './shared/enums/filter-type';
 import { Filter } from './shared/interfaces/filter';
@@ -10,11 +12,18 @@ import { Filter } from './shared/interfaces/filter';
 })
 export class FiltersComponent implements OnInit {
 
+  readonly faToggle: IconDefinition = faFilter;
+
   readonly filterType = FilterType;
 
   @Input() filters: Filter[];
 
   @Output() update = new EventEmitter<GetParams>();
+
+  /**
+   * Filters expand/collapse status. Mobile only.
+   */
+  expand = false;
 
   ngOnInit(): void {
     this.onUpdate();

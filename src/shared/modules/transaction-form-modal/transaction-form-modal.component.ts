@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -36,6 +36,11 @@ import { EventFormModalComponent } from 'src/shared/modules/event-form-modal/eve
   providers: [DatePipe],
 })
 export class TransactionFormModalComponent implements OnInit {
+
+  /**
+   * Triggered when data is deleted, updated or created.
+   */
+  static readonly CHANGE: EventEmitter<void> = new EventEmitter();
 
   readonly expenseKind = ExpenseKind;
 
@@ -177,6 +182,7 @@ export class TransactionFormModalComponent implements OnInit {
         Object.assign(this.transaction, data);
       }
       this.modal.hide();
+      TransactionFormModalComponent.CHANGE.emit();
       /**
        * This change effects profile balance, so let's refresh profile
        */
@@ -214,6 +220,7 @@ export class TransactionFormModalComponent implements OnInit {
     }
     this.api.transaction.delete(transaction.id).subscribe((): void => {
       this.modal.hide();
+      TransactionFormModalComponent.CHANGE.emit();
       /**
        * This change effects profile balance, so let's refresh profile
        */

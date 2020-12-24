@@ -1,0 +1,9 @@
+@import "src/variables";
+
+.container {
+  max-width: map_get($grid-breakpoints, md);
+}
+
+input {
+  height: unset;
+}

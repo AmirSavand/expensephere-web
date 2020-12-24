@@ -1,4 +1,13 @@
-<div class="filters">
+<!-- Header (mobile only) -->
+<div class="d-flex align-items-center d-lg-none" [class.mb-3]="expand">
+  <div class="font-weight-bold">Filters</div>
+  <button class="btn btn-light ml-auto" (click)="expand = !expand" [class.active]="expand">
+    <fa-icon [fixedWidth]="true" [icon]="faToggle"></fa-icon>
+  </button>
+</div>
+
+<!-- Filters -->
+<div class="filters" [class.expand]="expand">
   <div class="filter" *ngFor="let filter of filters">
 
     <!-- Text type -->

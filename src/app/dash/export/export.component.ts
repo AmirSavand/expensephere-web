@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { ExportOption } from '@app/dash/export/shared/interfaces/export-option';
 import { Utils } from '@shared/classes/utils';
 import { ExportFile } from '@shared/enums/export-file';
@@ -8,11 +9,13 @@ import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
 import { Transaction } from '@shared/interfaces/transaction';
+import { TransactionsPage } from '@shared/interfaces/transactions-page';
 import { Wallet } from '@shared/interfaces/wallet';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { ApiService } from '@shared/services/api.service';
+import { ProfileService } from 'src/shared/services/profile.service';
 
 @Component({
   selector: 'app-export',
@@ -122,6 +125,7 @@ export class ExportComponent implements OnInit {
   constructor(private api: ApiService,
               private date: DatePipe,
               private cdr: ChangeDetectorRef,
+              private router: Router,
               private profileCurrency: ProfileCurrencyPipe) {
   }
 
@@ -236,7 +240,24 @@ export class ExportComponent implements OnInit {
         return;
       }
       case ExportFile.PAGE: {
-        alert('This feature is coming soon 💖');
+        if (!this.transactions.length) {
+          alert('No transactions are selected. Update your filters and try again 😉');
+          return;
+        }
+        const transactions: number[] = [];
+        for (const transaction of this.transactions) {
+          transactions.push(transaction.id);
+        }
+        const note: string = prompt('Note for this public transactions page (optional):');
+        this.api.transactionsPage.create({
+          transactions,
+          note,
+          profile: ProfileService.profile.value.id,
+        }).subscribe((data: TransactionsPage): void => {
+          this.router.navigate(['/public/transactions', data.id]);
+        }, (): void => {
+          alert('Failed to create public transactions page.');
+        });
         return;
       }
     }

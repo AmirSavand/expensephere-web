@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModelDebounceModule } from '@shared/modules/model-debounce/model-debounce.module';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { SelectModule } from 'src/shared/modules/select/select.module';
 import { FiltersComponent } from './filters.component';
 
@@ -14,6 +16,8 @@ import { FiltersComponent } from './filters.component';
     FormsModule,
     ModelDebounceModule,
     SelectModule,
+    FontAwesomeModule,
+    CollapseModule,
   ],
   exports: [
     FiltersComponent,

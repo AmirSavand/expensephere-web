@@ -1,8 +1,8 @@
 <div>
-  <div class="container pt-4">
+  <div class="container pt-3">
 
     <!-- Header -->
-    <div class="d-flex align-items-center mb-4">
+    <div class="d-flex align-items-center mb-3">
 
       <!-- Title -->
       <p class="font-weight-bold mb-0">Export Transactions</p>
@@ -19,8 +19,8 @@
 
       <!-- Filters -->
       <div class="col-lg-4">
-        <div class="card mb-4 border border-tertiary">
-          <div class="card-header font-weight-bold">Select Filters</div>
+        <div class="card mb-3">
+          <div class="card-header">Select Filters</div>
           <div class="card-body">
             <p>Filter what transactions you want to include for exporting.</p>
             <app-filters [filters]="filters" (update)="filtersSelected = $event; load()"></app-filters>
@@ -33,8 +33,8 @@
 
       <!-- Date -->
       <div class="col-lg-4">
-        <div class="card mb-4 border border-tertiary">
-          <div class="card-header font-weight-bold">Select Date Range</div>
+        <div class="card mb-3">
+          <div class="card-header">Select Date Range</div>
           <div class="card-body">
 
             <p>Include transactions between specific dates. Dates are ignored if they are not set.</p>
@@ -62,13 +62,15 @@
 
       <!-- Export -->
       <div class="col-lg-4">
-        <div class="card mb-4 border border-tertiary">
-          <div class="card-header font-weight-bold">Select Export Type</div>
+        <div class="card mb-3">
+          <div class="card-header">Select Export Type</div>
           <div class="card-body">
             <p>Select what kind of file you want to export your transactions to.</p>
             <button class="btn btn-primary btn-block" *ngFor="let option of options" (click)="submit(option)">
               {{ option.label }}
             </button>
+            <hr>
+            <a class="btn btn-dark btn-block" routerLink="../pages">Mange Public Pages</a>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 @import "src/variables";
 
-@media screen and (min-width: 991px) {
+@include media-breakpoint-up(lg) {
   .filters {
     display: flex;
     align-items: center;
@@ -15,8 +15,14 @@
   }
 }
 
-@media screen and (max-width: 991px) {
+@include media-breakpoint-down(lg) {
   .filters {
+    display: none;
+
+    &.expand {
+      display: block;
+    }
+
     > .filter {
       margin-bottom: map_get($spacers, 2);
 

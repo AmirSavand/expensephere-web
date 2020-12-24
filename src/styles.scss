@@ -109,7 +109,11 @@ a, button, .btn {
   }
 
   > div {
-    cursor: unset;
+    border-width: 0 !important;
+
+    &:not(.no-action) {
+      cursor: default;
+    }
 
     .edit {
       display: none;
@@ -264,6 +268,28 @@ a, button, .btn {
   > .card-header {
     display: flex;
     align-items: center;
+    background: $dark;
+    color: $light;
+    font-weight: $font-weight-bold;
+  }
+
+  > .card-body,
+  > .card-footer {
+    border: 1px solid $border-color;
+    border-top: none;
+    border-radius: 0 0 $border-radius $border-radius;
+    background: transparent;
+    position: relative;
+  }
+
+  > .card-body {
+    z-index: 2;
+  }
+
+  > .card-footer {
+    margin-top: -$border-radius;
+    z-index: 1;
+    padding-top: $card-spacer-y + $border-radius;
   }
 }
 
@@ -310,4 +336,9 @@ select.no-style {
   padding: 0;
   background: none;
   border: none;
+}
+
+.text-pre {
+  white-space: pre-line;
+  word-break: break-word;
 }

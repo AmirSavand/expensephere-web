@@ -3,7 +3,6 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
-import { Wallet } from '@shared/interfaces/wallet';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
