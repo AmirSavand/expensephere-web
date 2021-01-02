@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -13,6 +13,7 @@ import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
+import { InlineStorage } from '@shared/classes/inline-storage';
 import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
@@ -21,13 +22,13 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
+import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
+import { SelectComponent } from '@shared/modules/select/select.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { InlineStorage } from 'src/shared/classes/inline-storage';
-import { EventFormModalComponent } from 'src/shared/modules/event-form-modal/event-form-modal.component';
 
 @Component({
   selector: 'app-transaction-form-modal',
@@ -55,6 +56,8 @@ export class TransactionFormModalComponent implements OnInit {
   readonly faTrash: IconDefinition = faTrash;
 
   readonly walletInlineStorage = new InlineStorage('last-wallet');
+
+  @ViewChild('selectCategory') selectCategory: SelectComponent;
 
   @Input() transaction?: Transaction;
 
@@ -206,6 +209,7 @@ export class TransactionFormModalComponent implements OnInit {
       this.form.form.get('category').setValue(this.categoryGroups[ExpenseKind.TRANSFER][0].id);
     } else {
       this.form.form.get('category').reset();
+      this.selectCategory.select(this.selectCategory.selected);
     }
   }
 

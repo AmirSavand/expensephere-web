@@ -248,12 +248,12 @@ a, button, .btn {
       > .modal-content > * {
         > .modal-header {
           border-radius: 0 !important;
+          position: sticky;
+          top: 0;
+          z-index: 10;
         }
 
         > .modal-body {
-          height: calc(100vh - 140px);
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
         }
 
         > .modal-footer {

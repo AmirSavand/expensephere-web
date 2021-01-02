@@ -96,10 +96,10 @@
 </div>
 
 <!-- Content -->
-<div class="container mb-3">
+<div class="container pb-3">
 
   <!-- Transactions table -->
-  <div class="table-responsive my-3"
+  <div class="table-responsive mt-3"
        *ngIf="transactions && transactions.length && categoryDict && walletDict && listView">
     <table class="table table-borderless table-striped">
       <thead>
@@ -168,8 +168,8 @@
   </app-transaction-list>
 
   <!-- No data -->
-  <app-no-data classes="my-5" *ngIf="transactions && !transactions.length"></app-no-data>
+  <app-no-data classes="mt-5" *ngIf="transactions && !transactions.length"></app-no-data>
 
   <!-- Loading -->
-  <app-loading classes="my-5" *ngIf="!transactions || !wallets"></app-loading>
+  <app-loading classes="mt-5" *ngIf="!transactions || !wallets"></app-loading>
 </div>

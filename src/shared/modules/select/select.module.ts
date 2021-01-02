@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AutoFocusModule } from '@shared/modules/auto-focus/auto-focus.module';
 import { FilterModule } from '@shared/modules/filter/filter.module';
-import { AutoFocusModule } from 'src/shared/modules/auto-focus/auto-focus.module';
-import { NoDataModule } from 'src/shared/modules/no-data/no-data.module';
+import { NoDataModule } from '@shared/modules/no-data/no-data.module';
 
 import { SelectComponent } from './select.component';
 
