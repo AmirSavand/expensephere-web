@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AutoFocusModule } from '@shared/modules/auto-focus/auto-focus.module';
 import { FilterModule } from '@shared/modules/filter/filter.module';
 import { NoDataModule } from '@shared/modules/no-data/no-data.module';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { SelectComponent } from './select.component';
 
@@ -22,6 +23,7 @@ import { SelectComponent } from './select.component';
     FontAwesomeModule,
     AutoFocusModule,
     NoDataModule,
+    OverlayModule,
   ],
 })
 export class SelectModule {
