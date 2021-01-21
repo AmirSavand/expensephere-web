@@ -1,17 +1,16 @@
 <!-- Selected -->
 <div class="custom-select cursor-pointer"
-     (click)="edit = !edit" cdkOverlayOrigin  #trigger="cdkOverlayOrigin">
+     (click)="edit = !edit" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
   {{ selected ? selected.name : selectLabel }}
 </div>
 
 <!-- This template displays the overlay content and is connected to the select -->
-<ng-template
-  cdkConnectedOverlay
-  [cdkConnectedOverlayFlexibleDimensions]="true"
-  [cdkConnectedOverlayOrigin]="trigger"
-  [cdkConnectedOverlayOpen]="edit"
-  (overlayOutsideClick)="handleOverlayOutsideClick($event, trigger)"
->
+<ng-template cdkConnectedOverlay
+             [cdkConnectedOverlayFlexibleDimensions]="true"
+             [cdkConnectedOverlayOrigin]="trigger"
+             [cdkConnectedOverlayOpen]="edit"
+             (overlayOutsideClick)="handleOverlayOutsideClick($event, trigger)">
+
   <!-- Selection -->
   <div class="card shadow-sm border">
 

@@ -11,9 +11,14 @@ export class AutoFocusDirective implements OnInit {
     }
   }
 
+  get input(): HTMLInputElement {
+    return this.element.nativeElement;
+  }
+
   ngOnInit(): void {
-    const input: HTMLInputElement = this.element.nativeElement as HTMLInputElement;
-    input.focus();
-    input.select();
+    setTimeout((): void => {
+      this.input.focus();
+      this.input.select();
+    });
   }
 }
