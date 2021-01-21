@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Color } from '@shared/classes/color';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
+import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-select',
@@ -137,5 +138,18 @@ export class SelectComponent implements OnChanges {
     }
     this.edit = false;
     this.search = null;
+  }
+
+  /**
+   * Handle CDK overlay outside click and conditionally close it.
+   *
+   * @param event Click event.
+   * @param overlayOrigin Directive applied to an
+   *                      element to make it usable as an origin for an Overlay using a ConnectedPositionStrategy.
+   */
+  handleOverlayOutsideClick(event: MouseEvent, overlayOrigin: CdkOverlayOrigin): void {
+    if (!overlayOrigin.elementRef.nativeElement.isEqualNode(event.target as Node)) {
+      this.edit = false;
+    }
   }
 }

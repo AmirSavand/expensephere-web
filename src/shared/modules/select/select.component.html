@@ -1,52 +1,61 @@
 <!-- Selected -->
-<div class="custom-select cursor-pointer" (click)="edit = !edit">
+<div class="custom-select cursor-pointer"
+     (click)="edit = !edit" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
   {{ selected ? selected.name : selectLabel }}
 </div>
 
-<!-- Selection -->
-<div class="card shadow-sm border" *ngIf="edit">
+<!-- This template displays the overlay content and is connected to the select -->
+<ng-template cdkConnectedOverlay
+             [cdkConnectedOverlayFlexibleDimensions]="true"
+             [cdkConnectedOverlayOrigin]="trigger"
+             [cdkConnectedOverlayOpen]="edit"
+             (overlayOutsideClick)="handleOverlayOutsideClick($event, trigger)">
 
-  <!-- Header (mobile only) -->
-  <div class="px-3 pt-3 d-flex align-items-center d-lg-none border-0">
+  <!-- Selection -->
+  <div class="card shadow-sm border">
 
-    <!-- Title -->
-    <div class="font-weight-bold">{{ selectLabel }}</div>
+    <!-- Header (mobile only) -->
+    <div class="px-3 pt-3 d-flex align-items-center d-lg-none border-0">
 
-    <!-- Close button -->
-    <button class="btn btn-light ml-auto" (click)="edit = false">
-      <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
-    </button>
-  </div>
+      <!-- Title -->
+      <div class="font-weight-bold">{{ selectLabel }}</div>
 
-  <!-- Search -->
-  <div class="card-body border-0 p-3" [class.input-group]="showAdd">
-
-    <!-- Input -->
-    <input appAutoFocus type="text" placeholder="Search" [(ngModel)]="search" class="form-control">
-
-    <!-- Add button -->
-    <div class="input-group-append" *ngIf="showAdd">
-      <button class="btn btn-light text-secondary" type="button" (click)="add.emit()">
-        <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
+      <!-- Close button -->
+      <button class="btn btn-light ml-auto" (click)="edit = false">
+        <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
       </button>
     </div>
-  </div>
 
-  <!-- List -->
-  <div class="list-group list-group-flush">
+    <!-- Search -->
+    <div class="card-body border-0 p-3" [class.input-group]="showAdd">
 
-    <!-- Data -->
-    <div class="list-group-item list-group-item-action border-0 d-flex align-items-center cursor-pointer"
-         *ngFor="let item of items | filter:search:'name'"
-         (click)="select(item)">
-      <div class="item-icon" [ngStyle]="style(item.color)" *ngIf="item.icon">
-        <span class="icon-{{ item.icon }}"></span>
+      <!-- Input -->
+      <input appAutoFocus type="text" placeholder="Search" [(ngModel)]="search" class="form-control">
+
+      <!-- Add button -->
+      <div class="input-group-append" *ngIf="showAdd">
+        <button class="btn btn-light text-secondary" type="button" (click)="add.emit()">
+          <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
+        </button>
       </div>
-      <div [class.ml-3]="item.icon">{{ item.name }}</div>
-      <fa-icon *ngIf="selected === item" [icon]="faSelected" class="ml-auto text-primary"></fa-icon>
     </div>
 
-    <!-- No data -->
-    <app-no-data classes="my-3" *ngIf="!items || !items.length"></app-no-data>
+    <!-- List -->
+    <div class="list-group list-group-flush">
+
+      <!-- Data -->
+      <div class="list-group-item list-group-item-action border-0 d-flex align-items-center cursor-pointer"
+           *ngFor="let item of items | filter:search:'name'"
+           (click)="select(item)">
+        <div class="item-icon" [ngStyle]="style(item.color)" *ngIf="item.icon">
+          <span class="icon-{{ item.icon }}"></span>
+        </div>
+        <div [class.ml-3]="item.icon">{{ item.name }}</div>
+        <fa-icon *ngIf="selected === item" [icon]="faSelected" class="ml-auto text-primary"></fa-icon>
+      </div>
+
+      <!-- No data -->
+      <app-no-data classes="my-3" *ngIf="!items || !items.length"></app-no-data>
+    </div>
   </div>
-</div>
+</ng-template>
