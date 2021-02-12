@@ -8,6 +8,7 @@ import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
+import { startOfDay, parseISO, formatISO, getTime } from 'date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -95,8 +96,7 @@ export class TransactionListComponent implements OnInit, OnChanges {
           transaction.title = transaction.title.substring(0, 21) + '...';
         }
       }
-      const created: Date = new Date(transaction.time);
-      const date: string = new Date(created.getFullYear(), created.getMonth(), created.getDate()).toString();
+      const date: string = formatISO(startOfDay(parseISO(transaction.time)), { representation: 'date' });
       if (!this.transactionsGroups[date]) {
         this.transactionsGroups[date] = [];
       }
@@ -129,8 +129,8 @@ export class TransactionListComponent implements OnInit, OnChanges {
    * Order dict by date
    */
   orderByDate(a: KeyValue<string, Transaction[]>, b: KeyValue<string, Transaction[]>): number {
-    const aDate: number = new Date(a.key).getTime();
-    const bDate: number = new Date(b.key).getTime();
+    const aDate: number = getTime(parseISO(a.key));
+    const bDate: number = getTime(parseISO(b.key));
     if (aDate < bDate) {
       return 1;
     }

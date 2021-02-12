@@ -27,6 +27,7 @@ import { SelectComponent } from '@shared/modules/select/select.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
+import { format, parseISO, formatISO } from 'date-fns';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 
@@ -149,7 +150,7 @@ export class TransactionFormModalComponent implements OnInit {
       into: [null],
       event: [null],
       amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
-      time: [this.date.transform(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
+      time: [format(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
       archive: [false],
       exclude: [false],
       note: [''],
@@ -171,7 +172,9 @@ export class TransactionFormModalComponent implements OnInit {
   submit(): void {
     this.form.loading = true;
     const payload: Partial<Transaction> = Object.assign(this.form.form.value, {
-      time: new Date(this.form.form.value.time).toISOString(),
+      time: formatISO(parseISO(this.form.form.value.time), {
+        representation: 'complete',
+      }),
     });
     let method: Observable<Transaction> = this.api.transaction.create(payload);
     if (this.isEditing) {
