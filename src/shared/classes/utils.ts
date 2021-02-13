@@ -16,7 +16,7 @@ export class Utils {
   /**
    * API datetime format for HTML native datetime-local.
    */
-  static readonly HTML_DATETIME_FORMAT = 'yyyy-MM-ddTHH:mm';
+  static readonly HTML_DATETIME_FORMAT = 'yyyy-MM-dd\'T\'HH:mm';
 
   /**
    * API datetime format for filtering.
