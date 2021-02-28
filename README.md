@@ -76,6 +76,7 @@ Here are the app routes to follow:
 /dash/event/<id>
 
 /dash/transaction/list
+/dash/transaction/bulk-add
 /dash/transaction/<id>
 
 /dash/import

@@ -1,13 +1,18 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AbstractControl } from '@angular/forms';
 import { Color } from '@shared/classes/color';
 import { icons } from '@shared/constants/icons';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
+import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
+import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
+import { Observable } from 'rxjs';
+import { Crud } from 'src/shared/classes/crud';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -120,5 +125,90 @@ export class Utils {
         red: { color: '#ff5252' },
       },
     }).download(file);
+  }
+
+  /**
+   * Remove a child item from a list.
+   */
+  static removeChild<T>(list: T[], child: T): void {
+    list.splice(list.indexOf(child), 1);
+  }
+
+  /**
+   * Sets error for each invalid control in the forms.
+   *
+   * Used to validate and show errors for inputs before
+   * making an API call.
+   */
+  static validateControls(forms: ReactiveFormData[]): void {
+    for (const form of forms) {
+      form.error = {};
+      if (form.form.invalid) {
+        for (const name in form.form.controls) {
+          if (form.form.controls[name]) {
+            const control: AbstractControl = form.form.get(name);
+            if (control.invalid) {
+              form.error[name] = ['This input is not valid.'];
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Used to validate form inputs before making an API call.
+   *
+   * @returns Whether or not all forms pass validation.
+   */
+  static validateForms(forms: ReactiveFormData[], errorForm?: ReactiveFormData): boolean {
+    Utils.validateControls(forms);
+    for (const form of forms) {
+      if (form.form.invalid) {
+        errorForm = errorForm || form;
+        errorForm.error.detail = 'You must enter all required inputs.';
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Update a form value with given data. Supports dict values as well.
+   * Used to update form group from a retrieve API call data.
+   *
+   * @param form Reactive form data object to update.
+   * @param data Data to patch to the form (usually comes from API).
+   */
+  static patchForm<T = Record<string, any>>(form: ReactiveFormData, data: T): void {
+    for (const key in form.form.controls) {
+      if (form.form.controls[key] && data[key]) {
+        const control: AbstractControl = form.form.get(key);
+        if (data[key]?.id || data[key]?.code) {
+          control.patchValue(data[key].id || data[key].code);
+        } else {
+          control.patchValue(data[key]);
+        }
+      }
+    }
+  }
+
+  /**
+   * Handles error situation for given form data.
+   */
+  static handleError(form: ReactiveFormData, error: HttpErrorResponse): void {
+    form.loading = false;
+    form.error = error.error;
+    form.errorStatus = error.status;
+  }
+
+  /**
+   * @returns API observable of create or update of given form.
+   */
+  static getFormSubmission<T, LT>(api: Crud<T, LT>, form: ReactiveFormData): Observable<T> {
+    if (form.id) {
+      return api.update(form.id, form.form.value);
+    }
+    return api.create(form.form.value);
   }
 }

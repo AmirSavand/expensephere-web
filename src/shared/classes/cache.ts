@@ -1,5 +1,5 @@
 /**
- * Simple cache system to load initial data instantly from storage
+ * Simple cache system to load initial data instantly from storage.
  *
  * @example const myCache = new Cache<Party>({name: 'Party'});
  *          myCache.data = myData;
