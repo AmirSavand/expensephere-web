@@ -13,18 +13,18 @@
   <div class="container-fluid text-center py-2 border-bottom bg-light d-flex align-items-center">
 
     <!-- Prev month button -->
-    <button class="btn btn-link" (click)="viewDate.add(-1, 'month'); load()">
+    <button class="btn btn-link" (click)="loadPrevMonth()">
       <fa-icon [fixedWidth]="true" [icon]="faPrev"></fa-icon>
     </button>
 
     <!-- Current month and year -->
     <h4 class="my-0 mx-auto">
-      <span class="font-weight-bold">{{ viewDate.toDate() | date:'MMMM' }}</span>
-      <span class="small text-secondary">, {{ viewDate.toDate() | date:'yyyy' }}</span>
+      <span class="font-weight-bold">{{ viewDate | date:'MMMM' }}</span>
+      <span class="small text-secondary">, {{ viewDate | date:'yyyy' }}</span>
     </h4>
 
     <!-- Next month button -->
-    <button class="btn btn-link" (click)="viewDate.add(1, 'month'); load()">
+    <button class="btn btn-link" (click)="loadNextMonth()">
       <fa-icon [fixedWidth]="true" [icon]="faNext"></fa-icon>
     </button>
   </div>

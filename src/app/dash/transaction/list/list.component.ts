@@ -21,12 +21,11 @@ import { ActionData } from '@shared/modules/actions/shared/interfaces/action-dat
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
+import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
 import { ApiService } from '@shared/services/api.service';
-import * as moment from 'moment';
-import { Moment } from 'moment';
+import { isValid, addDays } from 'date-fns';
 import { Observable, forkJoin } from 'rxjs';
-import { TransactionFormModalComponent } from 'src/shared/modules/transaction-form-modal/transaction-form-modal.component';
 
 @Component({
   selector: 'app-list',
@@ -63,7 +62,7 @@ export class ListComponent implements OnInit {
    * and template for comparing the selected date to
    * show "This Month" and "Last Month".
    */
-  readonly now: Date = new Date();
+  readonly now = new Date();
 
   /**
    * List of available filters for user. We feed this
@@ -199,7 +198,7 @@ export class ListComponent implements OnInit {
    * If day filter is set in query params.
    * Can be set by calendar page on day click.
    */
-  viewingDay?: Moment;
+  viewingDay?: Date;
 
   /**
    * Selection for multi-select
@@ -250,8 +249,17 @@ export class ListComponent implements OnInit {
       /**
        * Check for day filter in query params.
        * Day is set when user clicks on a day in calendar page.
+       *
+       * Note that viewing date is the beginning of the day in
+       * local time so we need to send it as UTC to the API. We
+       * use {@see Utils.stringToLocalDate} to load this as a
+       * local date and we'll use {@see Utils.dateToUTCString}
+       * to send it as a UTC date.
        */
-      this.viewingDay = moment(new Date(data.day));
+      this.viewingDay = Utils.stringToLocalDate(data.day);
+      if (!isValid(this.viewingDay)) {
+        delete this.viewingDay;
+      }
       if (!isFirstTime) {
         this.load();
       }
@@ -367,12 +375,12 @@ export class ListComponent implements OnInit {
      * If there's no selected month, then remove the filters
      * and update storage about "All Time" being selected.
      */
-    if (this.viewingDay?.isValid()) {
-      this.filtersSelected.time_after = this.viewingDay.format(Utils.API_DATE_FORMAT_MOMENT);
-      this.filtersSelected.time_before = moment(this.viewingDay).add(1, 'day').format(Utils.API_DATE_FORMAT_MOMENT);
+    if (isValid(this.viewingDay)) {
+      this.filtersSelected.time_after = Utils.dateToUTCString(this.viewingDay);
+      this.filtersSelected.time_before = Utils.dateToUTCString(addDays(this.viewingDay, 1));
     } else if (this.monthSelected !== null) {
-      this.filtersSelected.time_after = this.date.transform(this.months[this.monthSelected], Utils.API_DATE_FORMAT);
-      this.filtersSelected.time_before = this.date.transform(this.getEndOfSelectedMonth(), Utils.API_DATE_FORMAT);
+      this.filtersSelected.time_after = Utils.dateToUTCString(this.months[this.monthSelected]);
+      this.filtersSelected.time_before = Utils.dateToUTCString(this.getEndOfSelectedMonth());
       localStorage.removeItem(ListComponent.STORAGE_KEY_ALL_TIME);
     } else {
       delete this.filtersSelected.time_after;

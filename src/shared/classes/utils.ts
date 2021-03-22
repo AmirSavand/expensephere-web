@@ -24,10 +24,10 @@ export class Utils {
   static readonly HTML_DATETIME_FORMAT = 'yyyy-MM-dd\'T\'HH:mm';
 
   /**
-   * API datetime format for filtering.
+   * Query params date format.
    */
-  static readonly API_DATE_FORMAT = 'yyyy-MM-dd';
-  static readonly API_DATE_FORMAT_MOMENT = 'yyyy-MM-DD';
+  static readonly QUERY_PARAMS_DATE_FORMAT = 'yyyy-MM-dd';
+  static readonly QUERY_PARAMS_DATE_FORMAT_NO_DAY = 'yyyy-MM';
 
   /**
    * List of all expense kinds with their label.
@@ -210,5 +210,21 @@ export class Utils {
       return api.update(form.id, form.form.value);
     }
     return api.create(form.form.value);
+  }
+
+  /**
+   * @returns UTC date string of given date.
+   * @example "2019-10-25 08:10:00"
+   */
+  static dateToUTCString(date: Date): string {
+    const isoDate = date.toISOString();
+    return `${isoDate.substr(0, 10)} ${isoDate.substr(11, 8)}`;
+  }
+
+  /**
+   * @returns Date of given date string in local time zone.
+   */
+  static stringToLocalDate(date: string, time: string = '00:00:00'): Date {
+    return new Date(`${date}T${time}`);
   }
 }

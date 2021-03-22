@@ -13,7 +13,7 @@
     <div class="d-flex align-items-center" *ngIf="!(selection && selection.selected)">
 
       <!-- Month selector and all time -->
-      <ng-container *ngIf="!viewingDay?.isValid()">
+      <ng-container *ngIf="!viewingDay">
 
         <!-- Month selector -->
         <div class="d-flex align-items-center" *ngIf="monthSelected !== null">
@@ -59,10 +59,10 @@
       </ng-container>
 
       <!-- Dat viewer -->
-      <ng-container *ngIf="viewingDay?.isValid()">
+      <ng-container *ngIf="viewingDay">
 
         <!-- Day -->
-        <div class="font-weight-bold">{{ viewingDay.toDate() | date }}</div>
+        <div class="font-weight-bold">{{ viewingDay | date }}</div>
 
         <!-- Clear -->
         <a routerLink="." class="btn btn-light ml-2">Clear Filter</a>
@@ -100,7 +100,7 @@
 
   <!-- Transactions table -->
   <div class="table-responsive mt-3"
-       *ngIf="transactions && transactions.length && categoryDict && walletDict && listView">
+       *ngIf="listView && transactions?.length && categoryDict && walletDict">
     <table class="table table-borderless table-striped">
       <thead>
       <tr>

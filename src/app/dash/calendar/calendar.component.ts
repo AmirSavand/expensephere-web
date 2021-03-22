@@ -1,6 +1,6 @@
 import { WeekDay } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
@@ -11,8 +11,7 @@ import { Transaction } from '@shared/interfaces/transaction';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { ApiService } from '@shared/services/api.service';
 import { CalendarEvent } from 'angular-calendar';
-import * as moment from 'moment';
-import { Moment } from 'moment';
+import { startOfMonth, endOfMonth, addDays, format, subMonths, addMonths } from 'date-fns';
 
 @Component({
   selector: 'app-calendar',
@@ -34,8 +33,16 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Current calendar view date.
+   *
+   * This value is synced to query params so
+   * do not update it directly use the method
+   * for it {@see setViewDate};
+   *
+   * Note that the time zone of this date object
+   * is local and we need to convert it to UTC
+   * when we're making the API call.
    */
-  viewDate: Moment = moment();
+  viewDate = new Date();
 
   /**
    * Dict of categories.
@@ -44,7 +51,22 @@ export class CalendarComponent implements OnInit {
 
   constructor(private api: ApiService,
               private router: Router,
+              private route: ActivatedRoute,
               private profileCurrency: ProfileCurrencyPipe) {
+  }
+
+  /**
+   * Updates the {@see viewDate}, the query params
+   * and loads the data again (handled in ngOnInit).
+   *
+   * @see viewDate
+   */
+  private setViewDate(date: Date): void {
+    this.viewDate = date;
+    this.router.navigate(['.'], {
+      queryParams: { date: format(this.viewDate, Utils.QUERY_PARAMS_DATE_FORMAT_NO_DAY) },
+      relativeTo: this.route,
+    });
   }
 
   ngOnInit(): void {
@@ -52,7 +74,15 @@ export class CalendarComponent implements OnInit {
       for (const category of data) {
         this.categories[category.id] = category;
       }
-      this.load();
+      /**
+       * Get and watch viewing date from query params.
+       */
+      this.route.queryParams.subscribe((params: Params): void => {
+        if (params.date) {
+          this.viewDate = new Date(params.date);
+        }
+        this.load();
+      });
     });
   }
 
@@ -61,8 +91,8 @@ export class CalendarComponent implements OnInit {
    */
   load(): void {
     this.api.transaction.list({
-      time_after: moment(this.viewDate).startOf('month').format(Utils.API_DATE_FORMAT_MOMENT),
-      time_before: moment(this.viewDate).endOf('month').add(1, 'day').format(Utils.API_DATE_FORMAT_MOMENT),
+      time_after: Utils.dateToUTCString(startOfMonth(this.viewDate)),
+      time_before: Utils.dateToUTCString(addDays(endOfMonth(this.viewDate), 1)),
     }).subscribe((data: Transaction[]): void => {
       this.events = [];
       for (const transaction of data) {
@@ -80,6 +110,14 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  loadPrevMonth(): void {
+    this.setViewDate(subMonths(this.viewDate, 1));
+  }
+
+  loadNextMonth(): void {
+    this.setViewDate(addMonths(this.viewDate, 1));
+  }
+
   /**
    * When clicked on an event, redirect to transaction page.
    */
@@ -93,7 +131,7 @@ export class CalendarComponent implements OnInit {
   onDayClick(data: { day: WeekDay | any }) {
     if (data.day.events.length) {
       this.router.navigate(['/dash', 'transaction', 'list'], {
-        queryParams: { day: moment(data.day.date).format(Utils.API_DATE_FORMAT_MOMENT) },
+        queryParams: { day: format(data.day.date, Utils.QUERY_PARAMS_DATE_FORMAT) },
       });
     }
   }

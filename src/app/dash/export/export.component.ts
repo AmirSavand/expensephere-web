@@ -15,6 +15,7 @@ import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { ApiService } from '@shared/services/api.service';
+import { addDays, isValid } from 'date-fns';
 import { ProfileService } from 'src/shared/services/profile.service';
 
 @Component({
@@ -110,12 +111,12 @@ export class ExportComponent implements OnInit {
   /**
    * From date (date range).
    */
-  from: Date;
+  from: string;
 
   /**
    * To date (date range).
    */
-  to: Date;
+  to: string;
 
   /**
    * Disable action button
@@ -136,8 +137,8 @@ export class ExportComponent implements OnInit {
     /**
      * Add/remove start date.
      */
-    if (this.from) {
-      this.filtersSelected.time_after = this.date.transform(this.from, Utils.API_DATE_FORMAT);
+    if (isValid(new Date(this.from))) {
+      this.filtersSelected.time_after = Utils.dateToUTCString(Utils.stringToLocalDate(this.from));
     } else {
       delete this.filtersSelected.time_after;
     }
@@ -145,10 +146,8 @@ export class ExportComponent implements OnInit {
      * Add/remove end date.
      * End date must be a day after the selected for BE support.
      */
-    if (this.to) {
-      const to = new Date(this.to);
-      to.setDate(to.getDate() + 1);
-      this.filtersSelected.time_before = this.date.transform(to, Utils.API_DATE_FORMAT);
+    if (isValid(new Date(this.to))) {
+      this.filtersSelected.time_before = Utils.dateToUTCString(addDays(Utils.stringToLocalDate(this.to), 1));
     } else {
       delete this.filtersSelected.time_before;
     }
