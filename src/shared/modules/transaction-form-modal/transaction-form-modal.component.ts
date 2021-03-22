@@ -58,8 +58,6 @@ export class TransactionFormModalComponent implements OnInit {
 
   readonly walletInlineStorage = new InlineStorage('last-wallet');
 
-  @ViewChild('selectCategory') selectCategory: SelectComponent;
-
   @Input() transaction?: Transaction;
 
   expenseKindSelected: ExpenseKind = this.expenseKind.EXPENSE;
@@ -212,7 +210,6 @@ export class TransactionFormModalComponent implements OnInit {
       this.form.form.get('category').setValue(this.categoryGroups[ExpenseKind.TRANSFER][0].id);
     } else {
       this.form.form.get('category').reset();
-      this.selectCategory.select(this.selectCategory.selected);
     }
   }
 
