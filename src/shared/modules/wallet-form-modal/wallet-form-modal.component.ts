@@ -18,7 +18,7 @@ import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { Category } from 'src/shared/interfaces/category';
+import { Category } from '@shared/interfaces/category';
 
 @Component({
   selector: 'app-wallet-form-modal',

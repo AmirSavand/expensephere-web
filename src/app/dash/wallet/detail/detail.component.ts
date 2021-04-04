@@ -8,7 +8,7 @@ import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { WalletFormModalComponent } from 'src/shared/modules/wallet-form-modal/wallet-form-modal.component';
+import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 
 @Component({
   selector: 'app-detail',

@@ -12,7 +12,8 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable } from 'rxjs';
-import { Crud } from 'src/shared/classes/crud';
+import { Crud } from '@shared/classes/crud';
+import { Payload } from '@shared/types/payload';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -22,6 +23,7 @@ export class Utils {
    * API datetime format for HTML native datetime-local.
    */
   static readonly HTML_DATETIME_FORMAT = 'yyyy-MM-dd\'T\'HH:mm';
+  static readonly HTML_DATE_FORMAT = 'yyyy-MM-dd';
 
   /**
    * Query params date format.
@@ -179,10 +181,18 @@ export class Utils {
    *
    * @param form Reactive form data object to update.
    * @param data Data to patch to the form (usually comes from API).
+   *
+   * @version v21.3.3
    */
   static patchForm<T = Record<string, any>>(form: ReactiveFormData, data: T): void {
     for (const key in form.form.controls) {
-      if (form.form.controls[key] && data[key]) {
+      /**
+       * Check if the key exist in both object, the data
+       * value is set and also handle the case where the
+       * data value is the number 0 since it is considered
+       * "false" for JavaScript.
+       */
+      if (form.form.controls[key] && (data[key] || data[key] === 0)) {
         const control: AbstractControl = form.form.get(key);
         if (data[key]?.id || data[key]?.code) {
           control.patchValue(data[key].id || data[key].code);
@@ -204,12 +214,17 @@ export class Utils {
 
   /**
    * @returns API observable of create or update of given form.
+   * @version v2020-3-20
    */
-  static getFormSubmission<T, LT>(api: Crud<T, LT>, form: ReactiveFormData): Observable<T> {
+  static getFormSubmission<T, LT>(
+    curd: Crud<T, LT>,
+    form: ReactiveFormData,
+    payload: Payload<T> = form.form.value,
+  ): Observable<T> {
     if (form.id) {
-      return api.update(form.id, form.form.value);
+      return curd.update(form.id, payload);
     }
-    return api.create(form.form.value);
+    return curd.create(payload);
   }
 
   /**

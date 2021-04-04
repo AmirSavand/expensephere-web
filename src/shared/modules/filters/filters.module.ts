@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModelDebounceModule } from '@shared/modules/model-debounce/model-debounce.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { SelectModule } from 'src/shared/modules/select/select.module';
+import { SelectModule } from '@shared/modules/select/select.module';
 import { FiltersComponent } from './filters.component';
 
 

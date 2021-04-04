@@ -45,6 +45,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
       },
       {
+        path: 'invoice',
+        loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'overview',

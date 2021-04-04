@@ -1,0 +1,7 @@
+<div [classList]="classes" *ngIf="form.error.detail || form.error.non_field_errors || form.errorStatus">
+  <ng-container *ngIf="!form.error.detail && !form.error.non_field_errors && form.errorStatus === 400">
+    Something went wrong. Try again later.
+  </ng-container>
+  <ng-container *ngIf="form.error.detail">{{ form.error.detail }}</ng-container>
+  <ng-container *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[ 0 ] }}</ng-container>
+</div>

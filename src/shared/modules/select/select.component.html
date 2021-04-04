@@ -34,7 +34,7 @@
 
       <!-- Add button -->
       <div class="input-group-append" *ngIf="showAdd">
-        <button class="btn btn-light text-secondary" type="button" (click)="add.emit()">
+        <button class="btn btn-light text-secondary" type="button" (click)="edit = false; add.emit()">
           <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
         </button>
       </div>

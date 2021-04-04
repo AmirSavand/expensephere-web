@@ -21,7 +21,7 @@
       <!-- Budget -->
       <hr>
       <p class="font-weight-bold">Budget</p>
-      <p>{{ event.budget | profileCurrency }}</p>
+      <p>{{ event.budget ? (event.budget | profileCurrency) : 'Not set' }}</p>
 
       <!-- Transactions (count) -->
       <hr>
@@ -37,10 +37,15 @@
       <hr>
       <p class="font-weight-bold">Date</p>
       <p>
-        <span>From </span>
-        <abbr [title]="event.start | date:'short'">{{ event.start | date }} </abbr>
-        <span>to </span>
-        <abbr [title]="event.end | date:'short'">{{ event.end | date }}</abbr>
+        <ng-container *ngIf="!event.start && !event.end">Not set</ng-container>
+        <ng-container *ngIf="event.start">
+          <span>From </span>
+          <abbr [title]="event.start | date:'short'">{{ event.start | date }} </abbr>
+        </ng-container>
+        <ng-container *ngIf="event.end">
+          <span>to </span>
+          <abbr [title]="event.end | date:'short'">{{ event.end | date }}</abbr>
+        </ng-container>
         <span>.</span>
       </p>
 

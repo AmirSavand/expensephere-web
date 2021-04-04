@@ -13,7 +13,9 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle';
 import { faCloudDownloadAlt } from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
+import { faFileInvoice } from '@fortawesome/free-solid-svg-icons/faFileInvoice';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons/faRetweet';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
@@ -45,6 +47,7 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly style = Color.style;
   readonly home = environment.home;
 
+  readonly faAdd: IconDefinition = faPlus;
   readonly faView: IconDefinition = faChevronDown;
   readonly faSidebarToggle: IconDefinition = faBars;
   readonly faBack: IconDefinition = faChevronUp;
@@ -52,6 +55,7 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly faSettings: IconDefinition = faCog;
   readonly faWallets: IconDefinition = faLayerGroup;
   readonly faExport: IconDefinition = faCloudDownloadAlt;
+  readonly faInvoice: IconDefinition = faFileInvoice;
 
   readonly faDashboard: IconDefinition = faTachometerAlt;
   readonly faTransactions: IconDefinition = faRetweet;

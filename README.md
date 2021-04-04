@@ -49,7 +49,8 @@ Here's what the project is build with:
 Here are the app routes to follow:
 
 ```
-/public/transactions/<id>
+/public/transaction/<id>
+/public/invoice/<id>
 
 /user/sign-in
 /user/sign-up
@@ -79,6 +80,10 @@ Here are the app routes to follow:
 /dash/transaction/bulk-add
 /dash/transaction/<id>
 
+/dash/invoice/list
+/dash/invoice/add
+/dash/invoice/<id>
+
 /dash/import
 /dash/export
 ```
@@ -92,3 +97,9 @@ Here are some modals that can be used instead of a page for that route:
 - `CategoryFormModal` is used for creating and editing a category.
 - `EventFormModal` is used for creating and editing an event.
 - `TransactionFormModal` is used for creating and editing a transaction.
+
+
+### Invoice Templates
+
+Read about invoice templates, development and rules in
+its [README file](src/app/public/invoice/shared/components/README.md).

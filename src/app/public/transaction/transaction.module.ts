@@ -5,21 +5,21 @@ import { LoadingModule } from '@shared/modules/loading/loading.module';
 import { NotFoundModule } from '@shared/modules/not-found/not-found.module';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { TransactionsRoutingModule } from './transactions-routing.module';
-import { TransactionsComponent } from './transactions.component';
+import { TransactionRoutingModule } from './transaction-routing.module';
+import { TransactionComponent } from './transaction.component';
 
 @NgModule({
   declarations: [
-    TransactionsComponent,
+    TransactionComponent,
   ],
   imports: [
     CommonModule,
-    TransactionsRoutingModule,
+    TransactionRoutingModule,
     LoadingModule,
     NotFoundModule,
     FontAwesomeModule,
     TooltipModule.forRoot(),
   ],
 })
-export class TransactionsModule {
+export class TransactionModule {
 }

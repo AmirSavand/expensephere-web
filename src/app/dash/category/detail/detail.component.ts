@@ -5,8 +5,8 @@ import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
-import { CategoryFormModalComponent } from 'src/shared/modules/category-form-modal/category-form-modal.component';
-import { WalletFormModalComponent } from 'src/shared/modules/wallet-form-modal/wallet-form-modal.component';
+import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
+import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 
 @Component({
   selector: 'app-component',

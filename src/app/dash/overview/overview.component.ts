@@ -14,9 +14,9 @@ import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
-import { CategoryFormModalComponent } from 'src/shared/modules/category-form-modal/category-form-modal.component';
-import { EventFormModalComponent } from 'src/shared/modules/event-form-modal/event-form-modal.component';
-import { TransactionFormModalComponent } from 'src/shared/modules/transaction-form-modal/transaction-form-modal.component';
+import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
+import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
+import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 
 @Component({
   selector: 'app-overview',

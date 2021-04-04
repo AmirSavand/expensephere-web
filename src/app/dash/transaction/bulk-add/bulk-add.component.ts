@@ -8,16 +8,16 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { format, formatISO, parseISO } from 'date-fns';
-import { Utils } from 'src/shared/classes/utils';
-import { ExpenseKind } from 'src/shared/enums/kind';
-import { Category } from 'src/shared/interfaces/category';
-import { Event } from 'src/shared/interfaces/event';
-import { Profile } from 'src/shared/interfaces/profile';
-import { ReactiveFormData } from 'src/shared/interfaces/reactive-form-data';
-import { Transaction } from 'src/shared/interfaces/transaction';
-import { Wallet } from 'src/shared/interfaces/wallet';
-import { ApiService } from 'src/shared/services/api.service';
-import { ProfileService } from 'src/shared/services/profile.service';
+import { Utils } from '@shared/classes/utils';
+import { ExpenseKind } from '@shared/enums/kind';
+import { Category } from '@shared/interfaces/category';
+import { Event } from '@shared/interfaces/event';
+import { Profile } from '@shared/interfaces/profile';
+import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
+import { Transaction } from '@shared/interfaces/transaction';
+import { Wallet } from '@shared/interfaces/wallet';
+import { ApiService } from '@shared/services/api.service';
+import { ProfileService } from '@shared/services/profile.service';
 
 @Component({
   selector: 'app-bulk-add',

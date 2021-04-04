@@ -1,6 +1,10 @@
 @import "src/variables";
 
-@include media-breakpoint-up(md) {
+@include media-breakpoint-up(lg) {
+  .header {
+    display: none;
+  }
+
   .filters {
     display: flex;
     align-items: center;
@@ -15,7 +19,12 @@
   }
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
+  .header {
+    display: flex;
+    align-items: center;
+  }
+
   .filters {
     display: none;
 

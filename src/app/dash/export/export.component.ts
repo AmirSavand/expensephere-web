@@ -16,7 +16,7 @@ import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { ApiService } from '@shared/services/api.service';
 import { addDays, isValid } from 'date-fns';
-import { ProfileService } from 'src/shared/services/profile.service';
+import { ProfileService } from '@shared/services/profile.service';
 
 @Component({
   selector: 'app-export',
@@ -253,7 +253,7 @@ export class ExportComponent implements OnInit {
           note,
           profile: ProfileService.profile.value.id,
         }).subscribe((data: TransactionsPage): void => {
-          this.router.navigate(['/public/transactions', data.id]);
+          this.router.navigate(['/public/transaction', data.id]);
         }, (): void => {
           alert('Failed to create public transactions page.');
         });

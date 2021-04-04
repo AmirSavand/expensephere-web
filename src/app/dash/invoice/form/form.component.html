@@ -1,0 +1,367 @@
+<div class="bg-light">
+  <div class="container py-3">
+
+    <!-- Header -->
+    <div class="font-weight-bold d-flex align-items-center mb-3" *ngIf="!notFound">
+
+      <!-- Page title -->
+      <a class="text-secondary" routerLink="../list">Invoices</a>
+      <fa-icon [fixedWidth]="true" [icon]="faBreadcrumbArrow" class="small mx-1 text-secondary"></fa-icon>
+      <span [class.text-monospace]="form.id">{{ form.id ? form.data?.invoice_id : 'Add' }}</span>
+
+      <!-- Badges -->
+      <div class="ml-auto" *ngIf="form.data">
+        <div class="ml-auto badge badge-secondary badge-pill px-3 mr-2">
+          Subtotal {{ form.data.subtotal | profileCurrency:currency }}
+        </div>
+        <div class="ml-auto badge badge-info badge-pill px-3">
+          Total {{ form.data.total | profileCurrency:currency }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <app-loading *ngIf="!notFound && form.id && !form.data"></app-loading>
+
+    <!-- Not found -->
+    <app-not-found name="Invoice" *ngIf="notFound"></app-not-found>
+
+    <!-- Form -->
+    <form *ngIf="!notFound" [formGroup]="form.form" (ngSubmit)="submit()">
+
+      <!-- Row 1 -->
+      <div class="row">
+
+        <!-- Information -->
+        <div class="col-xl-4 mb-3">
+          <div class="card h-100">
+            <div class="card-header">Information</div>
+            <div class="card-body pb-0">
+
+              <!-- Invoice ID -->
+              <div class="form-group">
+                <label for="invoice_id">Invoice ID</label>
+                <input id="invoice_id"
+                       class="form-control"
+                       formControlName="invoice_id"
+                       placeholder="Invoice ID"
+                       [class.is-invalid]="form.error.invoice_id">
+                <div class="invalid-tooltip" *ngIf="form.error.invoice_id">{{ form.error.invoice_id[ 0 ] }}</div>
+              </div>
+
+              <!-- Company -->
+              <div class="form-group">
+                <label for="company">Company</label>
+                <textarea id="company"
+                          rows="3"
+                          class="form-control"
+                          formControlName="company"
+                          placeholder="Company"
+                          [class.is-invalid]="form.error.company"></textarea>
+                <div class="invalid-tooltip" *ngIf="form.error.company">{{ form.error.company[ 0 ] }}</div>
+              </div>
+
+              <!-- Client -->
+              <div class="form-group">
+                <label for="client">Client</label>
+                <textarea id="client"
+                          rows="3"
+                          class="form-control"
+                          formControlName="client"
+                          placeholder="Client"
+                          [class.is-invalid]="form.error.client"></textarea>
+                <div class="invalid-tooltip" *ngIf="form.error.client">{{ form.error.client[ 0 ] }}</div>
+              </div>
+
+              <!-- Note -->
+              <div class="form-group" *ngIf="options.get('note').value">
+                <label for="note">Note</label>
+                <textarea id="note"
+                          rows="3"
+                          class="form-control"
+                          formControlName="note"
+                          placeholder="Write a note"
+                          [class.is-invalid]="form.error.note"></textarea>
+                <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[ 0 ] }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="col-xl-4 mb-3">
+          <div class="card h-100">
+            <div class="card-header">Payment</div>
+            <div class="card-body pb-0">
+
+              <!-- Date -->
+              <div class="form-group" *ngIf="options.get('date').value">
+                <label for="date">Date</label>
+                <input type="date"
+                       id="date"
+                       class="form-control"
+                       formControlName="date"
+                       [class.is-invalid]="form.error.date">
+                <div class="form-error" *ngIf="form.error.date">{{ form.error.date[ 0 ] }}</div>
+              </div>
+
+              <!-- Due date -->
+              <div class="form-group" *ngIf="options.get('due_date').value">
+                <label for="due_date">Due Date</label>
+                <input type="date"
+                       id="due_date"
+                       class="form-control"
+                       formControlName="due_date"
+                       [class.is-invalid]="form.error.due_date">
+                <div class="form-error" *ngIf="form.error.due_date">{{ form.error.due_date[ 0 ] }}</div>
+              </div>
+
+              <!-- Discount and discount type -->
+              <div class="form-group" *ngIf="options.get('discount').value">
+                <label for="discount">Discount</label>
+                <div class="input-group">
+                  <input type="number"
+                         id="discount"
+                         class="form-control"
+                         formControlName="discount"
+                         placeholder="Enter discount"
+                         [step]="1"
+                         [min]="0"
+                         [max]="100"
+                         [class.is-invalid]="form.error.discount">
+                  <select id="discount_flat" formControlName="discount_flat" class="form-control">
+                    <option [ngValue]="true">Flat</option>
+                    <option [ngValue]="false">Percentage</option>
+                  </select>
+                  <div class="invalid-tooltip" *ngIf="form.error.discount">{{ form.error.discount[ 0 ] }}</div>
+                </div>
+              </div>
+
+              <!-- Tax -->
+              <div class="form-group" *ngIf="options.get('tax').value">
+                <label for="tax">Tax</label>
+                <input type="number"
+                       id="tax"
+                       class="form-control"
+                       formControlName="tax"
+                       placeholder="Enter tax (percentage)"
+                       [step]="1"
+                       [min]="0"
+                       [max]="100"
+                       [class.is-invalid]="form.error.tax">
+                <div class="invalid-tooltip" *ngIf="form.error.tax">{{ form.error.tax[ 0 ] }}</div>
+              </div>
+
+              <!-- Currency -->
+              <div class="form-group">
+                <label for="currency">Currency</label>
+                <app-select id="currency"
+                            selectLabel="Select currency"
+                            *ngIf="currencies"
+                            [items]="currencies"
+                            [selectedId]="form.form.get('currency').value"
+                            (choose)="form.form.get('currency').setValue($event.id)">
+                </app-select>
+                <div class="invalid-tooltip" *ngIf="form.error.currency">{{ form.error.currency[ 0 ] }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <div class="col-xl-4 mb-3 order-first order-xl-last">
+          <div class="card h-100">
+            <div class="card-header">Options</div>
+            <div class="card-body pb-0">
+
+              <!-- Template -->
+              <div class="form-group border-bottom pb-3 mb-3">
+                <label for="currency" class="d-flex align-items-center">
+                  <span>Template</span>
+                  <small class="ml-auto">More templates coming soon 😉</small>
+                </label>
+                <app-select id="template"
+                            selectLabel="Select template"
+                            [items]="templates"
+                            [selectedId]="form.form.get('template').value"
+                            (choose)="form.form.get('template').setValue($event.id)">
+                </app-select>
+                <div class="invalid-tooltip" *ngIf="form.error.template">{{ form.error.template[0] }}</div>
+              </div>
+
+              <!-- UI Options -->
+              <div class="pb-3 mb-3 border-bottom" [formGroup]="options">
+
+                <!-- Title -->
+                <p>Click to toggle invoice options.</p>
+
+                <!-- Discount -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input"
+                         id="option-discount" formControlName="discount">
+                  <label class="custom-control-label" for="option-discount">Discount</label>
+                </div>
+
+                <!-- Tax -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input"
+                         id="option-tax" formControlName="tax">
+                  <label class="custom-control-label" for="option-tax">Tax</label>
+                </div>
+
+                <!-- Payment status (is_paid) -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input"
+                         id="option-is_paid" formControlName="is_paid">
+                  <label class="custom-control-label" for="option-is_paid">Payment Status</label>
+                </div>
+
+                <!-- Date -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input"
+                         id="option-date" formControlName="date">
+                  <label class="custom-control-label" for="option-date">Date</label>
+                </div>
+
+                <!-- Due date -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input"
+                         id="option-due_date" formControlName="due_date">
+                  <label class="custom-control-label" for="option-due_date">Due Date</label>
+                </div>
+
+                <!-- Note -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input"
+                         id="option-note" formControlName="note">
+                  <label class="custom-control-label" for="option-note">Note</label>
+                </div>
+
+                <!-- Items label -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input"
+                         id="option-items_label" formControlName="items_label">
+                  <label class="custom-control-label" for="option-items_label">Items Label</label>
+                </div>
+              </div>
+
+              <!-- Public -->
+              <div class="form-group">
+                <label for="is_published">Publish</label>
+                <div class="custom-control custom-switch position-static">
+                  <input class="custom-control-input" type="checkbox" formControlName="is_published" id="is_published">
+                  <label class="custom-control-label" for="is_published"></label>
+                  <span class="text-secondary">Allow access to direct link</span>
+                </div>
+              </div>
+
+              <!-- Paid -->
+              <div class="form-group" *ngIf="options.get('is_paid').value">
+                <label for="is_published">Paid</label>
+                <div class="custom-control custom-switch position-static">
+                  <input class="custom-control-input" type="checkbox" formControlName="is_paid" id="is_paid">
+                  <label class="custom-control-label" for="is_paid"></label>
+                  <span class="text-secondary">Is invoice paid by client</span>
+                </div>
+              </div>
+
+              <!-- Items label -->
+              <div class="form-group" *ngIf="options.get('items_label').value">
+                <label for="items_label">Items Label</label>
+                <input id="items_label"
+                       class="form-control"
+                       formControlName="items_label"
+                       placeholder="Label for the items/products/services"
+                       [class.is-invalid]="form.error.items_label">
+                <div class="invalid-tooltip" *ngIf="form.error.items_label">{{ form.error.items_label[ 0 ] }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Items -->
+      <div class="card mb-3">
+        <div class="card-header">{{ form.form.get('items_label').value || "Items" }}</div>
+        <div class="card-body">
+
+          <!-- Invoice items table -->
+          <table class="table table-borderless" *ngIf="itemForms.length">
+            <thead>
+            <tr>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th class="text-right">Total</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Invoice item row -->
+            <tr *ngFor="let item of itemForms; let index = index" [formGroup]="item.form">
+              <!-- Description -->
+              <td>
+                <input type="text"
+                       class="form-control"
+                       formControlName="description"
+                       [class.is-invalid]="item.error.description">
+                <div class="invalid-tooltip" *ngIf="item.error.description">{{ item.error.description[ 0 ] }}</div>
+              </td>
+              <!-- Quantity -->
+              <td>
+                <input type="number" min="0"
+                       class="form-control"
+                       formControlName="quantity"
+                       [class.is-invalid]="item.error.quantity">
+                <div class="invalid-tooltip" *ngIf="item.error.quantity">{{ item.error.quantity[ 0 ] }}</div>
+              </td>
+              <!-- Price -->
+              <td>
+                <input type="number" min="0"
+                       class="form-control"
+                       formControlName="price"
+                       [class.is-invalid]="item.error.price">
+                <div class="invalid-tooltip" *ngIf="item.error.price">{{ item.error.price[ 0 ] }}</div>
+              </td>
+              <!-- Total -->
+              <td class="text-right">
+                <div class="pt-2 pl-2 pb-0 pr-0">{{ (item.data.amount || 0) | profileCurrency:currency }}</div>
+              </td>
+              <!-- Delete -->
+              <td class="text-right">
+                <a class="pt-2 pl-2 pb-0 pr-0 d-block text-danger" (click)="removeItem(item)">
+                  <fa-icon [fixedWidth]="true" [icon]="faDelete"></fa-icon>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!-- No invoice items message -->
+          <p class="text-muted">There are no invoice items. Click to add new ones 🚀</p>
+
+          <!-- Add a new invoice item form to the list -->
+          <button type="button" class="btn btn-success" (click)="addItemForm()">
+            <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon> Add a new item
+          </button>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <app-general-error [form]="form"></app-general-error>
+
+      <!-- Buttons -->
+      <div class="d-flex align-items-center mt-3">
+        <button type="button" class="btn btn-link text-danger" (click)="remove()" *ngIf="form.id">
+          <fa-icon [icon]="faDelete" [fixedWidth]="true"></fa-icon>
+        </button>
+        <a class="btn btn-link ml-auto" routerLink="../list">
+          {{ form.id ? 'Cancel' : 'Go Back' }}
+        </a>
+        <button class="btn btn-primary btn-form ml-2" (click)="submit()" [disabled]="form.loading">
+          {{ form.id ? 'Update' : 'Add' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -21,7 +21,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let form of forms" [formGroup]="form.form" [title]="form.form.value | json">
+      <tr *ngFor="let form of forms" [formGroup]="form.form">
         <!-- Success -->
         <td [colSpan]="6" *ngIf="form.success">
           <div class="alert alert-success m-0 py-2 d-flex align-items-center justify-content-between">

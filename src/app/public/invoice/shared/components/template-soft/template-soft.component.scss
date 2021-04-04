@@ -1,0 +1,50 @@
+@import "src/variables";
+
+$company-client-combined-space: 100px;
+
+.wrapper {
+  box-shadow: 0 0 0 10000px $light;
+  background: $light;
+  position: relative;
+  z-index: -1;
+
+  p,
+  th {
+    color: rgba($dark, 0.5);
+    font-weight: $font-weight-bold;
+  }
+
+  .container {
+    max-width: map_get($grid-breakpoints, md);
+  }
+
+  td {
+    color: $dark;
+    font-weight: $font-weight-bold;
+  }
+
+  th, td {
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+.company {
+  padding-bottom: $company-client-combined-space;
+  margin-bottom: -$company-client-combined-space;
+  background: $primary;
+}
+
+.client {
+  > div {
+    border-radius: 2rem;
+
+    p {
+      font-size: $font-size-lg;
+    }
+  }
+}

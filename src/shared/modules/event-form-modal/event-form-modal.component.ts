@@ -22,7 +22,6 @@ import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { Wallet } from 'src/shared/interfaces/wallet';
 
 @Component({
   selector: 'app-event-form-modal',
@@ -110,8 +109,8 @@ export class EventFormModalComponent implements OnInit {
     this.form.form = this.formBuilder.group({
       profile: [ProfileService.profile.value.id],
       name: [null, Validators.required],
-      start: [null, Validators.required],
-      end: [null, Validators.required],
+      start: [],
+      end: [],
       color: [null, Validators.required],
       icon: [null, Validators.required],
       budget: [null],
@@ -141,10 +140,17 @@ export class EventFormModalComponent implements OnInit {
    */
   submit(): void {
     this.form.loading = true;
-    const payload: Partial<Event> = Object.assign(this.form.form.value, {
-      start: new Date(this.form.form.value.start).toISOString(),
-      end: new Date(this.form.form.value.end).toISOString(),
-    });
+    const payload: Partial<Event> = Object.assign(this.form.form.value, { start: null, end: null });
+    if (this.form.form.value.start) {
+      Object.assign(payload, {
+        start: new Date(this.form.form.value.start).toISOString(),
+      });
+    }
+    if (this.form.form.value.end) {
+      Object.assign(payload, {
+        end: new Date(this.form.form.value.end).toISOString(),
+      });
+    }
     let method: Observable<Event> = this.api.event.create(payload);
     if (this.isEditing) {
       method = this.api.event.update(this.event.id, payload);

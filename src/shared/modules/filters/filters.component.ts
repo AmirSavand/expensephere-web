@@ -32,7 +32,9 @@ export class FiltersComponent implements OnInit {
   onUpdate(): void {
     const params: GetParams = {};
     for (const filter of this.filters) {
-      params[filter.key] = String(filter.value);
+      if (filter.value) {
+        params[filter.key] = String(filter.value);
+      }
     }
     this.update.emit(params);
   }

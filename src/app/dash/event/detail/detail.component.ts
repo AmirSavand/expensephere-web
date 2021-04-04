@@ -5,7 +5,7 @@ import { Event } from '@shared/interfaces/event';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { ApiService } from '@shared/services/api.service';
-import { EventFormModalComponent } from 'src/shared/modules/event-form-modal/event-form-modal.component';
+import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 
 @Component({
   selector: 'app-detail',

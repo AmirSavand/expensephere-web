@@ -1,0 +1,14 @@
+<!-- Error or loading -->
+<div class="container py-5" *ngIf="error || !invoice">
+
+  <!-- Error -->
+  <app-not-found *ngIf="error" name="Invoice"></app-not-found>
+
+  <!-- Loading -->
+  <app-loading *ngIf="!error && !invoice"></app-loading>
+</div>
+
+<!-- Invoice - Load the right template -->
+<ng-container *ngIf="invoice" [ngSwitch]="invoice.template">
+  <app-template-soft *ngSwitchDefault [invoice]="invoice"></app-template-soft>
+</ng-container>
