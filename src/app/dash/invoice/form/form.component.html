@@ -338,7 +338,7 @@
           </table>
 
           <!-- No invoice items message -->
-          <p class="text-muted">There are no invoice items. Click to add new ones 🚀</p>
+          <p class="text-muted" *ngIf="!itemForms.length">There are no invoice items. Click to add new ones 🚀</p>
 
           <!-- Add a new invoice item form to the list -->
           <button type="button" class="btn btn-success" (click)="addItemForm()">
