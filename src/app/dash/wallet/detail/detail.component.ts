@@ -9,6 +9,7 @@ import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
+import { GetParams } from '@shared/types/get-params';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -20,35 +21,29 @@ export class DetailComponent implements OnInit {
 
   readonly faEdit: IconDefinition = faPen;
 
-  /**
-   * Wallet data
-   */
+  // Filters used for loading transactions.
+  readonly transactionsFilter: GetParams = {};
+
+  // Wallet data
   wallet: Wallet;
 
-  /**
-   * Wallet list
-   */
+  // Wallet list
   wallets: Wallet[];
 
-  /**
-   * Categories for transaction
-   */
+  // Categories for transaction
   categories: Category[];
 
-  /**
-   * Wallet transactions
-   */
+  // Wallet transactions
   transactions: Transaction[];
 
-  /**
-   * Wallet ID from param
-   */
+  // Wallet ID from param
   walletId: string;
 
-  /**
-   * Page error
-   */
+  // Page error flag.
   error = false;
+
+  // API response data for transactions.
+  transactionsApiResponse: ApiResponse<Transaction>;
 
   constructor(private route: ActivatedRoute,
               private modalService: BsModalService) {
@@ -72,13 +67,11 @@ export class DetailComponent implements OnInit {
        * If wallet ID changes
        */
       if (this.walletId !== params.get('id')) {
-        /**
-         * Get wallet ID from params
-         */
+        // Get wallet ID from params
         this.walletId = params.get('id');
-        /**
-         * Load wallet data
-         */
+        // Update transaction filters.
+        this.transactionsFilter.wallet = this.walletId;
+        // Load wallet data
         this.loadWallet();
         /**
          * Load wallet list
@@ -91,12 +84,7 @@ export class DetailComponent implements OnInit {
          */
         Api.category.list().subscribe((data: Category[]): void => {
           this.categories = data;
-          /**
-           * Load transactions of this wallet
-           */
-          Api.transaction.list({ wallet: this.walletId }).subscribe((transaction: ApiResponse<Transaction>): void => {
-            this.transactions = transaction.results;
-          });
+          this.loadTransactions();
         });
       }
     });
@@ -111,6 +99,16 @@ export class DetailComponent implements OnInit {
     }, (): void => {
       delete this.wallet;
       this.error = true;
+    });
+  }
+
+  /**
+   * Load transactions of this wallet.
+   */
+  loadTransactions(): void {
+    Api.transaction.list(this.transactionsFilter).subscribe((data: ApiResponse<Transaction>): void => {
+      this.transactions = data.results;
+      this.transactionsApiResponse = data;
     });
   }
 

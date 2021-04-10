@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-center {{ wrapperClass }}" *ngIf="show">
+  <pagination [(ngModel)]="currentPage"
+              [totalItems]="totalItems"
+              [itemsPerPage]="itemsPerPage"
+              [boundaryLinks]="boundaryLinks"
+              [disabled]="disabled"
+              [maxSize]="maxSize"
+              [rotate]="rotate"
+              (pageChanged)="beforePageChanged($event)"
+              (numPages)="numPages.emit($event)"
+              [nextText]="nextText || '&#8658;'"
+              [previousText]="previousText || '&#8656;'">
+  </pagination>
+</div>

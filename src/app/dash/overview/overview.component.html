@@ -138,6 +138,15 @@
                                 [wallets]="wallets"
                                 columnClass="col-xl-12 col-lg-6">
           </app-transaction-list>
+
+          <!-- Pagination -->
+          <app-pager wrapperClass="mt-4 mb-0"
+                     *ngIf="transactions?.length"
+                     [disabled]="!transactions || !wallets"
+                     [apiResponse]="transactionsApiResponse"
+                     [paramsToCombine]="transactionsFilter"
+                     (pageChanged)="loadTransactions()">
+          </app-pager>
         </div>
       </div>
     </div>

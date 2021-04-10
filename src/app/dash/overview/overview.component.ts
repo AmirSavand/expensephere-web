@@ -3,21 +3,22 @@ import { Router } from '@angular/router';
 import { AppComponent } from '@app/app.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
+import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
+import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
+import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
-import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
-import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
-import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
-import { Api } from '@shared/classes/api';
 import { ApiResponse } from 'src/shared/interfaces/api-response';
+import { GetParams } from 'src/shared/types/get-params';
 
 @Component({
   selector: 'app-overview',
@@ -26,9 +27,7 @@ import { ApiResponse } from 'src/shared/interfaces/api-response';
 })
 export class OverviewComponent implements OnInit, OnDestroy {
 
-  /**
-   * Maximum number of categories to show in category chart
-   */
+  // Maximum number of categories to show in category chart.
   private static MAX_CATEGORIES_IN_CHART = 7;
 
   private subscription: Subscription;
@@ -36,50 +35,38 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   readonly faLink: IconDefinition = faArrowRight;
 
-  /**
-   * Current profile.
-   */
+  // Current profile..
   private profile: Profile;
 
-  /**
-   * Wallet list
-   */
+  // Filters used for loading transactions.
+  readonly transactionsFilter: GetParams = {};
+
+  // Wallet list.
   wallets: Wallet[];
 
-  /**
-   * Category list
-   */
+  // Category list.
   categories: Category[];
 
-  /**
-   * Category list to show to user
-   */
+  // Category list to show to user.
   categoriesToShow: Category[];
 
-  /**
-   * Transaction list
-   */
+  // Transaction list.
   transactions: Transaction[];
 
-  /**
-   * Expense/income chart data
-   */
+  // Expense/income chart data.
   balanceChartResults: { name: string; value: number }[];
 
-  /**
-   * Top expense categories chart data
-   */
+  // Top expense categories chart data.
   categoryChartResults: { name: string; value: number }[];
 
-  /**
-   * Balance chart colors
-   */
+  // Balance chart colors.
   balanceChartColors: { name: string; value: string }[] = [];
 
-  /**
-   * Category chart colors
-   */
+  // Category chart colors.
   categoryChartColors: { name: string; value: string }[] = [];
+
+  // API response data for transactions.
+  transactionsApiResponse: ApiResponse<Transaction>;
 
   constructor(private router: Router,
               private modalService: BsModalService) {
@@ -226,15 +213,20 @@ export class OverviewComponent implements OnInit, OnDestroy {
           }
         });
         this.subscriptions.push(subscription);
-        /**
-         * Load transactions list
-         */
-        subscription = Api.transaction.list().subscribe((data: ApiResponse<Transaction>): void => {
-          this.transactions = data.results;
-        });
-        this.subscriptions.push(subscription);
+        // Load transactions list.
+        this.subscriptions.push(this.loadTransactions());
       });
       this.subscriptions.push(subscription);
     }
+  }
+
+  /**
+   * Load transactions of this category.
+   */
+  loadTransactions(): Subscription {
+    return Api.transaction.list(this.transactionsFilter).subscribe((data: ApiResponse<Transaction>): void => {
+      this.transactions = data.results;
+      this.transactionsApiResponse = data;
+    });
   }
 }

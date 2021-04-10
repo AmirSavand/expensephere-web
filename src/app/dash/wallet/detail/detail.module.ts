@@ -6,6 +6,7 @@ import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-
 import { TransactionListModule } from '@shared/modules/transaction-list/transaction-list.module';
 import { WalletListModule } from '@shared/modules/wallet-list/wallet-list.module';
 import { NotFoundModule } from '@shared/modules/not-found/not-found.module';
+import { PagerModule } from 'src/shared/modules/pager/pager.module';
 
 import { DetailRoutingModule } from './detail-routing.module';
 import { DetailComponent } from './detail.component';
@@ -24,6 +25,7 @@ import { DetailComponent } from './detail.component';
     NoDataModule,
     LoadingModule,
     NotFoundModule,
+    PagerModule,
   ],
 })
 export class DetailModule {

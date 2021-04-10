@@ -7,6 +7,7 @@ import { Event } from '@shared/interfaces/event';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
+import { GetParams } from '@shared/types/get-params';
 
 @Component({
   selector: 'app-detail',
@@ -15,35 +16,29 @@ import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-
 })
 export class DetailComponent implements OnInit {
 
-  /**
-   * Event ID from param
-   */
+  // Filters used for loading transactions.
+  readonly transactionsFilter: GetParams = {};
+
+  // Event ID from param.
   eventId: string;
 
-  /**
-   * Event data
-   */
+  // Event data.
   event: Event;
 
-  /**
-   * Wallet list
-   */
+  // Wallet list.
   wallets: Wallet[];
 
-  /**
-   * Category list
-   */
+  // Category list.
   categories: Category[];
 
-  /**
-   * event transactions
-   */
+  // event transactions.
   transactions: Transaction[];
 
-  /**
-   * Page error
-   */
+  // Page error flag.
   error = false;
+
+  // API response data for transactions.
+  transactionsApiResponse: ApiResponse<Transaction>;
 
   constructor(private route: ActivatedRoute) {
   }
@@ -66,13 +61,11 @@ export class DetailComponent implements OnInit {
        * If event ID changes
        */
       if (this.eventId !== params.get('id')) {
-        /**
-         * Get event ID from params
-         */
+        // Get event ID from params.
         this.eventId = params.get('id');
-        /**
-         * Load event data
-         */
+        // Update transaction filters.
+        this.transactionsFilter.event = this.eventId;
+        // Load event data.
         this.load();
         /**
          * Load wallet list
@@ -86,12 +79,7 @@ export class DetailComponent implements OnInit {
         Api.category.list().subscribe((data: Category[]): void => {
           this.categories = data;
         });
-        /**
-         * Load transactions
-         */
-        Api.transaction.list({ event: this.eventId }).subscribe((data: ApiResponse<Transaction>): void => {
-          this.transactions = data.results;
-        });
+        this.loadTransactions();
       }
     });
   }
@@ -105,6 +93,16 @@ export class DetailComponent implements OnInit {
     }, (): void => {
       delete this.event;
       this.error = true;
+    });
+  }
+
+  /**
+   * Load transactions of this category.
+   */
+  loadTransactions(): void {
+    Api.transaction.list(this.transactionsFilter).subscribe((data: ApiResponse<Transaction>): void => {
+      this.transactions = data.results;
+      this.transactionsApiResponse = data;
     });
   }
 }

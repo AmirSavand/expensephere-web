@@ -223,6 +223,9 @@ export class ListComponent implements OnInit {
    */
   loadingAction = false;
 
+  // Transactions API response for <app-pager>.
+  apiResponse: ApiResponse<Transaction>;
+
   constructor(private date: DatePipe,
               private route: ActivatedRoute,
               private profileCurrency: ProfileCurrencyPipe,
@@ -392,6 +395,8 @@ export class ListComponent implements OnInit {
      */
     Api.transaction.list(this.filtersSelected).subscribe((data: ApiResponse<Transaction>): void => {
       this.transactions = data.results;
+      // Store API response data.
+      this.apiResponse = data;
       // Setup selection instance.
       this.selection = new Selection(this.transactions);
       // Detect changes for transaction.title that is set in <app-transaction-list>.
