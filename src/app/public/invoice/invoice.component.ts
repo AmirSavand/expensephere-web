@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
+import { Api } from '@shared/classes/api';
 import { Invoice } from '@shared/interfaces/invoice';
-import { ApiService } from '@shared/services/api.service';
 
 @Component({
   selector: 'app-invoice',
@@ -14,8 +14,7 @@ export class InvoiceComponent implements OnInit {
 
   error: boolean;
 
-  constructor(private api: ApiService,
-              private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -24,7 +23,7 @@ export class InvoiceComponent implements OnInit {
      */
     this.route.params.subscribe((params: Params): void => {
       if (params.id) {
-        this.api.invoice.retrieve(params.id).subscribe((data: Invoice): void => {
+        Api.invoice.retrieve(params.id).subscribe((data: Invoice): void => {
           this.invoice = data;
         }, (): void => {
           this.error = true;

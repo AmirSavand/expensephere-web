@@ -9,7 +9,7 @@ import { GetParams } from '@shared/interfaces/get-params';
 import { InvoiceMin } from '@shared/interfaces/invoice-min';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
-import { ApiService } from '@shared/services/api.service';
+import { Api } from 'src/shared/classes/api';
 
 @Component({
   selector: 'app-list',
@@ -57,15 +57,12 @@ export class ListComponent implements OnInit {
   // Params to filter data.
   params: GetParams;
 
-  constructor(private api: ApiService) {
-  }
-
   ngOnInit(): void {
     this.load();
   }
 
   load(): void {
-    this.api.invoice.list(this.params).subscribe((data: ApiResponse<InvoiceMin>): void => {
+    Api.invoice.list(this.params).subscribe((data: ApiResponse<InvoiceMin>): void => {
       this.invoices = data.results;
     });
   }

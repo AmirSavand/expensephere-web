@@ -9,16 +9,15 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Wallet } from '@shared/interfaces/wallet';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { Category } from '@shared/interfaces/category';
 
 @Component({
   selector: 'app-wallet-form-modal',
@@ -85,7 +84,6 @@ export class WalletFormModalComponent implements OnInit {
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
               private profileService: ProfileService,
-              private api: ApiService,
               private router: Router) {
   }
 
@@ -139,9 +137,9 @@ export class WalletFormModalComponent implements OnInit {
     if (!(Math.abs(payload.initial_balance) > 0)) {
       delete payload.initial_balance;
     }
-    let method: Observable<Wallet> = this.api.wallet.create(payload);
+    let method: Observable<Wallet> = Api.wallet.create(payload);
     if (this.isEditing) {
-      method = this.api.wallet.update(this.wallet.id, payload);
+      method = Api.wallet.update(this.wallet.id, payload);
     }
     method.subscribe((data: Wallet): void => {
       if (this.redirect && !this.isEditing) {
@@ -172,7 +170,7 @@ export class WalletFormModalComponent implements OnInit {
     if (!confirm('Are you sure you want to delete this wallet?')) {
       return;
     }
-    this.api.wallet.delete(wallet.id).subscribe((): void => {
+    Api.wallet.delete(wallet.id).subscribe((): void => {
       this.modal.hide();
       WalletFormModalComponent.CHANGE.emit();
     });

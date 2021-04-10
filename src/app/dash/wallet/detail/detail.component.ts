@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { Api } from '@shared/classes/api';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-detail',
@@ -49,8 +50,7 @@ export class DetailComponent implements OnInit {
    */
   error = false;
 
-  constructor(private api: ApiService,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private modalService: BsModalService) {
   }
 
@@ -83,19 +83,19 @@ export class DetailComponent implements OnInit {
         /**
          * Load wallet list
          */
-        this.api.wallet.list().subscribe((data: Wallet[]): void => {
+        Api.wallet.list().subscribe((data: Wallet[]): void => {
           this.wallets = data;
         });
         /**
          * Load categories for transaction
          */
-        this.api.category.list().subscribe((data: Category[]): void => {
+        Api.category.list().subscribe((data: Category[]): void => {
           this.categories = data;
           /**
            * Load transactions of this wallet
            */
-          this.api.transaction.list({ wallet: this.walletId }).subscribe((transaction: Transaction[]): void => {
-            this.transactions = transaction;
+          Api.transaction.list({ wallet: this.walletId }).subscribe((transaction: ApiResponse<Transaction>): void => {
+            this.transactions = transaction.results;
           });
         });
       }
@@ -106,7 +106,7 @@ export class DetailComponent implements OnInit {
    * Load wallet data
    */
   loadWallet(): void {
-    this.api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
+    Api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
       this.wallet = data;
     }, (): void => {
       delete this.wallet;

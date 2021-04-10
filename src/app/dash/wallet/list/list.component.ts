@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Api } from '@shared/classes/api';
 import { GetParams } from '@shared/interfaces/get-params';
 import { Wallet } from '@shared/interfaces/wallet';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-list',
@@ -39,10 +38,6 @@ export class ListComponent implements OnInit {
    */
   params: GetParams;
 
-  constructor(private api: ApiService,
-              private modalService: BsModalService) {
-  }
-
   ngOnInit(): void {
     WalletFormModalComponent.CHANGE.subscribe((): void => {
       this.load();
@@ -53,15 +48,8 @@ export class ListComponent implements OnInit {
    * Load wallets with filters
    */
   load(): void {
-    this.api.wallet.list(this.params).subscribe((data: Wallet[]): void => {
+    Api.wallet.list(this.params).subscribe((data: Wallet[]): void => {
       this.wallets = data;
     });
-  }
-
-  /**
-   * Open up wallet form modal
-   */
-  addWallet(): void {
-    this.modalService.show(WalletFormModalComponent, { class: 'modal-sm' });
   }
 }

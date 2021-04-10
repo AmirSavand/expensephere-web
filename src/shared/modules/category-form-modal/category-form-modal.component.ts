@@ -8,13 +8,13 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
@@ -82,7 +82,6 @@ export class CategoryFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
-              private api: ApiService,
               private router: Router) {
   }
 
@@ -119,9 +118,9 @@ export class CategoryFormModalComponent implements OnInit {
   submit(): void {
     this.form.loading = true;
     const payload: Partial<Category> = this.form.form.value;
-    let method: Observable<Category> = this.api.category.create(payload);
+    let method: Observable<Category> = Api.category.create(payload);
     if (this.isEditing) {
-      method = this.api.category.update(this.category.id, payload);
+      method = Api.category.update(this.category.id, payload);
     }
     method.subscribe((data: Category): void => {
       if (this.redirect && !this.isEditing) {
@@ -148,7 +147,7 @@ export class CategoryFormModalComponent implements OnInit {
     if (!confirm('Are you sure you want to delete this category?')) {
       return;
     }
-    this.api.category.delete(category.id).subscribe((): void => {
+    Api.category.delete(category.id).subscribe((): void => {
       this.modal.hide();
       CategoryFormModalComponent.CHANGE.emit();
     });

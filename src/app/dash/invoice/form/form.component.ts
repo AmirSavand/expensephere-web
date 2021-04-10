@@ -7,6 +7,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 import { ApiResponse } from '@shared/interfaces/api-response';
@@ -17,7 +18,6 @@ import { InvoiceTemplate } from '@shared/interfaces/invoice-template';
 import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { Payload } from '@shared/types/payload';
 import { format } from 'date-fns';
@@ -97,7 +97,6 @@ export class FormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private api: ApiService,
               private router: Router) {
   }
 
@@ -118,7 +117,7 @@ export class FormComponent implements OnInit {
         /**
          * We're in edit route so let's load the invoice from API.
          */
-        this.api.invoice.retrieve(this.form.id).subscribe((data: Invoice): void => {
+        Api.invoice.retrieve(this.form.id).subscribe((data: Invoice): void => {
           /**
            * Loop through options and toggle them based on invoice
            * keys and values (if an invoice item is set, enable its option).
@@ -132,7 +131,7 @@ export class FormComponent implements OnInit {
            * Now that we've loaded the invoice, let's load all the invoice
            * items as well. Create a for for each of them.
            */
-          this.api.invoiceItem.list({ invoice: data.id }).subscribe((items: ApiResponse<InvoiceItem>): void => {
+          Api.invoiceItem.list({ invoice: data.id }).subscribe((items: ApiResponse<InvoiceItem>): void => {
             items.results.forEach((item: InvoiceItem): void => {
               this.addItemForm(item);
             });
@@ -145,7 +144,7 @@ export class FormComponent implements OnInit {
     /**
      * Get list of currencies.
      */
-    this.api.currency.list().subscribe((data: Currency[]): void => {
+    Api.currency.list().subscribe((data: Currency[]): void => {
       this.currencies = [];
       for (const currency of data) {
         this.currencies.push({
@@ -198,7 +197,7 @@ export class FormComponent implements OnInit {
    */
   remove(): void {
     if (confirm('Are you sure you want to delete this?')) {
-      this.api.invoice.delete(this.form.id).subscribe((): void => {
+      Api.invoice.delete(this.form.id).subscribe((): void => {
         this.router.navigate(['../list'], { relativeTo: this.route });
       });
     }
@@ -210,7 +209,7 @@ export class FormComponent implements OnInit {
   removeItem(item: ReactiveFormData): void {
     if (item.id) {
       if (confirm('Are you sure you want to delete this item?')) {
-        this.api.invoiceItem.delete(item.id).subscribe();
+        Api.invoiceItem.delete(item.id).subscribe();
       } else {
         return;
       }
@@ -239,7 +238,7 @@ export class FormComponent implements OnInit {
     /**
      * Submit the invoice form and all the invoice item forms.
      */
-    Utils.getFormSubmission(this.api.invoice, this.form).subscribe((data: Invoice): void => {
+    Utils.getFormSubmission(Api.invoice, this.form).subscribe((data: Invoice): void => {
       this.form.loading = false;
       this.form.error = {};
       this.form.id = data.id;
@@ -250,7 +249,7 @@ export class FormComponent implements OnInit {
        */
       this.itemForms.forEach((itemForm: ReactiveFormData<InvoiceItem>, index: number): void => {
         Utils.getFormSubmission(
-          this.api.invoiceItem,
+          Api.invoiceItem,
           itemForm,
           Object.assign(itemForm.form.value, { invoice: data.id, order: index }),
         ).subscribe((itemData: InvoiceItem): void => {

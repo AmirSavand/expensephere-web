@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
+import { Api } from '@shared/classes/api';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { User } from '@shared/interfaces/user';
-import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
 
 @Component({
@@ -29,8 +29,7 @@ export class SettingsComponent implements OnInit {
     error: {},
   };
 
-  constructor(private formBuilder: FormBuilder,
-              private api: ApiService) {
+  constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -54,7 +53,7 @@ export class SettingsComponent implements OnInit {
    */
   submit(): void {
     this.form.loading = true;
-    this.api.account.update(this.user.username, this.form.form.value).subscribe((data: Account): void => {
+    Api.account.update(this.user.username, this.form.form.value).subscribe((data: Account): void => {
       this.form.loading = false;
       AuthService.setUser(Object.assign(this.user, { account: data }));
     }, (error: HttpErrorResponse): void => {

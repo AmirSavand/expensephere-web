@@ -7,7 +7,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
-import { format, formatISO, parseISO } from 'date-fns';
+import { Api } from '@shared/classes/api';
 import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
@@ -16,8 +16,8 @@ import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
+import { format, formatISO, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-bulk-add',
@@ -51,8 +51,7 @@ export class BulkAddComponent implements OnInit {
 
   currency: string;
 
-  constructor(private api: ApiService,
-              private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -65,7 +64,7 @@ export class BulkAddComponent implements OnInit {
     /**
      * Load wallets for selection.
      */
-    this.api.wallet.list().subscribe((data: Wallet[]): void => {
+    Api.wallet.list().subscribe((data: Wallet[]): void => {
       this.wallets = data;
       // Set default values.
       this.forms.forEach((form: ReactiveFormData): void => form.form.patchValue({ wallet: this.wallets[0].id }));
@@ -73,7 +72,7 @@ export class BulkAddComponent implements OnInit {
     /**
      * Load categories for selection.
      */
-    this.api.category.list().subscribe((data: Category[]): void => {
+    Api.category.list().subscribe((data: Category[]): void => {
       this.categories = data;
       /**
        * Group categories by their kind.
@@ -91,7 +90,7 @@ export class BulkAddComponent implements OnInit {
     /**
      * Load events for selection.
      */
-    this.api.event.list().subscribe((data: Event[]): void => {
+    Api.event.list().subscribe((data: Event[]): void => {
       this.events = data;
     });
   }
@@ -151,9 +150,9 @@ export class BulkAddComponent implements OnInit {
       }
       form.loading = true;
       const payload = form.form.value;
-      payload.time = formatISO(parseISO(payload.time), { representation: 'complete' }),
-        delete payload.kind;
-      this.api.transaction.create(payload).subscribe((data: Transaction): void => {
+      payload.time = formatISO(parseISO(payload.time), { representation: 'complete' });
+      delete payload.kind;
+      Api.transaction.create(payload).subscribe((data: Transaction): void => {
         form.id = data.id;
         form.success = true;
         form.loading = false;

@@ -10,13 +10,14 @@ import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
+import { Api } from '@shared/classes/api';
+import { ApiResponse } from 'src/shared/interfaces/api-response';
 
 @Component({
   selector: 'app-overview',
@@ -80,8 +81,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
    */
   categoryChartColors: { name: string; value: string }[] = [];
 
-  constructor(private api: ApiService,
-              private router: Router,
+  constructor(private router: Router,
               private modalService: BsModalService) {
   }
 
@@ -163,7 +163,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
       /**
        * Load wallet list
        */
-      subscription = this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
+      subscription = Api.wallet.list().subscribe((wallets: Wallet[]): void => {
         /**
          * There are no wallets for this profile,
          * open the wallet form modal so user creates one.
@@ -192,7 +192,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
          * Load category list
          * We need all categories for transactions list and for creating the chart.
          */
-        subscription = this.api.category.list().subscribe((data: Category[]): void => {
+        subscription = Api.category.list().subscribe((data: Category[]): void => {
           /**
            * Store categories and sort them by transactions count
            */
@@ -229,8 +229,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
         /**
          * Load transactions list
          */
-        subscription = this.api.transaction.list().subscribe((data: Transaction[]): void => {
-          this.transactions = data;
+        subscription = Api.transaction.list().subscribe((data: ApiResponse<Transaction>): void => {
+          this.transactions = data.results;
         });
         this.subscriptions.push(subscription);
       });

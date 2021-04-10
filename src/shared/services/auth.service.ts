@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Api } from '@shared/classes/api';
 import { AuthResponse } from '@shared/interfaces/auth-response';
 import { AuthToken } from '@shared/interfaces/auth-token';
 import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -167,7 +167,7 @@ export class AuthService {
    * @return String observable which can be subscribed to.
    */
   signIn(payload: { username: string, password: string }): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${ApiService.BASE}auth/`, payload).pipe(
+    return this.http.post<AuthResponse>(`${Api.base}auth/`, payload).pipe(
       map((data: AuthResponse): AuthResponse => {
         // Store token, user and profile
         AuthService.token = data.token;
@@ -181,7 +181,7 @@ export class AuthService {
    * Sign user up
    */
   signUp(payload: { email: string, username: string, password: string }): Observable<void> {
-    return this.http.post(ApiService.BASE + 'user/', payload).pipe(map((): void => {
+    return this.http.post(Api.base + 'user/', payload).pipe(map((): void => {
       this.signIn(payload).subscribe();
     }));
   }
@@ -194,7 +194,7 @@ export class AuthService {
     new_password1: string,
     new_password2: string,
   }): Observable<{ detail: string }> {
-    return this.http.post<{ detail: string }>(`${ApiService.BASE}auth/password/change/`, payload);
+    return this.http.post<{ detail: string }>(`${Api.base}auth/password/change/`, payload);
   }
 
   /**
@@ -203,7 +203,7 @@ export class AuthService {
    * @param email User email
    */
   resetPassword(email: string): Observable<{ detail: string }> {
-    return this.http.post<{ detail: string }>(`${ApiService.BASE}auth/password/reset/`, { email });
+    return this.http.post<{ detail: string }>(`${Api.base}auth/password/reset/`, { email });
   }
 
   /**
@@ -217,6 +217,6 @@ export class AuthService {
     uid: string,
     token: string,
   }): Observable<{ detail: string }> {
-    return this.http.post<{ detail: string }>(`${ApiService.BASE}auth/password/reset/confirm/`, payload);
+    return this.http.post<{ detail: string }>(`${Api.base}auth/password/reset/confirm/`, payload);
   }
 }

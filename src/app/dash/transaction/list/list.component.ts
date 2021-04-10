@@ -7,10 +7,12 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faThLarge } from '@fortawesome/free-solid-svg-icons/faThLarge';
+import { Api } from '@shared/classes/api';
 import { Selection } from '@shared/classes/selection';
 import { Utils } from '@shared/classes/utils';
 import { ExportFile } from '@shared/enums/export-file';
 import { ExpenseKind } from '@shared/enums/kind';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
@@ -23,7 +25,6 @@ import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
-import { ApiService } from '@shared/services/api.service';
 import { isValid, addDays } from 'date-fns';
 import { Observable, forkJoin } from 'rxjs';
 
@@ -222,8 +223,7 @@ export class ListComponent implements OnInit {
    */
   loadingAction = false;
 
-  constructor(private api: ApiService,
-              private date: DatePipe,
+  constructor(private date: DatePipe,
               private route: ActivatedRoute,
               private profileCurrency: ProfileCurrencyPipe,
               private changeDetectorRef: ChangeDetectorRef) {
@@ -290,7 +290,7 @@ export class ListComponent implements OnInit {
     /**
      * Load wallets
      */
-    this.api.wallet.list().subscribe((data: Wallet[]): void => {
+    Api.wallet.list().subscribe((data: Wallet[]): void => {
       this.wallets = data;
       // Set transaction list to filter
       for (const wallet of data) {
@@ -306,7 +306,7 @@ export class ListComponent implements OnInit {
     /**
      * Load categories
      */
-    this.api.category.list().subscribe((data: Category[]): void => {
+    Api.category.list().subscribe((data: Category[]): void => {
       this.categories = data;
       // Set category list to filter
       for (const category of data) {
@@ -322,7 +322,7 @@ export class ListComponent implements OnInit {
     /**
      * Load events
      */
-    this.api.event.list().subscribe((data: Event[]): void => {
+    Api.event.list().subscribe((data: Event[]): void => {
       // Set event list to filter
       for (const event of data) {
         if (!this.filters[4].values) {
@@ -390,15 +390,11 @@ export class ListComponent implements OnInit {
     /**
      * Finally, get list of transactions based on filters and selected month.
      */
-    this.api.transaction.list(this.filtersSelected).subscribe((data: Transaction[]): void => {
-      this.transactions = data;
-      /**
-       * Setup selection instance
-       */
+    Api.transaction.list(this.filtersSelected).subscribe((data: ApiResponse<Transaction>): void => {
+      this.transactions = data.results;
+      // Setup selection instance.
       this.selection = new Selection(this.transactions);
-      /**
-       * Detect changes for transaction.title that is set in <app-transaction-list>
-       */
+      // Detect changes for transaction.title that is set in <app-transaction-list>.
       this.changeDetectorRef.detectChanges();
     });
   }
@@ -430,13 +426,13 @@ export class ListComponent implements OnInit {
     switch (data.action.label) {
       case 'Exclude': {
         call((transaction: Transaction): Observable<Transaction> => {
-          return this.api.transaction.update(transaction.id, { exclude: data.value });
+          return Api.transaction.update(transaction.id, { exclude: data.value });
         });
         break;
       }
       case 'Archive': {
         call((transaction: Transaction): Observable<Transaction> => {
-          return this.api.transaction.update(transaction.id, { archive: data.value });
+          return Api.transaction.update(transaction.id, { archive: data.value });
         });
         break;
       }
@@ -461,7 +457,7 @@ export class ListComponent implements OnInit {
           case ExportFile.XLSX:
           case ExportFile.CSV: {
             this.loadingAction = true;
-            this.api.transaction.download(data.value as ExportFile, file, params).subscribe((): void => {
+            Api.transaction.download(data.value as ExportFile, file, params).subscribe((): void => {
               this.loadingAction = false;
             });
             return;
@@ -477,7 +473,7 @@ export class ListComponent implements OnInit {
           return;
         }
         call((transaction: Transaction): Observable<void> => {
-          return this.api.transaction.delete(transaction.id);
+          return Api.transaction.delete(transaction.id);
         });
         break;
       }

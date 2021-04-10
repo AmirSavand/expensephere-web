@@ -13,12 +13,12 @@ import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faPiggyBank } from '@fortawesome/free-solid-svg-icons/faPiggyBank';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 import { Event } from '@shared/interfaces/event';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
@@ -93,7 +93,6 @@ export class EventFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
-              private api: ApiService,
               private date: DatePipe,
               private router: Router) {
   }
@@ -151,9 +150,9 @@ export class EventFormModalComponent implements OnInit {
         end: new Date(this.form.form.value.end).toISOString(),
       });
     }
-    let method: Observable<Event> = this.api.event.create(payload);
+    let method: Observable<Event> = Api.event.create(payload);
     if (this.isEditing) {
-      method = this.api.event.update(this.event.id, payload);
+      method = Api.event.update(this.event.id, payload);
     }
     method.subscribe((data: Event): void => {
       if (this.redirect && !this.isEditing) {
@@ -180,7 +179,7 @@ export class EventFormModalComponent implements OnInit {
     if (!confirm('Are you sure you want to delete this event?')) {
       return;
     }
-    this.api.event.delete(event.id).subscribe((): void => {
+    Api.event.delete(event.id).subscribe((): void => {
       this.modal.hide();
       EventFormModalComponent.CHANGE.emit();
     });

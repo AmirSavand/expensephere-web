@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Api } from '@shared/classes/api';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
-import { ApiService } from '@shared/services/api.service';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 
 @Component({
@@ -44,8 +45,7 @@ export class DetailComponent implements OnInit {
    */
   error = false;
 
-  constructor(private api: ApiService,
-              private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -77,20 +77,20 @@ export class DetailComponent implements OnInit {
         /**
          * Load wallet list
          */
-        this.api.wallet.list().subscribe((data: Wallet[]): void => {
+        Api.wallet.list().subscribe((data: Wallet[]): void => {
           this.wallets = data;
         });
         /**
          * Load category list
          */
-        this.api.category.list().subscribe((data: Category[]): void => {
+        Api.category.list().subscribe((data: Category[]): void => {
           this.categories = data;
         });
         /**
          * Load transactions
          */
-        this.api.transaction.list({ event: this.eventId }).subscribe((data: Transaction[]): void => {
-          this.transactions = data;
+        Api.transaction.list({ event: this.eventId }).subscribe((data: ApiResponse<Transaction>): void => {
+          this.transactions = data.results;
         });
       }
     });
@@ -100,7 +100,7 @@ export class DetailComponent implements OnInit {
    * Load event data
    */
   load(): void {
-    this.api.event.retrieve(this.eventId).subscribe((data: Event): void => {
+    Api.event.retrieve(this.eventId).subscribe((data: Event): void => {
       this.event = data;
     }, (): void => {
       delete this.event;

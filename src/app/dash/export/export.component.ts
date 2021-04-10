@@ -14,9 +14,10 @@ import { Wallet } from '@shared/interfaces/wallet';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
-import { ApiService } from '@shared/services/api.service';
-import { addDays, isValid } from 'date-fns';
 import { ProfileService } from '@shared/services/profile.service';
+import { addDays, isValid } from 'date-fns';
+import { Api } from '@shared/classes/api';
+import { ApiResponse } from 'src/shared/interfaces/api-response';
 
 @Component({
   selector: 'app-export',
@@ -25,6 +26,8 @@ import { ProfileService } from '@shared/services/profile.service';
   providers: [DatePipe, ProfileCurrencyPipe],
 })
 export class ExportComponent implements OnInit {
+
+  private static readonly TRANSACTIONS_LIMIT = 5000;
 
   /**
    * Last transaction list pulled for counting.
@@ -100,8 +103,13 @@ export class ExportComponent implements OnInit {
 
   /**
    * Selected filter values to fetch from the API.
+   *
+   * Since the transactions list is paginated we need
+   * to set a huge limit to it.
    */
-  filtersSelected: GetParams = {};
+  filtersSelected: GetParams = {
+    limit: String(ExportComponent.TRANSACTIONS_LIMIT),
+  };
 
   /**
    * Number of transactions with current filters.
@@ -123,8 +131,7 @@ export class ExportComponent implements OnInit {
    */
   loading: boolean;
 
-  constructor(private api: ApiService,
-              private date: DatePipe,
+  constructor(private date: DatePipe,
               private cdr: ChangeDetectorRef,
               private router: Router,
               private profileCurrency: ProfileCurrencyPipe) {
@@ -151,6 +158,7 @@ export class ExportComponent implements OnInit {
     } else {
       delete this.filtersSelected.time_before;
     }
+    // Finally, return the selected filters.
     return this.filtersSelected;
   }
 
@@ -164,9 +172,9 @@ export class ExportComponent implements OnInit {
      * Also store it for PDF export.
      * @see transactions
      */
-    this.api.transaction.list(this.filtersSelectedWithDates).subscribe((data: Transaction[]): void => {
-      this.count = data.length;
-      this.transactions = data;
+    Api.transaction.list(this.filtersSelectedWithDates).subscribe((data: ApiResponse<Transaction>): void => {
+      this.count = data.results.length;
+      this.transactions = data.results;
     });
   }
 
@@ -174,7 +182,7 @@ export class ExportComponent implements OnInit {
     /**
      * Load wallets for filters
      */
-    this.api.wallet.list().subscribe((data: Wallet[]): void => {
+    Api.wallet.list().subscribe((data: Wallet[]): void => {
       for (const wallet of data) {
         if (!this.filters[1].values) {
           this.filters[1].values = [];
@@ -188,7 +196,7 @@ export class ExportComponent implements OnInit {
     /**
      * Load categories for filters and {@see categoryDict}
      */
-    this.api.category.list().subscribe((data: Category[]): void => {
+    Api.category.list().subscribe((data: Category[]): void => {
       for (const category of data) {
         if (!this.filters[2].values) {
           this.filters[2].values = [];
@@ -203,7 +211,7 @@ export class ExportComponent implements OnInit {
     /**
      * Load events for filters
      */
-    this.api.event.list().subscribe((data: Event[]): void => {
+    Api.event.list().subscribe((data: Event[]): void => {
       for (const event of data) {
         if (!this.filters[3].values) {
           this.filters[3].values = [];
@@ -233,7 +241,7 @@ export class ExportComponent implements OnInit {
       case ExportFile.XLSX:
       case ExportFile.CSV: {
         this.loading = true;
-        this.api.transaction.download(option.value, file, this.filtersSelectedWithDates).subscribe((): void => {
+        Api.transaction.download(option.value, file, this.filtersSelectedWithDates).subscribe((): void => {
           this.loading = false;
         });
         return;
@@ -248,7 +256,7 @@ export class ExportComponent implements OnInit {
           transactions.push(transaction.id);
         }
         const note: string = prompt('Note for this public transactions page (optional):');
-        this.api.transactionsPage.create({
+        Api.transactionsPage.create({
           transactions,
           note,
           profile: ProfileService.profile.value.id,

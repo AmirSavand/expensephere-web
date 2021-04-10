@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -13,6 +13,7 @@ import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
+import { Api } from '@shared/classes/api';
 import { InlineStorage } from '@shared/classes/inline-storage';
 import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
@@ -23,9 +24,7 @@ import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
-import { SelectComponent } from '@shared/modules/select/select.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { format, parseISO, formatISO } from 'date-fns';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -39,10 +38,8 @@ import { Observable } from 'rxjs';
 })
 export class TransactionFormModalComponent implements OnInit {
 
-  /**
-   * Triggered when data is deleted, updated or created.
-   */
-  static readonly CHANGE: EventEmitter<void> = new EventEmitter();
+  // Triggered when data is deleted, updated or created.
+  static readonly CHANGE = new EventEmitter();
 
   readonly expenseKind = ExpenseKind;
 
@@ -77,39 +74,30 @@ export class TransactionFormModalComponent implements OnInit {
 
   showExtraDetails = false;
 
-  /**
-   * If {@see transaction} is given, then the modal is for edit
-   */
+  // If {@see transaction} is given, then the modal is for edit.
   isEditing: boolean;
 
-  /**
-   * Current (profile) currency
-   */
+  // Current (profile) currency.
   currency: string;
 
-  /**
-   * No wallet, used to show alert to add wallet
-   */
+  // No wallet, used to show alert to add wallet.
   noWallets = false;
 
   constructor(public modal: BsModalRef,
               private modalService: BsModalService,
               private profileService: ProfileService,
               private formBuilder: FormBuilder,
-              private api: ApiService,
               private date: DatePipe,
               private router: Router) {
   }
 
   ngOnInit(): void {
-    /**
-     * Set currency
-     */
+    // Set currency to current profile currency.
     this.currency = ProfileService.profile.value.currency;
     /**
      * Load wallets
      */
-    this.api.wallet.list().subscribe((data: Wallet[]): void => {
+    Api.wallet.list().subscribe((data: Wallet[]): void => {
       this.wallets = data;
       // Select first wallet
       if (data.length && !this.isEditing) {
@@ -121,7 +109,7 @@ export class TransactionFormModalComponent implements OnInit {
     /**
      * Load categories
      */
-    this.api.category.list().subscribe((data: Category[]): void => {
+    Api.category.list().subscribe((data: Category[]): void => {
       this.categories = data;
       // Group categories
       for (const category of this.categories) {
@@ -136,7 +124,7 @@ export class TransactionFormModalComponent implements OnInit {
     /**
      * Load events
      */
-    this.api.event.list().subscribe((data: Event[]): void => {
+    Api.event.list().subscribe((data: Event[]): void => {
       this.events = data;
     });
     /**
@@ -174,9 +162,9 @@ export class TransactionFormModalComponent implements OnInit {
         representation: 'complete',
       }),
     });
-    let method: Observable<Transaction> = this.api.transaction.create(payload);
+    let method: Observable<Transaction> = Api.transaction.create(payload);
     if (this.isEditing) {
-      method = this.api.transaction.update(this.transaction.id, payload);
+      method = Api.transaction.update(this.transaction.id, payload);
     }
     method.subscribe((data: Transaction): void => {
       if (!this.isEditing) {
@@ -222,7 +210,7 @@ export class TransactionFormModalComponent implements OnInit {
     if (!confirm('Are you sure you want to delete this transaction?')) {
       return;
     }
-    this.api.transaction.delete(transaction.id).subscribe((): void => {
+    Api.transaction.delete(transaction.id).subscribe((): void => {
       this.modal.hide();
       TransactionFormModalComponent.CHANGE.emit();
       /**
@@ -237,9 +225,7 @@ export class TransactionFormModalComponent implements OnInit {
    */
   addEvent(): void {
     const modal: BsModalRef = this.modalService.show(EventFormModalComponent, {
-      initialState: {
-        redirect: false,
-      },
+      initialState: { redirect: false },
     });
     modal.content.submitted.subscribe((event: Event): void => {
       this.events.unshift(event);

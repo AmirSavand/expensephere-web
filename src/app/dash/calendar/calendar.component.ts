@@ -4,12 +4,13 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
-import { ApiService } from '@shared/services/api.service';
 import { CalendarEvent } from 'angular-calendar';
 import { startOfMonth, endOfMonth, addDays, format, subMonths, addMonths } from 'date-fns';
 
@@ -49,8 +50,7 @@ export class CalendarComponent implements OnInit {
    */
   categories: Record<number, Category> = {};
 
-  constructor(private api: ApiService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private profileCurrency: ProfileCurrencyPipe) {
   }
@@ -70,7 +70,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.category.list().subscribe((data: Category[]): void => {
+    Api.category.list().subscribe((data: Category[]): void => {
       for (const category of data) {
         this.categories[category.id] = category;
       }
@@ -88,14 +88,18 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Load transactions in selected month.
+   *
+   * We set page size to max number of transactions in
+   * a single day times max number of days in a month.
    */
   load(): void {
-    this.api.transaction.list({
+    Api.transaction.list({
+      limit: String(31 * 24),
       time_after: Utils.dateToUTCString(startOfMonth(this.viewDate)),
       time_before: Utils.dateToUTCString(addDays(endOfMonth(this.viewDate), 1)),
-    }).subscribe((data: Transaction[]): void => {
+    }).subscribe((data: ApiResponse<Transaction>): void => {
       this.events = [];
-      for (const transaction of data) {
+      for (const transaction of data.results) {
         const category: Category = this.categories[transaction.category];
         this.events.push({
           id: transaction.id,

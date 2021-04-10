@@ -4,9 +4,9 @@ import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
-import { ApiService } from '@shared/services/api.service';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
-import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
+import { Api } from '@shared/classes/api';
+import { ApiResponse } from 'src/shared/interfaces/api-response';
 
 @Component({
   selector: 'app-component',
@@ -42,8 +42,7 @@ export class DetailComponent implements OnInit {
    */
   error = false;
 
-  constructor(private api: ApiService,
-              private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -75,13 +74,13 @@ export class DetailComponent implements OnInit {
         /**
          * Load wallets for transactions
          */
-        this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
+        Api.wallet.list().subscribe((wallets: Wallet[]): void => {
           this.wallets = wallets;
           /**
            * Load transactions of this category
            */
-          this.api.transaction.list({ category: this.categoryId }).subscribe((data: Transaction[]): void => {
-            this.transactions = data;
+          Api.transaction.list({ category: this.categoryId }).subscribe((data: ApiResponse<Transaction>): void => {
+            this.transactions = data.results;
           });
         });
       }
@@ -92,7 +91,7 @@ export class DetailComponent implements OnInit {
    * Load category data.
    */
   load(): void {
-    this.api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
+    Api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
       this.category = data;
     }, (): void => {
       delete this.category;

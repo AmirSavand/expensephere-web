@@ -4,11 +4,11 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { ExpenseKind } from '@shared/enums/kind';
 import { TransactionsPage } from '@shared/interfaces/transactions-page';
 import { TransactionsPageTransaction } from '@shared/interfaces/transactions-page-transaction';
-import { ApiService } from '@shared/services/api.service';
 
 @Component({
   selector: 'app-transaction',
@@ -32,8 +32,7 @@ export class TransactionComponent implements OnInit {
 
   copied: boolean;
 
-  constructor(private route: ActivatedRoute,
-              private api: ApiService) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -42,7 +41,7 @@ export class TransactionComponent implements OnInit {
      */
     this.route.params.subscribe((params: Params): void => {
       if (params.id) {
-        this.api.transactionsPage.retrieve(params.id).subscribe((data: TransactionsPage): void => {
+        Api.transactionsPage.retrieve(params.id).subscribe((data: TransactionsPage): void => {
           this.page = data;
           /**
            * Generate transaction title based on category name and its note.
