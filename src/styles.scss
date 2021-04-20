@@ -6,12 +6,12 @@
 @import "src/assets/icon/style";
 
 ::-moz-selection {
-  background-color: $primary;
+  background-color: lighten($primary, 10);
   color: $white;
 }
 
 ::selection {
-  background-color: $primary;
+  background-color: lighten($primary, 10);
   color: $white;
 }
 

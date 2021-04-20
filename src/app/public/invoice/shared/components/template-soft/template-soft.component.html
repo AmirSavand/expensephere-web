@@ -6,7 +6,7 @@
     <div class="container text-white py-5">
       <p>
         <button class="btn btn-light py-0 mr-2" *ngIf="invoice.is_paid !== null" disabled>
-          {{ invoice.is_paid ? 'NOT PAID' : 'PAID' }}
+          {{ invoice.is_paid ? 'PAID' : 'NOT PAID' }}
         </button>
         <button class="btn btn-light py-0 mr-2" *ngIf="!invoice.is_published" disabled>PRIVATE</button>
       </p>
@@ -75,20 +75,20 @@
       <div class="col-md-5">
         <table class="table table-borderless text-right">
           <tbody>
-          <tr *ngIf="invoice.discount || invoice.tax">
+          <tr *ngIf="invoice.discount !== null || invoice.tax !== null">
             <th>Subtotal</th>
             <td>{{ invoice.subtotal | profileCurrency:invoice.currency }}</td>
           </tr>
-          <tr *ngIf="invoice.discount">
+          <tr *ngIf="invoice.discount !== null">
             <th>Discount</th>
             <td *ngIf="invoice.discount_flat">{{ invoice.discount | profileCurrency:invoice.currency }}</td>
             <td *ngIf="!invoice.discount_flat">{{ invoice.discount | number:'0.0-2' }}%</td>
           </tr>
-          <tr *ngIf="invoice.tax">
+          <tr *ngIf="invoice.tax !== null">
             <th>Tax</th>
             <td>{{ invoice.tax | number:'0.0-2' }}%</td>
           </tr>
-          <tr class="border-top h4">
+          <tr class="h4" [class.border-top]="invoice.discount !== null || invoice.tax !== null">
             <th>Total</th>
             <td>{{ invoice.total | profileCurrency:invoice.currency }}</td>
           </tr>

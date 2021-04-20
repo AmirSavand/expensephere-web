@@ -5,8 +5,6 @@ $company-client-combined-space: 100px;
 .wrapper {
   box-shadow: 0 0 0 10000px $light;
   background: $light;
-  position: relative;
-  z-index: -1;
 
   p,
   th {
