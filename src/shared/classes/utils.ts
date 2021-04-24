@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl } from '@angular/forms';
 import { Color } from '@shared/classes/color';
+import { Crud } from '@shared/classes/crud';
 import { icons } from '@shared/constants/icons';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
@@ -9,11 +10,11 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
+import { Payload } from '@shared/types/payload';
+import html2canvas from 'html2canvas';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Observable } from 'rxjs';
-import { Crud } from '@shared/classes/crud';
-import { Payload } from '@shared/types/payload';
+import { Observable, from } from 'rxjs';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -130,6 +131,45 @@ export class Utils {
   }
 
   /**
+   * @returns Observable for converted canvas of given element using html2canvas.
+   * @param element HTML element to convert to canvas.
+   * @see https://html2canvas.hertzen.com
+   */
+  static elementToCanvas(element: HTMLElement): Observable<HTMLCanvasElement> {
+    return from(html2canvas(element, {
+      windowWidth: 1000,
+      width: 1000,
+      scrollX: 0,
+      scrollY: -window.pageYOffset,
+    }));
+  }
+
+  /**
+   * Takes the given HTML element and uses html2canvas to create an A4
+   * with PDF with auto height with that image insode it.
+   *
+   * @param element HTML element to turn into image to turn into PDF.
+   */
+  static elementToPDF(element: HTMLElement): void {
+    Utils.elementToCanvas(element).subscribe((canvas: HTMLCanvasElement): void => {
+      pdfMake.createPdf({
+        pageSize: {
+          width: 595.28,
+          height: 'auto',
+        },
+        pageMargins: [0, 0, 0, 0],
+        content: [
+          {
+            image: canvas.toDataURL(),
+            width: 595.28,
+            height: (canvas.height / canvas.width) * 595.28,
+          },
+        ],
+      }).download();
+    });
+  }
+
+  /**
    * Remove a child item from a list.
    */
   static removeChild<T>(list: T[], child: T): void {
@@ -182,7 +222,7 @@ export class Utils {
    * @param form Reactive form data object to update.
    * @param data Data to patch to the form (usually comes from API).
    *
-   * @version v21.3.3
+   * @version 21.3.3
    */
   static patchForm<T = Record<string, any>>(form: ReactiveFormData, data: T): void {
     for (const key in form.form.controls) {
@@ -214,7 +254,7 @@ export class Utils {
 
   /**
    * @returns API observable of create or update of given form.
-   * @version v2020-3-20
+   * @version 2020.3.20
    */
   static getFormSubmission<T, LT>(
     curd: Crud<T, LT>,

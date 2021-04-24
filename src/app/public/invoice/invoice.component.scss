@@ -1,0 +1,24 @@
+@import "src/variables";
+
+.overlay {
+  position: fixed;
+  left: 0;
+  bottom: -200px;
+  width: 100%;
+  transition: $transition-base;
+  z-index: 1000;
+
+  &.show {
+    bottom: 0;
+  }
+
+  .btn {
+    margin-left: map_get($spacers, 3);
+
+    &.rounded-circle {
+      width: 55px;
+      height: 55px;
+      box-shadow: 0 5px 10px rgba(black, 0.25);
+    }
+  }
+}

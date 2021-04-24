@@ -5,10 +5,10 @@
   <div class="company">
     <div class="container text-white py-5">
       <p>
-        <button class="btn btn-light py-0 mr-2" *ngIf="invoice.is_paid !== null" disabled>
+        <span class="bg-light text-dark rounded px-3 py-1 mr-2" *ngIf="invoice.is_paid !== null">
           {{ invoice.is_paid ? 'PAID' : 'NOT PAID' }}
-        </button>
-        <button class="btn btn-light py-0 mr-2" *ngIf="!invoice.is_published" disabled>PRIVATE</button>
+        </span>
+        <span class="bg-light text-dark rounded px-3 py-1 mr-2" *ngIf="!invoice.is_published">PRIVATE</span>
       </p>
       <h1 class="text-pre font-weight-bold">{{ invoice.company }}</h1>
     </div>
@@ -19,7 +19,7 @@
 
     <!-- Client, invoice ID, total, date, due date -->
     <div class="client mb-5">
-      <div class="bg-white shadow p-4 p-md-5">
+      <div class="bg-white border shadow p-4 p-md-5">
         <div class="row">
           <div class="col-md-7 mb-3 mb-md-0">
             <p>Client</p>
