@@ -10,7 +10,8 @@ import { TransactionFormModalModule } from '@shared/modules/transaction-form-mod
 import { TransactionListModule } from '@shared/modules/transaction-list/transaction-list.module';
 import { WalletListModule } from '@shared/modules/wallet-list/wallet-list.module';
 import { PieChartModule } from '@swimlane/ngx-charts';
-import { PagerModule } from 'src/shared/modules/pager/pager.module';
+import { MetricSpentCategoryModule } from '@shared/modules/metric-spent-category/metric-spent-category.module';
+import { PagerModule } from '@shared/modules/pager/pager.module';
 
 import { OverviewRoutingModule } from './overview-routing.module';
 import { OverviewComponent } from './overview.component';
@@ -34,6 +35,7 @@ import { OverviewComponent } from './overview.component';
     LoadingModule,
     NoDataModule,
     PagerModule,
+    MetricSpentCategoryModule,
   ],
 })
 export class OverviewModule {

@@ -1,0 +1,13 @@
+@import "src/variables";
+
+.wrapper {
+  display: flex;
+  overflow-x: auto;
+  align-items: center;
+  padding: map_get($spacers, 3);
+
+  > div {
+    flex-shrink: 0;
+    margin-right: map_get($spacers, 3);
+  }
+}

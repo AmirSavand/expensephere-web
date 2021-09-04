@@ -11,7 +11,7 @@ import { ListRoutingModule } from '@app/dash/transaction/list/list-routing.modul
 import { ListComponent } from '@app/dash/transaction/list/list.component';
 import { ActionsModule } from '@shared/modules/actions/actions.module';
 import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-currency.module';
-import { PagerModule } from 'src/shared/modules/pager/pager.module';
+import { PagerModule } from '@shared/modules/pager/pager.module';
 
 
 @NgModule({

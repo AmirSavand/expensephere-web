@@ -7,7 +7,7 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { Api } from '@shared/classes/api';
 import { Invoice } from '@shared/interfaces/invoice';
-import { Utils } from 'src/shared/classes/utils';
+import { Utils } from '@shared/classes/utils';
 
 @Component({
   selector: 'app-invoice',

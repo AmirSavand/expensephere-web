@@ -1,4 +1,19 @@
 <div class="container">
+
+  <!-- Row 1 -->
+  <div class="card mt-4">
+    <div class="card-header">Spent in the last 30 days</div>
+    <div class="card-body p-0">
+      <!-- Metrics -->
+      <app-metric-spent-category *ngIf="categories" [categories]="categories"></app-metric-spent-category>
+      <!-- Loading -->
+      <div class="p-3 text-center" *ngIf="!categories">
+        <app-loading></app-loading>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2 -->
   <div class="row">
 
     <!-- Left -->
@@ -8,7 +23,7 @@
       <div class="card bg-light mt-4">
 
         <!-- Header -->
-          <a class="card-header" routerLink="../wallet/list">
+        <a class="card-header" routerLink="../wallet/list">
           <span>My Wallets</span>
           <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
         </a>

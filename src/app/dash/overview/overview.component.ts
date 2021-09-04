@@ -17,8 +17,8 @@ import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wall
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
-import { ApiResponse } from 'src/shared/interfaces/api-response';
-import { GetParams } from 'src/shared/types/get-params';
+import { ApiResponse } from '@shared/interfaces/api-response';
+import { GetParams } from '@shared/types/get-params';
 
 @Component({
   selector: 'app-overview',

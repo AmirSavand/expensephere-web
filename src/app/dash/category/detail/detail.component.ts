@@ -6,8 +6,8 @@ import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
-import { ApiResponse } from 'src/shared/interfaces/api-response';
-import { GetParams } from 'src/shared/types/get-params';
+import { ApiResponse } from '@shared/interfaces/api-response';
+import { GetParams } from '@shared/types/get-params';
 
 @Component({
   selector: 'app-component',

@@ -17,7 +17,7 @@ import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-cu
 import { ProfileService } from '@shared/services/profile.service';
 import { addDays, isValid } from 'date-fns';
 import { Api } from '@shared/classes/api';
-import { ApiResponse } from 'src/shared/interfaces/api-response';
+import { ApiResponse } from '@shared/interfaces/api-response';
 
 @Component({
   selector: 'app-export',

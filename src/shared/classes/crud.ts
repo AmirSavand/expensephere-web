@@ -120,4 +120,11 @@ export class Crud<T, LT = T[]> {
       return data;
     }));
   }
+
+  /**
+   * Manual GET action for this endpoint.
+   */
+  action<R>(action: string, params: GetParams = {}): Observable<R> {
+    return Crud.http.get<R>(`${this.endpoint}${action}/`, { params });
+  }
 }

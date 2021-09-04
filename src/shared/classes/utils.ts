@@ -15,6 +15,7 @@ import html2canvas from 'html2canvas';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable, from } from 'rxjs';
+import { PK } from '@shared/types/pk';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -281,5 +282,19 @@ export class Utils {
    */
   static stringToLocalDate(date: string, time: string = '00:00:00'): Date {
     return new Date(`${date}T${time}`);
+  }
+
+  /**
+   * @returns Dict of given list mapped to given property.
+   * @param list The list to convert to dict.
+   * @param key The property to map the dict items with.
+   * @example Turns `[{id: 2, foo: "bar"}}` to `{2: {id: 2, foo: "bar"}}`.
+   */
+  static getDictOfList<D>(list: D[], key: string = 'id'): Record<PK, D> {
+    const output: Record<PK, D> = {};
+    list.forEach((item: D): void => {
+      output[item[key]] = item;
+    });
+    return output;
   }
 }
