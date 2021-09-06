@@ -11,7 +11,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpInterceptorService implements HttpInterceptor {
 
-  private static readonly PROFILE_ENDPOINTS: string[] = ['transaction', 'wallet', 'category', 'event'];
+  private static readonly PROFILE_ENDPOINTS: string[] = ['transaction', 'wallet', 'category', 'event', 'invoice'];
 
   constructor(private auth: AuthService) {
   }
