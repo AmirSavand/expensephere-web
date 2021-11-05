@@ -1,0 +1,21 @@
+@import "src/variables";
+
+.invalid-tooltip {
+  position: relative;
+}
+
+th, td {
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+
+}
+
+td {
+  padding-top: map_get($spacers, 1);
+  padding-bottom: map_get($spacers, 1);
+}

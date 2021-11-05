@@ -6,6 +6,7 @@ import { TransactionFormModalModule } from '@shared/modules/transaction-form-mod
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LoadingModule } from '@shared/modules/loading/loading.module';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { DashRoutingModule } from './dash-routing.module';
 import { DashComponent } from './dash.component';
@@ -24,6 +25,7 @@ import { DashComponent } from './dash.component';
     ProfileCurrencyModule,
     BsDropdownModule.forRoot(),
     LoadingModule,
+    OverlayModule,
   ],
 })
 export class DashModule {

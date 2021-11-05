@@ -13,7 +13,7 @@
     <div class="d-flex align-items-center" *ngIf="!(selection && selection.selected)">
 
       <!-- Month selector and all time -->
-      <ng-container *ngIf="!viewingDay?.isValid()">
+      <ng-container *ngIf="!viewingDay">
 
         <!-- Month selector -->
         <div class="d-flex align-items-center" *ngIf="monthSelected !== null">
@@ -28,7 +28,7 @@
           <!-- Selected month -->
           <div class="font-weight-bold mx-2">
           <span *ngIf="months[monthSelected].getMonth() < now.getMonth() - 1">
-            {{ months[ monthSelected ] | date:'MMMM' }}
+            {{ months[monthSelected] | date:'MMMM' }}
           </span>
             <span *ngIf="months[monthSelected].getMonth() === now.getMonth()">This Month</span>
             <span *ngIf="months[monthSelected].getMonth() === now.getMonth() - 1">Last Month</span>
@@ -59,10 +59,10 @@
       </ng-container>
 
       <!-- Dat viewer -->
-      <ng-container *ngIf="viewingDay?.isValid()">
+      <ng-container *ngIf="viewingDay">
 
         <!-- Day -->
-        <div class="font-weight-bold">{{ viewingDay.toDate() | date }}</div>
+        <div class="font-weight-bold">{{ viewingDay | date }}</div>
 
         <!-- Clear -->
         <a routerLink="." class="btn btn-light ml-2">Clear Filter</a>
@@ -96,11 +96,11 @@
 </div>
 
 <!-- Content -->
-<div class="container mb-3">
+<div class="container pb-3">
 
   <!-- Transactions table -->
-  <div class="table-responsive my-3"
-       *ngIf="transactions && transactions.length && categoryDict && walletDict && listView">
+  <div class="table-responsive mt-3"
+       *ngIf="listView && transactions?.length && categoryDict && walletDict">
     <table class="table table-borderless table-striped">
       <thead>
       <tr>
@@ -138,12 +138,12 @@
         </td>
         <td>
           <a class="text-dark" [routerLink]="['/dash', 'category', transaction.category]">
-            {{ categoryDict[ transaction.category ].name }}
+            {{ categoryDict[transaction.category].name }}
           </a>
         </td>
         <td>
           <a class="text-dark" [routerLink]="['/dash', 'wallet', transaction.wallet]">
-            {{ walletDict[ transaction.wallet ].name }}
+            {{ walletDict[transaction.wallet].name }}
           </a>
         </td>
         <td>{{ transaction.created | date }}</td>
@@ -167,9 +167,18 @@
                         (walletDictSet)="walletDict = $event">
   </app-transaction-list>
 
+  <!-- Pagination -->
+  <app-pager wrapperClass="mt-3"
+             *ngIf="transactions?.length"
+             [disabled]="!transactions || !wallets"
+             [apiResponse]="apiResponse"
+             [paramsToCombine]="filtersSelected"
+             (pageChanged)="load()">
+  </app-pager>
+
   <!-- No data -->
-  <app-no-data classes="my-5" *ngIf="transactions && !transactions.length"></app-no-data>
+  <app-no-data classes="mt-5" *ngIf="transactions && !transactions.length"></app-no-data>
 
   <!-- Loading -->
-  <app-loading classes="my-5" *ngIf="!transactions || !wallets"></app-loading>
+  <app-loading classes="mt-5" *ngIf="!transactions || !wallets"></app-loading>
 </div>

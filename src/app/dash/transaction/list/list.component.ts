@@ -7,10 +7,12 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faThLarge } from '@fortawesome/free-solid-svg-icons/faThLarge';
+import { Api } from '@shared/classes/api';
 import { Selection } from '@shared/classes/selection';
 import { Utils } from '@shared/classes/utils';
 import { ExportFile } from '@shared/enums/export-file';
 import { ExpenseKind } from '@shared/enums/kind';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
@@ -21,12 +23,10 @@ import { ActionData } from '@shared/modules/actions/shared/interfaces/action-dat
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
+import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
-import { ApiService } from '@shared/services/api.service';
-import * as moment from 'moment';
-import { Moment } from 'moment';
+import { isValid, addDays } from 'date-fns';
 import { Observable, forkJoin } from 'rxjs';
-import { TransactionFormModalComponent } from 'src/shared/modules/transaction-form-modal/transaction-form-modal.component';
 
 @Component({
   selector: 'app-list',
@@ -63,7 +63,7 @@ export class ListComponent implements OnInit {
    * and template for comparing the selected date to
    * show "This Month" and "Last Month".
    */
-  readonly now: Date = new Date();
+  readonly now = new Date();
 
   /**
    * List of available filters for user. We feed this
@@ -199,7 +199,7 @@ export class ListComponent implements OnInit {
    * If day filter is set in query params.
    * Can be set by calendar page on day click.
    */
-  viewingDay?: Moment;
+  viewingDay?: Date;
 
   /**
    * Selection for multi-select
@@ -223,8 +223,10 @@ export class ListComponent implements OnInit {
    */
   loadingAction = false;
 
-  constructor(private api: ApiService,
-              private date: DatePipe,
+  // Transactions API response for <app-pager>.
+  apiResponse: ApiResponse<Transaction>;
+
+  constructor(private date: DatePipe,
               private route: ActivatedRoute,
               private profileCurrency: ProfileCurrencyPipe,
               private changeDetectorRef: ChangeDetectorRef) {
@@ -250,8 +252,17 @@ export class ListComponent implements OnInit {
       /**
        * Check for day filter in query params.
        * Day is set when user clicks on a day in calendar page.
+       *
+       * Note that viewing date is the beginning of the day in
+       * local time so we need to send it as UTC to the API. We
+       * use {@see Utils.stringToLocalDate} to load this as a
+       * local date and we'll use {@see Utils.dateToUTCString}
+       * to send it as a UTC date.
        */
-      this.viewingDay = moment(new Date(data.day));
+      this.viewingDay = Utils.stringToLocalDate(data.day);
+      if (!isValid(this.viewingDay)) {
+        delete this.viewingDay;
+      }
       if (!isFirstTime) {
         this.load();
       }
@@ -282,7 +293,7 @@ export class ListComponent implements OnInit {
     /**
      * Load wallets
      */
-    this.api.wallet.list().subscribe((data: Wallet[]): void => {
+    Api.wallet.list().subscribe((data: Wallet[]): void => {
       this.wallets = data;
       // Set transaction list to filter
       for (const wallet of data) {
@@ -298,7 +309,7 @@ export class ListComponent implements OnInit {
     /**
      * Load categories
      */
-    this.api.category.list().subscribe((data: Category[]): void => {
+    Api.category.list().subscribe((data: Category[]): void => {
       this.categories = data;
       // Set category list to filter
       for (const category of data) {
@@ -314,7 +325,7 @@ export class ListComponent implements OnInit {
     /**
      * Load events
      */
-    this.api.event.list().subscribe((data: Event[]): void => {
+    Api.event.list().subscribe((data: Event[]): void => {
       // Set event list to filter
       for (const event of data) {
         if (!this.filters[4].values) {
@@ -367,12 +378,12 @@ export class ListComponent implements OnInit {
      * If there's no selected month, then remove the filters
      * and update storage about "All Time" being selected.
      */
-    if (this.viewingDay?.isValid()) {
-      this.filtersSelected.time_after = this.viewingDay.format(Utils.API_DATE_FORMAT_MOMENT);
-      this.filtersSelected.time_before = moment(this.viewingDay).add(1, 'day').format(Utils.API_DATE_FORMAT_MOMENT);
+    if (isValid(this.viewingDay)) {
+      this.filtersSelected.time_after = Utils.dateToUTCString(this.viewingDay);
+      this.filtersSelected.time_before = Utils.dateToUTCString(addDays(this.viewingDay, 1));
     } else if (this.monthSelected !== null) {
-      this.filtersSelected.time_after = this.date.transform(this.months[this.monthSelected], Utils.API_DATE_FORMAT);
-      this.filtersSelected.time_before = this.date.transform(this.getEndOfSelectedMonth(), Utils.API_DATE_FORMAT);
+      this.filtersSelected.time_after = Utils.dateToUTCString(this.months[this.monthSelected]);
+      this.filtersSelected.time_before = Utils.dateToUTCString(this.getEndOfSelectedMonth());
       localStorage.removeItem(ListComponent.STORAGE_KEY_ALL_TIME);
     } else {
       delete this.filtersSelected.time_after;
@@ -382,15 +393,13 @@ export class ListComponent implements OnInit {
     /**
      * Finally, get list of transactions based on filters and selected month.
      */
-    this.api.transaction.list(this.filtersSelected).subscribe((data: Transaction[]): void => {
-      this.transactions = data;
-      /**
-       * Setup selection instance
-       */
+    Api.transaction.list(this.filtersSelected).subscribe((data: ApiResponse<Transaction>): void => {
+      this.transactions = data.results;
+      // Store API response data.
+      this.apiResponse = data;
+      // Setup selection instance.
       this.selection = new Selection(this.transactions);
-      /**
-       * Detect changes for transaction.title that is set in <app-transaction-list>
-       */
+      // Detect changes for transaction.title that is set in <app-transaction-list>.
       this.changeDetectorRef.detectChanges();
     });
   }
@@ -422,13 +431,13 @@ export class ListComponent implements OnInit {
     switch (data.action.label) {
       case 'Exclude': {
         call((transaction: Transaction): Observable<Transaction> => {
-          return this.api.transaction.update(transaction.id, { exclude: data.value });
+          return Api.transaction.update(transaction.id, { exclude: data.value });
         });
         break;
       }
       case 'Archive': {
         call((transaction: Transaction): Observable<Transaction> => {
-          return this.api.transaction.update(transaction.id, { archive: data.value });
+          return Api.transaction.update(transaction.id, { archive: data.value });
         });
         break;
       }
@@ -453,7 +462,7 @@ export class ListComponent implements OnInit {
           case ExportFile.XLSX:
           case ExportFile.CSV: {
             this.loadingAction = true;
-            this.api.transaction.download(data.value as ExportFile, file, params).subscribe((): void => {
+            Api.transaction.download(data.value as ExportFile, file, params).subscribe((): void => {
               this.loadingAction = false;
             });
             return;
@@ -469,7 +478,7 @@ export class ListComponent implements OnInit {
           return;
         }
         call((transaction: Transaction): Observable<void> => {
-          return this.api.transaction.delete(transaction.id);
+          return Api.transaction.delete(transaction.id);
         });
         break;
       }

@@ -8,12 +8,12 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons/faMoneyBill';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Currency } from '@shared/interfaces/currency';
 import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
@@ -60,8 +60,7 @@ export class ProfileFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private router: Router,
-              private formBuilder: FormBuilder,
-              private api: ApiService) {
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -76,7 +75,7 @@ export class ProfileFormModalComponent implements OnInit {
     /**
      * Get list of currencies
      */
-    this.api.currency.list().subscribe((data: Currency[]): void => {
+    Api.currency.list().subscribe((data: Currency[]): void => {
       this.currencies = [];
       for (const currency of data) {
         this.currencies.push({
@@ -106,9 +105,9 @@ export class ProfileFormModalComponent implements OnInit {
   submit(): void {
     this.form.loading = true;
     const payload: Partial<Profile> = this.form.form.value;
-    let method: Observable<Profile> = this.api.profile.create(payload);
+    let method: Observable<Profile> = Api.profile.create(payload);
     if (this.isEditing) {
-      method = this.api.profile.update(this.profile.id, payload);
+      method = Api.profile.update(this.profile.id, payload);
     }
     method.subscribe((data: Profile): void => {
       /**
@@ -153,7 +152,7 @@ export class ProfileFormModalComponent implements OnInit {
     if (!confirm('Are you sure you want to delete this profile?')) {
       return;
     }
-    this.api.profile.delete(profile.id).subscribe((): void => {
+    Api.profile.delete(profile.id).subscribe((): void => {
       this.modal.hide();
     });
   }

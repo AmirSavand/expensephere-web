@@ -1,0 +1,25 @@
+<!-- Data -->
+<div class="wrapper" *ngIf="metrics && metrics.length">
+  <div class="item-icon-wrapper" *ngFor="let metric of metrics">
+    <div class="d-flex align-items-center no-edit item-icon-action">
+      <div class="item-icon item-icon-action" [ngStyle]="style(categoryDict[metric.id].color)">
+        <i class="icon-{{ categoryDict[metric.id].icon }}"></i>
+      </div>
+      <a class="pl-3 text-dark w-100" title="View category"
+         [routerLink]="['/dash', 'category', metric.id]">
+        <div>{{ metric.value | profileCurrency }}</div>
+        <div class="small text-muted">{{ categoryDict[metric.id].name }}</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div class="p-3 text-center" *ngIf="!metrics && !metrics.length">
+  <app-loading></app-loading>
+</div>
+
+<!-- No data -->
+<p class="m-3 text-info text-center font-weight-bold" *ngIf="metrics && !metrics.length">
+  📋 When you start adding expenses, your categories with how much you spent will show up here.
+</p>

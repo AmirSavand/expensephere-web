@@ -1,0 +1,52 @@
+<div class="wrapper" #wrapperElement>
+
+  <!-- Error or loading -->
+  <div class="container py-5" *ngIf="error || !invoice">
+
+    <!-- Error -->
+    <app-not-found *ngIf="error" name="Invoice"></app-not-found>
+
+    <!-- Loading -->
+    <app-loading *ngIf="!error && !invoice"></app-loading>
+  </div>
+
+  <!-- Overlay -->
+  <div *ngIf="invoice" class="overlay pb-3 text-right" [class.show]="overlayShow" data-html2canvas-ignore="true">
+    <div class="container">
+
+      <!-- View: Main -->
+      <ng-container *ngIf="overlayView === 'main'">
+
+        <!-- Download -->
+        <button class="btn btn-secondary rounded-circle" (click)="overlayView = 'download'">
+          <fa-icon [fixedWidth]="true" [icon]="faDownload"></fa-icon>
+        </button>
+      </ng-container>
+
+      <!-- Download view -->
+      <ng-container *ngIf="overlayView === 'download'">
+
+        <!-- Image -->
+        <button class="btn btn-primary rounded-circle" (click)="saveAsImage()" tooltip="Download as Image">
+          <fa-icon [fixedWidth]="true" [icon]="faImage"></fa-icon>
+        </button>
+
+        <!-- PDF -->
+        <button class="btn btn-primary rounded-circle" (click)="saveAsPDFImage()" tooltip="Download as PDF">
+          <fa-icon [fixedWidth]="true" [icon]="faPDF"></fa-icon>
+        </button>
+
+        <!-- Collapse -->
+        <button class="btn btn-secondary rounded-circle" (click)="overlayView = 'main'">
+          <fa-icon [fixedWidth]="true" [icon]="faCollapse"></fa-icon>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Invoice - Load the right template -->
+  <ng-container *ngIf="invoice" [ngSwitch]="invoice.template">
+    <app-template-soft *ngSwitchDefault [invoice]="invoice"></app-template-soft>
+    <app-template-paper *ngSwitchCase="'paper'" [invoice]="invoice"></app-template-paper>
+  </ng-container>
+</div>

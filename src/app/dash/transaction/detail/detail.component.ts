@@ -13,8 +13,8 @@ import { Event } from '@shared/interfaces/event';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { Api } from '@shared/classes/api';
 
 @Component({
   selector: 'app-detail',
@@ -67,8 +67,7 @@ export class DetailComponent implements OnInit {
    */
   error = false;
 
-  constructor(private api: ApiService,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private modalService: BsModalService) {
   }
 
@@ -103,33 +102,33 @@ export class DetailComponent implements OnInit {
    * Load transaction data.
    */
   load(): void {
-    this.api.transaction.retrieve(this.id).subscribe((transaction: Transaction): void => {
+    Api.transaction.retrieve(this.id).subscribe((transaction: Transaction): void => {
       this.transaction = transaction;
       /**
        * Load transaction wallet
        */
-      this.api.wallet.retrieve(transaction.wallet).subscribe((data: Wallet): void => {
+      Api.wallet.retrieve(transaction.wallet).subscribe((data: Wallet): void => {
         this.wallet = data;
       });
       /**
        * Load transaction wallet into
        */
       if (transaction.into) {
-        this.api.wallet.retrieve(transaction.into).subscribe((data: Wallet): void => {
+        Api.wallet.retrieve(transaction.into).subscribe((data: Wallet): void => {
           this.into = data;
         });
       }
       /**
        * Load transaction category
        */
-      this.api.category.retrieve(transaction.category).subscribe((data: Category): void => {
+      Api.category.retrieve(transaction.category).subscribe((data: Category): void => {
         this.category = data;
       });
       /**
        * Load transaction event
        */
       if (transaction.event) {
-        this.api.event.retrieve(transaction.event).subscribe((data: Event): void => {
+        Api.event.retrieve(transaction.event).subscribe((data: Event): void => {
           this.event = data;
         });
       }

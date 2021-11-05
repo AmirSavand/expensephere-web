@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { Api } from '@shared/classes/api';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
-import { ApiService } from '@shared/services/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -43,8 +43,7 @@ export class ListComponent implements OnInit {
    */
   params: GetParams;
 
-  constructor(private api: ApiService,
-              private modalService: BsModalService) {
+  constructor(private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
@@ -57,7 +56,7 @@ export class ListComponent implements OnInit {
    * Load event with filters
    */
   load(): void {
-    this.api.event.list(this.params).subscribe((data: Event[]): void => {
+    Api.event.list(this.params).subscribe((data: Event[]): void => {
       this.events = data;
     });
   }

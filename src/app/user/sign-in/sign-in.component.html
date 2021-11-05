@@ -13,7 +13,7 @@
 
   <!-- Password -->
   <div class="form-group">
-    <input type="password" class="form-control" placeholder="Password"
+    <input type="password" class="form-control" placeholder="Password" autocomplete="password"
            formControlName="password" [class.is-invalid]="form.error.username">
     <p class="small text-danger" *ngIf="form.error.password">{{ form.error.password[0] }}</p>
   </div>

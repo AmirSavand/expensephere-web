@@ -1,5 +1,5 @@
 <!-- Header (mobile only) -->
-<div class="d-flex align-items-center d-lg-none" [class.mb-3]="expand">
+<div class="header" [class.mb-3]="expand">
   <div class="font-weight-bold">Filters</div>
   <button class="btn btn-light ml-auto" (click)="expand = !expand" [class.active]="expand">
     <fa-icon [fixedWidth]="true" [icon]="faToggle"></fa-icon>
@@ -19,7 +19,7 @@
            type="text"
            class="form-control">
 
-    <!-- List type  -->
+    <!-- List type -->
     <app-select *ngIf="filter.type === filterType.LIST && (!filter.values || filter.values.length)"
                 rawItemIdKey="value"
                 rawItemLabelKey="label"
@@ -27,6 +27,7 @@
                 [selectLabel]="filter.label"
                 [title]="filter.label"
                 [allowClear]="true"
+                (clear)="filter.value = null; onUpdate()"
                 (choose)="filter.value = $event.id; onUpdate()">
     </app-select>
 

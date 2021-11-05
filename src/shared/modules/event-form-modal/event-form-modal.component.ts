@@ -13,16 +13,15 @@ import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
 import { faPiggyBank } from '@fortawesome/free-solid-svg-icons/faPiggyBank';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 import { Event } from '@shared/interfaces/event';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { Wallet } from 'src/shared/interfaces/wallet';
 
 @Component({
   selector: 'app-event-form-modal',
@@ -94,7 +93,6 @@ export class EventFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private formBuilder: FormBuilder,
-              private api: ApiService,
               private date: DatePipe,
               private router: Router) {
   }
@@ -110,8 +108,8 @@ export class EventFormModalComponent implements OnInit {
     this.form.form = this.formBuilder.group({
       profile: [ProfileService.profile.value.id],
       name: [null, Validators.required],
-      start: [null, Validators.required],
-      end: [null, Validators.required],
+      start: [],
+      end: [],
       color: [null, Validators.required],
       icon: [null, Validators.required],
       budget: [null],
@@ -141,13 +139,20 @@ export class EventFormModalComponent implements OnInit {
    */
   submit(): void {
     this.form.loading = true;
-    const payload: Partial<Event> = Object.assign(this.form.form.value, {
-      start: new Date(this.form.form.value.start).toISOString(),
-      end: new Date(this.form.form.value.end).toISOString(),
-    });
-    let method: Observable<Event> = this.api.event.create(payload);
+    const payload: Partial<Event> = Object.assign(this.form.form.value, { start: null, end: null });
+    if (this.form.form.value.start) {
+      Object.assign(payload, {
+        start: new Date(this.form.form.value.start).toISOString(),
+      });
+    }
+    if (this.form.form.value.end) {
+      Object.assign(payload, {
+        end: new Date(this.form.form.value.end).toISOString(),
+      });
+    }
+    let method: Observable<Event> = Api.event.create(payload);
     if (this.isEditing) {
-      method = this.api.event.update(this.event.id, payload);
+      method = Api.event.update(this.event.id, payload);
     }
     method.subscribe((data: Event): void => {
       if (this.redirect && !this.isEditing) {
@@ -174,7 +179,7 @@ export class EventFormModalComponent implements OnInit {
     if (!confirm('Are you sure you want to delete this event?')) {
       return;
     }
-    this.api.event.delete(event.id).subscribe((): void => {
+    Api.event.delete(event.id).subscribe((): void => {
       this.modal.hide();
       EventFormModalComponent.CHANGE.emit();
     });

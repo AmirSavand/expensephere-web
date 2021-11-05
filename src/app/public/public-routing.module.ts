@@ -8,8 +8,12 @@ const routes: Routes = [
     path: '', component: PublicComponent,
     children: [
       {
-        path: 'transactions/:id',
-        loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule),
+        path: 'transaction/:id',
+        loadChildren: () => import('./transaction/transaction.module').then(m => m.TransactionModule),
+      },
+      {
+        path: 'invoice/:id',
+        loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule),
       },
       {
         path: '**',

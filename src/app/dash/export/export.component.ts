@@ -14,8 +14,10 @@ import { Wallet } from '@shared/interfaces/wallet';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
-import { ApiService } from '@shared/services/api.service';
-import { ProfileService } from 'src/shared/services/profile.service';
+import { ProfileService } from '@shared/services/profile.service';
+import { addDays, isValid } from 'date-fns';
+import { Api } from '@shared/classes/api';
+import { ApiResponse } from '@shared/interfaces/api-response';
 
 @Component({
   selector: 'app-export',
@@ -24,6 +26,8 @@ import { ProfileService } from 'src/shared/services/profile.service';
   providers: [DatePipe, ProfileCurrencyPipe],
 })
 export class ExportComponent implements OnInit {
+
+  private static readonly TRANSACTIONS_LIMIT = 5000;
 
   /**
    * Last transaction list pulled for counting.
@@ -99,8 +103,13 @@ export class ExportComponent implements OnInit {
 
   /**
    * Selected filter values to fetch from the API.
+   *
+   * Since the transactions list is paginated we need
+   * to set a huge limit to it.
    */
-  filtersSelected: GetParams = {};
+  filtersSelected: GetParams = {
+    limit: String(ExportComponent.TRANSACTIONS_LIMIT),
+  };
 
   /**
    * Number of transactions with current filters.
@@ -110,20 +119,19 @@ export class ExportComponent implements OnInit {
   /**
    * From date (date range).
    */
-  from: Date;
+  from: string;
 
   /**
    * To date (date range).
    */
-  to: Date;
+  to: string;
 
   /**
    * Disable action button
    */
   loading: boolean;
 
-  constructor(private api: ApiService,
-              private date: DatePipe,
+  constructor(private date: DatePipe,
               private cdr: ChangeDetectorRef,
               private router: Router,
               private profileCurrency: ProfileCurrencyPipe) {
@@ -136,8 +144,8 @@ export class ExportComponent implements OnInit {
     /**
      * Add/remove start date.
      */
-    if (this.from) {
-      this.filtersSelected.time_after = this.date.transform(this.from, Utils.API_DATE_FORMAT);
+    if (isValid(new Date(this.from))) {
+      this.filtersSelected.time_after = Utils.dateToUTCString(Utils.stringToLocalDate(this.from));
     } else {
       delete this.filtersSelected.time_after;
     }
@@ -145,13 +153,12 @@ export class ExportComponent implements OnInit {
      * Add/remove end date.
      * End date must be a day after the selected for BE support.
      */
-    if (this.to) {
-      const to = new Date(this.to);
-      to.setDate(to.getDate() + 1);
-      this.filtersSelected.time_before = this.date.transform(to, Utils.API_DATE_FORMAT);
+    if (isValid(new Date(this.to))) {
+      this.filtersSelected.time_before = Utils.dateToUTCString(addDays(Utils.stringToLocalDate(this.to), 1));
     } else {
       delete this.filtersSelected.time_before;
     }
+    // Finally, return the selected filters.
     return this.filtersSelected;
   }
 
@@ -165,9 +172,9 @@ export class ExportComponent implements OnInit {
      * Also store it for PDF export.
      * @see transactions
      */
-    this.api.transaction.list(this.filtersSelectedWithDates).subscribe((data: Transaction[]): void => {
-      this.count = data.length;
-      this.transactions = data;
+    Api.transaction.list(this.filtersSelectedWithDates).subscribe((data: ApiResponse<Transaction>): void => {
+      this.count = data.results.length;
+      this.transactions = data.results;
     });
   }
 
@@ -175,7 +182,7 @@ export class ExportComponent implements OnInit {
     /**
      * Load wallets for filters
      */
-    this.api.wallet.list().subscribe((data: Wallet[]): void => {
+    Api.wallet.list().subscribe((data: Wallet[]): void => {
       for (const wallet of data) {
         if (!this.filters[1].values) {
           this.filters[1].values = [];
@@ -189,7 +196,7 @@ export class ExportComponent implements OnInit {
     /**
      * Load categories for filters and {@see categoryDict}
      */
-    this.api.category.list().subscribe((data: Category[]): void => {
+    Api.category.list().subscribe((data: Category[]): void => {
       for (const category of data) {
         if (!this.filters[2].values) {
           this.filters[2].values = [];
@@ -204,7 +211,7 @@ export class ExportComponent implements OnInit {
     /**
      * Load events for filters
      */
-    this.api.event.list().subscribe((data: Event[]): void => {
+    Api.event.list().subscribe((data: Event[]): void => {
       for (const event of data) {
         if (!this.filters[3].values) {
           this.filters[3].values = [];
@@ -234,7 +241,7 @@ export class ExportComponent implements OnInit {
       case ExportFile.XLSX:
       case ExportFile.CSV: {
         this.loading = true;
-        this.api.transaction.download(option.value, file, this.filtersSelectedWithDates).subscribe((): void => {
+        Api.transaction.download(option.value, file, this.filtersSelectedWithDates).subscribe((): void => {
           this.loading = false;
         });
         return;
@@ -249,12 +256,12 @@ export class ExportComponent implements OnInit {
           transactions.push(transaction.id);
         }
         const note: string = prompt('Note for this public transactions page (optional):');
-        this.api.transactionsPage.create({
+        Api.transactionsPage.create({
           transactions,
           note,
           profile: ProfileService.profile.value.id,
         }).subscribe((data: TransactionsPage): void => {
-          this.router.navigate(['/public/transactions', data.id]);
+          this.router.navigate(['/public/transaction', data.id]);
         }, (): void => {
           alert('Failed to create public transactions page.');
         });

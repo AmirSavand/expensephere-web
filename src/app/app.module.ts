@@ -6,7 +6,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@environments/environment';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
 import { HttpInterceptorService } from '@shared/services/http-interceptor.service';
 import { ProfileService } from '@shared/services/profile.service';
@@ -32,7 +31,6 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
-    ApiService,
     AuthService,
     ProfileService,
     WalletService,

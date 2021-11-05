@@ -1,0 +1,129 @@
+<div class="container-fluid py-3">
+
+  <!-- Header -->
+  <div class="font-weight-bold d-flex align-items-center mb-3">
+    <a class="text-secondary" routerLink="../list">Transactions</a>
+    <fa-icon [fixedWidth]="true" [icon]="faBreadcrumbArrow" class="small mx-1 text-secondary"></fa-icon>
+    <span>Bulk Creation</span>
+  </div>
+
+  <!-- Forms -->
+  <div class="table-responsive">
+    <table class="table table-borderless m-0">
+      <thead>
+      <tr>
+        <th>Type</th>
+        <th>Wallet</th>
+        <th>Category</th>
+        <th>Event</th>
+        <th>Amount</th>
+        <th>Time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let form of forms" [formGroup]="form.form">
+        <!-- Success -->
+        <td [colSpan]="6" *ngIf="form.success">
+          <div class="alert alert-success m-0 py-2 d-flex align-items-center justify-content-between">
+            <span>Transaction successfully created.</span>
+            <a class="btn btn-primary btn-sm" [routerLink]="['../', form.id]">View</a>
+          </div>
+        </td>
+        <!-- Kind -->
+        <td *ngIf="!form.success">
+          <select class="custom-select" formControlName="kind"
+                  (ngModelChange)="form.form.get('category').setValue(categoryGroups[form.form.value.kind][0].id)">
+            <option [ngValue]="expenseKind.INCOME">Income</option>
+            <option [ngValue]="expenseKind.EXPENSE">Expense</option>
+            <option [ngValue]="expenseKind.TRANSFER">Transfer</option>
+          </select>
+        </td>
+        <!-- Wallet -->
+        <td *ngIf="!form.success">
+          <!-- Wallet from and into -->
+          <div class="d-flex">
+            <!-- Wallet from -->
+            <div class="w-100">
+              <select class="custom-select" formControlName="wallet" [class.is-invalid]="form.error.wallet">
+                <option *ngFor="let wallet of wallets" [ngValue]="wallet.id">{{ wallet.name }}</option>
+              </select>
+            </div>
+            <!-- Wallet into -->
+            <div class="w-100 ml-2" *ngIf="form.form.value.kind === expenseKind.TRANSFER"
+                 [class.is-invalid]="form.error.into">
+              <select class="custom-select" formControlName="into">
+                <option [ngValue]="null">Select wallet</option>
+                <option *ngFor="let wallet of wallets"
+                        [disabled]="wallet.id === form.form.value.wallet"
+                        [ngValue]="wallet.id">
+                  Into {{ wallet.name }}
+                </option>
+              </select>
+              <div class="form-error" *ngIf="form.error.wallet">{{ form.error.wallet[0] }}</div>
+            </div>
+          </div>
+          <!-- 1 error text for both of them -->
+          <div class="form-error" *ngIf="form.error.wallet || form.error.into">
+            {{ form.error.wallet ? form.error.wallet[0] : form.error.into[0] }}
+          </div>
+        </td>
+        <!-- Category -->
+        <td *ngIf="!form.success">
+          <select class="custom-select" formControlName="category" [class.is-invalid]="form.error.category">
+            <option *ngFor="let category of categoryGroups[form.form.value.kind]" [ngValue]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+          <div class="form-error" *ngIf="form.error.category">{{ form.error.category[0] }}</div>
+        </td>
+        <!-- Event -->
+        <td *ngIf="!form.success">
+          <select class="custom-select" formControlName="event" [class.is-invalid]="form.error.event">
+            <option [ngValue]="null">Unset</option>
+            <option *ngFor="let event of events" [ngValue]="event.id">{{ event.name }}</option>
+          </select>
+          <div class="form-error" *ngIf="form.error.event">{{ form.error.event[0] }}</div>
+        </td>
+        <!-- Amount -->
+        <td *ngIf="!form.success">
+          <input [placeholder]="currency" class="form-control" type="number" [step]="1" formControlName="amount"
+                 [class.is-invalid]="form.error.amount">
+          <div class="form-error" *ngIf="form.error.amount">{{ form.error.amount[0] }}</div>
+        </td>
+        <!-- Time -->
+        <td *ngIf="!form.success">
+          <input type="datetime-local" id="time" class="form-control" formControlName="time"
+                 [class.is-invalid]="form.error.time">
+          <div class="form-error" *ngIf="form.error.time">{{ form.error.time[0] }}</div>
+        </td>
+        <!-- Actions -->
+        <td class="actions">
+          <!-- Delete -->
+          <a class="text-danger" (click)="removeForm(form)">
+            <fa-icon [fixedWidth]="true" [icon]="faDelete"></fa-icon>
+          </a>
+          <!-- Success -->
+          <fa-icon class="text-success" [fixedWidth]="true"
+                   [icon]="faSuccess" *ngIf="form.success"></fa-icon>
+          <!-- Loading -->
+          <fa-icon class="text-warning" [fixedWidth]="true"
+                   [icon]="faLoading" [spin]="true" *ngIf="form.loading">
+          </fa-icon>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Buttons -->
+  <div class="d-flex align-items-center mt-3">
+
+    <!-- Add button -->
+    <button class="btn btn-success mr-auto" (click)="forms.push(getForm())">
+      <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
+    </button>
+
+    <!-- Submit -->
+    <button class="btn btn-primary" (click)="submit()">Create All Transactions</button>
+  </div>
+</div>

@@ -1,26 +1,24 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { environment } from '@environments/environment';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { ExpenseKind } from '@shared/enums/kind';
 import { TransactionsPage } from '@shared/interfaces/transactions-page';
 import { TransactionsPageTransaction } from '@shared/interfaces/transactions-page-transaction';
-import { ApiService } from '@shared/services/api.service';
 
 @Component({
-  selector: 'app-transactions',
-  templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss'],
+  selector: 'app-transaction',
+  templateUrl: './transaction.component.html',
+  styleUrls: ['./transaction.component.scss'],
 })
-export class TransactionsComponent implements OnInit {
+export class TransactionComponent implements OnInit {
 
   readonly expenseKind = ExpenseKind;
   readonly style = Color.style;
-  readonly home = environment.home;
   readonly isSharingEnabled = Boolean(navigator.share);
   readonly shareUrl = location.href;
   readonly faCopy: IconDefinition = faCopy;
@@ -34,8 +32,7 @@ export class TransactionsComponent implements OnInit {
 
   copied: boolean;
 
-  constructor(private route: ActivatedRoute,
-              private api: ApiService) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -44,7 +41,7 @@ export class TransactionsComponent implements OnInit {
      */
     this.route.params.subscribe((params: Params): void => {
       if (params.id) {
-        this.api.transactionsPage.retrieve(params.id).subscribe((data: TransactionsPage): void => {
+        Api.transactionsPage.retrieve(params.id).subscribe((data: TransactionsPage): void => {
           this.page = data;
           /**
            * Generate transaction title based on category name and its note.

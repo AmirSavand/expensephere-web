@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Api } from '@shared/classes/api';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
-import { ApiService } from '@shared/services/api.service';
-import { CategoryFormModalComponent } from 'src/shared/modules/category-form-modal/category-form-modal.component';
-import { WalletFormModalComponent } from 'src/shared/modules/wallet-form-modal/wallet-form-modal.component';
+import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
+import { ApiResponse } from '@shared/interfaces/api-response';
+import { GetParams } from '@shared/types/get-params';
 
 @Component({
   selector: 'app-component',
@@ -17,33 +18,28 @@ export class DetailComponent implements OnInit {
 
   readonly expenseKind = ExpenseKind;
 
-  /**
-   * Category data
-   */
+  // Filters used for loading transactions.
+  readonly transactionsFilter: GetParams = {};
+
+  // Current category data.
   category: Category;
 
-  /**
-   * Wallets for transactions
-   */
+  // Wallets for transactions.
   wallets: Wallet[];
 
-  /**
-   * Category transactions
-   */
+  // Category transactions list.
   transactions: Transaction[];
 
-  /**
-   * Category ID from param
-   */
+  // Category ID from param
   categoryId: string;
 
-  /**
-   * Page error
-   */
+  // Page error flag.
   error = false;
 
-  constructor(private api: ApiService,
-              private route: ActivatedRoute) {
+  // API response data for transactions.
+  transactionsApiResponse: ApiResponse<Transaction>;
+
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -64,27 +60,30 @@ export class DetailComponent implements OnInit {
        * If category ID changes
        */
       if (this.categoryId !== params.get('id')) {
-        /**
-         * Get category ID from params
-         */
+        // Get category ID from params
         this.categoryId = params.get('id');
-        /**
-         * Load category data
-         */
+        // Load category data
         this.load();
+        // Update transaction filters.
+        this.transactionsFilter.category = this.categoryId;
         /**
          * Load wallets for transactions
          */
-        this.api.wallet.list().subscribe((wallets: Wallet[]): void => {
+        Api.wallet.list().subscribe((wallets: Wallet[]): void => {
           this.wallets = wallets;
-          /**
-           * Load transactions of this category
-           */
-          this.api.transaction.list({ category: this.categoryId }).subscribe((data: Transaction[]): void => {
-            this.transactions = data;
-          });
+          this.loadTransactions();
         });
       }
+    });
+  }
+
+  /**
+   * Load transactions of this category.
+   */
+  loadTransactions(): void {
+    Api.transaction.list(this.transactionsFilter).subscribe((data: ApiResponse<Transaction>): void => {
+      this.transactions = data.results;
+      this.transactionsApiResponse = data;
     });
   }
 
@@ -92,7 +91,7 @@ export class DetailComponent implements OnInit {
    * Load category data.
    */
   load(): void {
-    this.api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
+    Api.category.retrieve(this.categoryId).subscribe((data: Category): void => {
       this.category = data;
     }, (): void => {
       delete this.category;

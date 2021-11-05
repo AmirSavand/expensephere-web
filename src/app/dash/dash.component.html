@@ -12,7 +12,7 @@
 
         <!-- Logo -->
         <a routerLink="/" title="Expensephere">
-          <img src="assets/favicon/favicon.ico" class="mr-3" [width]="28">
+          <img src="assets/favicon/favicon.png" class="mr-3" [width]="28">
         </a>
 
         <!-- Total -->
@@ -24,7 +24,9 @@
         <!-- Create button (dropdown) -->
         <div class="dropdown ml-auto" dropdown>
           <!-- Create button -->
-          <button class="btn btn-primary dropdown-toggle" dropdownToggle>Create</button>
+          <button class="btn btn-primary" dropdownToggle>
+            <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
+          </button>
           <!-- Buttons -->
           <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
             <!-- Transaction -->
@@ -35,18 +37,24 @@
             <a class="dropdown-item" (click)="addCategory()">Category</a>
             <!-- Event -->
             <a class="dropdown-item" (click)="addEvent()">Event</a>
+            <!-- Invoice -->
+            <a class="dropdown-item" [routerLink]="'/dash/invoice/add'">Invoice</a>
+            <!-- Separator -->
+            <div class="dropdown-divider"></div>
+            <!-- Bulk transaction -->
+            <a class="dropdown-item" routerLink="/dash/transaction/bulk-add">Bulk Transaction</a>
           </div>
         </div>
 
         <!-- Sidebar toggle button (mobile only) -->
-        <button class="btn btn-light ml-2 d-block d-lg-none" (click)="sidebarClose = !sidebarClose">
+        <button class="btn btn-secondary ml-2 d-block d-lg-none" (click)="sidebarClose = !sidebarClose">
           <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
         </button>
       </div>
     </div>
 
     <!-- Page -->
-    <div id="page" (click)="sidebarClose = true">
+    <div id="page" cdkScrollable (click)="sidebarClose = true">
       <router-outlet></router-outlet>
     </div>
   </div>
@@ -144,7 +152,7 @@
       <!-- App info -->
       <div class="mt-auto text-secondary small">
         <p>
-          <span>Expensephere v0.5 Beta &bull; </span>
+          <span>Expensephere v0.7.4 Beta &bull; </span>
           <a [href]="home">Website</a>
           <span> &bull; </span>
           <a href="mailto:expensephere@savandbros.com">Feedback</a>
@@ -181,6 +189,10 @@
         <a routerLinkActive="active" routerLink="/dash/event">
           <fa-icon [fixedWidth]="true" [icon]="faEvents"></fa-icon>
           <span>Events</span>
+        </a>
+        <a routerLinkActive="active" routerLink="/dash/invoice">
+          <fa-icon [fixedWidth]="true" [icon]="faInvoice"></fa-icon>
+          <span>Invoices</span>
         </a>
         <a routerLinkActive="active" routerLink="/dash/export">
           <fa-icon [fixedWidth]="true" [icon]="faExport"></fa-icon>

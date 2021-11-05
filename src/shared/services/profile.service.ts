@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Api } from '@shared/classes/api';
 import { Profile } from '@shared/interfaces/profile';
-import { ApiService } from '@shared/services/api.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -51,14 +51,11 @@ export class ProfileService {
     });
   }
 
-  constructor(private api: ApiService) {
-  }
-
   /**
    * Refresh selected profile data from API
    */
   refresh(): void {
-    this.api.profile.retrieve(ProfileService.profile.value.id).subscribe((profile: Profile): void => {
+    Api.profile.retrieve(ProfileService.profile.value.id).subscribe((profile: Profile): void => {
       ProfileService.profile.next(profile);
     });
   }

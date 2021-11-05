@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { Api } from '@shared/classes/api';
 import { Profile } from '@shared/interfaces/profile';
 import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
@@ -24,8 +24,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   profiles: Profile[];
 
-  constructor(private api: ApiService,
-              private router: Router,
+  constructor(private router: Router,
               private modalService: BsModalService) {
   }
 
@@ -39,7 +38,7 @@ export class ListComponent implements OnInit, OnDestroy {
     /**
      * Load profile list
      */
-    this.api.profile.list().subscribe((data: Profile[]): void => {
+    Api.profile.list().subscribe((data: Profile[]): void => {
       if (!data.length) {
         this.add();
       }

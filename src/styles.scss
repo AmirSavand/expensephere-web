@@ -6,12 +6,12 @@
 @import "src/assets/icon/style";
 
 ::-moz-selection {
-  background-color: $primary;
+  background-color: lighten($primary, 10);
   color: $white;
 }
 
 ::selection {
-  background-color: $primary;
+  background-color: lighten($primary, 10);
   color: $white;
 }
 
@@ -144,6 +144,10 @@ a, button, .btn {
 }
 
 .modal {
+  .modal-content {
+    box-shadow: 0 0 0 100000px rgba(black, 0.5);
+  }
+
   .modal-header,
   .modal-footer {
     background: $light;
@@ -156,15 +160,6 @@ a, button, .btn {
       > button > fa-icon {
         color: $secondary;
       }
-    }
-  }
-
-  .modal-body {
-    label {
-      @extend .text-uppercase;
-      @extend .small;
-      @extend .font-weight-bold;
-      @extend .text-secondary;
     }
   }
 }
@@ -195,6 +190,14 @@ a, button, .btn {
 }
 
 .form-group {
+
+  > label {
+    @extend .text-uppercase;
+    @extend .small;
+    @extend .font-weight-bold;
+    @extend .text-secondary;
+  }
+
   .invalid-tooltip {
     right: 0;
   }
@@ -248,12 +251,12 @@ a, button, .btn {
       > .modal-content > * {
         > .modal-header {
           border-radius: 0 !important;
+          position: sticky;
+          top: 0;
+          z-index: 10;
         }
 
         > .modal-body {
-          height: calc(100vh - 140px);
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
         }
 
         > .modal-footer {
@@ -341,4 +344,36 @@ select.no-style {
 .text-pre {
   white-space: pre-line;
   word-break: break-word;
+}
+
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 1070;
+}
+
+.cdk-overlay-container, .cdk-global-overlay-wrapper {
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.cdk-overlay-connected-position-bounding-box {
+  position: absolute;
+  z-index: 1070;
+  display: flex;
+  flex-direction: column;
+  min-width: 1px;
+  min-height: 1px;
+}
+
+.cdk-overlay-pane {
+  position: absolute;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 1070;
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
 }

@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { Api } from '@shared/classes/api';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
+import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
+import { GetParams } from '@shared/types/get-params';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { WalletFormModalComponent } from 'src/shared/modules/wallet-form-modal/wallet-form-modal.component';
 
 @Component({
   selector: 'app-detail',
@@ -19,38 +21,31 @@ export class DetailComponent implements OnInit {
 
   readonly faEdit: IconDefinition = faPen;
 
-  /**
-   * Wallet data
-   */
+  // Filters used for loading transactions.
+  readonly transactionsFilter: GetParams = {};
+
+  // Wallet data
   wallet: Wallet;
 
-  /**
-   * Wallet list
-   */
+  // Wallet list
   wallets: Wallet[];
 
-  /**
-   * Categories for transaction
-   */
+  // Categories for transaction
   categories: Category[];
 
-  /**
-   * Wallet transactions
-   */
+  // Wallet transactions
   transactions: Transaction[];
 
-  /**
-   * Wallet ID from param
-   */
+  // Wallet ID from param
   walletId: string;
 
-  /**
-   * Page error
-   */
+  // Page error flag.
   error = false;
 
-  constructor(private api: ApiService,
-              private route: ActivatedRoute,
+  // API response data for transactions.
+  transactionsApiResponse: ApiResponse<Transaction>;
+
+  constructor(private route: ActivatedRoute,
               private modalService: BsModalService) {
   }
 
@@ -72,31 +67,24 @@ export class DetailComponent implements OnInit {
        * If wallet ID changes
        */
       if (this.walletId !== params.get('id')) {
-        /**
-         * Get wallet ID from params
-         */
+        // Get wallet ID from params
         this.walletId = params.get('id');
-        /**
-         * Load wallet data
-         */
+        // Update transaction filters.
+        this.transactionsFilter.wallet = this.walletId;
+        // Load wallet data
         this.loadWallet();
         /**
          * Load wallet list
          */
-        this.api.wallet.list().subscribe((data: Wallet[]): void => {
+        Api.wallet.list().subscribe((data: Wallet[]): void => {
           this.wallets = data;
         });
         /**
          * Load categories for transaction
          */
-        this.api.category.list().subscribe((data: Category[]): void => {
+        Api.category.list().subscribe((data: Category[]): void => {
           this.categories = data;
-          /**
-           * Load transactions of this wallet
-           */
-          this.api.transaction.list({ wallet: this.walletId }).subscribe((transaction: Transaction[]): void => {
-            this.transactions = transaction;
-          });
+          this.loadTransactions();
         });
       }
     });
@@ -106,11 +94,21 @@ export class DetailComponent implements OnInit {
    * Load wallet data
    */
   loadWallet(): void {
-    this.api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
+    Api.wallet.retrieve(this.walletId).subscribe((data: Wallet): void => {
       this.wallet = data;
     }, (): void => {
       delete this.wallet;
       this.error = true;
+    });
+  }
+
+  /**
+   * Load transactions of this wallet.
+   */
+  loadTransactions(): void {
+    Api.transaction.list(this.transactionsFilter).subscribe((data: ApiResponse<Transaction>): void => {
+      this.transactions = data.results;
+      this.transactionsApiResponse = data;
     });
   }
 

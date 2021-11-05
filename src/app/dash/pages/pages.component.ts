@@ -6,9 +6,9 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Api } from '@shared/classes/api';
 import { ApiResponse } from '@shared/interfaces/api-response';
 import { TransactionsPage } from '@shared/interfaces/transactions-page';
-import { ApiService } from '@shared/services/api.service';
 
 @Component({
   selector: 'app-pages',
@@ -32,14 +32,11 @@ export class PagesComponent implements OnInit {
    */
   loading: boolean;
 
-  constructor(private api: ApiService) {
-  }
-
   ngOnInit(): void {
     /**
      * Get list of transactions pages.
      */
-    this.api.transactionsPage.list().subscribe((data: ApiResponse<TransactionsPage>): void => {
+    Api.transactionsPage.list().subscribe((data: ApiResponse<TransactionsPage>): void => {
       this.pages = data.results;
     });
   }
@@ -53,7 +50,7 @@ export class PagesComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.api.transactionsPage.update(page.id, { note }).subscribe((): void => {
+    Api.transactionsPage.update(page.id, { note }).subscribe((): void => {
       this.loading = false;
       page.note = note;
     }, (): void => {
@@ -67,7 +64,7 @@ export class PagesComponent implements OnInit {
    */
   delete(page: TransactionsPage): void {
     this.loading = true;
-    this.api.transactionsPage.delete(page.id).subscribe((): void => {
+    Api.transactionsPage.delete(page.id).subscribe((): void => {
       this.loading = false;
       this.pages.splice(this.pages.indexOf(page), 1);
     }, (): void => {

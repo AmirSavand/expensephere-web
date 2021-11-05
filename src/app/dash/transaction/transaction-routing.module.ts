@@ -13,6 +13,10 @@ const routes: Routes = [
         loadChildren: () => import('./list/list.module').then(m => m.ListModule),
       },
       {
+        path: 'bulk-add',
+        loadChildren: () => import('./bulk-add/bulk-add.module').then(m => m.BulkAddModule),
+      },
+      {
         path: ':id',
         loadChildren: () => import('./detail/detail.module').then(m => m.DetailModule),
       },

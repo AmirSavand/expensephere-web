@@ -16,6 +16,7 @@
     -webkit-overflow-scrolling: touch;
     background: $light;
     border-left: 1px solid $border-color;
+    z-index: 10;
 
     > div {
       padding: map_get($spacers, 4);

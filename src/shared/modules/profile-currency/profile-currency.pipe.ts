@@ -1,6 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { ProfileService } from 'src/shared/services/profile.service';
+import { ProfileService } from '@shared/services/profile.service';
 
 @Pipe({
   name: 'profileCurrency',

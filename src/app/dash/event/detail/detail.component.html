@@ -8,7 +8,7 @@
 </div>
 
 <!-- Data -->
-<div class="container my-3" *ngIf="event">
+<div class="container py-3" *ngIf="event">
   <div class="row">
 
     <!-- Info (left) -->
@@ -21,7 +21,7 @@
       <!-- Budget -->
       <hr>
       <p class="font-weight-bold">Budget</p>
-      <p>{{ event.budget | profileCurrency }}</p>
+      <p>{{ event.budget ? (event.budget | profileCurrency) : 'Not set' }}</p>
 
       <!-- Transactions (count) -->
       <hr>
@@ -37,10 +37,15 @@
       <hr>
       <p class="font-weight-bold">Date</p>
       <p>
-        <span>From </span>
-        <abbr [title]="event.start | date:'short'">{{ event.start | date }} </abbr>
-        <span>to </span>
-        <abbr [title]="event.end | date:'short'">{{ event.end | date }}</abbr>
+        <ng-container *ngIf="!event.start && !event.end">Not set</ng-container>
+        <ng-container *ngIf="event.start">
+          <span>From </span>
+          <abbr [title]="event.start | date:'short'">{{ event.start | date }} </abbr>
+        </ng-container>
+        <ng-container *ngIf="event.end">
+          <span>to </span>
+          <abbr [title]="event.end | date:'short'">{{ event.end | date }}</abbr>
+        </ng-container>
         <span>.</span>
       </p>
 
@@ -74,6 +79,16 @@
                             [wallets]="wallets"
                             columnClass="col-12">
       </app-transaction-list>
+
+
+      <!-- Pagination -->
+      <app-pager wrapperClass="mt-3"
+                 *ngIf="transactions?.length"
+                 [disabled]="!transactions || !wallets"
+                 [apiResponse]="transactionsApiResponse"
+                 [paramsToCombine]="transactionsFilter"
+                 (pageChanged)="loadTransactions()">
+      </app-pager>
     </div>
   </div>
 </div>

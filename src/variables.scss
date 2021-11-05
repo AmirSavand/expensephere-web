@@ -50,12 +50,14 @@ $popover-max-width: 250px;
 $popover-border-radius: 0;
 
 $modal-content-border-width: 0;
-$modal-backdrop-bg: $secondary;
+$modal-backdrop-opacity: 0;
 
 $link-hover-decoration: none;
 
 $badge-font-size: 100%;
 $badge-font-weight: normal;
+
+$dropdown-item-padding-y: 0.75rem;
 
 /* Icons variables override */
 

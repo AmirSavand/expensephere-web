@@ -13,11 +13,14 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle';
 import { faCloudDownloadAlt } from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
+import { faFileInvoice } from '@fortawesome/free-solid-svg-icons/faFileInvoice';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons/faRetweet';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
 import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
+import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Profile } from '@shared/interfaces/profile';
 import { User } from '@shared/interfaces/user';
@@ -26,7 +29,6 @@ import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-
 import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
-import { ApiService } from '@shared/services/api.service';
 import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -45,6 +47,7 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly style = Color.style;
   readonly home = environment.home;
 
+  readonly faAdd: IconDefinition = faPlus;
   readonly faView: IconDefinition = faChevronDown;
   readonly faSidebarToggle: IconDefinition = faBars;
   readonly faBack: IconDefinition = faChevronUp;
@@ -52,6 +55,7 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly faSettings: IconDefinition = faCog;
   readonly faWallets: IconDefinition = faLayerGroup;
   readonly faExport: IconDefinition = faCloudDownloadAlt;
+  readonly faInvoice: IconDefinition = faFileInvoice;
 
   readonly faDashboard: IconDefinition = faTachometerAlt;
   readonly faTransactions: IconDefinition = faRetweet;
@@ -88,7 +92,6 @@ export class DashComponent implements OnInit, OnDestroy {
   sidebarClose = true;
 
   constructor(public auth: AuthService,
-              private api: ApiService,
               private router: Router,
               private modalService: BsModalService) {
   }
@@ -132,7 +135,7 @@ export class DashComponent implements OnInit, OnDestroy {
       this.sidebarViewSelected = SidebarView.MAIN;
     } else {
       this.sidebarViewSelected = SidebarView.USER;
-      this.api.profile.list().subscribe((profiles: Profile[]): void => {
+      Api.profile.list().subscribe((profiles: Profile[]): void => {
         this.profiles = profiles;
       });
     }

@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { ListRoutingModule } from '@app/dash/wallet/list/list-routing.module';
 import { ListComponent } from '@app/dash/wallet/list/list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FiltersModule } from '@shared/modules/filters/filters.module';
@@ -10,7 +8,8 @@ import { NoDataModule } from '@shared/modules/no-data/no-data.module';
 import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-currency.module';
 import { WalletFormModalModule } from '@shared/modules/wallet-form-modal/wallet-form-modal.module';
 import { WalletListModule } from '@shared/modules/wallet-list/wallet-list.module';
-import { ModalModule } from 'ngx-bootstrap/modal';
+
+import { ListRoutingModule } from './list-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,10 +18,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   imports: [
     CommonModule,
     ListRoutingModule,
-    ModalModule.forRoot(),
-    WalletFormModalModule,
     FontAwesomeModule,
     ProfileCurrencyModule,
+    WalletFormModalModule,
     WalletListModule,
     NoDataModule,
     LoadingModule,

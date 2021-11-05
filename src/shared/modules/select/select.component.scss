@@ -35,6 +35,10 @@
 
     > .list-group {
       max-height: calc(100% - 123px);
+
+      > .list-group-item {
+        flex-shrink: 0;
+      }
     }
   }
 }

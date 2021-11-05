@@ -1,0 +1,100 @@
+<!-- Invoice -->
+<div class="wrapper pb-5">
+
+  <!-- Company, payment status, visibility -->
+  <div class="company">
+    <div class="container text-white py-5">
+      <p>
+        <span class="bg-light text-dark rounded px-3 py-1 mr-2" *ngIf="invoice.is_paid !== null">
+          {{ invoice.is_paid ? 'PAID' : 'NOT PAID' }}
+        </span>
+        <span class="bg-light text-dark rounded px-3 py-1 mr-2" *ngIf="!invoice.is_published">PRIVATE</span>
+      </p>
+      <h1 class="text-pre font-weight-bold">{{ invoice.company }}</h1>
+    </div>
+  </div>
+
+  <!-- Contained -->
+  <div class="container">
+
+    <!-- Client, invoice ID, total, date, due date -->
+    <div class="client mb-5">
+      <div class="bg-white border shadow p-4 p-md-5">
+        <div class="row">
+          <div class="col-md-7 mb-3 mb-md-0">
+            <p>Client</p>
+            <h2 class="text-pre font-weight-bold">{{ invoice.client }}</h2>
+          </div>
+          <div class="col-md-5">
+            <p>Invoice <b class="text-re text-primary">{{ invoice.invoice_id }}</b></p>
+            <h2 class="font-weight-bold text-success">{{ invoice.total | profileCurrency:invoice.currency }}</h2>
+            <div class="border bg-light rounded p-2 mt-auto" *ngIf="invoice.date || invoice.due_date">
+              <div class="d-flex justify-content-between" *ngIf="invoice.date">
+                <span class="text-muted">Date</span>
+                <span>{{ invoice.date | date }}</span>
+              </div>
+              <div class="d-flex justify-content-between" *ngIf="invoice.due_date">
+                <span class="text-muted">Due Date</span>
+                <span>{{ invoice.due_date | date }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Items table -->
+    <table class="table table-borderless">
+      <thead>
+      <tr>
+        <th>{{ invoice.items_label || "Tasks" }}</th>
+        <th class="text-right">Price</th>
+        <th class="text-right">Quantity</th>
+        <th class="text-right">Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of invoice.items">
+        <td>{{ item.description }}</td>
+        <td class="text-right">{{ item.price | profileCurrency:invoice.currency }}</td>
+        <td class="text-right">{{ item.quantity | number }}</td>
+        <td class="text-right">{{ item.quantity * item.price | profileCurrency:invoice.currency }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Separator -->
+    <hr class="my-4">
+
+    <!-- Notes, total, subtotal, tax, discount -->
+    <div class="row">
+      <div class="col-md-7 mb-3 mb-md-0">
+        <p class="text-muted">Notes</p>
+        <div class="text-pre">{{ invoice.note || 'There are no notes.' }}</div>
+      </div>
+      <div class="col-md-5">
+        <table class="table table-borderless text-right">
+          <tbody>
+          <tr *ngIf="invoice.discount !== null || invoice.tax !== null">
+            <th>Subtotal</th>
+            <td>{{ invoice.subtotal | profileCurrency:invoice.currency }}</td>
+          </tr>
+          <tr *ngIf="invoice.discount !== null">
+            <th>Discount</th>
+            <td *ngIf="invoice.discount_flat">{{ invoice.discount | profileCurrency:invoice.currency }}</td>
+            <td *ngIf="!invoice.discount_flat">{{ invoice.discount | number:'0.0-2' }}%</td>
+          </tr>
+          <tr *ngIf="invoice.tax !== null">
+            <th>Tax</th>
+            <td>{{ invoice.tax | number:'0.0-2' }}%</td>
+          </tr>
+          <tr class="h4" [class.border-top]="invoice.discount !== null || invoice.tax !== null">
+            <th>Total</th>
+            <td>{{ invoice.total | profileCurrency:invoice.currency }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

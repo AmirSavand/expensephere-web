@@ -1,0 +1,26 @@
+@import "src/variables";
+
+td {
+  padding: map_get($spacers, 1);
+  min-width: 100px;
+
+  &.actions {
+    text-align: right;
+    min-width: unset;
+    padding: map_get($spacers, 3) 0;
+
+    > a,
+    > fa-icon {
+      margin: 0 map_get($spacers, 2);
+    }
+  }
+}
+
+.form-error {
+  background: $danger;
+  padding: 0 map_get($spacers, 1);
+  margin-top: map_get($spacers, 1);
+  border-radius: $border-radius;
+  font-size: $form-feedback-tooltip-font-size;
+  color: white;
+}
