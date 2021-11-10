@@ -95,17 +95,8 @@ a, button, .btn {
 }
 
 .item-icon-wrapper {
-  &:hover,
-  &:focus {
-    background: #fff;
-    box-shadow: 0 0 0 5px #fff;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:active {
-      background: none;
-      box-shadow: none;
-    }
+  &.card {
+    border: $border-width solid $border-color;
   }
 
   > div {
@@ -271,25 +262,22 @@ a, button, .btn {
   > .card-header {
     display: flex;
     align-items: center;
-    background: $dark;
-    color: $light;
+    background: transparent;
+    color: $dark;
     font-weight: $font-weight-bold;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   > .card-body,
   > .card-footer {
     border: 1px solid $border-color;
-    border-top: none;
-    border-radius: 0 0 $border-radius $border-radius;
-    background: transparent;
+    border-radius: $border-radius;
     position: relative;
   }
 
-  > .card-body {
-    z-index: 2;
-  }
-
   > .card-footer {
+    background: white;
     margin-top: -$border-radius;
     z-index: 1;
     padding-top: $card-spacer-y + $border-radius;
