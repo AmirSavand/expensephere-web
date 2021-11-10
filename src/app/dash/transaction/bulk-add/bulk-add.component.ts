@@ -11,7 +11,6 @@ import { Api } from '@shared/classes/api';
 import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
-import { Event } from '@shared/interfaces/event';
 import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Transaction } from '@shared/interfaces/transaction';
@@ -35,7 +34,6 @@ export class BulkAddComponent implements OnInit {
   readonly expenseKind = ExpenseKind;
 
   wallets: Wallet[];
-  events: Event[];
   categories: Category[];
   categoryGroups: Record<ExpenseKind, Category[]> = {
     [ExpenseKind.INCOME]: [],
@@ -87,12 +85,6 @@ export class BulkAddComponent implements OnInit {
         category: this.categoryGroups[ExpenseKind.EXPENSE][0].id,
       }));
     });
-    /**
-     * Load events for selection.
-     */
-    Api.event.list().subscribe((data: Event[]): void => {
-      this.events = data;
-    });
   }
 
   /**
@@ -115,7 +107,6 @@ export class BulkAddComponent implements OnInit {
         wallet: [wallet, Validators.required],
         category: [category, Validators.required],
         into: [null],
-        event: [null],
         amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
         time: [format(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
       }),

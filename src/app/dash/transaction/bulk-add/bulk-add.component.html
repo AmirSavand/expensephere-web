@@ -15,7 +15,6 @@
         <th>Type</th>
         <th>Wallet</th>
         <th>Category</th>
-        <th>Event</th>
         <th>Amount</th>
         <th>Time</th>
       </tr>
@@ -75,14 +74,6 @@
             </option>
           </select>
           <div class="form-error" *ngIf="form.error.category">{{ form.error.category[0] }}</div>
-        </td>
-        <!-- Event -->
-        <td *ngIf="!form.success">
-          <select class="custom-select" formControlName="event" [class.is-invalid]="form.error.event">
-            <option [ngValue]="null">Unset</option>
-            <option *ngFor="let event of events" [ngValue]="event.id">{{ event.name }}</option>
-          </select>
-          <div class="form-error" *ngIf="form.error.event">{{ form.error.event[0] }}</div>
         </td>
         <!-- Amount -->
         <td *ngIf="!form.success">
