@@ -44,7 +44,9 @@ export class SettingsComponent implements OnInit {
      */
     AuthService.user.subscribe((user: User): void => {
       this.user = user;
-      this.form.form.get('display_name').setValue(user.account.name);
+      if (user) {
+        this.form.form.get('display_name').setValue(user.account.name);
+      }
     });
   }
 

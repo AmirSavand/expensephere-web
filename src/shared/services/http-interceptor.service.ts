@@ -2,7 +2,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Injectable } from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
-import { WalletService } from '@shared/services/wallet.service';
+import { GetParams } from '@shared/types/get-params';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -11,42 +11,45 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpInterceptorService implements HttpInterceptor {
 
-  private static readonly PROFILE_ENDPOINTS: string[] = ['transaction', 'wallet', 'category', 'event', 'invoice'];
+  private static readonly PROFILE_ENDPOINTS: string[] = [
+    'transaction',
+    'wallet',
+    'category',
+    'event',
+    'invoice',
+  ];
+
+  private static shouldFilterByProfile(url: string, method: string): boolean {
+    const endpoints: string[] = HttpInterceptorService.PROFILE_ENDPOINTS;
+    return Boolean(
+      method === 'GET' &&
+      ProfileService.profile.value &&
+      endpoints.some((endpoint: string): boolean => url.includes(`/${endpoint}/`)),
+    );
+  }
 
   constructor(private auth: AuthService) {
   }
 
-  /**
-   * @param request The outgoing request to handle
-   * @param next The next interceptor in the chain, or the backend if no interceptors in the chain.
-   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = AuthService.token;
-    if (token) {
+    if (AuthService.token) {
       /**
        * Include profile for some API calls
        */
-      const params: { [p: string]: string } = {};
-      if (request.method === 'GET') {
-        if (ProfileService.profile.value &&
-          HttpInterceptorService.PROFILE_ENDPOINTS.some((substr: string): boolean => request.url.includes(substr)) &&
-          request.url.split('/').length === 5) {
-          let key = 'profile';
-          if (request.url.includes('transaction')) {
-            key = 'wallet__profile';
-          }
-          params[key] = String(ProfileService.profile.value.id);
+      const params: GetParams = {};
+      if (HttpInterceptorService.shouldFilterByProfile(request.url, request.method)) {
+        let key = 'profile';
+        if (request.url.includes('/transaction/')) {
+          key = 'wallet__profile';
         }
-        if (WalletService.wallet && request.url.includes('transaction')) {
-          params.wallet = String(WalletService.wallet);
-        }
+        params[key] = String(ProfileService.profile.value.id);
       }
       /**
-       * Update request with new params and headers
+       * Include authentication token
        */
       request = request.clone({
         setHeaders: {
-          Authorization: `JWT ${token}`,
+          Authorization: `JWT ${AuthService.token}`,
         },
         setParams: params,
       });

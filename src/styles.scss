@@ -1,9 +1,50 @@
+/* Google font */
+
 @import url("https://fonts.googleapis.com/css2?family=Gudea:wght@400;700&display=swap");
 
+/* Variables */
 @import "./variables";
 
+/* Bootstrap */
 @import "~bootstrap/scss/bootstrap";
-@import "src/assets/icon/style";
+
+/* Icons */
+@import "./assets/icon/style";
+
+/* Dark and light theme */
+
+:root {
+  --app-primary-color: #{$primary};
+  --app-sidebar-bg-color: #{$light};
+  --app-sidebar-text-color: #{$dark};
+  --app-sidebar-border-color: #{$border-color};
+  --app-sidebar-card-bg-color: #{darken($light, 5)};
+  --app-sidebar-link-hover-bg-color: rgba(0, 0, 0, 0.025);
+  --app-sidebar-link-active-bg-color: rgba(0, 0, 0, 0.05);
+  --app-header-bg-color: #{$white};
+  --app-header-text-color: #{$dark};
+  --app-header-border-color: #{$border-color};
+}
+
+@media (prefers-color-scheme: light) {
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --app-primary-color: #{lighten($primary, 20)};
+    --app-sidebar-bg-color: #{$dark};
+    --app-sidebar-text-color: #{$light};
+    --app-sidebar-border-color: #{lighten($dark, 20)};
+    --app-sidebar-card-bg-color: #{lighten($dark, 10)};
+    --app-sidebar-link-hover-bg-color: rgba(255, 255, 255, 0.025);
+    --app-sidebar-link-active-bg-color: rgba(255, 255, 255, 0.05);
+    --app-header-bg-color: #{$white};
+    --app-header-text-color: #{$dark};
+    --app-header-border-color: #{$border-color};
+  }
+}
+
+/* Global */
 
 ::-moz-selection {
   background-color: lighten($primary, 10);
@@ -238,20 +279,30 @@ a, button, .btn {
       max-width: 100%;
       height: 100%;
       margin: 0;
+      display: flex;
 
-      > .modal-content > * {
-        > .modal-header {
-          border-radius: 0 !important;
-          position: sticky;
-          top: 0;
-          z-index: 10;
-        }
+      > .modal-content {
+        background: rgba(black, 0.5);
+        pointer-events: none;
 
-        > .modal-body {
-        }
+        > * {
+          pointer-events: all;
+          background: white;
+          margin-top: auto;
 
-        > .modal-footer {
-          border-radius: 0 !important;
+          > .modal-header {
+            border-radius: 0 !important;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+          }
+
+          > .modal-body {
+          }
+
+          > .modal-footer {
+            border-radius: 0 !important;
+          }
         }
       }
     }

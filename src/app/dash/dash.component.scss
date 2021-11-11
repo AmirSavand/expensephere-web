@@ -14,9 +14,23 @@
     max-width: $sidebar-width;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    background: $light;
-    border-left: 1px solid $border-color;
+    background: var(--app-sidebar-bg-color);
+    color: var(--app-sidebar-text-color);
+    border-left: 1px solid var(--app-sidebar-border-color);
     z-index: 10;
+
+    .card > .card-body {
+      background: var(--app-sidebar-card-bg-color);
+      border-color: var(--app-sidebar-border-color);
+    }
+
+    .text-primary {
+      color: var(--app-primary-color) !important;
+    }
+
+    .bg-primary {
+      background: var(--app-primary-color) !important;
+    }
 
     > div {
       padding: map_get($spacers, 4);
@@ -34,20 +48,20 @@
         > a {
           padding: map_get($spacers, 4);
           display: block;
-          color: $dark;
+          color: var(--app-sidebar-text-color);
           text-decoration: none;
 
           &:hover,
           &:focus {
-            background: rgba(0, 0, 0, 0.025);
+            background: var(--app-sidebar-link-hover-bg-color);
           }
 
           &:active,
           &.active {
-            background: rgba(0, 0, 0, 0.05);
+            background: var(--app-sidebar-link-active-bg-color);
 
             > fa-icon {
-              color: $primary;
+              color: var(--app-primary-color);
               opacity: 1;
             }
           }
@@ -66,6 +80,12 @@
       align-items: center;
       justify-content: end;
     }
+
+    > .view-user {
+      a:not(.btn) {
+        color: var(--app-primary-color);
+      }
+    }
   }
 
   > #page-wrapper {
@@ -75,9 +95,9 @@
     > #header {
       height: $header-height;
       min-height: $header-height;
-      background: $white;
-      color: $light;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+      background: var(--app-header-bg-color);
+      color: var(--app-header-text-color);
+      border-bottom: $border-width solid var(--app-header-border-color);
       align-items: center;
     }
 

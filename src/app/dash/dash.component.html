@@ -12,25 +12,31 @@
 
         <!-- Logo -->
         <a routerLink="/" title="Expensephere">
-          <img src="assets/favicon/favicon.png" class="mr-3" [width]="28">
+          <img alt="Expensephere" src="assets/favicon/favicon.png" class="mr-3" [width]="28">
         </a>
 
         <!-- Total -->
-        <div class="text-dark" title="Total balance" *ngIf="profile">
+        <div title="Total balance" *ngIf="profile">
           <div class="font-weight-bold">Total</div>
           <div class="text-muted small">{{ profile.balance.total | profileCurrency }}</div>
         </div>
 
-        <!-- Create button (dropdown) -->
-        <div class="dropdown ml-auto" dropdown>
+        <!-- Create transaction button -->
+        <a class="btn btn-secondary ml-auto" (click)="addTransaction()">
+          <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
+          <span class="ml-1">Transaction</span>
+        </a>
+
+        <!-- Dropdown -->
+        <div class="dropdown ml-2" dropdown>
+
           <!-- Create button -->
           <button class="btn btn-primary" dropdownToggle>
             <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
           </button>
+
           <!-- Buttons -->
           <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-            <!-- Transaction -->
-            <a class="dropdown-item" (click)="addTransaction()">Transaction</a>
             <!-- Wallet -->
             <a class="dropdown-item" (click)="addWallet()">Wallet</a>
             <!-- Category -->
@@ -66,27 +72,30 @@
     <div id="user">
 
       <!-- Sidebar toggle button (mobile only) -->
-      <button class="btn btn-light mr-3 d-block d-lg-none" (click)="sidebarClose = true">
+      <button class="btn btn-secondary mr-3 d-block d-lg-none" (click)="sidebarClose = true">
         <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
       </button>
+
+      <!-- User icon (desktop only) -->
+      <fa-icon [icon]="faPhoto" size="2x" class="text-primary mr-3 d-none d-lg-block"></fa-icon>
 
       <!-- Name -->
       <div class="font-weight-bold">
         <div>{{ user.account.name }}</div>
-        <small class="text-muted d-none d-sm-block">{{ user.email }}</small>
+        <div class="small text-muted">{{ user.email }}</div>
       </div>
 
       <!-- Icon -->
-      <div class="btn btn-light ml-auto" (click)="toggleUserView()">
+      <div class="btn btn-secondary ml-auto" (click)="toggleUserView()">
         <fa-icon [fixedWidth]="true" [icon]="sidebarViewSelected === sidebarView.USER ? faBack : faView"></fa-icon>
       </div>
     </div>
 
     <!-- Sidebar view: User -->
-    <div *ngIf="sidebarViewSelected === sidebarView.USER">
+    <div class="view-user" *ngIf="sidebarViewSelected === sidebarView.USER">
 
       <!-- My profile -->
-      <div class="my profiles" *ngIf="profile">
+      <div class="my profile" *ngIf="profile">
 
         <!-- Header -->
         <a class="font-weight-bold mb-3 d-block" routerLink="./profile/list">My Profiles</a>
@@ -152,7 +161,7 @@
       <!-- App info -->
       <div class="mt-auto text-secondary small">
         <p>
-          <span>Expensephere v0.7.4 Beta &bull; </span>
+          <span>Expensephere v0.8 Beta &bull; </span>
           <a [href]="home">Website</a>
           <span> &bull; </span>
           <a href="mailto:expensephere@savandbros.com">Feedback</a>
@@ -162,7 +171,7 @@
     </div>
 
     <!-- Sidebar view: Main -->
-    <div *ngIf="sidebarViewSelected === sidebarView.MAIN">
+    <div class="view-main" *ngIf="sidebarViewSelected === sidebarView.MAIN">
 
       <!-- Links -->
       <div class="links" *ngIf="profile">

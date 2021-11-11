@@ -1,6 +1,5 @@
 /* Custom variables */
 
-$sidebar-color: #F9FAFC;
 $sidebar-width: 350px;
 $sidebar-mobile-width: 250px;
 $header-height: 90px;
@@ -23,7 +22,7 @@ $success: #0be881;
 $danger: #ff5252;
 $warning: #ffa801;
 $dark: #1e272e;
-$light: $sidebar-color;
+$light: #F9FAFC;
 $tertiary: lighten($secondary, 35);
 
 $theme-colors: (
@@ -35,13 +34,14 @@ $font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-bold: 700;
 
-$body-bg: white;
+$body-bg: #fff;
 $body-color: $dark;
 
 $input-bg: $light;
 $input-border-width: 0;
 $input-height: 45px;
 
+$card-bg: transparent;
 $card-border-width: 0;
 
 $popover-body-padding-x: 15px;
@@ -51,6 +51,7 @@ $popover-border-radius: 0;
 
 $modal-content-border-width: 0;
 $modal-backdrop-opacity: 0;
+$modal-fade-transform: translate(0, 25%);
 
 $link-hover-decoration: none;
 
@@ -61,7 +62,7 @@ $dropdown-item-padding-y: 0.75rem;
 
 /* Icons variables override */
 
-$icomoon-font-path: '/assets/icon/fonts';
+$icomoon-font-path: "/assets/icon/fonts";
 
 /* Bootstrap variables */
 
