@@ -12,6 +12,7 @@ import { WalletListModule } from '@shared/modules/wallet-list/wallet-list.module
 import { PieChartModule } from '@swimlane/ngx-charts';
 import { MetricSpentCategoryModule } from '@shared/modules/metric-spent-category/metric-spent-category.module';
 import { PagerModule } from '@shared/modules/pager/pager.module';
+import { ChartSpentCategoryModule } from 'src/shared/modules/chart-spent-category/chart-spent-category.module';
 
 import { OverviewRoutingModule } from './overview-routing.module';
 import { OverviewComponent } from './overview.component';
@@ -36,6 +37,7 @@ import { OverviewComponent } from './overview.component';
     NoDataModule,
     PagerModule,
     MetricSpentCategoryModule,
+    ChartSpentCategoryModule,
   ],
 })
 export class OverviewModule {

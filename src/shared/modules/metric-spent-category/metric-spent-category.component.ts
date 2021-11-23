@@ -18,19 +18,28 @@ export class MetricSpentCategoryComponent implements OnInit {
 
   @Input() categories: Category[];
 
+  @Input() metrics?: MetricSpent[];
+
   categoryDict: Record<PK, Category>;
 
-  metrics: MetricSpent[];
+  /** Filter out items without values and sort by higher values first. */
+  private generate(): void {
+    this.metrics = this.metrics
+      .filter((item: MetricSpent): boolean => Boolean(item.value))
+      .sort((a: MetricSpent, b: MetricSpent): number => b.value - a.value);
+  }
 
   ngOnInit(): void {
     this.categoryDict = Utils.getDictOfList(this.categories);
-    Api.category.action<MetricSpent[]>('metric-spent', {
-      time_after: Utils.dateToUTCString(addDays(new Date(), -30)),
-    }).subscribe((data: MetricSpent[]): void => {
-      /** Filter out items without values and sort by higher values first. */
-      this.metrics = data
-        .filter((item: MetricSpent): boolean => Boolean(item.value))
-        .sort((a: MetricSpent, b: MetricSpent): number => b.value - a.value);
-    });
+    if (!this.metrics) {
+      Api.category.action<MetricSpent[]>('metric-spent', {
+        time_after: Utils.dateToUTCString(addDays(new Date(), -30)),
+      }).subscribe((data: MetricSpent[]): void => {
+        this.metrics = data;
+        this.generate();
+      });
+    } else {
+      this.generate();
+    }
   }
 }

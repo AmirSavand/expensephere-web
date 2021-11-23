@@ -6,6 +6,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { ExpenseKind } from '@shared/enums/kind';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Profile } from '@shared/interfaces/profile';
 import { Transaction } from '@shared/interfaces/transaction';
@@ -15,10 +16,12 @@ import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ProfileService } from '@shared/services/profile.service';
+import { GetParams } from '@shared/types/get-params';
+import { addDays } from 'date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
-import { ApiResponse } from '@shared/interfaces/api-response';
-import { GetParams } from '@shared/types/get-params';
+import { Utils } from 'src/shared/classes/utils';
+import { MetricSpent } from 'src/shared/interfaces/metric-spent';
 
 @Component({
   selector: 'app-overview',
@@ -27,13 +30,15 @@ import { GetParams } from '@shared/types/get-params';
 })
 export class OverviewComponent implements OnInit, OnDestroy {
 
-  // Maximum number of categories to show in category chart.
-  private static MAX_CATEGORIES_IN_CHART = 7;
+  /** On init subscription. */
+  private subscription = new Subscription();
 
-  private subscription: Subscription;
-  private subscriptions: Subscription[] = [];
+  /** On load subscriptions. */
+  private subscriptions = new Subscription();
 
   readonly faLink: IconDefinition = faArrowRight;
+
+  readonly filterText = 'Filtered by last 30 days';
 
   // Current profile..
   private profile: Profile;
@@ -56,14 +61,11 @@ export class OverviewComponent implements OnInit, OnDestroy {
   // Expense/income chart data.
   balanceChartResults: { name: string; value: number }[];
 
-  // Top expense categories chart data.
-  categoryChartResults: { name: string; value: number }[];
-
   // Balance chart colors.
   balanceChartColors: { name: string; value: string }[] = [];
 
-  // Category chart colors.
-  categoryChartColors: { name: string; value: string }[] = [];
+  // Metrics spent for categories used for category chart and overview.
+  categorySpentMetrics: MetricSpent[];
 
   // API response data for transactions.
   transactionsApiResponse: ApiResponse<Transaction>;
@@ -100,10 +102,10 @@ export class OverviewComponent implements OnInit, OnDestroy {
     /**
      * Watch selected profile data
      */
-    this.subscription = ProfileService.profile.subscribe((profile: Profile): void => {
+    this.subscription.add(ProfileService.profile.subscribe((profile: Profile): void => {
       this.profile = profile;
       this.loadData();
-    });
+    }));
   }
 
   ngOnDestroy(): void {
@@ -121,15 +123,13 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.categories = null;
     this.categoriesToShow = null;
     this.transactions = null;
-    this.subscriptions.forEach((subscription: Subscription): void => subscription.unsubscribe());
+    this.categorySpentMetrics = null;
+    this.subscriptions.unsubscribe();
+    this.subscriptions = new Subscription();
     /**
      * If there's a selected profile
      */
     if (this.profile) {
-      /**
-       * We use this to push to subscriptions list
-       */
-      let subscription: Subscription;
       /**
        * Setup income/expense chart data
        */
@@ -150,7 +150,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
       /**
        * Load wallet list
        */
-      subscription = Api.wallet.list().subscribe((wallets: Wallet[]): void => {
+      this.subscriptions.add(Api.wallet.list().subscribe((wallets: Wallet[]): void => {
         /**
          * There are no wallets for this profile,
          * open the wallet form modal so user creates one.
@@ -179,7 +179,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
          * Load category list
          * We need all categories for transactions list and for creating the chart.
          */
-        subscription = Api.category.list().subscribe((data: Category[]): void => {
+        this.subscriptions.add(Api.category.list().subscribe((data: Category[]): void => {
           /**
            * Store categories and sort them by transactions count
            */
@@ -192,31 +192,18 @@ export class OverviewComponent implements OnInit, OnDestroy {
           this.categoriesToShow = data.filter((item: Category): boolean => (
             item.kind === ExpenseKind.EXPENSE && Boolean(item.transactions_total)
           ));
-          /**
-           * Setup top category chart.
-           * We only need top X expense categories with values.
-           */
-          let chartCategories: Category[] = data.filter((item: Category): boolean => (
-            item.kind === ExpenseKind.EXPENSE && Boolean(item.transactions_total)
-          ));
-          chartCategories = chartCategories.splice(0, OverviewComponent.MAX_CATEGORIES_IN_CHART);
-          this.categoryChartResults = [];
-          for (const category of chartCategories) {
-            this.categoryChartResults.push({
-              name: category.name,
-              value: category.transactions_total || 0,
-            });
-            this.categoryChartColors.push({
-              name: category.name,
-              value: category.color,
-            });
-          }
-        });
-        this.subscriptions.push(subscription);
-        // Load transactions list.
-        this.subscriptions.push(this.loadTransactions());
-      });
-      this.subscriptions.push(subscription);
+        }));
+        /** Load transactions list. */
+        this.subscriptions.add(this.loadTransactions());
+      }));
+      /** Load spent metrics for categories. */
+      this.subscriptions.add(Api.category.action<MetricSpent[]>('metric-spent', {
+        time_after: Utils.dateToUTCString(addDays(new Date(), -30)),
+      }).subscribe({
+        next: (data: MetricSpent[]): void => {
+          this.categorySpentMetrics = data;
+        },
+      }));
     }
   }
 

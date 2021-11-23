@@ -1,13 +1,16 @@
 <div class="container">
 
-  <!-- Row 1 -->
+  <!-- Spent in categories -->
   <div class="card mt-4">
-    <div class="card-header">Spent in the last 30 days</div>
+    <div class="card-header" [title]="filterText">Spent in categories</div>
     <div class="card-body p-0">
       <!-- Metrics -->
-      <app-metric-spent-category *ngIf="categories" [categories]="categories"></app-metric-spent-category>
+      <app-metric-spent-category *ngIf="categories && categorySpentMetrics"
+                                 [metrics]="categorySpentMetrics"
+                                 [categories]="categories">
+      </app-metric-spent-category>
       <!-- Loading -->
-      <div class="p-3 text-center" *ngIf="!categories">
+      <div class="p-3 text-center" *ngIf="!categories || !categorySpentMetrics">
         <app-loading></app-loading>
       </div>
     </div>
@@ -64,13 +67,13 @@
         </div>
       </div>
 
-      <!-- Transactions Overview + Categories Overview -->
+      <!-- Balance chart + Categories chart -->
       <div class="row">
 
-        <!-- Transactions overview -->
+        <!-- Balance chart -->
         <div class="col-lg-6">
           <div class="card mt-4">
-            <div class="card-header">Transactions Overview</div>
+            <div class="card-header" [title]="filterText">Balance Chart</div>
             <div class="card-body chart-wrapper p-0">
 
               <!-- Loading -->
@@ -94,29 +97,18 @@
           </div>
         </div>
 
-        <!-- Categories overview -->
+        <!-- Categories chart -->
         <div class="col-lg-6">
           <div class="card mt-4">
-            <div class="card-header">Categories Overview</div>
-            <div class="card-body chart-wrapper p-0">
-
+            <div class="card-header" [title]="filterText">Categories Chart</div>
+            <div class="card-body p-0">
+              <!-- Chart -->
+              <app-chart-spent-category *ngIf="categories && categorySpentMetrics"
+                                        [metrics]="categorySpentMetrics"
+                                        [categories]="categories">
+              </app-chart-spent-category>
               <!-- Loading -->
-              <app-loading *ngIf="!transactions" classes="mt-5"></app-loading>
-
-              <!-- No data -->
-              <p class="m-3 text-info text-center font-weight-bold"
-                 *ngIf="categories && !categoryChartResults.length">
-                📋 When you start adding expenses, statistical chart will show up here.
-              </p>
-
-              <!-- Data -->
-              <ngx-charts-pie-chart *ngIf="categories && categoryChartResults.length"
-                                    [results]="categoryChartResults"
-                                    [customColors]="categoryChartColors"
-                                    [doughnut]="true"
-                                    [arcWidth]="0.25"
-                                    [labels]="true">
-              </ngx-charts-pie-chart>
+              <app-loading *ngIf="!categories || !categorySpentMetrics" classes="m-3"></app-loading>
             </div>
           </div>
         </div>

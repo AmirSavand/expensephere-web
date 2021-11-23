@@ -1,0 +1,14 @@
+<!-- Data -->
+<div class="chart-wrapper" *ngIf="chartResults?.length">
+  <ngx-charts-pie-chart [results]="chartResults"
+                        [customColors]="chartColors"
+                        [doughnut]="true"
+                        [arcWidth]="0.25"
+                        [labels]="true">
+  </ngx-charts-pie-chart>
+</div>
+
+<!-- No data -->
+<p class="m-3 text-info text-center font-weight-bold" *ngIf="!chartResults?.length">
+  📋 When you start adding expenses, the chart will show up here.
+</p>
