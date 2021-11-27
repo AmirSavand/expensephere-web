@@ -28,7 +28,7 @@
               "src/assets/icon/fonts",
               "src/assets/img",
               "src/assets/manifest",
-              "src/assets/.htaccess",
+              "src/.htaccess",
               {
                 "glob": "assetlinks.json",
                 "input": "src/assets/",
