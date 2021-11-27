@@ -1,6 +1,7 @@
 # Expensephere (Web)
 
-![Build and Deploy](https://github.com/AmirSavand/expensephere-web/workflows/Build%20and%20Deploy/badge.svg?branch=production)
+![Deployment](https://github.com/AmirSavand/expensephere-web/workflows/Deployment/badge.svg?branch=production)
+![Build](https://github.com/AmirSavand/expensephere-web/workflows/Build/badge.svg)
 ![Code Quality](https://github.com/AmirSavand/expensephere-web/workflows/Code%20Quality/badge.svg)
 
 Web app for Expensephere.
@@ -39,10 +40,9 @@ Check code quality.
 
 Here's what the project is build with:
 
-- [angular.io](https://angular.io/)
-- [getbootstrap.com](https://getbootstrap.com/)
-- [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
-- [fontawesome.com](https://fontawesome.com/)
+- [Angular](https://angular.io/)
+- [Bootstrap](https://getbootstrap.com/)
+- [FontAwesome](https://fontawesome.com/)
 
 ### Routes
 

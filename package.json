@@ -1,6 +1,4 @@
 {
-  "name": "expensephere-web",
-  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "serve": "ng serve",
@@ -9,12 +7,10 @@
     "build": "ng build",
     "build-staging": "ng build -c staging",
     "build-production": "ng build -c production",
-    "deploy": "firebase deploy --only hosting",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~11.2.6",
     "@angular/cdk": "^11.2.5",
@@ -38,7 +34,7 @@
     "date-fns": "^2.21.1",
     "html2canvas": "^1.0.0-rc.7",
     "ngx-bootstrap": "^6.2.0",
-    "ngx-google-analytics": "^11.2.0",
+    "ngx-google-analytics": "^11.2.1",
     "pdfmake": "^0.1.71",
     "rxjs": "~6.6.6",
     "tslib": "^2.0.0",
