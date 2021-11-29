@@ -100,6 +100,11 @@ export class FormComponent implements OnInit {
               private router: Router) {
   }
 
+  /** Redirect to edit page of this invoice. */
+  private redirectToEdit(): void {
+    this.router.navigate(['/dash', 'invoice', this.form.id]);
+  }
+
   ngOnInit(): void {
     /**
      * We need to set the "currency" field default value to current
@@ -239,28 +244,43 @@ export class FormComponent implements OnInit {
      * Submit the invoice form and all the invoice item forms.
      */
     Utils.getFormSubmission(Api.invoice, this.form).subscribe((data: Invoice): void => {
+      const isCreate = !Boolean(this.form.id);
       this.form.loading = false;
       this.form.error = {};
       this.form.id = data.id;
       this.form.data = data;
       Utils.patchForm(this.form, data);
+      /** If we're creating and there are no invoice items, let's redirect. */
+      if (isCreate && !this.itemForms.length) {
+        this.redirectToEdit();
+      }
       /**
        * Loop through invoice items and submit them as well.
        */
-      this.itemForms.forEach((itemForm: ReactiveFormData<InvoiceItem>, index: number): void => {
-        Utils.getFormSubmission(
-          Api.invoiceItem,
-          itemForm,
-          Object.assign(itemForm.form.value, { invoice: data.id, order: index }),
-        ).subscribe((itemData: InvoiceItem): void => {
-          itemForm.error = {};
-          itemForm.id = itemData.id;
-          itemForm.data = itemData;
-          Utils.patchForm(itemForm, itemData);
-        }, (error: HttpErrorResponse): void => {
-          Utils.handleError(itemForm, error);
+      else {
+        this.itemForms.forEach((itemForm: ReactiveFormData<InvoiceItem>, index: number): void => {
+          Utils.getFormSubmission(
+            Api.invoiceItem,
+            itemForm,
+            Object.assign(itemForm.form.value, { invoice: data.id, order: index }),
+          ).subscribe((itemData: InvoiceItem): void => {
+            itemForm.error = {};
+            itemForm.id = itemData.id;
+            itemForm.data = itemData;
+            itemForm.success = true;
+            Utils.patchForm(itemForm, itemData);
+            /**
+             * If we're creating this invoice and there are no invoice items that failed
+             * let's redirect user to edit page (change param ID).
+             */
+            if (isCreate && !this.itemForms.some((item: ReactiveFormData<InvoiceItem>): boolean => !item.success)) {
+              this.redirectToEdit();
+            }
+          }, (error: HttpErrorResponse): void => {
+            Utils.handleError(itemForm, error);
+          });
         });
-      });
+      }
     }, (error: HttpErrorResponse): void => {
       Utils.handleError(this.form, error);
     });

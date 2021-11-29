@@ -2,9 +2,11 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ExportOption } from '@app/dash/export/shared/interfaces/export-option';
+import { Api } from '@shared/classes/api';
 import { Utils } from '@shared/classes/utils';
 import { ExportFile } from '@shared/enums/export-file';
 import { ExpenseKind } from '@shared/enums/kind';
+import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
@@ -16,8 +18,6 @@ import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { ProfileService } from '@shared/services/profile.service';
 import { addDays, isValid } from 'date-fns';
-import { Api } from '@shared/classes/api';
-import { ApiResponse } from '@shared/interfaces/api-response';
 
 @Component({
   selector: 'app-export',
@@ -222,10 +222,6 @@ export class ExportComponent implements OnInit {
         });
       }
     });
-    /**
-     * Initial count
-     */
-    this.load();
   }
 
   /**
