@@ -29,9 +29,9 @@ export class AuthService {
   }
 
   /**
-   * Storage version to use to force to reload authentication data in storage
+   * Storage version to use to force reloading authentication data in storage
    */
-  private static readonly STORAGE_VERSION = 3;
+  private static readonly STORAGE_VERSION = 4;
 
   /**
    * Storage key for storage version
@@ -51,7 +51,7 @@ export class AuthService {
   /**
    * Where to redirect after sign in
    */
-  static readonly SIGN_IN_REDIRECT = '/';
+  static readonly SIGN_IN_REDIRECT = '/dash/overview';
 
   /**
    * Where to redirect after sign in without profiles

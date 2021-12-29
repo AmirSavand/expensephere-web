@@ -12,34 +12,6 @@
   <div class="row">
     <div class="col-lg-6">
 
-      <!-- Category -->
-      <p class="font-weight-bold m-0">Category</p>
-      <app-category-list columnClass="col-12" [categories]="[category]"></app-category-list>
-
-      <!-- Transactions count -->
-      <hr>
-      <p class="font-weight-bold">Transactions</p>
-      <div>{{ category.transactions_count | number }}</div>
-
-      <!-- Total spent -->
-      <hr>
-      <p class="font-weight-bold">Total Spent</p>
-      <div>{{ category.transactions_total || 0 | profileCurrency }}</div>
-
-      <!-- Archive message -->
-      <div *ngIf="category.archive" class="text-warning">
-        <hr>
-        <p class="font-weight-bold">Archived</p>
-        <p>This event is archived.</p>
-      </div>
-
-      <!-- Responsive separator -->
-      <hr class="d-lg-none">
-    </div>
-
-    <!-- Transactions (right) -->
-    <div class="col-lg-6">
-
       <!-- Header -->
       <p class="font-weight-bold mb-0">Transactions</p>
 
@@ -65,6 +37,34 @@
                  [paramsToCombine]="transactionsFilter"
                  (pageChanged)="loadTransactions()">
       </app-pager>
+    </div>
+
+    <!-- Transactions (right) -->
+    <div class="col-lg-6">
+
+      <!-- Category -->
+      <p class="font-weight-bold m-0">Category</p>
+      <app-category-list columnClass="col-12" [categories]="[category]"></app-category-list>
+
+      <!-- Transactions count -->
+      <hr>
+      <p class="font-weight-bold">Transactions</p>
+      <div>{{ category.transactions_count | number }}</div>
+
+      <!-- Total -->
+      <hr>
+      <p class="font-weight-bold">Total</p>
+      <div>{{ category.transactions_total || 0 | profileCurrency }}</div>
+
+      <!-- Archive message -->
+      <div *ngIf="category.archive" class="text-warning">
+        <hr>
+        <p class="font-weight-bold">Archived</p>
+        <p>This event is archived.</p>
+      </div>
+
+      <!-- Responsive separator -->
+      <hr class="d-lg-none">
     </div>
   </div>
 </div>

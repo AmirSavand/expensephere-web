@@ -7,4 +7,7 @@ export interface Profile {
   note: string;
   currency: string;
   balance: Balance;
+  karma: number;
+  level: number;
+  next_level_karma: number;
 }

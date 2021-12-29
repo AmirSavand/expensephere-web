@@ -11,7 +11,7 @@
       <div class="container d-flex align-items-center">
 
         <!-- Logo -->
-        <a routerLink="/" title="Expensephere">
+        <a routerLink="/dash/overview" title="Expensephere">
           <img alt="Expensephere" src="assets/favicon/favicon.png" class="mr-3" [width]="28">
         </a>
 
@@ -22,7 +22,7 @@
         </div>
 
         <!-- Create transaction button -->
-        <a class="btn btn-secondary ml-auto" (click)="addTransaction()">
+        <a class="btn btn-primary ml-auto" (click)="addTransaction()">
           <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
           <span class="ml-1">Transaction</span>
         </a>
@@ -161,7 +161,7 @@
       <!-- App info -->
       <div class="mt-auto text-secondary small">
         <p>
-          <span>Expensephere v0.8.2 Beta &bull; </span>
+          <span>Expensephere v0.8.3 Beta &bull; </span>
           <a [href]="home">Website</a>
           <span> &bull; </span>
           <a href="mailto:expensephere@savandbros.com">Feedback</a>

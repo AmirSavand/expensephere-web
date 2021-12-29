@@ -31,6 +31,9 @@ export class ChartSpentCategoryComponent implements OnInit {
   /** Colors for the chart. */
   chartColors: { name: string; value: string }[];
 
+  /** Is there any data to show? */
+  hasData: boolean;
+
   private generate(): void {
     /** Sort metrics by value. */
     let data = this.metrics.sort((a: MetricSpent, b: MetricSpent) => b.value - a.value);
@@ -45,6 +48,8 @@ export class ChartSpentCategoryComponent implements OnInit {
       this.chartResults.push({ name: category.name, value: item.value });
       this.chartColors.push({ name: category.name, value: category.color });
     }
+    /** Set up the value of {@see hasData }. */
+    this.hasData = this.chartResults.some((item: { name: string; value: number }): boolean => Boolean(item.value));
   }
 
   ngOnInit(): void {

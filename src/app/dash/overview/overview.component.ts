@@ -40,11 +40,11 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   readonly filterText = 'Filtered by last 30 days';
 
-  // Current profile..
-  private profile: Profile;
-
   // Filters used for loading transactions.
   readonly transactionsFilter: GetParams = {};
+
+  // Current profile..
+  profile: Profile;
 
   // Wallet list.
   wallets: Wallet[];
@@ -69,6 +69,9 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   // API response data for transactions.
   transactionsApiResponse: ApiResponse<Transaction>;
+
+  // Show block of information for karma info (status).
+  showKarmaInfo = false;
 
   constructor(private router: Router,
               private modalService: BsModalService) {

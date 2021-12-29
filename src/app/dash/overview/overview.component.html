@@ -1,5 +1,25 @@
 <div class="container">
 
+  <!-- Karma -->
+  <div class="card mt-4 cursor-pointer" (click)="showKarmaInfo = !showKarmaInfo">
+    <div class="card-header">
+      <span class="mr-auto" (click)="showKarmaInfo">Karma Level</span>
+      <span class="badge badge-primary" title="Current Level">{{ profile.level | number }}</span>
+    </div>
+    <div class="card-body p-0" *ngIf="showKarmaInfo">
+      <p class="m-3 text-info text-center font-weight-bold">
+        <span class="font-weight-normal">📋</span>
+        When using Expensephere you gain Karma points and in here you can see your
+        current karma points, level, and karma points required for next level.
+      </p>
+    </div>
+    <progressbar *ngIf="!showKarmaInfo"
+                 [max]="profile.karma + profile.next_level_karma"
+                 [value]="profile.karma"
+                 title="{{ profile.karma | number }} / {{ profile.next_level_karma | number }}">
+    </progressbar>
+  </div>
+
   <!-- Spent in categories -->
   <div class="card mt-4">
     <div class="card-header" [title]="filterText">Spent in categories</div>
@@ -58,8 +78,9 @@
           <app-loading classes="mt-5" *ngIf="!categories"></app-loading>
 
           <!-- No data -->
-          <p class="m-3 text-info text-center font-weight-bold" *ngIf="categories && !categoriesToShow.length">
-            📋 When you start adding expenses, their categories will show up here.
+          <p class="mt-3 mb-0 text-info text-center font-weight-bold" *ngIf="categories && !categoriesToShow.length">
+            <span class="font-weight-normal">📋</span>
+            When you start adding expenses, their categories will show up here.
           </p>
 
           <!-- Data -->
@@ -74,7 +95,8 @@
         <div class="col-lg-6">
           <div class="card mt-4">
             <div class="card-header" [title]="filterText">Balance Chart</div>
-            <div class="card-body chart-wrapper p-0">
+            <div class="card-body p-0"
+                 [class.chart-wrapper]="transactions && transactions.length && balanceChartResults">
 
               <!-- Loading -->
               <app-loading *ngIf="!transactions" classes="mt-5"></app-loading>
@@ -82,7 +104,8 @@
               <!-- No data -->
               <p class="m-3 text-info text-center font-weight-bold"
                  *ngIf="transactions && !transactions.length">
-                📋 When you start adding transactions, statistical chart will show up here.
+                <span class="font-weight-normal">📋</span>
+                When you start adding transactions, statistical chart will show up here.
               </p>
 
               <!-- Data -->
@@ -134,8 +157,8 @@
           <app-loading classes="mt-5" *ngIf="!transactions || !categories || !wallets"></app-loading>
 
           <!-- No data -->
-          <p class="m-3 text-info text-center font-weight-bold" *ngIf="transactions && !transactions.length">
-            📋 When you start adding transactions, they will show up here.
+          <p class="mt-3 mb-0 text-info text-center font-weight-bold" *ngIf="transactions && !transactions.length">
+            <span class="font-weight-normal">📋</span> When you start adding transactions, they will show up here.
           </p>
 
           <!-- Transactions -->
