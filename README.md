@@ -1,6 +1,5 @@
 # Expensephere (Web)
 
-![Deployment](https://github.com/AmirSavand/expensephere-web/workflows/Deployment/badge.svg?branch=production)
 ![Build](https://github.com/AmirSavand/expensephere-web/workflows/Build/badge.svg)
 ![Code Quality](https://github.com/AmirSavand/expensephere-web/workflows/Code%20Quality/badge.svg)
 
