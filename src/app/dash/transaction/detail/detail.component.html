@@ -22,14 +22,14 @@
       </a>
 
       <!-- Category name and transactions_total -->
-      <div class="ml-4">
-        <h1 class="font-weight-bold m-0">{{ category.name }}</h1>
+      <div class="ms-4">
+        <h1 class="fw-bold m-0">{{ category.name }}</h1>
         <p class="m-0 text-secondary">{{ category.transactions_total | profileCurrency }} in this category</p>
       </div>
 
       <!-- Transaction amount (for large screen only) -->
-      <div class="ml-auto d-none d-lg-block">
-        <h1 class="font-weight-bold mb-0 text-secondary"
+      <div class="ms-auto d-none d-lg-block">
+        <h1 class="fw-bold mb-0 text-secondary"
             [class.text-danger]="category.kind === expenseKind.EXPENSE"
             [class.text-success]="category.kind === expenseKind.INCOME">
           {{ transaction.amount | profileCurrency }}
@@ -41,7 +41,7 @@
     <div class="mt-5">
 
       <!-- Header -->
-      <p class="font-weight-bold border-bottom pb-3">Information</p>
+      <p class="fw-bold border-bottom pb-3">Information</p>
 
       <!-- Info list -->
       <div class="row">
@@ -50,8 +50,8 @@
         <div class="col-xl-4 mb-3 d-sm-block d-lg-none" *ngIf="wallet">
           <div class="d-flex align-items-center">
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faAmount"></fa-icon>
-            <div class="ml-3">
-              <p class="font-weight-bold mb-0 text-secondary"
+            <div class="ms-3">
+              <p class="fw-bold mb-0 text-secondary"
                  [class.text-danger]="category.kind === expenseKind.EXPENSE"
                  [class.text-success]="category.kind === expenseKind.INCOME">
                 {{ transaction.amount | profileCurrency }}
@@ -65,8 +65,8 @@
         <div class="col-xl-4 mb-4" *ngIf="wallet">
           <div class="d-flex align-items-center">
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faWallet"></fa-icon>
-            <div class="ml-3">
-              <p class="font-weight-bold m-0">
+            <div class="ms-3">
+              <p class="fw-bold m-0">
                 <a class="text-dark" [routerLink]="['/dash/wallet', wallet.id]">{{ wallet.name }}</a>
               </p>
               <div>Transaction wallet</div>
@@ -78,8 +78,8 @@
         <div class="col-xl-4 mb-4" *ngIf="into">
           <div class="d-flex align-items-center">
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faWallet"></fa-icon>
-            <div class="ml-3">
-              <p class="font-weight-bold m-0">
+            <div class="ms-3">
+              <p class="fw-bold m-0">
                 <a class="text-dark" [routerLink]="['/dash/wallet', into.id]">{{ into.name }}</a>
               </p>
               <div>Transferred into wallet</div>
@@ -91,8 +91,8 @@
         <div class="col-xl-4 mb-4">
           <div class="d-flex align-items-center">
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faTime"></fa-icon>
-            <div class="ml-3">
-              <p class="font-weight-bold m-0">Date</p>
+            <div class="ms-3">
+              <p class="fw-bold m-0">Date</p>
               <div>{{ transaction.time | date:'d MMM, yyyy - hh:mm aa' }}</div>
             </div>
           </div>
@@ -102,8 +102,8 @@
         <div class="col-xl-4 mb-4">
           <div class="d-flex align-items-center">
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faNote"></fa-icon>
-            <div class="ml-3">
-              <p class="font-weight-bold m-0">Note</p>
+            <div class="ms-3">
+              <p class="fw-bold m-0">Note</p>
               <div class="text-pre">{{ transaction.note || 'Nothing here.' }}</div>
             </div>
           </div>
@@ -113,8 +113,8 @@
         <div class="col-xl-4 mb-4" *ngIf="event">
           <div class="d-flex align-items-center">
             <fa-icon [fixedWidth]="true" class="text-secondary" size="2x" [icon]="faEvent"></fa-icon>
-            <div class="ml-3">
-              <p class="font-weight-bold m-0">
+            <div class="ms-3">
+              <p class="fw-bold m-0">
                 <a class="text-dark" [routerLink]="['/dash/event', event.id]">{{ event.name }}</a>
               </p>
               <div>Transaction event</div>
@@ -126,8 +126,8 @@
         <div class="col-xl-4 mb-4" *ngIf="transaction.archive">
           <div class="d-flex align-items-center">
             <fa-icon [fixedWidth]="true" class="text-warning" size="2x" [icon]="faArchive"></fa-icon>
-            <div class="ml-3">
-              <p class="font-weight-bold m-0">Archive</p>
+            <div class="ms-3">
+              <p class="fw-bold m-0">Archive</p>
               <div>This transaction is archived</div>
             </div>
           </div>
@@ -139,12 +139,12 @@
     <div class="mt-5">
 
       <!-- Header -->
-      <p class="font-weight-bold border-bottom pb-3">Actions</p>
+      <p class="fw-bold border-bottom pb-3">Actions</p>
 
       <!-- Buttons -->
-      <button class="btn btn-secondary mr-2 mb-2" (click)="edit()">Edit Transaction</button>
-      <a class="btn btn-secondary mr-2 mb-2" [routerLink]="['/dash/category', category.id]">View Category</a>
-      <a class="btn btn-secondary mr-2 mb-2" [routerLink]="['/dash/event', event.id]" *ngIf="event">View Event</a>
+      <button class="btn btn-secondary me-2 mb-2" (click)="edit()">Edit Transaction</button>
+      <a class="btn btn-secondary me-2 mb-2" [routerLink]="['/dash/category', category.id]">View Category</a>
+      <a class="btn btn-secondary me-2 mb-2" [routerLink]="['/dash/event', event.id]" *ngIf="event">View Event</a>
     </div>
   </div>
 </div>

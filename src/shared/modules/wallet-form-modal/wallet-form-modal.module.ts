@@ -8,19 +8,16 @@ import { SelectModule } from '@shared/modules/select/select.module';
 import { WalletFormModalComponent } from './wallet-form-modal.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    SelectColorModule,
-    SelectModule,
-  ],
-  declarations: [
-    WalletFormModalComponent,
-  ],
-  entryComponents: [
-    WalletFormModalComponent,
-  ],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        ReactiveFormsModule,
+        SelectColorModule,
+        SelectModule,
+    ],
+    declarations: [
+        WalletFormModalComponent,
+    ]
 })
 export class WalletFormModalModule {
 }

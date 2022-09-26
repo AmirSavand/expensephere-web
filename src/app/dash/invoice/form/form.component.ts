@@ -1,12 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { InvoiceComponent } from '@app/dash/invoice/invoice.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { faChevronRight, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
@@ -95,7 +93,7 @@ export class FormComponent implements OnInit {
   // Invoice currency for UI purposes.
   currency: string;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -128,6 +126,7 @@ export class FormComponent implements OnInit {
            * keys and values (if an invoice item is set, enable its option).
            */
           for (const key of Object.keys(this.options.controls)) {
+            // @ts-ignore
             this.options.get(key).setValue(data[key] !== null);
           }
           Utils.patchForm(this.form, data);
@@ -237,6 +236,7 @@ export class FormComponent implements OnInit {
      */
     for (const key of Object.keys(this.options.controls)) {
       if (!this.options.value[key]) {
+        // @ts-ignore
         payload[key] = null;
       }
     }

@@ -1,12 +1,12 @@
 <!-- Current color and toggler -->
-<div class="selected-color-wrapper custom-select" (click)="isSelecting =! isSelecting">
+<div class="selected-color-wrapper form-select" (click)="isSelecting =! isSelecting">
   <div class="selected-color" [style.background]="selected" [style.color]="lighten(selected)"></div>
 </div>
 
 <!-- Color header (for mobile only when selecting) -->
 <div class="colors-header px-3 border-bottom d-lg-none" *ngIf="isSelecting">
-  <span class="font-weight-bold">Select color</span>
-  <button class="btn btn-light ml-auto" type="button" (click)="isSelecting = false">
+  <span class="fw-bold">Select color</span>
+  <button class="btn btn-light ms-auto" type="button" (click)="isSelecting = false">
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>

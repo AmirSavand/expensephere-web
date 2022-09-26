@@ -1,7 +1,7 @@
 <div class="container-fluid py-3">
 
   <!-- Header -->
-  <div class="font-weight-bold d-flex align-items-center mb-3">
+  <div class="fw-bold d-flex align-items-center mb-3">
     <a class="text-secondary" routerLink="../list">Transactions</a>
     <fa-icon [fixedWidth]="true" [icon]="faBreadcrumbArrow" class="small mx-1 text-secondary"></fa-icon>
     <span>Bulk Creation</span>
@@ -30,7 +30,7 @@
         </td>
         <!-- Kind -->
         <td *ngIf="!form.success">
-          <select class="custom-select" formControlName="kind"
+          <select class="form-select" formControlName="kind"
                   (ngModelChange)="form.form.get('category').setValue(categoryGroups[form.form.value.kind][0].id)">
             <option [ngValue]="expenseKind.INCOME">Income</option>
             <option [ngValue]="expenseKind.EXPENSE">Expense</option>
@@ -43,17 +43,17 @@
           <div class="d-flex">
             <!-- Wallet from -->
             <div class="w-100">
-              <select class="custom-select" formControlName="wallet" [class.is-invalid]="form.error.wallet">
+              <select class="form-select" formControlName="wallet" [class.is-invalid]="form.error.wallet">
                 <option *ngFor="let wallet of wallets" [ngValue]="wallet.id">{{ wallet.name }}</option>
               </select>
             </div>
             <!-- Wallet into -->
-            <div class="w-100 ml-2" *ngIf="form.form.value.kind === expenseKind.TRANSFER"
+            <div class="w-100 ms-2" *ngIf="form.form.value.kind === expenseKind.TRANSFER"
                  [class.is-invalid]="form.error.into">
-              <select class="custom-select" formControlName="into">
+              <select class="form-select" formControlName="into">
                 <option [ngValue]="null">Select wallet</option>
                 <option *ngFor="let wallet of wallets"
-                        [disabled]="wallet.id === form.form.value.wallet"
+                        [disabled]="wallet.id === form.form.value['wallet']"
                         [ngValue]="wallet.id">
                   Into {{ wallet.name }}
                 </option>
@@ -68,7 +68,7 @@
         </td>
         <!-- Category -->
         <td *ngIf="!form.success">
-          <select class="custom-select" formControlName="category" [class.is-invalid]="form.error.category">
+          <select class="form-select" formControlName="category" [class.is-invalid]="form.error.category">
             <option *ngFor="let category of categoryGroups[form.form.value.kind]" [ngValue]="category.id">
               {{ category.name }}
             </option>
@@ -110,7 +110,7 @@
   <div class="d-flex align-items-center mt-3">
 
     <!-- Add button -->
-    <button class="btn btn-success mr-auto" (click)="forms.push(getForm())">
+    <button class="btn btn-success me-auto" (click)="forms.push(getForm())">
       <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
     </button>
 

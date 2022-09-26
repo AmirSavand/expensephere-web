@@ -13,7 +13,7 @@
     <div class="col-lg-6">
 
       <!-- Header -->
-      <p class="font-weight-bold mb-0">Transactions</p>
+      <p class="fw-bold mb-0">Transactions</p>
 
       <!-- Loading -->
       <app-loading *ngIf="!transactions"></app-loading>
@@ -43,23 +43,23 @@
     <div class="col-lg-6">
 
       <!-- Category -->
-      <p class="font-weight-bold m-0">Category</p>
+      <p class="fw-bold m-0">Category</p>
       <app-category-list columnClass="col-12" [categories]="[category]"></app-category-list>
 
       <!-- Transactions count -->
       <hr>
-      <p class="font-weight-bold">Transactions</p>
+      <p class="fw-bold">Transactions</p>
       <div>{{ category.transactions_count | number }}</div>
 
       <!-- Total -->
       <hr>
-      <p class="font-weight-bold">Total</p>
+      <p class="fw-bold">Total</p>
       <div>{{ category.transactions_total || 0 | profileCurrency }}</div>
 
       <!-- Archive message -->
       <div *ngIf="category.archive" class="text-warning">
         <hr>
-        <p class="font-weight-bold">Archived</p>
+        <p class="fw-bold">Archived</p>
         <p>This event is archived.</p>
       </div>
 

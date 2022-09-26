@@ -11,12 +11,13 @@ import { Transaction } from '@shared/interfaces/transaction';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { Payload } from '@shared/types/payload';
+import { PK } from '@shared/types/pk';
 import html2canvas from 'html2canvas';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable, from } from 'rxjs';
-import { PK } from '@shared/types/pk';
 
+// @ts-ignore
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export class Utils {
@@ -113,6 +114,7 @@ export class Utils {
       content: [
         {
           layout: 'lightHorizontalLines',
+          // @ts-ignore
           pageSize: 'A4',
           table: {
             headerRows: 1,
@@ -233,11 +235,15 @@ export class Utils {
        * data value is the number 0 since it is considered
        * "false" for JavaScript.
        */
+      // @ts-ignore
       if (form.form.controls[key] && (data[key] || data[key] === 0)) {
         const control: AbstractControl = form.form.get(key);
+        // @ts-ignore
         if (data[key]?.id || data[key]?.code) {
+          // @ts-ignore
           control.patchValue(data[key].id || data[key].code);
         } else {
+          // @ts-ignore
           control.patchValue(data[key]);
         }
       }
@@ -293,6 +299,7 @@ export class Utils {
   static getDictOfList<D>(list: D[], key: string = 'id'): Record<PK, D> {
     const output: Record<PK, D> = {};
     list.forEach((item: D): void => {
+      // @ts-ignore
       output[item[key]] = item;
     });
     return output;

@@ -9,19 +9,16 @@ import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    SelectColorModule,
-    ButtonsModule,
-    SelectModule,
-  ],
-  declarations: [
-    CategoryFormModalComponent,
-  ],
-  entryComponents: [
-    CategoryFormModalComponent,
-  ],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        ReactiveFormsModule,
+        SelectColorModule,
+        ButtonsModule,
+        SelectModule,
+    ],
+    declarations: [
+        CategoryFormModalComponent,
+    ]
 })
 export class CategoryFormModalModule { }

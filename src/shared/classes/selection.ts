@@ -4,7 +4,7 @@
 export class Selection<T> {
 
   /**
-   * @param items List of original items to setup selection for.
+   * @param items List of original items to set up selection for.
    * @param id Item unique property key to store selection by.
    */
   constructor(public items: T[], public id: string = 'id') {
@@ -37,6 +37,7 @@ export class Selection<T> {
    * @returns List of original items that are selected
    */
   get selectedItems(): T[] {
+    // @ts-ignore
     return this.items.filter((item: T): boolean => this.selection[item[this.id]]);
   }
 
@@ -54,6 +55,7 @@ export class Selection<T> {
    * Select an item
    */
   select(item: T): void {
+    // @ts-ignore
     this.selection[item[this.id]] = true;
     this.count();
   }
@@ -62,6 +64,7 @@ export class Selection<T> {
    * Deselect an item
    */
   deselect(item: T): void {
+    // @ts-ignore
     this.selection[item[this.id]] = false;
     this.count();
   }
@@ -70,6 +73,7 @@ export class Selection<T> {
    * Toggle an item selection status
    */
   toggle(item: T): void {
+    // @ts-ignore
     this.selection[item[this.id]] = !this.selection[item[this.id]];
     this.count();
   }

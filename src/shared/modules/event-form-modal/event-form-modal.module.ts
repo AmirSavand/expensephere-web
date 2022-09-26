@@ -10,20 +10,17 @@ import { EventFormModalComponent } from './event-form-modal.component';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    CollapseModule,
-    SelectColorModule,
-    SelectModule,
-  ],
-  declarations: [
-    EventFormModalComponent,
-  ],
-  entryComponents: [
-    EventFormModalComponent,
-  ],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        ReactiveFormsModule,
+        CollapseModule,
+        SelectColorModule,
+        SelectModule,
+    ],
+    declarations: [
+        EventFormModalComponent,
+    ]
 })
 export class EventFormModalModule {
 }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { AuthService } from '@shared/services/auth.service';
@@ -19,7 +19,7 @@ export class SignUpComponent implements OnInit {
     error: {},
   };
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private auth: AuthService,
               private router: Router) {
   }

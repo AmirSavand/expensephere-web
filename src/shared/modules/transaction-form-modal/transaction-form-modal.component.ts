@@ -1,18 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCalendar } from '@fortawesome/free-regular-svg-icons/faCalendar';
-import { faClock } from '@fortawesome/free-regular-svg-icons/faClock';
-import { faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons/faMoneyBillAlt';
-import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
-import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
-import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
+import { faCalendar, faClock, faMoneyBillAlt, faStickyNote } from '@fortawesome/free-regular-svg-icons';
+import { faChevronDown, faCube, faTimes, faTrash, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { InlineStorage } from '@shared/classes/inline-storage';
 import { Utils } from '@shared/classes/utils';
@@ -86,7 +79,7 @@ export class TransactionFormModalComponent implements OnInit {
   constructor(public modal: BsModalRef,
               private modalService: BsModalService,
               private profileService: ProfileService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private date: DatePipe,
               private router: Router) {
   }

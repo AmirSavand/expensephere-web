@@ -9,20 +9,17 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TransactionFormModalComponent } from './transaction-form-modal.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    CollapseModule,
-    SelectModule,
-    CategoryFormModalModule,
-  ],
-  declarations: [
-    TransactionFormModalComponent,
-  ],
-  entryComponents: [
-    TransactionFormModalComponent,
-  ],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        ReactiveFormsModule,
+        CollapseModule,
+        SelectModule,
+        CategoryFormModalModule,
+    ],
+    declarations: [
+        TransactionFormModalComponent,
+    ]
 })
 export class TransactionFormModalModule {
 }

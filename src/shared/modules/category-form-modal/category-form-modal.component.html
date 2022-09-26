@@ -5,7 +5,7 @@
   <span>{{ isEditing ? 'Edit' : 'Add' }} Category</span>
 
   <!-- Close -->
-  <button class="ml-auto btn btn-light" (click)="modal.hide()">
+  <button class="ms-auto btn btn-link" (click)="modal.hide()">
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
@@ -16,12 +16,12 @@
 
     <!-- Kind -->
     <div class="form-group btn-group d-flex" title="Type">
-      <button class="btn btn-light font-weight-bold" type="button"
+      <button class="btn btn-light fw-bold" type="button"
               (click)="form.form.get('kind').patchValue(expenseKind.INCOME)"
               [class.active]="form.form.get('kind').value === expenseKind.INCOME">
         INCOME
       </button>
-      <button class="btn btn-light font-weight-bold" type="button"
+      <button class="btn btn-light fw-bold" type="button"
               (click)="form.form.get('kind').patchValue(expenseKind.EXPENSE)"
               [class.active]="form.form.get('kind').value === expenseKind.EXPENSE">
         EXPENSE
@@ -32,7 +32,7 @@
     <div class="form-group">
       <label for="name">Name</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
         </div>
         <input type="text" id="name" class="form-control" formControlName="name"
@@ -45,7 +45,7 @@
     <div class="form-group">
       <label for="icon">Icon</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faIcons"></fa-icon>
         </div>
         <app-select id="icon"
@@ -63,7 +63,7 @@
     <div class="form-group">
       <label for="color">Color</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faPaint"></fa-icon>
         </div>
         <app-select-color id="color"
@@ -77,20 +77,19 @@
     <!-- Archive -->
     <div class="form-group">
       <label for="archive">Archive</label>
-      <div class="custom-control custom-switch position-static">
-        <input class="custom-control-input" type="checkbox" formControlName="archive" id="archive">
-        <label class="custom-control-label" for="archive"></label>
-        <span class="text-secondary">Archive and hide from the list</span>
+      <div class="form-check form-switch position-static">
+        <input class="form-check-input" type="checkbox" formControlName="archive" id="archive">
+        <label class="form-check-label" for="archive">Archive and hide from the list</label>
       </div>
     </div>
   </form>
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-right" *ngIf="!(isEditing && category.protect)">
+<div class="modal-footer text-end" *ngIf="!(isEditing && category.protect)">
 
   <!-- Delete -->
-  <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(category)">
+  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(category)">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
   </a>
 
@@ -107,14 +106,14 @@
 <div class="modal-body pb-0" *ngIf="isEditing && category.protect">
 
   <!-- Protected message -->
-  <p class="text-warning font-weight-bold">
+  <p class="text-warning fw-bold">
     This is an automated category and also used by the system therefore it can not be modified.
   </p>
 </div>
 
 <!-- Footer (protected) -->
-<div class="modal-footer text-right" *ngIf="isEditing && category.protect">
+<div class="modal-footer text-end" *ngIf="isEditing && category.protect">
 
   <!-- Cancel -->
-  <button class="btn btn-light ml-auto" (click)="modal.hide()">Close</button>
+  <button class="btn btn-light ms-auto" (click)="modal.hide()">Close</button>
 </div>

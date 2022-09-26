@@ -2,7 +2,7 @@
 <form [formGroup]="form.form" (ngSubmit)="submit()">
 
   <!-- Title -->
-  <p class="font-weight-bold text-center mb-5">
+  <p class="fw-bold text-center mb-5">
     Join <span class="text-primary">Expensephere</span> 💖
   </p>
 
@@ -31,8 +31,8 @@
   <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
 
   <!-- Button -->
-  <button class="btn btn-block btn-primary" [disabled]="form.loading">Register</button>
+  <button class="btn w-100 btn-primary" [disabled]="form.loading">Register</button>
 
   <!-- Login link -->
-  <a class="btn btn-block btn-link" routerLink="../sign-in">Already have an account?</a>
+  <a class="btn w-100 btn-link" routerLink="../sign-in">Already have an account?</a>
 </form>

@@ -21,7 +21,7 @@
       <tr>
         <th>Invoice ID</th>
         <th>Client</th>
-        <th class="text-right">Total</th>
+        <th class="text-end">Total</th>
         <th class="text-center">Paid</th>
         <th class="text-center">Public</th>
         <th></th>
@@ -31,7 +31,7 @@
       <tr *ngFor="let invoice of invoices">
         <td><a [routerLink]="['..', invoice.id]" class="text-monospace">{{ invoice.invoice_id }}</a></td>
         <td [title]="invoice.client">{{ invoice.client | truncate:40 }}</td>
-        <td class="text-right" [title]="invoice.currency">{{ invoice.total | profileCurrency:invoice.currency }}</td>
+        <td class="text-end" [title]="invoice.currency">{{ invoice.total | profileCurrency:invoice.currency }}</td>
         <td class="text-center">
           <fa-icon [fixedWidth]="true"
                    *ngIf="invoice.is_paid !== null"
@@ -47,8 +47,8 @@
                    [icon]="invoice.is_published ? faYes : faNo">
           </fa-icon>
         </td>
-        <td class="text-right">
-          <a [routerLink]="['/public/invoice', invoice.id]" target="_blank" class="mr-2">
+        <td class="text-end">
+          <a [routerLink]="['/public/invoice', invoice.id]" target="_blank" class="me-2">
             <fa-icon [fixedWidth]="true" [icon]="faView"></fa-icon>
           </a>
           <a [routerLink]="['..', invoice.id]">

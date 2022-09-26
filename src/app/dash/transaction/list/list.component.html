@@ -26,7 +26,7 @@
           </button>
 
           <!-- Selected month -->
-          <div class="font-weight-bold mx-2">
+          <div class="fw-bold mx-2">
           <span *ngIf="months[monthSelected].getMonth() < now.getMonth() - 1">
             {{ months[monthSelected] | date:'MMMM' }}
           </span>
@@ -50,7 +50,7 @@
         </button>
 
         <!-- All time -->
-        <button class="btn btn-light ml-2 pointer-events-none"
+        <button class="btn btn-light ms-2 pointer-events-none"
                 (click)="monthSelected = null; load()"
                 [class.active]="monthSelected === null"
                 [class.pointer-events-none]="monthSelected === null">
@@ -62,14 +62,14 @@
       <ng-container *ngIf="viewingDay">
 
         <!-- Day -->
-        <div class="font-weight-bold">{{ viewingDay | date }}</div>
+        <div class="fw-bold">{{ viewingDay | date }}</div>
 
         <!-- Clear -->
-        <a routerLink="." class="btn btn-light ml-2">Clear Filter</a>
+        <a routerLink="." class="btn btn-light ms-2">Clear Filter</a>
       </ng-container>
 
       <!-- View switcher -->
-      <div class="btn-group ml-auto">
+      <div class="btn-group ms-auto">
         <div class="btn btn-outline-tertiary text-dark" [class.active]="listView" (click)="listView = true">
           <fa-icon [fixedWidth]="true" [icon]="faListView"></fa-icon>
         </div>
@@ -86,7 +86,7 @@
       <div>{{ selection.selected }} Selected</div>
 
       <!-- Action buttons -->
-      <app-actions class="d-flex ml-auto"
+      <app-actions class="d-flex ms-auto"
                    [actions]="actions"
                    [disable]="loadingAction"
                    (selection)="onAction($event)">
@@ -107,12 +107,12 @@
         <th>
           <div class="custom-control custom-checkbox">
             <input type="checkbox"
-                   class="custom-control-input"
+                   class="form-check-input"
                    id="selection"
                    [indeterminate]="selection.indeterminate"
                    [checked]="selection.deselected === 0"
                    (change)="selection.selectDeselectAll()">
-            <label class="custom-control-label" for="selection"></label>
+            <label class="form-check-label" for="selection"></label>
           </div>
         </th>
         <th>Transaction</th>
@@ -127,10 +127,10 @@
       <tr *ngFor="let transaction of transactions">
         <td>
           <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" [id]="transaction.id"
+            <input type="checkbox" class="form-check-input" [id]="transaction.id"
                    [(ngModel)]="selection.selection[transaction.id]"
                    (ngModelChange)="selection.count()">
-            <label class="custom-control-label" [for]="transaction.id"></label>
+            <label class="form-check-label" [for]="transaction.id"></label>
           </div>
         </td>
         <td>

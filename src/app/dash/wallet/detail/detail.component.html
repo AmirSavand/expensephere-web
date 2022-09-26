@@ -15,28 +15,28 @@
     <div class="col-lg-6">
 
       <!-- Wallet -->
-      <p class="font-weight-bold m-0">Wallet</p>
+      <p class="fw-bold m-0">Wallet</p>
       <app-wallet-list columnClass="col-12" [wallets]="[wallet]"></app-wallet-list>
 
       <!-- Total -->
       <hr>
-      <p class="font-weight-bold">Total</p>
+      <p class="fw-bold">Total</p>
       <div>{{ wallet.balance.total | profileCurrency }}</div>
 
       <!-- Expenses -->
       <hr>
-      <p class="font-weight-bold">Expenses</p>
+      <p class="fw-bold">Expenses</p>
       <div>{{ wallet.balance.expense | profileCurrency }}</div>
 
       <!-- Income -->
       <hr>
-      <p class="font-weight-bold">Income</p>
+      <p class="fw-bold">Income</p>
       <div>{{ wallet.balance.income | profileCurrency }}</div>
 
       <!-- Archive message -->
       <div *ngIf="wallet.archive" class="text-warning">
         <hr>
-        <p class="font-weight-bold">Archived</p>
+        <p class="fw-bold">Archived</p>
         <p>This wallet is archived.</p>
       </div>
 
@@ -48,7 +48,7 @@
     <div class="col-lg-6">
 
       <!-- Header -->
-      <p class="font-weight-bold mb-0">Transactions</p>
+      <p class="fw-bold mb-0">Transactions</p>
 
       <!-- Loading -->
       <app-loading *ngIf="!transactions"></app-loading>

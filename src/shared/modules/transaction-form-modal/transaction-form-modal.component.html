@@ -5,7 +5,7 @@
   <span>{{ isEditing ? 'Edit' : 'New' }} Transaction</span>
 
   <!-- Close -->
-  <button class="ml-auto btn btn-light" (click)="modal.hide()">
+  <button class="ms-auto btn btn-link" (click)="modal.hide()">
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
@@ -16,19 +16,19 @@
 
     <!-- Kind -->
     <div class="form-group btn-group d-flex justify-content-center text-uppercase" title="Transaction Type">
-      <div class="btn font-weight-bold"
+      <div class="btn fw-bold"
            (click)="setExpenseKind(expenseKind.INCOME)"
            [class.btn-light]="expenseKindSelected !== expenseKind.INCOME"
            [class.btn-primary]="expenseKindSelected === expenseKind.INCOME">
         <span>Income</span>
       </div>
-      <div class="btn font-weight-bold"
+      <div class="btn fw-bold"
            (click)="setExpenseKind(expenseKind.EXPENSE)"
            [class.btn-light]="expenseKindSelected !== expenseKind.EXPENSE"
            [class.btn-danger]="expenseKindSelected === expenseKind.EXPENSE">
         <span>Expense</span>
       </div>
-      <div class="btn font-weight-bold"
+      <div class="btn fw-bold"
            (click)="setExpenseKind(expenseKind.TRANSFER)"
            [class.btn-light]="expenseKindSelected !== expenseKind.TRANSFER"
            [class.btn-secondary]="expenseKindSelected === expenseKind.TRANSFER">
@@ -40,7 +40,7 @@
     <div class="form-group">
       <label for="wallet">Wallet</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWallet"></fa-icon>
         </div>
         <app-select id="wallet"
@@ -59,7 +59,7 @@
     <div class="form-group" *ngIf="expenseKindSelected === expenseKind.TRANSFER">
       <label for="into">Into Wallet</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWallet"></fa-icon>
         </div>
         <app-select id="into"
@@ -76,7 +76,7 @@
     <div class="form-group" *ngIf="expenseKindSelected !== expenseKind.TRANSFER">
       <label for="category">Category</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faCategory"></fa-icon>
         </div>
         <app-select id="category"
@@ -96,13 +96,13 @@
     <div class="form-group">
       <label for="amount">Amount</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
         </div>
         <input type="number" id="amount" class="form-control" formControlName="amount"
                [step]="1" [min]="0" placeholder="Enter amount" autocomplete="off"
                [class.is-invalid]="form.error.amount">
-        <div class="input-group-append"><span class="input-group-text font-weight-bold">{{ currency }}</span></div>
+        <div class="input-group-text w-auto"><span class="input-group-text fw-bold">{{ currency }}</span></div>
         <div class="invalid-tooltip" *ngIf="form.error.amount">{{ form.error.amount[0] }}</div>
       </div>
     </div>
@@ -111,7 +111,7 @@
     <div class="form-group">
       <label for="time">Time</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faTime"></fa-icon>
         </div>
         <input type="datetime-local" id="time" class="form-control" formControlName="time"
@@ -121,10 +121,10 @@
     </div>
 
     <!-- Extra details toggle -->
-    <a class="d-block font-weight-bold text-secondary mt-5 mb-3 text-uppercase"
+    <a class="d-block fw-bold text-secondary mt-5 mb-3 text-uppercase"
        (click)="showExtraDetails = !showExtraDetails">
       <span>Extra Details</span>
-      <fa-icon class="float-right" [icon]="faCollapse" [flip]="showExtraDetails ? 'vertical' : null"></fa-icon>
+      <fa-icon class="float-end" [icon]="faCollapse" [flip]="showExtraDetails ? 'vertical' : null"></fa-icon>
     </a>
 
     <!-- Extra details -->
@@ -134,7 +134,7 @@
       <div class="form-group">
         <label for="event">Event</label>
         <div class="input-group">
-          <div class="input-group-prepend">
+          <div class="input-group-text">
             <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faEvent"></fa-icon>
           </div>
           <app-select id="event"
@@ -155,7 +155,7 @@
       <div class="form-group">
         <label for="note">Note</label>
         <div class="input-group">
-          <div class="input-group-prepend">
+          <div class="input-group-text">
             <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faNote"></fa-icon>
           </div>
           <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
@@ -168,20 +168,18 @@
       <!-- Archive -->
       <div class="form-group">
         <label for="archive">Archive</label>
-        <div class="custom-control custom-switch position-static">
-          <input class="custom-control-input" type="checkbox" formControlName="archive" id="archive">
-          <label class="custom-control-label" for="archive"></label>
-          <span class="text-secondary">Archive and hide from the list</span>
+        <div class="form-check form-switch position-static">
+          <input class="form-check-input" type="checkbox" formControlName="archive" id="archive">
+          <label class="form-check-label" for="archive">Archive and hide from the list</label>
         </div>
       </div>
 
       <!-- Exclude -->
       <div class="form-group">
         <label for="exclude">Exclude</label>
-        <div class="custom-control custom-switch position-static">
-          <input class="custom-control-input" type="checkbox" formControlName="exclude" id="exclude">
-          <label class="custom-control-label" for="exclude"></label>
-          <span class="text-secondary">Exclude from the reports</span>
+        <div class="form-check form-switch position-static">
+          <input class="form-check-input" type="checkbox" formControlName="exclude" id="exclude">
+          <label class="form-check-label" for="exclude">Exclude from the reports</label>
         </div>
       </div>
     </div>
@@ -189,10 +187,10 @@
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-right" *ngIf="!noWallets">
+<div class="modal-footer text-end" *ngIf="!noWallets">
 
   <!-- Delete -->
-  <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(transaction)">
+  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(transaction)">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
   </a>
 
@@ -207,7 +205,7 @@
 
 <!-- Body (when no wallets) -->
 <div class="modal-body" *ngIf="noWallets">
-  <p class="font-weight-bold text-warning">No Wallets 😮</p>
+  <p class="fw-bold text-warning">No Wallets 😮</p>
   <p>You don't have any wallets for your profile.</p>
   <button class="btn btn-primary" (click)="addWallet(); modal.hide();">Add Wallet</button>
 </div>

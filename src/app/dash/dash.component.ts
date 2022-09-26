@@ -3,25 +3,26 @@ import { Router } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
 import { environment } from '@environments/environment';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
-import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
-import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
-import { faCalendarDay } from '@fortawesome/free-solid-svg-icons/faCalendarDay';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
-import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle';
-import { faCloudDownloadAlt } from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
-import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons/faEllipsisV';
-import { faFileInvoice } from '@fortawesome/free-solid-svg-icons/faFileInvoice';
-import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import { faRetweet } from '@fortawesome/free-solid-svg-icons/faRetweet';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
-import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
-import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons/faUserCircle';
+import { faCalendarAlt, faUser } from '@fortawesome/free-regular-svg-icons';
+import {
+  faBars,
+  faCalendarDay,
+  faCheckCircle,
+  faChevronDown,
+  faChevronUp,
+  faCircle,
+  faCloudDownloadAlt,
+  faCog,
+  faEllipsisV,
+  faFileInvoice,
+  faLayerGroup,
+  faPlus,
+  faRetweet,
+  faSignOutAlt,
+  faTachometerAlt,
+  faTags,
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Profile } from '@shared/interfaces/profile';

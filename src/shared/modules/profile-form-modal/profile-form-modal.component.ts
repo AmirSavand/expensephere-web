@@ -1,13 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
-import { faMoneyBill } from '@fortawesome/free-solid-svg-icons/faMoneyBill';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { faStickyNote } from '@fortawesome/free-regular-svg-icons';
+import { faInfoCircle, faMoneyBill, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Currency } from '@shared/interfaces/currency';
@@ -60,7 +57,7 @@ export class ProfileFormModalComponent implements OnInit {
 
   constructor(public modal: BsModalRef,
               private router: Router,
-              private formBuilder: FormBuilder) {
+              private formBuilder: UntypedFormBuilder) {
   }
 
   ngOnInit(): void {

@@ -26,7 +26,15 @@ $light: #F9FAFC;
 $tertiary: lighten($secondary, 35);
 
 $theme-colors: (
-  "tertiary": $tertiary
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+  "tertiary": $tertiary,
 );
 
 $font-family-base: "Gudea", "Roboto", sans-serif;
@@ -54,11 +62,13 @@ $modal-backdrop-opacity: 0;
 $modal-fade-transform: translate(0, 25%);
 
 $link-hover-decoration: none;
-
-$badge-font-size: 100%;
-$badge-font-weight: normal;
+$link-decoration: none;
 
 $dropdown-item-padding-y: 0.75rem;
+
+$table-cell-padding-y: 0.75rem;
+
+$min-contrast-ratio: 2;
 
 /* Icons variables override */
 
@@ -66,6 +76,8 @@ $icomoon-font-path: "/assets/icon/fonts";
 
 /* Bootstrap variables */
 
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";

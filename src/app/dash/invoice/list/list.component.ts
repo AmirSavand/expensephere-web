@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
-import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
+import { faCheckCircle, faLink, faPen, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { ApiResponse } from '@shared/interfaces/api-response';
 import { GetParams } from '@shared/interfaces/get-params';

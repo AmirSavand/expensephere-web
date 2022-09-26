@@ -56,6 +56,7 @@ export class Cache<T> {
     if (this.isCached()) {
       return JSON.parse(localStorage.getItem(this.storageKey));
     }
+    return {} as T;
   }
 
   /**

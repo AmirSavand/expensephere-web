@@ -1,5 +1,6 @@
 import { environment } from '@environments/environment';
 import { Crud } from '@shared/classes/crud';
+import { Account } from '@shared/interfaces/account';
 import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Currency } from '@shared/interfaces/currency';

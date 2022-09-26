@@ -8,9 +8,9 @@
         <div class="item-icon edit" (click)="editEvent(event)" title="Edit event">
           <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
         </div>
-        <a class="pl-3 w-100" title="View event"
+        <a class="ps-3 w-100" title="View event"
            [routerLink]="['/dash', 'event', event.id]">
-          <div class="font-weight-bold" [style.color]="event.color">{{ event.name }}</div>
+          <div class="fw-bold" [style.color]="event.color">{{ event.name }}</div>
           <div class="small text-dark">{{ event.budget | profileCurrency }}</div>
         </a>
       </div>

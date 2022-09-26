@@ -5,12 +5,12 @@
     <div class="d-flex align-items-center mb-3">
 
       <!-- Title -->
-      <p class="font-weight-bold mb-0">Export Transactions</p>
+      <p class="fw-bold mb-0">Export Transactions</p>
 
       <!-- Info -->
-      <div class="ml-auto badge badge-info badge-pill px-3"
+      <div class="ms-auto badge bg-info badge-pill px-3"
            title="Number of transactions by your selected filters and dates.">
-        <b>{{ count >= 0 ? (count | number) : '...' }}</b> Selected
+        <b>{{ count >= 0 ? ( count | number ) : '...' }}</b> Selected
       </div>
     </div>
 
@@ -24,7 +24,7 @@
           <div class="card-body">
             <p>Filter what transactions you want to include for exporting.</p>
             <app-filters [filters]="filters" (update)="filtersSelected = $event; load()"></app-filters>
-            <button class="btn btn-light btn-block mt-3" (click)="filtersSelected = {}; load()">
+            <button class="btn btn-light w-100 mt-3" (click)="filtersSelected = {}; load()">
               Clear Filters
             </button>
           </div>
@@ -51,7 +51,7 @@
                      [(ngModel)]="to" (change)="load()">
             </div>
 
-            <button class="btn btn-light btn-block"
+            <button class="btn btn-light w-100"
                     (click)="from = null; to = null; load()"
                     [disabled]="!from && !to">
               Clear Dates
@@ -66,11 +66,14 @@
           <div class="card-header">Select Export Type</div>
           <div class="card-body">
             <p>Select what kind of file you want to export your transactions to.</p>
-            <button class="btn btn-primary btn-block" *ngFor="let option of options" (click)="submit(option)">
+            <button class="btn btn-primary w-100"
+                    [class.mt-2]="!first"
+                    *ngFor="let option of options; let first = first"
+                    (click)="submit(option)">
               {{ option.label }}
             </button>
             <hr>
-            <a class="btn btn-dark btn-block" routerLink="../pages">Mange Public Pages</a>
+            <a class="btn btn-dark w-100" routerLink="../pages">Mange Public Pages</a>
           </div>
         </div>
       </div>

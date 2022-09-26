@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
+import { Account } from '@shared/interfaces/account';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { User } from '@shared/interfaces/user';
 import { AuthService } from '@shared/services/auth.service';
@@ -29,7 +30,7 @@ export class SettingsComponent implements OnInit {
     error: {},
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
   }
 
   ngOnInit(): void {
