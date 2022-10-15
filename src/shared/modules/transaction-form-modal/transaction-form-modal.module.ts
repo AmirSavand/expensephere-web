@@ -5,7 +5,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CategoryFormModalModule } from '@shared/modules/category-form-modal/category-form-modal.module';
 import { SelectModule } from '@shared/modules/select/select.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-
 import { TransactionFormModalComponent } from './transaction-form-modal.component';
 
 @NgModule({
@@ -18,9 +17,6 @@ import { TransactionFormModalComponent } from './transaction-form-modal.componen
     CategoryFormModalModule,
   ],
   declarations: [
-    TransactionFormModalComponent,
-  ],
-  entryComponents: [
     TransactionFormModalComponent,
   ],
 })

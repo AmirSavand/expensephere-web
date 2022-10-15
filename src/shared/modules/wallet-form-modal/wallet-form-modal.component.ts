@@ -1,14 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons/faMoneyBillAlt';
-import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
-import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons';
+import { faInfoCircle, faPaintBrush, faIcons, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
@@ -82,7 +78,7 @@ export class WalletFormModalComponent implements OnInit {
   isEditing: boolean;
 
   constructor(public modal: BsModalRef,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private profileService: ProfileService,
               private router: Router) {
   }

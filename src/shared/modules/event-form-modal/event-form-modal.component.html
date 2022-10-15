@@ -5,7 +5,7 @@
   <span>{{ isEditing ? 'Edit' : 'Add' }} Event</span>
 
   <!-- Close -->
-  <button class="ml-auto btn btn-light" (click)="modal.hide()">
+  <button class="ms-auto btn btn-link" (click)="modal.hide()">
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
@@ -19,7 +19,7 @@
     <div class="form-group">
       <label for="name">Name</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
         </div>
         <input type="text" id="name" class="form-control" formControlName="name"
@@ -32,13 +32,13 @@
     <div class="form-group">
       <label for="budget">Budget</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faBudget"></fa-icon>
         </div>
         <input type="number" id="budget" class="form-control" formControlName="budget"
                [step]="1" [min]="0" placeholder="Enter budget" autocomplete="off"
                [class.is-invalid]="form.error.budget">
-        <div class="input-group-append"><span class="input-group-text font-weight-bold">{{ currency }}</span></div>
+        <div class="input-group-text w-auto"><span class="input-group-text fw-bold">{{ currency }}</span></div>
         <div class="invalid-tooltip" *ngIf="form.error.budget">{{ form.error.budget[0] }}</div>
       </div>
     </div>
@@ -47,7 +47,7 @@
     <div class="form-group">
       <label for="icon">Icon</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faIcons"></fa-icon>
         </div>
         <app-select id="icon"
@@ -64,7 +64,7 @@
     <div class="form-group">
       <label for="color">Color</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faPaint"></fa-icon>
         </div>
         <app-select-color id="color" [selected]="form.form.get('color').value"
@@ -76,18 +76,17 @@
     <!-- Archive -->
     <div class="form-group">
       <label for="archive">Archive</label>
-      <div class="custom-control custom-switch position-static">
-        <input class="custom-control-input" type="checkbox" formControlName="archive" id="archive">
-        <label class="custom-control-label" for="archive"></label>
-        <span class="text-secondary">Archive and hide from the list</span>
+      <div class="form-check form-switch position-static">
+        <input class="form-check-input" type="checkbox" formControlName="archive" id="archive">
+        <label class="form-check-label" for="archive">Archive and hide from the list</label>
       </div>
     </div>
 
     <!-- Extra details toggle -->
-    <a class="d-block font-weight-bold text-secondary mt-5 mb-3 text-uppercase"
+    <a class="d-block fw-bold text-secondary mt-5 mb-3 text-uppercase"
        (click)="showExtraDetails = !showExtraDetails">
       <span>Extra Details</span>
-      <fa-icon class="float-right" [icon]="faCollapse" [flip]="showExtraDetails ? 'vertical' : null"></fa-icon>
+      <fa-icon class="float-end" [icon]="faCollapse" [flip]="showExtraDetails ? 'vertical' : null"></fa-icon>
     </a>
 
     <!-- Extra details -->
@@ -97,7 +96,7 @@
       <div class="form-group">
         <label for="start">Start</label>
         <div class="input-group">
-          <div class="input-group-prepend">
+          <div class="input-group-text">
             <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faTime"></fa-icon>
           </div>
           <input type="datetime-local" id="start" class="form-control" formControlName="start"
@@ -110,7 +109,7 @@
       <div class="form-group">
         <label for="end">End</label>
         <div class="input-group">
-          <div class="input-group-prepend">
+          <div class="input-group-text">
             <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faTime"></fa-icon>
           </div>
           <input type="datetime-local" id="end" class="form-control current-timedate" formControlName="end"
@@ -123,7 +122,7 @@
       <div class="form-group">
         <label for="note">Note</label>
         <div class="input-group">
-          <div class="input-group-prepend">
+          <div class="input-group-text">
             <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faNote"></fa-icon>
           </div>
           <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
@@ -137,10 +136,10 @@
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-right">
+<div class="modal-footer text-end">
 
   <!-- Delete -->
-  <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(event)">
+  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(event)">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
   </a>
 

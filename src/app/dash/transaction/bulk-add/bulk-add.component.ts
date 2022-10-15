@@ -1,12 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons/faCheckCircle';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { faChevronRight, faCircleNotch, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
@@ -49,7 +46,7 @@ export class BulkAddComponent implements OnInit {
 
   currency: string;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
   }
 
   ngOnInit(): void {

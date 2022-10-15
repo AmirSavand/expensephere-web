@@ -5,7 +5,7 @@
   <span>{{ isEditing ? 'Edit' : 'Add' }} Profile</span>
 
   <!-- Close -->
-  <button class="ml-auto btn btn-light" (click)="modal.hide()">
+  <button class="ms-auto btn btn-link" (click)="modal.hide()">
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
@@ -18,7 +18,7 @@
     <div class="form-group">
       <label for="name">Name</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
         </div>
         <input type="text" id="name" class="form-control" formControlName="name"
@@ -31,7 +31,7 @@
     <div class="form-group">
       <label for="currency">Currency</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faCurrency"></fa-icon>
         </div>
         <app-select id="currency"
@@ -49,7 +49,7 @@
     <div class="form-group">
       <label for="note">Note</label>
       <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faNote"></fa-icon>
         </div>
         <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
@@ -62,10 +62,10 @@
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-right">
+<div class="modal-footer text-end">
 
   <!-- Delete -->
-  <a class="text-danger mr-auto" *ngIf="isEditing" (click)="delete(profile)">
+  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(profile)">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
   </a>
 

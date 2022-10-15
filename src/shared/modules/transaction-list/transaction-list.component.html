@@ -3,14 +3,14 @@
 
   <!-- Date -->
   <div class="mt-4 d-flex align-items-center text-secondary border-bottom pb-2">
-    <h3 class="mb-0 mr-2 text-dark">{{ transactionGroup.key | date:'d' }}</h3>
+    <h3 class="mb-0 me-2 text-dark">{{ transactionGroup.key | date:'d' }}</h3>
     <div class="small">
       <div>{{ transactionGroup.key | date:'EEEE' }}</div>
       <div>{{ transactionGroup.key | date:'MMM yyyy' }}</div>
     </div>
-    <div class="ml-auto mt-auto small">
+    <div class="ms-auto mt-auto small">
       <div>{{ transactionGroup.value.length }} Transactions</div>
-      <div class="text-right">{{ transactionsGroupsTotal[transactionGroup.key] | profileCurrency }}</div>
+      <div class="text-end">{{ transactionsGroupsTotal[transactionGroup.key] | profileCurrency }}</div>
     </div>
   </div>
 
@@ -30,7 +30,7 @@
                [title]="walletDict[transaction.wallet].name"
                [style.background]="walletDict[transaction.wallet].color"></i>
           </div>
-          <a class="pl-3 d-flex align-items-center text-dark w-100" title="View transaction"
+          <a class="ps-3 d-flex align-items-center text-dark w-100" title="View transaction"
              [routerLink]="['/dash', 'transaction', transaction.id]">
             <div>
               <!-- Name -->
@@ -39,10 +39,10 @@
               <div class="small text-muted">{{ transaction.time | date:'hh:mm aa' }}</div>
             </div>
             <!-- Amount and (to wallet) -->
-            <div class="ml-auto font-weight-bold"
+            <div class="ms-auto fw-bold"
                  [class.text-secondary]="transaction.kind === expenseKind.TRANSFER"
                  [class.text-danger]="transaction.kind === expenseKind.EXPENSE">
-              <div class="text-right">{{ transaction.amount | profileCurrency }}</div>
+              <div class="text-end">{{ transaction.amount | profileCurrency }}</div>
               <div class="small" *ngIf="transaction.kind === expenseKind.TRANSFER">
                 +{{ walletDict[transaction.wallet].name }}
               </div>

@@ -6,7 +6,7 @@ import { ProfileService } from '@shared/services/profile.service';
   name: 'profileCurrency',
 })
 export class ProfileCurrencyPipe extends CurrencyPipe implements PipeTransform {
-  transform(
+  override transform(
     value: number,
     currencyCode?: string,
     display?: 'code' | 'symbol' | 'symbol-narrow' | string | boolean,

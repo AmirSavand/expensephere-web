@@ -2,10 +2,10 @@
 <form [formGroup]="form.form" (ngSubmit)="submit()">
 
   <!-- Title and back link -->
-  <p class="font-weight-bold mb-5">
+  <p class="fw-bold mb-5">
 
     <!-- Back link -->
-    <a routerLink="/" class="mr-3 text-secondary">
+    <a routerLink="/" class="me-3 text-secondary">
       <fa-icon [icon]="faBack" [fixedWidth]="true"></fa-icon>
     </a>
 
@@ -37,5 +37,5 @@
   <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
 
   <!-- Button -->
-  <button class="btn btn-block btn-primary" [disabled]="form.loading">Save Changes</button>
+  <button class="btn w-100 btn-primary" [disabled]="form.loading">Save Changes</button>
 </form>

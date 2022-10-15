@@ -1,10 +1,12 @@
 import { environment } from '@environments/environment';
 import { Crud } from '@shared/classes/crud';
+import { Account } from '@shared/interfaces/account';
 import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Currency } from '@shared/interfaces/currency';
 import { Event } from '@shared/interfaces/event';
 import { Invoice } from '@shared/interfaces/invoice';
+import { Contact } from '@shared/interfaces/contact';
 import { InvoiceItem } from '@shared/interfaces/invoice-item';
 import { InvoiceMin } from '@shared/interfaces/invoice-min';
 import { Profile } from '@shared/interfaces/profile';
@@ -28,4 +30,5 @@ export class Api {
   static readonly transactionsPage = new Crud<TransactionsPage, ApiResponse<TransactionsPage>>('transactions-page');
   static readonly invoice = new Crud<Invoice, ApiResponse<InvoiceMin>>('invoice');
   static readonly invoiceItem = new Crud<InvoiceItem, ApiResponse<InvoiceItem>>('invoice-item');
+  static readonly invoiceContact = new Crud<Contact, ApiResponse<Contact>>('invoice-contact');
 }

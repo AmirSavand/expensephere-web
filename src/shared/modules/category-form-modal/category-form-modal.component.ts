@@ -1,13 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faIcons } from '@fortawesome/free-solid-svg-icons/faIcons';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
-import { faPaintBrush } from '@fortawesome/free-solid-svg-icons/faPaintBrush';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { faTimes, faInfoCircle, faPaintBrush, faIcons, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
@@ -81,7 +77,7 @@ export class CategoryFormModalComponent implements OnInit {
   isEditing: boolean;
 
   constructor(public modal: BsModalRef,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private router: Router) {
   }
 

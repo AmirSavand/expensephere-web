@@ -1,11 +1,9 @@
+import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faCheckCircle, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Color } from '@shared/classes/color';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
-import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-select',

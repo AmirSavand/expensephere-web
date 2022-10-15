@@ -5,9 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SelectColorModule } from '@shared/modules/select-color/select-color.module';
 import { SelectModule } from '@shared/modules/select/select.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-
 import { EventFormModalComponent } from './event-form-modal.component';
-
 
 @NgModule({
   imports: [
@@ -19,9 +17,6 @@ import { EventFormModalComponent } from './event-form-modal.component';
     SelectModule,
   ],
   declarations: [
-    EventFormModalComponent,
-  ],
-  entryComponents: [
     EventFormModalComponent,
   ],
 })

@@ -8,7 +8,7 @@
         <div class="item-icon edit" (click)="editCategory(category)" title="Edit category">
           <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
         </div>
-        <a class="pl-3 text-dark w-100" title="View category"
+        <a class="ps-3 text-dark w-100" title="View category"
            [routerLink]="['/dash', 'category', category.id]">
           <div>{{ category.name }}</div>
           <div class="small text-muted">{{ category.transactions_count }} Transactions</div>

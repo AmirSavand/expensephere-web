@@ -8,8 +8,8 @@
         <div class="item-icon edit" (click)="editWallet(wallet)" title="Edit wallet">
           <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
         </div>
-        <a class="pl-3 w-100" title="View wallet" [routerLink]="getWalletLink(wallet)">
-          <div class="font-weight-bold" [style.color]="wallet.color">{{ wallet.name }}</div>
+        <a class="ps-3 w-100" title="View wallet" [routerLink]="getWalletLink(wallet)">
+          <div class="fw-bold" [style.color]="wallet.color">{{ wallet.name }}</div>
           <div class="small text-dark">{{ wallet.balance.total | profileCurrency }}</div>
         </a>
       </div>

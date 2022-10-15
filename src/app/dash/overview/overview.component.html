@@ -3,12 +3,12 @@
   <!-- Karma -->
   <div class="card mt-4 cursor-pointer" (click)="showKarmaInfo = !showKarmaInfo">
     <div class="card-header">
-      <span class="mr-auto" (click)="showKarmaInfo">Karma Level</span>
-      <span class="badge badge-primary" title="Current Level">{{ profile.level | number }}</span>
+      <span class="me-auto" (click)="showKarmaInfo">Karma Level</span>
+      <span class="badge bg-primary" title="Current Level">{{ profile.level | number }}</span>
     </div>
     <div class="card-body p-0" *ngIf="showKarmaInfo">
-      <p class="m-3 text-info text-center font-weight-bold">
-        <span class="font-weight-normal">📋</span>
+      <p class="m-3 text-info text-center fw-bold">
+        <span class="fw-normal">📋</span>
         When using Expensephere you gain Karma points and in here you can see your
         current karma points, level, and karma points required for next level.
       </p>
@@ -48,7 +48,7 @@
         <!-- Header -->
         <a class="card-header" routerLink="../wallet/list">
           <span>My Wallets</span>
-          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ms-auto text-secondary"></fa-icon>
         </a>
 
         <!-- Body -->
@@ -68,7 +68,7 @@
         <!-- Header -->
         <a class="card-header" routerLink="../category/list">
           <span>My Categories</span>
-          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ms-auto text-secondary"></fa-icon>
         </a>
 
         <!-- Body -->
@@ -78,8 +78,8 @@
           <app-loading classes="mt-5" *ngIf="!categories"></app-loading>
 
           <!-- No data -->
-          <p class="mt-3 mb-0 text-info text-center font-weight-bold" *ngIf="categories && !categoriesToShow.length">
-            <span class="font-weight-normal">📋</span>
+          <p class="mt-3 mb-0 text-info text-center fw-bold" *ngIf="categories && !categoriesToShow.length">
+            <span class="fw-normal">📋</span>
             When you start adding expenses, their categories will show up here.
           </p>
 
@@ -102,9 +102,9 @@
               <app-loading *ngIf="!transactions" classes="mt-5"></app-loading>
 
               <!-- No data -->
-              <p class="m-3 text-info text-center font-weight-bold"
+              <p class="m-3 text-info text-center fw-bold"
                  *ngIf="transactions && !transactions.length">
-                <span class="font-weight-normal">📋</span>
+                <span class="fw-normal">📋</span>
                 When you start adding transactions, statistical chart will show up here.
               </p>
 
@@ -147,7 +147,7 @@
         <!-- Header -->
         <a class="card-header" routerLink="../transaction/list">
           <span>My Transactions</span>
-          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ml-auto text-secondary"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faLink" class="ms-auto text-secondary"></fa-icon>
         </a>
 
         <!-- Body -->
@@ -157,8 +157,8 @@
           <app-loading classes="mt-5" *ngIf="!transactions || !categories || !wallets"></app-loading>
 
           <!-- No data -->
-          <p class="mt-3 mb-0 text-info text-center font-weight-bold" *ngIf="transactions && !transactions.length">
-            <span class="font-weight-normal">📋</span> When you start adding transactions, they will show up here.
+          <p class="mt-3 mb-0 text-info text-center fw-bold" *ngIf="transactions && !transactions.length">
+            <span class="fw-normal">📋</span> When you start adding transactions, they will show up here.
           </p>
 
           <!-- Transactions -->

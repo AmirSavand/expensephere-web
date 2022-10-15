@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faDizzy } from '@fortawesome/free-regular-svg-icons/faDizzy';
+import { faDizzy } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-not-found',

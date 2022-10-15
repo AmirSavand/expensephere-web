@@ -5,7 +5,7 @@
       <div class="item-icon item-icon-action" [ngStyle]="style(categoryDict[metric.id].color)">
         <i class="icon-{{ categoryDict[metric.id].icon }}"></i>
       </div>
-      <a class="pl-3 text-dark w-100" title="View category"
+      <a class="ps-3 text-dark w-100" title="View category"
          [routerLink]="['/dash', 'category', metric.id]">
         <div>{{ metric.value | profileCurrency }}</div>
         <div class="small text-muted">{{ categoryDict[metric.id].name }}</div>
@@ -20,7 +20,7 @@
 </div>
 
 <!-- No data -->
-<p class="m-3 text-info text-center font-weight-bold" *ngIf="metrics && !metrics.length">
-  <span class="font-weight-normal">📋</span>
+<p class="m-3 text-info text-center fw-bold" *ngIf="metrics && !metrics.length">
+  <span class="fw-normal">📋</span>
   When you start adding expenses, your categories with how much you spent will show up here.
 </p>

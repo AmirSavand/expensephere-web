@@ -15,27 +15,27 @@
     <div class="col-lg-6">
 
       <!-- Event -->
-      <p class="font-weight-bold m-0">Event</p>
+      <p class="fw-bold m-0">Event</p>
       <app-event-list columnClass="col-12" [events]="[event]"></app-event-list>
 
       <!-- Budget -->
       <hr>
-      <p class="font-weight-bold">Budget</p>
+      <p class="fw-bold">Budget</p>
       <p>{{ event.budget ? (event.budget | profileCurrency) : 'Not set' }}</p>
 
       <!-- Transactions (count) -->
       <hr>
-      <p class="font-weight-bold">Transactions</p>
+      <p class="fw-bold">Transactions</p>
       <p>{{ event.transactions_count | number }}</p>
 
       <!-- Transactions total -->
       <hr>
-      <p class="font-weight-bold">Total</p>
+      <p class="fw-bold">Total</p>
       <p>{{ event.transactions_total | profileCurrency }}</p>
 
       <!-- Date (start and end) -->
       <hr>
-      <p class="font-weight-bold">Date</p>
+      <p class="fw-bold">Date</p>
       <p>
         <ng-container *ngIf="!event.start && !event.end">Unspecified</ng-container>
         <ng-container *ngIf="event.start">
@@ -52,7 +52,7 @@
       <!-- Archive message -->
       <div *ngIf="event.archive" class="text-warning">
         <hr>
-        <p class="font-weight-bold">Archived</p>
+        <p class="fw-bold">Archived</p>
         <p>This event is archived.</p>
       </div>
 
@@ -64,7 +64,7 @@
     <div class="col-lg-6">
 
       <!-- Header -->
-      <p class="font-weight-bold mb-0">Transactions</p>
+      <p class="fw-bold mb-0">Transactions</p>
 
       <!-- Loading -->
       <app-loading *ngIf="!transactions"></app-loading>

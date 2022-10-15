@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCalendar } from '@fortawesome/free-regular-svg-icons/faCalendar';
-import { faClock } from '@fortawesome/free-regular-svg-icons/faClock';
-import { faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons/faMoneyBillAlt';
-import { faStickyNote } from '@fortawesome/free-regular-svg-icons/faStickyNote';
-import { faArchive } from '@fortawesome/free-solid-svg-icons/faArchive';
-import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
+import { faCalendar, faClock, faMoneyBillAlt, faStickyNote } from '@fortawesome/free-regular-svg-icons';
+import { faArchive, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { Api } from '@shared/classes/api';
 import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
@@ -14,7 +11,6 @@ import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { Api } from '@shared/classes/api';
 
 @Component({
   selector: 'app-detail',

@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 

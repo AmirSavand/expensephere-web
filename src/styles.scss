@@ -1,14 +1,49 @@
 /* Google font */
 
-@import url("https://fonts.googleapis.com/css2?family=Gudea:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gudea:wght@300;400;700&display=swap");
 
 /* Variables */
+
 @import "./variables";
 
 /* Bootstrap */
-@import "~bootstrap/scss/bootstrap";
+
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+//@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/button-group";
+//@import "bootstrap/scss/nav";
+//@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+//@import "bootstrap/scss/accordion";
+//@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/pagination";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/progress";
+@import "bootstrap/scss/list-group";
+//@import "bootstrap/scss/close";
+//@import "bootstrap/scss/toasts";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/tooltip";
+//@import "bootstrap/scss/popover";
+//@import "bootstrap/scss/carousel";
+//@import "bootstrap/scss/spinners";
+//@import "bootstrap/scss/offcanvas";
+//@import "bootstrap/scss/placeholders";
+@import "bootstrap/scss/helpers";
+@import "bootstrap/scss/utilities/api";
 
 /* Icons */
+
 @import "./assets/icon/style";
 
 /* Dark and light theme */
@@ -202,10 +237,14 @@ a, button, .btn {
 }
 
 .input-group {
-  > .input-group-prepend {
+  flex-wrap: unset !important;
+
+  > .input-group-text {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    width: $input-height;
+    padding: 0;
 
     > span,
     > fa-icon {
@@ -222,12 +261,14 @@ a, button, .btn {
 }
 
 .form-group {
+  margin-bottom: map_get($spacers, 3);
 
   > label {
     @extend .text-uppercase;
     @extend .small;
-    @extend .font-weight-bold;
-    @extend .text-secondary;
+    @extend .fw-bold;
+    color: $secondary;
+    margin-bottom: map_get($spacers, 2);
   }
 
   .invalid-tooltip {
@@ -257,12 +298,8 @@ a, button, .btn {
   > .modal-dialog {
     > .modal-content > * {
       > .modal-header {
-        @extend .bg-primary;
-        @extend .text-white;
-
-        button {
-          @extend .btn-primary;
-        }
+        color: white;
+        background: $primary;
       }
 
       > .modal-footer {
@@ -351,9 +388,16 @@ a, button, .btn {
   cursor: pointer;
 }
 
-.custom-checkbox {
-  .custom-control-label::before {
-    border: 1px solid $primary;
+.form-check {
+  height: unset !important;
+
+  .form-check-input {
+    width: 2.3rem;
+    height: 1.2rem;
+  }
+
+  .form-check-label {
+    padding-left: map_get($spacers, 2);
   }
 }
 
@@ -372,7 +416,7 @@ a, button, .btn {
 }
 
 .input-group {
-  > .input-group-prepend {
+  > .input-group-text {
     > .input-group-text {
       display: flex;
       align-items: center;
@@ -380,10 +424,19 @@ a, button, .btn {
   }
 }
 
-.custom-select,
+.form-check,
+.form-select,
 .form-control {
   display: flex;
   align-items: center;
+
+  &:not(textarea) {
+    height: $input-height;
+  }
+
+  &textarea {
+    min-height: $input-height;
+  }
 }
 
 select.no-style {

@@ -2,7 +2,7 @@
 <form [formGroup]="form.form" (ngSubmit)="submit()">
 
   <!-- Title -->
-  <p class="font-weight-bold text-center mb-5">Welcome <span class="text-primary">back</span> 🚀</p>
+  <p class="fw-bold text-center mb-5">Welcome <span class="text-primary">back</span> 🚀</p>
 
   <!-- Username -->
   <div class="form-group">
@@ -22,8 +22,8 @@
   <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
 
   <!-- Button -->
-  <button class="btn btn-block btn-primary" [disabled]="form.loading">Login</button>
+  <button class="btn w-100 btn-primary" [disabled]="form.loading">Login</button>
 
   <!-- Sign up link -->
-  <a class="btn btn-block btn-link" routerLink="../sign-up">Don't have an account?</a>
+  <a class="btn w-100 btn-link" routerLink="../sign-up">Don't have an account?</a>
 </form>

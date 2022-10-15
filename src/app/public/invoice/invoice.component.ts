@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faImage } from '@fortawesome/free-regular-svg-icons';
-import { faFilePdf } from '@fortawesome/free-regular-svg-icons/faFilePdf';
-import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faImage, faFilePdf } from '@fortawesome/free-regular-svg-icons';
+import { faDownload, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
-import { Invoice } from '@shared/interfaces/invoice';
 import { Utils } from '@shared/classes/utils';
+import { Invoice } from '@shared/interfaces/invoice';
 
 @Component({
   selector: 'app-invoice',
@@ -48,10 +46,13 @@ export class InvoiceComponent implements OnInit {
      */
     this.route.params.subscribe((params: Params): void => {
       if (params.id) {
-        Api.invoice.retrieve(params.id).subscribe((data: Invoice): void => {
-          this.invoice = data;
-        }, (): void => {
-          this.error = true;
+        Api.invoice.retrieve(params.id).subscribe({
+          next: (data: Invoice): void => {
+            this.invoice = data;
+          },
+          error: (): void => {
+            this.error = true;
+          },
         });
       }
     });

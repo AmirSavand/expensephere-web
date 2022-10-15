@@ -15,7 +15,7 @@
 <div class="container py-3" *ngIf="page">
   <div class="row justify-content-center">
     <div class="col-lg-5 mb-3">
-      <p class="font-weight-bold" title="Person who shared this page.">{{ page.user.name }}</p>
+      <p class="fw-bold" title="Person who shared this page.">{{ page.user.name }}</p>
       <p>{{ page.note }}</p>
       <p class="text-secondary" [title]="page.created | date:'hh:mm a'">
         {{ page.created | date }}
@@ -23,30 +23,30 @@
       <hr>
       <p>
         <span>Income</span>
-        <span class="float-right">
+        <span class="float-end">
           {{ page.balance.income | currency:page.currency:page.currency }}
         </span>
       </p>
       <p>
         <span>Expenses</span>
-        <span class="float-right">
+        <span class="float-end">
           {{ page.balance.expense | currency:page.currency:page.currency }}
         </span>
       </p>
       <p title="Transfer transactions are ignored.">
         <span>Total</span>
-        <span class="float-right">
+        <span class="float-end">
           {{ page.balance.total | currency:page.currency:page.currency }}
         </span>
       </p>
       <hr>
       <!-- Share for mobile -->
-      <button class="btn btn-secondary btn-block" (click)="share()" *ngIf="isSharingEnabled">
+      <button class="btn btn-secondary w-100" (click)="share()" *ngIf="isSharingEnabled">
         <fa-icon [fixedWidth]="true" [icon]="faShare"></fa-icon> Share
       </button>
       <!-- Copy for desktop -->
       <div class="input-group" *ngIf="!isSharingEnabled">
-        <div class="input-group-prepend">
+        <div class="input-group-text">
           <button class="btn btn-secondary" (click)="share()">
             <fa-icon [fixedWidth]="true" [icon]="copied ? faCopied : faCopy"></fa-icon>
           </button>
@@ -57,8 +57,8 @@
     </div>
     <div class="col-lg-6 offset-lg-1">
       <p>
-        <span class="font-weight-bold">Transactions</span>
-        <span class="float-right badge badge-pill badge-info">{{ page.transactions.length }}</span>
+        <span class="fw-bold">Transactions</span>
+        <span class="float-end badge badge-pill bg-info">{{ page.transactions.length }}</span>
       </p>
       <hr>
       <div class="transaction" *ngFor="let transaction of page.transactions">
@@ -68,7 +68,7 @@
             <div class="item-icon" [ngStyle]="style(transaction.category.color)">
               <i class="icon-{{ transaction.category.icon }}"></i>
             </div>
-            <div class="pl-3 d-flex align-items-center text-dark w-100">
+            <div class="ps-3 d-flex align-items-center text-dark w-100">
               <div>
                 <!-- Name -->
                 <div [title]="transaction.note">{{ transaction.title }}</div>
@@ -76,10 +76,10 @@
                 <div class="small text-muted">{{ transaction.time | date:'hh:mm aa' }}</div>
               </div>
               <!-- Amount -->
-              <div class="ml-auto font-weight-bold"
+              <div class="ms-auto fw-bold"
                    [class.text-secondary]="transaction.category.kind === expenseKind.TRANSFER"
                    [class.text-danger]="transaction.category.kind === expenseKind.EXPENSE">
-                <div class="text-right">{{ transaction.amount | currency:page.currency }}</div>
+                <div class="text-end">{{ transaction.amount | currency:page.currency }}</div>
               </div>
             </div>
           </div>

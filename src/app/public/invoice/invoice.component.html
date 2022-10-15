@@ -11,7 +11,7 @@
   </div>
 
   <!-- Overlay -->
-  <div *ngIf="invoice" class="overlay pb-3 text-right" [class.show]="overlayShow" data-html2canvas-ignore="true">
+  <div *ngIf="invoice" class="overlay pb-3 text-end" [class.show]="overlayShow" data-html2canvas-ignore="true">
     <div class="container">
 
       <!-- View: Main -->
@@ -27,12 +27,12 @@
       <ng-container *ngIf="overlayView === 'download'">
 
         <!-- Image -->
-        <button class="btn btn-primary rounded-circle" (click)="saveAsImage()" tooltip="Download as Image">
+        <button class="btn btn-primary rounded-circle" (click)="saveAsImage()" title="Download as Image">
           <fa-icon [fixedWidth]="true" [icon]="faImage"></fa-icon>
         </button>
 
         <!-- PDF -->
-        <button class="btn btn-primary rounded-circle" (click)="saveAsPDFImage()" tooltip="Download as PDF">
+        <button class="btn btn-primary rounded-circle" (click)="saveAsPDFImage()" title="Download as PDF">
           <fa-icon [fixedWidth]="true" [icon]="faPDF"></fa-icon>
         </button>
 

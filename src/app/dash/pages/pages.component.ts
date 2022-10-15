@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faShare } from '@fortawesome/free-solid-svg-icons';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { faShare, faChevronRight, faInfoCircle, faPen, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { ApiResponse } from '@shared/interfaces/api-response';
 import { TransactionsPage } from '@shared/interfaces/transactions-page';

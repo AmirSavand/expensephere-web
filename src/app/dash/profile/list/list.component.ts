@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Profile } from '@shared/interfaces/profile';
 import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Color } from '@shared/classes/color';
 import { Wallet } from '@shared/interfaces/wallet';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';

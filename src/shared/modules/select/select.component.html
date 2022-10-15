@@ -1,5 +1,5 @@
 <!-- Selected -->
-<div class="custom-select cursor-pointer"
+<div class="form-select cursor-pointer"
      (click)="edit = !edit" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
   {{ selected ? selected.name : selectLabel }}
 </div>
@@ -18,10 +18,10 @@
     <div class="px-3 pt-3 d-flex align-items-center d-lg-none border-0">
 
       <!-- Title -->
-      <div class="font-weight-bold">{{ selectLabel }}</div>
+      <div class="fw-bold">{{ selectLabel }}</div>
 
       <!-- Close button -->
-      <button class="btn btn-light ml-auto" (click)="edit = false">
+      <button class="btn btn-light ms-auto" (click)="edit = false">
         <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
       </button>
     </div>
@@ -33,11 +33,9 @@
       <input appAutoFocus type="text" placeholder="Search" [(ngModel)]="search" class="form-control">
 
       <!-- Add button -->
-      <div class="input-group-append" *ngIf="showAdd">
-        <button class="btn btn-light text-secondary" type="button" (click)="edit = false; add.emit()">
-          <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
-        </button>
-      </div>
+      <button class="btn btn-light text-secondary" type="button" *ngIf="showAdd" (click)="edit = false; add.emit()">
+        <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
+      </button>
     </div>
 
     <!-- List -->
@@ -50,8 +48,8 @@
         <div class="item-icon" [ngStyle]="style(item.color)" *ngIf="item.icon">
           <span class="icon-{{ item.icon }}"></span>
         </div>
-        <div [class.ml-3]="item.icon">{{ item.name }}</div>
-        <fa-icon *ngIf="selected === item" [icon]="faSelected" class="ml-auto text-primary"></fa-icon>
+        <div [class.ms-3]="item.icon">{{ item.name }}</div>
+        <fa-icon *ngIf="selected === item" [icon]="faSelected" class="ms-auto text-primary"></fa-icon>
       </div>
 
       <!-- No data -->

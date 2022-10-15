@@ -11,7 +11,7 @@ Invoices can have template. In here, you can create invoice templates.
 - Template must handle cases where invoice values are `null`.
 - Template must be fully mobile friendly.
 - Template must show the owner if the invoice is private.
-- After creating a template, it must be added in `InvoiceComponent.TEMPLATES`.
+- After creating a template, it must be added in `InvoiceService.templates`.
 
 ### Notes
 

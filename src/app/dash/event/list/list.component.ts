@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
