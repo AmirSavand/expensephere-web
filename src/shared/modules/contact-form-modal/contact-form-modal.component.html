@@ -1,0 +1,123 @@
+<!-- Header -->
+<div class="modal-header">
+
+  <!-- Title -->
+  <span>{{ isEditing ? 'Edit' : 'Add' }} Contact</span>
+
+  <!-- Close -->
+  <button class="ms-auto btn btn-link" (click)="modal.hide()">
+    <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
+  </button>
+</div>
+
+<!-- Body -->
+<div class="modal-body pb-0" *ngIf="form.form">
+  <form [formGroup]="form.form" (ngSubmit)="submit()">
+
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name">Name</label>
+      <div class="input-group">
+        <div class="input-group-text">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faName"></fa-icon>
+        </div>
+        <input [class.is-invalid]="form.error.name"
+               class="form-control"
+               formControlName="name"
+               id="name"
+               placeholder="Name"
+               type="text">
+        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[ 0 ] }}</div>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="name">Email</label>
+      <div class="input-group">
+        <div class="input-group-text">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faEmail"></fa-icon>
+        </div>
+        <input [class.is-invalid]="form.error.email"
+               class="form-control"
+               formControlName="email"
+               id="email"
+               placeholder="Email"
+               type="email">
+        <div class="invalid-tooltip" *ngIf="form.error.email">{{ form.error.email[ 0 ] }}</div>
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group">
+      <label for="name">Phone</label>
+      <div class="input-group">
+        <div class="input-group-text">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faPhone"></fa-icon>
+        </div>
+        <input [class.is-invalid]="form.error.phone"
+               class="form-control"
+               formControlName="phone"
+               id="phone"
+               placeholder="Phone"
+               type="text">
+        <div class="invalid-tooltip" *ngIf="form.error.phone">{{ form.error.phone[ 0 ] }}</div>
+      </div>
+    </div>
+
+    <!-- Website -->
+    <div class="form-group">
+      <label for="name">Website</label>
+      <div class="input-group">
+        <div class="input-group-text">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWebsite"></fa-icon>
+        </div>
+        <input [class.is-invalid]="form.error.website"
+               class="form-control"
+               formControlName="website"
+               id="website"
+               placeholder="Website"
+               type="text">
+        <div class="invalid-tooltip" *ngIf="form.error.website">{{ form.error.website[ 0 ] }}</div>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="form-group">
+      <label for="name">Address</label>
+      <div class="input-group">
+        <div class="input-group-text">
+          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAddress"></fa-icon>
+        </div>
+        <textarea [class.is-invalid]="form.error.address"
+                  class="form-control"
+                  formControlName="address"
+                  id="address"
+                  placeholder="Address"
+                  rows="3">
+        </textarea>
+        <div class="invalid-tooltip" *ngIf="form.error.address">{{ form.error.address[ 0 ] }}</div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <app-general-error [form]="form"></app-general-error>
+  </form>
+</div>
+
+<!-- Footer -->
+<div class="modal-footer text-end" *ngIf="form.form">
+
+  <!-- Delete -->
+  <a class="text-danger me-auto" *ngIf="isEditing" (click)="destroy(contact)">
+    <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
+  </a>
+
+  <!-- Cancel -->
+  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+
+  <!-- Submit -->
+  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+    {{ isEditing ? 'Update' : 'Done' }}
+  </button>
+</div>

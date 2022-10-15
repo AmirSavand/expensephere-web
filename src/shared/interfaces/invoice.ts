@@ -3,9 +3,8 @@ import { InvoiceMin } from './invoice-min';
 
 export interface Invoice extends InvoiceMin {
   template?: string;
-  company: string;
   date?: string;
-  due_date?: any;
+  due_date?: string;
   items_label?: string;
   note: string;
   discount_flat: boolean;

@@ -51,25 +51,29 @@
             <!-- Company -->
             <div class="form-group">
               <label for="company">Company</label>
-              <textarea id="company"
-                        [rows]="4"
-                        class="form-control"
-                        formControlName="company"
-                        placeholder="Company"
-                        [class.is-invalid]="form.error.company"></textarea>
-              <div class="invalid-tooltip" *ngIf="form.error.company">{{ form.error.company[ 0 ] }}</div>
+              <app-select (add)="addContact('company')"
+                          (choose)="form.form.get('company').setValue($event.id)"
+                          [items]="contacts"
+                          [selectedId]="form.form.get('company').value"
+                          [showAdd]="true"
+                          id="company"
+                          selectLabel="Select company">
+              </app-select>
+              <div class="invalid-tooltip" *ngIf="form.error.company">{{ form.error.company[0] }}</div>
             </div>
 
             <!-- Client -->
             <div class="form-group">
               <label for="client">Client</label>
-              <textarea id="client"
-                        [rows]="4"
-                        class="form-control"
-                        formControlName="client"
-                        placeholder="Client"
-                        [class.is-invalid]="form.error.client"></textarea>
-              <div class="invalid-tooltip" *ngIf="form.error.client">{{ form.error.client[ 0 ] }}</div>
+              <app-select (add)="addContact('client')"
+                          (choose)="form.form.get('client').setValue($event.id)"
+                          [items]="contacts"
+                          [selectedId]="form.form.get('client').value"
+                          [showAdd]="true"
+                          id="client"
+                          selectLabel="Select client">
+              </app-select>
+              <div class="invalid-tooltip" *ngIf="form.error.client">{{ form.error.client[0] }}</div>
             </div>
 
             <!-- Note -->

@@ -2,23 +2,23 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CategoryFormModalModule } from '@shared/modules/category-form-modal/category-form-modal.module';
+import { GeneralErrorModule } from '@shared/modules/general-error/general-error.module';
+import { SelectColorModule } from '@shared/modules/select-color/select-color.module';
 import { SelectModule } from '@shared/modules/select/select.module';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { TransactionFormModalComponent } from './transaction-form-modal.component';
+import { ContactFormModalComponent } from './contact-form-modal.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    CollapseModule,
+    SelectColorModule,
     SelectModule,
-    CategoryFormModalModule,
+    GeneralErrorModule,
   ],
   declarations: [
-    TransactionFormModalComponent,
+    ContactFormModalComponent,
   ],
 })
-export class TransactionFormModalModule {
+export class ContactFormModalModule {
 }

@@ -1,0 +1,63 @@
+<!-- Filters -->
+<div class="bg-tertiary py-3">
+  <div class="container">
+    <app-filters [filters]="filters" (update)="params = $event; load()"></app-filters>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="container py-3">
+
+  <!-- Header -->
+  <div class="fw-bold d-flex align-items-center mb-3">
+    <a class="text-secondary" routerLink="../list">Invoice</a>
+    <fa-icon [fixedWidth]="true" [icon]="faBreadcrumbArrow" class="small mx-1 text-secondary"></fa-icon>
+    <span>Contacts</span>
+  </div>
+
+  <!-- Loading -->
+  <app-loading classes="my-3" *ngIf="!contacts"></app-loading>
+
+  <!-- No data -->
+  <app-no-data classes="my-3" *ngIf="contacts && !contacts.length"></app-no-data>
+
+  <!-- Data -->
+  <div class="table-responsive" *ngIf="contacts?.length">
+    <table class="table table-borderless table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Website</th>
+        <th>Address</th>
+        <td></td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contact of contacts">
+        <!-- Name -->
+        <td>{{ contact.name }}</td>
+        <!-- Email -->
+        <td><a [href]="'mailto:' + contact.email">{{ contact.email }}</a></td>
+        <!-- Phone -->
+        <td><a [href]="'tel:' + contact.phone">{{ contact.phone }}</a></td>
+        <!-- Website -->
+        <td><a [href]="contact.website" target="_blank">{{ contact.website }}</a></td>
+        <!-- Address -->
+        <td [title]="contact.address">{{ contact.address | slice:0:20 }}</td>
+        <!-- Actions -->
+        <td class="text-end">
+          <!-- Edit -->
+          <a class="text-primary" (click)="update(contact)">
+            <fa-icon [fixedWidth]="true" [icon]="faUpdate"></fa-icon>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Create -->
+  <button class="btn btn-success" (click)="create()">Create</button>
+</div>

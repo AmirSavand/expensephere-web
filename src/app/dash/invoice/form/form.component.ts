@@ -2,23 +2,26 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { InvoiceComponent } from '@app/dash/invoice/invoice.component';
+import { InvoiceService } from '@app/dash/invoice/invoice.service';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faChevronRight, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
 import { ApiResponse } from '@shared/interfaces/api-response';
+import { Contact } from '@shared/interfaces/contact';
 import { Currency } from '@shared/interfaces/currency';
 import { Invoice } from '@shared/interfaces/invoice';
 import { InvoiceItem } from '@shared/interfaces/invoice-item';
 import { InvoiceTemplate } from '@shared/interfaces/invoice-template';
 import { Profile } from '@shared/interfaces/profile';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
+import { ContactFormModalComponent } from '@shared/modules/contact-form-modal';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ProfileService } from '@shared/services/profile.service';
 import { Payload } from '@shared/types/payload';
 import { format } from 'date-fns';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-form',
@@ -35,7 +38,7 @@ export class FormComponent implements OnInit {
    * List of available templates for selection.
    * We map the structure for support for our selection.
    */
-  readonly templates: SelectItem[] = InvoiceComponent.TEMPLATES.map((template: InvoiceTemplate): SelectItem => ({
+  readonly templates: SelectItem[] = this.invoiceService.templates.map((template: InvoiceTemplate): SelectItem => ({
     id: template.name.toLowerCase().replace(/ /g, '-'),
     name: template.name,
     icon: 'box',
@@ -87,6 +90,9 @@ export class FormComponent implements OnInit {
   // List of currencies for select input.
   currencies: SelectItem[];
 
+  // List of contacts for select input.
+  contacts: SelectItem[];
+
   // Flag for when editing invoice is not found.
   notFound: boolean;
 
@@ -94,7 +100,9 @@ export class FormComponent implements OnInit {
   currency: string;
 
   constructor(private formBuilder: UntypedFormBuilder,
+              private invoiceService: InvoiceService,
               private route: ActivatedRoute,
+              private modalService: BsModalService,
               private router: Router) {
   }
 
@@ -126,14 +134,13 @@ export class FormComponent implements OnInit {
            * keys and values (if an invoice item is set, enable its option).
            */
           for (const key of Object.keys(this.options.controls)) {
-            // @ts-ignore
-            this.options.get(key).setValue(data[key] !== null);
+            this.options.get(key).setValue(data[key as keyof Invoice] !== null);
           }
           Utils.patchForm(this.form, data);
           this.form.data = data;
           /**
            * Now that we've loaded the invoice, let's load all the invoice
-           * items as well. Create a for for each of them.
+           * items as well. Create a for each of them.
            */
           Api.invoiceItem.list({ invoice: data.id }).subscribe((items: ApiResponse<InvoiceItem>): void => {
             items.results.forEach((item: InvoiceItem): void => {
@@ -158,6 +165,17 @@ export class FormComponent implements OnInit {
           name: `${currency.code}`,
         });
       }
+    });
+    /** Get list of contacts. */
+    Api.invoiceContact.list().subscribe({
+      next: (data: ApiResponse<Contact>): void => {
+        this.contacts = data.results.map((item: Contact): SelectItem => ({
+          id: item.id,
+          name: item.name,
+          icon: 'people',
+          color: Color.COLORS_RESERVED.default,
+        }));
+      },
     });
     /**
      * Store currency and watch for changes.
@@ -283,6 +301,19 @@ export class FormComponent implements OnInit {
       }
     }, (error: HttpErrorResponse): void => {
       Utils.handleError(this.form, error);
+    });
+  }
+
+  /** Add a client or company from the dropdowns. */
+  addContact(field: 'client' | 'company'): void {
+    const modal: BsModalRef<ContactFormModalComponent> = this.modalService.show(ContactFormModalComponent, {
+      initialState: { redirect: false },
+    });
+    modal.content.submitted.subscribe({
+      next: (data: Contact): void => {
+        this.contacts.push(data);
+        this.form.form.get(field).patchValue(data.id);
+      },
     });
   }
 }

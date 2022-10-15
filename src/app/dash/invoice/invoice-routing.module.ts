@@ -9,6 +9,10 @@ const routes: Routes = [
     component: InvoiceComponent,
     children: [
       {
+        path: 'contacts',
+        loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule),
+      },
+      {
         path: 'list',
         loadChildren: () => import('./list/list.module').then(m => m.ListModule),
       },
