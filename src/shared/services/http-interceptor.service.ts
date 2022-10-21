@@ -13,10 +13,12 @@ export class HttpInterceptorService implements HttpInterceptor {
 
   private static readonly PROFILE_ENDPOINTS: string[] = [
     'transaction',
+    'transactions-page',
     'wallet',
     'category',
     'event',
     'invoice',
+    'invoice-contact',
   ];
 
   private static shouldFilterByProfile(url: string, method: string): boolean {
