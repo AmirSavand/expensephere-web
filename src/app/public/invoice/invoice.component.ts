@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, ElementRef, HostListener, Inject, ChangeDetectorRef } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faImage, faFilePdf } from '@fortawesome/free-regular-svg-icons';
@@ -19,7 +20,9 @@ export class InvoiceComponent implements OnInit {
   readonly faPDF: IconDefinition = faFilePdf;
   readonly faCollapse: IconDefinition = faTimes;
 
-  @ViewChild('wrapperElement') wrapperElement: ElementRef;
+  snapshotElement: ElementRef<HTMLDivElement>;
+
+  snapshotLoading = false;
 
   invoice: Invoice;
 
@@ -31,13 +34,15 @@ export class InvoiceComponent implements OnInit {
 
   lastScrollPosition = 0;
 
+  constructor(@Inject(DOCUMENT) private document: Document,
+              private changeDetectorRef: ChangeDetectorRef,
+              private route: ActivatedRoute) {
+  }
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(): void {
     this.overlayShow = window.scrollY - this.lastScrollPosition < 0;
     this.lastScrollPosition = window.scrollY;
-  }
-
-  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -58,19 +63,25 @@ export class InvoiceComponent implements OnInit {
     });
   }
 
-  saveAsPDFImage(): void {
+  /** Download invoice with various types. */
+  download(type: 'pdf' | 'image'): void {
     this.overlayView = 'main';
-    Utils.elementToPDF(this.wrapperElement.nativeElement);
-  }
-
-  saveAsImage(): void {
-    this.overlayView = 'main';
-    Utils.elementToCanvas(this.wrapperElement.nativeElement).subscribe((canvas: HTMLCanvasElement): void => {
-      const a: HTMLAnchorElement = document.createElement('a');
-      a.href = canvas.toDataURL();
-      a.download = `Expensephere_Invoice_${this.invoice.invoice_id}.png`;
-      a.click();
-      a.remove();
+    this.snapshotLoading = true;
+    this.changeDetectorRef.detectChanges();
+    Utils.domToCanvas(this.snapshotElement.nativeElement, this.document).subscribe({
+      next: (canvas: HTMLCanvasElement): void => {
+        const name = `Expensephere_Invoice_${this.invoice.invoice_id}`;
+        switch (type) {
+          case 'pdf':
+            Utils.canvasToPdf(canvas, name);
+            break;
+          case 'image':
+            Utils.downloadFromUrl(canvas.toDataURL(), `${name}.png`);
+            break;
+        }
+        canvas.remove();
+        this.snapshotLoading = false;
+      },
     });
   }
 }

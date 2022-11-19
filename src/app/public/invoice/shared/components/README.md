@@ -17,4 +17,4 @@ Invoices can have template. In here, you can create invoice templates.
 
 - Here are the rules, for sample on creating templates, look at the "soft" template.
 - Note that template component is rendered only when invoice is loaded.
-- Loading and error is handled in mother component.
+- Loading and error is handled in parent component.

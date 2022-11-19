@@ -1,17 +1,19 @@
 <!-- Invoice -->
-<div class="wrapper pb-5">
+<div #snapshotElement [class.snapshot-mode]="snapshotLoading" class="wrapper pb-5">
 
   <!-- Company, payment status, visibility -->
   <div class="company">
     <div class="container text-white py-5">
       <p>
-        <span class="bg-light text-dark rounded px-3 py-1 me-2" *ngIf="invoice.is_paid !== null">
+        <span *ngIf="invoice.is_paid !== null" class="bg-light text-dark rounded px-3 py-1 me-2">
           {{ invoice.is_paid ? 'PAID' : 'NOT PAID' }}
         </span>
-        <span class="bg-light text-dark rounded px-3 py-1 me-2" *ngIf="!invoice.is_published">PRIVATE</span>
+        <span *ngIf="!invoice.is_published && !snapshotLoading" class="bg-light text-dark rounded px-3 py-1 me-2">
+          PRIVATE
+        </span>
       </p>
       <h1 class="fw-bold">{{ invoice.company.name }}</h1>
-      <h2 class="text-pre" *ngIf="invoice.company.address">{{ invoice.company.address }}</h2>
+      <h2 *ngIf="invoice.company.address" class="text-pre">{{ invoice.company.address }}</h2>
     </div>
   </div>
 
@@ -25,19 +27,19 @@
           <div class="col-md-7 mb-3 mb-md-0">
             <p>Client</p>
             <h2 class="fw-bold">{{ invoice.client.name }}</h2>
-            <h3 class="text-pre" *ngIf="invoice.client.address">{{ invoice.client.address }}</h3>
+            <h3 *ngIf="invoice.client.address" class="text-pre">{{ invoice.client.address }}</h3>
           </div>
           <div class="col-md-5">
             <p>Invoice <b class="text-re text-primary">{{ invoice.invoice_id }}</b></p>
             <h2 class="fw-bold text-success">{{ invoice.total | profileCurrency:invoice.currency }}</h2>
-            <div class="border bg-light rounded p-2 mt-auto" *ngIf="invoice.date || invoice.due_date">
-              <div class="d-flex justify-content-between" *ngIf="invoice.date">
-                <span class="text-muted">Date</span>
-                <span>{{ invoice.date | date }}</span>
+            <div *ngIf="invoice.date || invoice.due_date" class="border bg-light rounded p-2 mt-auto">
+              <div *ngIf="invoice.date" class="row">
+                <span class="col-6 text-muted">Date</span>
+                <span class="col-6">{{ invoice.date | date }}</span>
               </div>
-              <div class="d-flex justify-content-between" *ngIf="invoice.due_date">
-                <span class="text-muted">Due Date</span>
-                <span>{{ invoice.due_date | date }}</span>
+              <div *ngIf="invoice.due_date" class="row">
+                <span class="col-6 text-muted">Due Date</span>
+                <span class="col-6">{{ invoice.due_date | date }}</span>
               </div>
             </div>
           </div>
@@ -90,7 +92,7 @@
             <th>Tax</th>
             <td>{{ invoice.tax | number:'0.0-2' }}%</td>
           </tr>
-          <tr class="h4" [class.border-top]="invoice.discount !== null || invoice.tax !== null">
+          <tr [class.border-top]="invoice.discount !== null || invoice.tax !== null" class="h4">
             <th>Total</th>
             <td>{{ invoice.total | profileCurrency:invoice.currency }}</td>
           </tr>

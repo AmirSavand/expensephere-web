@@ -1,16 +1,16 @@
 <!-- Invoice background -->
-<div class="wrapper"></div>
+<div *ngIf="!snapshotLoading" class="wrapper"></div>
 
 <!-- Contained -->
 <div class="container">
 
   <!-- Invoice -->
-  <div class="invoice shadow-sm">
+  <div #snapshotElement [class.snapshot-mode]="snapshotLoading" class="invoice shadow-sm">
 
     <!-- Invoice id -->
     <div class="d-flex align-items-center">
       <h2 class="fw-bold">{{ invoice.invoice_id }}</h2>
-      <span class="private" *ngIf="!invoice.is_published">PRIVATE</span>
+      <span *ngIf="!invoice.is_published && !snapshotLoading" class="private">PRIVATE</span>
     </div>
 
     <!-- Companies info -->
@@ -108,7 +108,7 @@
             <th>Tax</th>
             <td>{{ invoice.tax | number:'0.0-2' }}%</td>
           </tr>
-          <tr class="h4" [class.border-top]="invoice.discount !== null || invoice.tax !== null">
+          <tr [class.border-top]="invoice.discount !== null || invoice.tax !== null" class="h4">
             <th>Total</th>
             <td>{{ invoice.total | profileCurrency:invoice.currency }}</td>
           </tr>

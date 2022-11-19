@@ -3,6 +3,17 @@
 $bg-color: #fdfdfd;
 $invoice-bg-color: #f0f1f3;
 
+.snapshot-mode {
+  $size: 950px;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin-top: 0 !important;
+  max-width: $size !important;
+  width: $size !important;
+  min-width: $size !important;
+}
+
 .wrapper {
   background-color: $invoice-bg-color;
   padding: 180px;

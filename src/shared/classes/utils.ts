@@ -12,10 +12,10 @@ import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-cu
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { Payload } from '@shared/types/payload';
 import { PK } from '@shared/types/pk';
-import html2canvas from 'html2canvas';
+import domtoimage from 'dom-to-image';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Observable, from } from 'rxjs';
+import { Observable, from, Subject } from 'rxjs';
 
 // @ts-ignore
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -133,43 +133,55 @@ export class Utils {
     }).download(file);
   }
 
-  /**
-   * @returns Observable for converted canvas of given element using html2canvas.
-   * @param element HTML element to convert to canvas.
-   * @see https://html2canvas.hertzen.com
-   */
-  static elementToCanvas(element: HTMLElement): Observable<HTMLCanvasElement> {
-    return from(html2canvas(element, {
-      windowWidth: 1000,
-      width: 1000,
-      scrollX: 0,
-      scrollY: -window.pageYOffset,
-    }));
+  /** Converts the given DOM element to a canvas. */
+  static domToCanvas(dom: HTMLElement, documentRef: Document = document): Observable<HTMLCanvasElement> {
+    const subject = new Subject<HTMLCanvasElement>();
+    from(domtoimage.toPng(dom)).subscribe({
+      next: (data: string): void => {
+        const canvas: HTMLCanvasElement = documentRef.createElement('canvas');
+        const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
+        const img: HTMLImageElement = new Image();
+        img.onload = (): void => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          img.remove();
+          subject.next(canvas);
+        };
+        img.src = data;
+      },
+      error: (error: unknown): void => {
+        subject.error(error);
+      },
+    });
+    return subject;
   }
 
-  /**
-   * Takes the given HTML element and uses html2canvas to create an A4
-   * with PDF with auto height with that image insode it.
-   *
-   * @param element HTML element to turn into image to turn into PDF.
-   */
-  static elementToPDF(element: HTMLElement): void {
-    Utils.elementToCanvas(element).subscribe((canvas: HTMLCanvasElement): void => {
-      pdfMake.createPdf({
-        pageSize: {
+  /** Downloads a file with the given URL and filename. */
+  static downloadFromUrl(url: string, filename: string, documentRef: Document = document): void {
+    const anchor: HTMLAnchorElement = documentRef.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    anchor.click();
+    anchor.remove();
+  }
+
+  /** Converts the given canvas into a PDF file with the given name and downloads it. */
+  static canvasToPdf(canvas: HTMLCanvasElement, filename: string): void {
+    pdfMake.createPdf({
+      pageSize: {
+        width: 595.28,
+        height: 'auto',
+      },
+      pageMargins: [0, 0, 0, 0],
+      content: [
+        {
+          image: canvas.toDataURL(),
           width: 595.28,
-          height: 'auto',
+          height: (canvas.height / canvas.width) * 595.28,
         },
-        pageMargins: [0, 0, 0, 0],
-        content: [
-          {
-            image: canvas.toDataURL(),
-            width: 595.28,
-            height: (canvas.height / canvas.width) * 595.28,
-          },
-        ],
-      }).download();
-    });
+      ],
+    }).download(filename);
   }
 
   /**

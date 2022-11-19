@@ -6,6 +6,13 @@ $company-client-combined-space: 100px;
   box-shadow: 0 0 0 10000px $light;
   background: $light;
 
+  &.snapshot-mode {
+    $size: 950px;
+    max-width: $size !important;
+    width: $size !important;
+    min-width: $size !important;
+  }
+
   p,
   th {
     color: rgba($dark, 0.5);
@@ -25,6 +32,7 @@ $company-client-combined-space: 100px;
     &:first-child {
       padding-left: 0;
     }
+
     &:last-child {
       padding-right: 0;
     }

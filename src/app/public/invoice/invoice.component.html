@@ -1,7 +1,7 @@
-<div class="wrapper" #wrapperElement>
+<div class="wrapper">
 
   <!-- Error or loading -->
-  <div class="container py-5" *ngIf="error || !invoice">
+  <div *ngIf="error || !invoice" class="container py-5">
 
     <!-- Error -->
     <app-not-found *ngIf="error" name="Invoice"></app-not-found>
@@ -11,14 +11,14 @@
   </div>
 
   <!-- Overlay -->
-  <div *ngIf="invoice" class="overlay pb-3 text-end" [class.show]="overlayShow" data-html2canvas-ignore="true">
+  <div *ngIf="invoice" [class.show]="overlayShow" class="overlay pb-3 text-end">
     <div class="container">
 
       <!-- View: Main -->
       <ng-container *ngIf="overlayView === 'main'">
 
         <!-- Download -->
-        <button class="btn btn-secondary rounded-circle" (click)="overlayView = 'download'">
+        <button (click)="overlayView = 'download'" class="btn btn-secondary rounded-circle">
           <fa-icon [fixedWidth]="true" [icon]="faDownload"></fa-icon>
         </button>
       </ng-container>
@@ -27,17 +27,25 @@
       <ng-container *ngIf="overlayView === 'download'">
 
         <!-- Image -->
-        <button class="btn btn-primary rounded-circle" (click)="saveAsImage()" title="Download as Image">
+        <button (click)="download('image')"
+                [disabled]="snapshotLoading"
+                class="btn btn-primary rounded-circle"
+                title="Download as Image">
           <fa-icon [fixedWidth]="true" [icon]="faImage"></fa-icon>
         </button>
 
         <!-- PDF -->
-        <button class="btn btn-primary rounded-circle" (click)="saveAsPDFImage()" title="Download as PDF">
+        <button (click)="download('pdf')"
+                [disabled]="snapshotLoading"
+                class="btn btn-primary rounded-circle"
+                title="Download as PDF">
           <fa-icon [fixedWidth]="true" [icon]="faPDF"></fa-icon>
         </button>
 
         <!-- Collapse -->
-        <button class="btn btn-secondary rounded-circle" (click)="overlayView = 'main'">
+        <button (click)="overlayView = 'main'"
+                [disabled]="snapshotLoading"
+                class="btn btn-secondary rounded-circle">
           <fa-icon [fixedWidth]="true" [icon]="faCollapse"></fa-icon>
         </button>
       </ng-container>
@@ -46,7 +54,15 @@
 
   <!-- Invoice - Load the right template -->
   <ng-container *ngIf="invoice" [ngSwitch]="invoice.template">
-    <app-template-soft *ngSwitchDefault [invoice]="invoice"></app-template-soft>
-    <app-template-paper *ngSwitchCase="'paper'" [invoice]="invoice"></app-template-paper>
+    <app-template-soft (snapshotElementLoad)="snapshotElement = $event"
+                       *ngSwitchDefault
+                       [invoice]="invoice"
+                       [snapshotLoading]="snapshotLoading">
+    </app-template-soft>
+    <app-template-paper (snapshotElementLoad)="snapshotElement = $event"
+                        *ngSwitchCase="'paper'"
+                        [invoice]="invoice"
+                        [snapshotLoading]="snapshotLoading">
+    </app-template-paper>
   </ng-container>
 </div>
