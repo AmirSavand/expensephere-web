@@ -5,6 +5,8 @@ import { Profile } from '@shared/interfaces/profile';
 import { Wallet } from '@shared/interfaces/wallet';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { Transaction } from '@shared/interfaces/transaction';
+import { ApiResponse } from '@shared/interfaces/api-response';
 
 @Component({
   selector: 'app-detail',
@@ -13,9 +15,20 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 })
 export class DetailComponent implements OnInit {
 
+  readonly filterText = 'Filtered by last 30 days';
+
   profile: Profile;
 
   wallets: Wallet[];
+
+  transactions: Transaction[];
+
+  // Expense/income chart data.
+  balanceChartResults: { name: string; value: number }[];
+
+  // Balance chart colors.
+  balanceChartColors: { name: string; value: string }[] = [];
+
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -35,6 +48,9 @@ export class DetailComponent implements OnInit {
         if (!wallets.length) {
           this.modalService.show(WalletFormModalComponent);
         }
+      });
+      Api.transaction.list().subscribe((data: ApiResponse<Transaction>): void => {
+        this.transactions = data.results;
       });
     });
   }

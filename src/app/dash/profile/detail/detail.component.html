@@ -1,6 +1,34 @@
 <div class="container mt-5">
-  <div class="alert alert-info">
-    <p class="fw-bold">Profile Page</p>
-    <p class="m-0">This page will be available in the next update 💖</p>
+  <!-- Balance chart + Categories chart -->
+  <div class="row">
+
+    <!-- Balance chart -->
+    <div class="col-lg-6">
+      <div class="card mt-4">
+        <div [title]="filterText" class="card-header">Balance Chart</div>
+        <div [class.chart-wrapper]="transactions && transactions.length && balanceChartResults"
+             class="card-body p-0">
+
+          <!-- Loading -->
+          <app-loading *ngIf="!transactions" classes="mt-5"></app-loading>
+
+          <!-- No data -->
+          <p *ngIf="transactions && !transactions.length"
+             class="m-3 text-info text-center fw-bold">
+            <span class="fw-normal">📋</span>
+            When you start adding transactions, statistical chart will show up here.
+          </p>
+
+          <!-- Data -->
+          <ngx-charts-pie-chart *ngIf="transactions && transactions.length && balanceChartResults"
+                                [arcWidth]="0.25"
+                                [customColors]="balanceChartColors"
+                                [doughnut]="true"
+                                [labels]="true"
+                                [results]="balanceChartResults">
+          </ngx-charts-pie-chart>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
