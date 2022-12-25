@@ -13,11 +13,6 @@ import { ProfileService } from '@shared/services/profile.service';
 })
 export class AppComponent implements OnInit {
 
-  /**
-   * Primary color of the app
-   */
-  static readonly PRIMARY_COLOR = '#474787';
-
   constructor(private router: Router,
               private http: HttpClient) {
   }
