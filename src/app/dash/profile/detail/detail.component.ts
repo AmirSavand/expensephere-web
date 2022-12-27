@@ -20,33 +20,26 @@ import { Subscription } from 'rxjs';
 })
 export class DetailComponent implements OnInit, OnDestroy {
 
-  private readonly subscriptions = new Subscription();
-
   readonly filterText = 'Filtered by last 30 days';
-
   /** Selected profile ID. */
   profileSelected: Profile;
-
   /** Viewing profile details. */
   profile: Profile;
-
   /** Viewing profile wallet list. */
   wallets: Wallet[];
-
+  /** Page error flag */
+  error = false;
   /** Viewing profile category list. */
   categories: Category[];
-
   /** Viewing profile transaction list. */
   transactions: Transaction[];
-
   /** Viewing profile metrics spent for categories. */
   categorySpentMetrics: MetricSpent[];
-
   /** Viewing profile expense and income chart data. */
   balanceChartResults: { name: string; value: number }[];
-
   /** Viewing profile balance chart colors. */
   balanceChartColors: { name: string; value: string }[] = [];
+  private readonly subscriptions = new Subscription();
 
   constructor(private route: ActivatedRoute) {
   }
