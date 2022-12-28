@@ -1,19 +1,29 @@
-<div *ngIf="(!profile && !error) || (!profile && error)" class="container py-3">
+<!-- Loading and error -->
+<div *ngIf="(!profile && !error) || (!profile && error)" class="container py-4">
 
   <!-- Loading -->
-  <app-loading *ngIf="!profile && !error" classes="my-3"></app-loading>
+  <app-loading *ngIf="!profile && !error"></app-loading>
 
   <!-- Not found -->
-  <app-not-found *ngIf="!profile && error" classes="my-3" name="profile"></app-not-found>
-
+  <app-not-found *ngIf="!profile && error" name="profile"></app-not-found>
 </div>
 
-<div class="container mb-4">
+<!-- Content -->
+<div *ngIf="profile" class="container pb-4">
 
+  <!-- Header -->
+  <div class="fw-bold d-flex align-items-center mt-3">
+    <a class="text-secondary" routerLink="../list">Profiles</a>
+    <fa-icon [fixedWidth]="true" [icon]="faBreadcrumbArrow" class="small mx-1 text-secondary"></fa-icon>
+    <span>{{ profile.name || 'Profile' }}</span>
+  </div>
+
+  <!-- Row -->
   <div class="row">
 
-    <!-- Left: TODO -->
+    <!-- Left -->
     <div class="col-xl-6">
+
       <!-- Total -->
       <p class="fw-bold mt-4">Total</p>
       <div>{{ profile.balance.total | profileCurrency }}</div>
@@ -28,6 +38,17 @@
       <p class="fw-bold">Income</p>
       <div>{{ profile.balance.income | profileCurrency }}</div>
 
+      <!-- Currency -->
+      <hr>
+      <p class="fw-bold">Currency</p>
+      <div>{{ profile.currency }}</div>
+
+      <!-- Karma -->
+      <hr>
+      <p class="fw-bold">Karma</p>
+      <div title="Required for next level: {{ profile.level | number }}">
+        Level {{ profile.level | number }} <span class="badge bg-primary">{{ profile.karma | number }}</span>
+      </div>
     </div>
 
     <!-- Right: Balance chart + Categories chart -->
