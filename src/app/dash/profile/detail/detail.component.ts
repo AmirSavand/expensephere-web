@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faChevronRight, faPen } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Utils } from '@shared/classes/utils';
 import { PRIMARY_COLOR } from '@shared/constants/primary-color';
@@ -14,6 +14,8 @@ import { Wallet } from '@shared/interfaces/wallet';
 import { ProfileService } from '@shared/services/profile.service';
 import { addDays } from 'date-fns';
 import { Subscription } from 'rxjs';
+import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-detail',
@@ -22,12 +24,9 @@ import { Subscription } from 'rxjs';
 })
 export class DetailComponent implements OnInit, OnDestroy {
 
-  private readonly subscriptions = new Subscription();
-
   readonly faBreadcrumbArrow: IconDefinition = faChevronRight;
-
   readonly filterText = 'Filtered by last 30 days';
-
+  
   /** Selected profile ID. */
   profileSelected: Profile;
 
@@ -55,7 +54,15 @@ export class DetailComponent implements OnInit, OnDestroy {
   /** Viewing profile balance chart colors. */
   balanceChartColors: { name: string; value: string }[] = [];
 
-  constructor(private route: ActivatedRoute) {
+  readonly faEdit: IconDefinition = faPen;
+
+  readonly faVisit = faArrowRight;
+
+  private readonly subscriptions = new Subscription();
+
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
@@ -146,6 +153,24 @@ export class DetailComponent implements OnInit, OnDestroy {
         },
       });
     }));
+  }
+
+  /**
+   * Select a profile and go to dashboard
+   */
+  select(): void {
+    ProfileService.profile.next(this.profile);
+    this.router.navigateByUrl('/');
+  }
+
+  /**
+   * Open profile form modal for editing
+   */
+  edit(): void {
+    this.modalService.show(ProfileFormModalComponent, {
+      class: 'modal-sm',
+      initialState: { profile: this.profile },
+    });
   }
 
   ngOnDestroy(): void {

@@ -16,6 +16,20 @@
     <a class="text-secondary" routerLink="../list">Profiles</a>
     <fa-icon [fixedWidth]="true" [icon]="faBreadcrumbArrow" class="small mx-1 text-secondary"></fa-icon>
     <span>{{ profile.name || 'Profile' }}</span>
+
+    <!-- Profile select button -->
+    <button (click)="select()"
+            [class.btn-link]="profile.id === profileSelected.id"
+            [class.btn-primary]="profile.id !== profileSelected.id"
+            [disabled]="profile.id === profileSelected.id"
+            class="btn btn-sm ms-auto">
+      {{ profile.id === profileSelected.id ? 'Selected' : 'Select' }}
+    </button>
+
+    <!-- Edit button -->
+    <button (click)="edit()" class="btn btn-sm btn-light ms-2">
+      <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+    </button>
   </div>
 
   <!-- Row -->
