@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarView } from '@app/dash/shared/enums/sidebar-view';
 import { environment } from '@environments/environment';
@@ -45,6 +45,9 @@ import { Subscription } from 'rxjs';
 export class DashComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
+
+  /** Current year for the footer. */
+  readonly currentYear: number = new Date().getFullYear();
 
   readonly sidebarView = SidebarView;
   readonly style = Color.style;

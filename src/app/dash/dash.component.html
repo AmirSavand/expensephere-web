@@ -5,24 +5,24 @@
   <div id="page-wrapper">
 
     <!-- Header -->
-    <div id="header" *ngIf="profile">
+    <div *ngIf="profile" id="header">
 
       <!-- Container -->
       <div class="container d-flex align-items-center">
 
         <!-- Logo -->
         <a routerLink="/dash/overview" title="Expensephere">
-          <img alt="Expensephere" src="assets/favicon/favicon.png" class="me-3" [width]="28">
+          <img [width]="28" alt="Expensephere" class="me-3" src="assets/favicon/favicon.png">
         </a>
 
         <!-- Total -->
-        <div title="Total balance" *ngIf="profile">
+        <div *ngIf="profile" title="Total balance">
           <div class="fw-bold">Total</div>
           <div class="text-muted small">{{ profile.balance.total | profileCurrency }}</div>
         </div>
 
         <!-- Create transaction button -->
-        <a class="btn btn-primary ms-auto" (click)="addTransaction()">
+        <a (click)="addTransaction()" class="btn btn-primary ms-auto">
           <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
           <span class="ms-1">Transaction</span>
         </a>
@@ -36,15 +36,15 @@
           </button>
 
           <!-- Buttons -->
-          <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
             <!-- Wallet -->
-            <a class="dropdown-item" (click)="addWallet()">Wallet</a>
+            <a (click)="addWallet()" class="dropdown-item">Wallet</a>
             <!-- Category -->
-            <a class="dropdown-item" (click)="addCategory()">Category</a>
+            <a (click)="addCategory()" class="dropdown-item">Category</a>
             <!-- Event -->
-            <a class="dropdown-item" (click)="addEvent()">Event</a>
+            <a (click)="addEvent()" class="dropdown-item">Event</a>
             <!-- Invoice -->
-            <a class="dropdown-item" [routerLink]="'/dash/invoice/add'">Invoice</a>
+            <a [routerLink]="'/dash/invoice/add'" class="dropdown-item">Invoice</a>
             <!-- Separator -->
             <div class="dropdown-divider"></div>
             <!-- Bulk transaction -->
@@ -53,31 +53,31 @@
         </div>
 
         <!-- Sidebar toggle button (mobile only) -->
-        <button class="btn btn-secondary ms-2 d-block d-lg-none" (click)="sidebarClose = !sidebarClose">
+        <button (click)="sidebarClose = !sidebarClose" class="btn btn-secondary ms-2 d-block d-lg-none">
           <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
         </button>
       </div>
     </div>
 
     <!-- Page -->
-    <div id="page" cdkScrollable (click)="sidebarClose = true">
+    <div (click)="sidebarClose = true" cdkScrollable id="page">
       <router-outlet></router-outlet>
     </div>
   </div>
 
   <!-- Sidebar -->
-  <div id="sidebar" [class.open]="!sidebarClose" *ngIf="user">
+  <div *ngIf="user" [class.open]="!sidebarClose" id="sidebar">
 
     <!-- User -->
     <div id="user">
 
       <!-- Sidebar toggle button (mobile only) -->
-      <button class="btn btn-secondary me-3 d-block d-lg-none" (click)="sidebarClose = true">
+      <button (click)="sidebarClose = true" class="btn btn-secondary me-3 d-block d-lg-none">
         <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
       </button>
 
       <!-- User icon (desktop only) -->
-      <fa-icon [icon]="faPhoto" size="2x" class="text-primary me-3 d-none d-lg-block"></fa-icon>
+      <fa-icon [icon]="faPhoto" class="text-primary me-3 d-none d-lg-block" size="2x"></fa-icon>
 
       <!-- Name -->
       <div class="fw-bold">
@@ -86,16 +86,16 @@
       </div>
 
       <!-- Icon -->
-      <div class="btn btn-secondary ms-auto" (click)="toggleUserView()">
+      <div (click)="toggleUserView()" class="btn btn-secondary ms-auto">
         <fa-icon [fixedWidth]="true" [icon]="sidebarViewSelected === sidebarView.USER ? faBack : faView"></fa-icon>
       </div>
     </div>
 
     <!-- Sidebar view: User -->
-    <div class="view-user" *ngIf="sidebarViewSelected === sidebarView.USER">
+    <div *ngIf="sidebarViewSelected === sidebarView.USER" class="view-user">
 
       <!-- My profile -->
-      <div class="my profile" *ngIf="profile">
+      <div *ngIf="profile" class="my profile">
 
         <!-- Header -->
         <a class="fw-bold mb-3 d-block" routerLink="./profile/list">My Profiles</a>
@@ -104,10 +104,10 @@
         <app-loading *ngIf="!profiles" classes="mb-2"></app-loading>
 
         <!-- Profile -->
-        <div class="card shadow-sm mb-2"
+        <div (click)="select(item)"
              *ngFor="let item of profiles; let last = last"
              [class.cursor-pointer]="profile && item.id !== profile.id"
-             (click)="select(item)">
+             class="card shadow-sm mb-2">
           <div class="card-body py-2">
             <div class="d-flex align-items-center">
 
@@ -138,7 +138,7 @@
         </div>
 
         <!-- Add profile -->
-        <button class="btn btn-link text-secondary fw-bold ms-2" (click)="addProfile()">Add Profile</button>
+        <button (click)="addProfile()" class="btn btn-link text-secondary fw-bold ms-2">Add Profile</button>
       </div>
 
       <!-- My account -->
@@ -148,7 +148,7 @@
         <p class="fw-bold">My Account</p>
 
         <!-- Settings -->
-        <a class="btn btn-secondary shadow-sm" title="Settings" routerLink="/user/settings">
+        <a class="btn btn-secondary shadow-sm" routerLink="/user/settings" title="Settings">
           <fa-icon [fixedWidth]="true" [icon]="faSettings"></fa-icon>
         </a>
 
@@ -161,57 +161,57 @@
       <!-- App info -->
       <div class="mt-auto text-secondary small">
         <p>
-          <span>Expensephere v0.8.3 Beta &bull; </span>
+          <span>Expensephere v0.9 Beta &bull; </span>
           <a [href]="home">Website</a>
           <span> &bull; </span>
           <a href="mailto:expensephere@savandbros.com">Feedback</a>
         </p>
-        <p>2020 &copy; <a href="https://savandbros.com" target="_blank">SavandBros</a></p>
+        <p>{{ currentYear }} &copy; <a href="https://savandbros.com" target="_blank">SavandBros</a></p>
       </div>
     </div>
 
     <!-- Sidebar view: Main -->
-    <div class="view-main" *ngIf="sidebarViewSelected === sidebarView.MAIN">
+    <div *ngIf="sidebarViewSelected === sidebarView.MAIN" class="view-main">
 
       <!-- Links -->
-      <div class="links" *ngIf="profile">
-        <a routerLinkActive="active" routerLink="/dash/overview">
+      <div *ngIf="profile" class="links">
+        <a routerLink="/dash/overview" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faDashboard"></fa-icon>
           <span>Dashboard</span>
         </a>
-        <a routerLinkActive="active" routerLink="/dash/transaction">
+        <a routerLink="/dash/transaction" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faTransactions"></fa-icon>
           <span>Transactions</span>
         </a>
-        <a routerLinkActive="active" routerLink="/dash/wallet">
+        <a routerLink="/dash/wallet" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faWallets"></fa-icon>
           <span>Wallets</span>
         </a>
-        <a routerLinkActive="active" routerLink="/dash/category">
+        <a routerLink="/dash/category" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faCategories"></fa-icon>
           <span>Categories</span>
         </a>
-        <a routerLinkActive="active" routerLink="/dash/calendar">
+        <a routerLink="/dash/calendar" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faCalendar"></fa-icon>
           <span>Calendar</span>
         </a>
-        <a routerLinkActive="active" routerLink="/dash/event">
+        <a routerLink="/dash/event" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faEvents"></fa-icon>
           <span>Events</span>
         </a>
-        <a routerLinkActive="active" routerLink="/dash/invoice">
+        <a routerLink="/dash/invoice" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faInvoice"></fa-icon>
           <span>Invoices</span>
         </a>
-        <a routerLinkActive="active" routerLink="/dash/export">
+        <a routerLink="/dash/export" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faExport"></fa-icon>
           <span>Export</span>
         </a>
       </div>
 
       <!-- Links -->
-      <div class="links" *ngIf="!profile">
-        <a routerLinkActive="active" routerLink="/dash/profile">
+      <div *ngIf="!profile" class="links">
+        <a routerLink="/dash/profile" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faProfile"></fa-icon>
           <span>Profiles</span>
         </a>
