@@ -1,0 +1,11 @@
+@import "src/variables";
+
+.card {
+  min-height: 125px;
+
+  .progress {
+    height: 4px;
+    border-radius: $border-radius-sm;
+    min-width: 15px;
+  }
+}

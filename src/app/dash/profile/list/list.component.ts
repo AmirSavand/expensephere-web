@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faPen } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Profile } from '@shared/interfaces/profile';
 import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
@@ -16,13 +16,14 @@ import { Subscription } from 'rxjs';
 })
 export class ListComponent implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
-
   readonly faEdit: IconDefinition = faPen;
+  readonly faVisit = faArrowRight;
 
   profile: Profile;
 
   profiles: Profile[];
+
+  private subscription: Subscription;
 
   constructor(private router: Router,
               private modalService: BsModalService) {

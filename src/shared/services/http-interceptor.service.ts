@@ -1,4 +1,11 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpParams,
+  HttpRequest,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
@@ -21,7 +28,10 @@ export class HttpInterceptorService implements HttpInterceptor {
     'invoice-contact',
   ];
 
-  private static shouldFilterByProfile(url: string, method: string): boolean {
+  private static shouldFilterByProfile(url: string, method: string, params: HttpParams): boolean {
+    if (params.has('no_intercept')) {
+      return false;
+    }
     const endpoints: string[] = HttpInterceptorService.PROFILE_ENDPOINTS;
     return Boolean(
       method === 'GET' &&
@@ -39,7 +49,7 @@ export class HttpInterceptorService implements HttpInterceptor {
        * Include profile for some API calls
        */
       const params: GetParams = {};
-      if (HttpInterceptorService.shouldFilterByProfile(request.url, request.method)) {
+      if (HttpInterceptorService.shouldFilterByProfile(request.url, request.method, request.params)) {
         let key = 'profile';
         if (request.url.includes('/transaction/')) {
           key = 'wallet__profile';

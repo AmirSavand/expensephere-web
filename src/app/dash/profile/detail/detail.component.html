@@ -1,6 +1,108 @@
-<div class="container mt-5">
-  <div class="alert alert-info">
-    <p class="fw-bold">Profile Page</p>
-    <p class="m-0">This page will be available in the next update 💖</p>
+<!-- Loading and error -->
+<div *ngIf="(!profile && !error) || (!profile && error)" class="container py-4">
+
+  <!-- Loading -->
+  <app-loading *ngIf="!profile && !error"></app-loading>
+
+  <!-- Not found -->
+  <app-not-found *ngIf="!profile && error" name="profile"></app-not-found>
+</div>
+
+<!-- Content -->
+<div *ngIf="profile" class="container pb-4">
+
+  <!-- Header -->
+  <div class="fw-bold d-flex align-items-center mt-3">
+    <a class="text-secondary" routerLink="../list">Profiles</a>
+    <fa-icon [fixedWidth]="true" [icon]="faBreadcrumbArrow" class="small mx-1 text-secondary"></fa-icon>
+    <span>{{ profile.name || 'Profile' }}</span>
+
+    <!-- Profile select button -->
+    <button (click)="select()"
+            [class.btn-link]="profile.id === profileSelected.id"
+            [class.btn-primary]="profile.id !== profileSelected.id"
+            [disabled]="profile.id === profileSelected.id"
+            class="btn btn-sm ms-auto">
+      {{ profile.id === profileSelected.id ? 'Selected' : 'Select' }}
+    </button>
+
+    <!-- Edit button -->
+    <button (click)="edit()" class="btn btn-sm btn-light ms-2">
+      <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+    </button>
+  </div>
+
+  <!-- Row -->
+  <div class="row">
+
+    <!-- Left -->
+    <div class="col-xl-6">
+
+      <!-- Total -->
+      <p class="fw-bold mt-4">Total</p>
+      <div>{{ profile.balance.total | profileCurrency }}</div>
+
+      <!-- Expenses -->
+      <hr>
+      <p class="fw-bold">Expenses</p>
+      <div>{{ profile.balance.expense | profileCurrency }}</div>
+
+      <!-- Income -->
+      <hr>
+      <p class="fw-bold">Income</p>
+      <div>{{ profile.balance.income | profileCurrency }}</div>
+
+      <!-- Currency -->
+      <hr>
+      <p class="fw-bold">Currency</p>
+      <div>{{ profile.currency }}</div>
+
+      <!-- Karma -->
+      <hr>
+      <p class="fw-bold">Karma</p>
+      <div title="Required for next level: {{ profile.level | number }}">
+        Level {{ profile.level | number }} <span class="badge bg-primary">{{ profile.karma | number }}</span>
+      </div>
+    </div>
+
+    <!-- Right: Balance chart + Categories chart -->
+    <div class="col-xl-6">
+
+      <!-- Balance chart -->
+      <div class="card mt-4">
+        <div [title]="filterText" class="card-header">Balance Chart</div>
+        <div [class.chart-wrapper]="transactions && transactions.length && balanceChartResults" class="card-body p-0">
+
+          <!-- Loading -->
+          <app-loading *ngIf="!transactions" classes="m-3"></app-loading>
+
+          <!-- No data -->
+          <app-no-data *ngIf="transactions && !transactions.length"></app-no-data>
+
+          <!-- Data -->
+          <ngx-charts-pie-chart *ngIf="transactions && transactions.length && balanceChartResults"
+                                [arcWidth]="0.25"
+                                [customColors]="balanceChartColors"
+                                [doughnut]="true"
+                                [labels]="true"
+                                [results]="balanceChartResults">
+          </ngx-charts-pie-chart>
+        </div>
+      </div>
+
+      <!-- Categories chart -->
+      <div class="card mt-4">
+        <div [title]="filterText" class="card-header">Categories Chart</div>
+        <div class="card-body p-0">
+          <!-- Chart -->
+          <app-chart-spent-category *ngIf="categories && categorySpentMetrics"
+                                    [categories]="categories"
+                                    [metrics]="categorySpentMetrics">
+          </app-chart-spent-category>
+          <!-- Loading -->
+          <app-loading *ngIf="!categories || !categorySpentMetrics" classes="m-3"></app-loading>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

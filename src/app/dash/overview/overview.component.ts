@@ -5,6 +5,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
+import { PRIMARY_COLOR } from '@shared/constants/primary-color';
 import { ExpenseKind } from '@shared/enums/kind';
 import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
@@ -145,10 +146,10 @@ export class OverviewComponent implements OnInit, OnDestroy {
       }];
       this.balanceChartColors = [{
         name: 'Income',
-        value: AppComponent.PRIMARY_COLOR,
+        value: PRIMARY_COLOR,
       }, {
         name: 'Expense',
-        value: AppComponent.PRIMARY_COLOR + '44',
+        value: PRIMARY_COLOR + '44',
       }];
       /**
        * Load wallet list
