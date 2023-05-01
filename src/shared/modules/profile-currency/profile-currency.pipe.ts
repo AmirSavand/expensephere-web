@@ -17,7 +17,7 @@ export class ProfileCurrencyPipe extends CurrencyPipe implements PipeTransform {
       value,
       currencyCode || ProfileService.profile.value.currency,
       'symbol-narrow',
-      digitsInfo,
+      digitsInfo || '1.0-3',
       locale,
     );
   }
