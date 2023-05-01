@@ -9,30 +9,30 @@ Web app for Expensephere.
 
 Install dependencies.
 
-```bash
-> npm install
+```
+npm install
 ```
 
 Run the server.
 
-```bash
-> npm run serve
-> npm run serve-stag
-> npm run serve-prod
+```
+npm run serve-local
+npm run serve-stag
+npm run serve-prod
 ```
 
 Build the app.
 
-```bash
-> npm run build
-> npm run build-staging
-> npm run build-prodduction
+```
+npm run build-local
+npm run build-staging
+npm run build-production
 ```
 
 Check code quality.
 
-```bash
-> npm run lint
+```
+npm run lint
 ```
 
 ## Source Code
@@ -75,6 +75,9 @@ Here are the app routes to follow:
 /dash/event/list
 /dash/event/<id>
 
+/dash/tag/list
+/dash/tag/<id>
+
 /dash/transaction/list
 /dash/transaction/bulk-add
 /dash/transaction/<id>
@@ -95,8 +98,8 @@ Here are some modals that can be used instead of a page for that route:
 - `WalletFormModal` is used for creating and editing a wallet.
 - `CategoryFormModal` is used for creating and editing a category.
 - `EventFormModal` is used for creating and editing an event.
+- `TagFormModal` is used for creating and editing an tag.
 - `TransactionFormModal` is used for creating and editing a transaction.
-
 
 ### Invoice Templates
 

@@ -1,11 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faClock, faMoneyBillAlt, faStickyNote } from '@fortawesome/free-regular-svg-icons';
-import { faChevronDown, faCube, faTimes, faTrash, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faCube, faTag, faTimes, faTrash, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { InlineStorage } from '@shared/classes/inline-storage';
 import { Utils } from '@shared/classes/utils';
@@ -19,7 +19,7 @@ import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ProfileService } from '@shared/services/profile.service';
-import { format, parseISO, formatISO } from 'date-fns';
+import { format, formatISO, parseISO } from 'date-fns';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 
@@ -39,6 +39,7 @@ export class TransactionFormModalComponent implements OnInit {
   readonly faClose: IconDefinition = faTimes;
   readonly faWallet: IconDefinition = faWallet;
   readonly faCategory: IconDefinition = faCube;
+  readonly faTag: IconDefinition = faTag;
   readonly faAmount: IconDefinition = faMoneyBillAlt;
   readonly faTime: IconDefinition = faClock;
   readonly faNote: IconDefinition = faStickyNote;
@@ -129,6 +130,7 @@ export class TransactionFormModalComponent implements OnInit {
       into: [null],
       event: [null],
       amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
+      tags: [[]],
       time: [format(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
       archive: [false],
       exclude: [false],

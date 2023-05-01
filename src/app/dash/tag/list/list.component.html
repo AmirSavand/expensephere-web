@@ -1,0 +1,17 @@
+<div class="p-2 rounded bg-tertiary">
+  <app-filters (update)="params = $event; load()" [filters]="filters"></app-filters>
+</div>
+
+<!-- Content -->
+<div class="container pb-3">
+
+  <!-- Categories -->
+  <app-tag-list *ngIf="tags && tags.length" [tags]="tags"></app-tag-list>
+
+  <!-- No data -->
+  <app-no-data *ngIf="tags && !tags.length" classes="mt-3"></app-no-data>
+
+  <!-- Loading -->
+  <app-loading *ngIf="!tags" classes="mt-3"></app-loading>
+</div>
+

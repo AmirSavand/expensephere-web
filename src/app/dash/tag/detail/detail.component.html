@@ -1,0 +1,73 @@
+<div *ngIf="(!tag && !error) || (!tag && error)" class="container py-3">
+
+  <!-- Loading -->
+  <app-loading *ngIf="!tag && !error" classes="my-3"></app-loading>
+
+  <!-- Not found -->
+  <app-not-found *ngIf="!tag && error" classes="my-3" name="tag"></app-not-found>
+</div>
+
+<!-- Data -->
+<div *ngIf="tag" class="container py-3">
+  <div class="row">
+    <div class="col-lg-6">
+
+      <!-- Header -->
+      <p class="fw-bold mb-0">Transactions</p>
+
+      <!-- Loading -->
+      <app-loading *ngIf="!transactions"></app-loading>
+
+      <!-- No data -->
+      <app-no-data *ngIf="transactions && !transactions.length"></app-no-data>
+
+      <!-- Transactions -->
+      <app-transaction-list *ngIf="transactions && tag && wallets"
+                            [transactions]="transactions"
+                            [wallets]="wallets"
+                            columnClass="col-12">
+      </app-transaction-list>
+
+      <!-- Pagination -->
+      <app-pager (pageChanged)="loadTransactions()"
+                 *ngIf="transactions?.length"
+                 [apiResponse]="transactionsApiResponse"
+                 [disabled]="!transactions || !wallets"
+                 [paramsToCombine]="transactionsFilter"
+                 wrapperClass="mt-3">
+      </app-pager>
+    </div>
+
+    <!-- Transactions (right) -->
+    <div class="col-lg-6">
+      <!-- Category -->
+      <p class="fw-bold m-0">Tag</p>
+      <app-tag-list columnClass="col-12"></app-tag-list>
+
+      <!-- Transactions count -->
+      <hr>
+      <p class="fw-bold">Transactions</p>
+      <div>{{ tag.transactions_count | number }}</div>
+
+      <!-- Total -->
+      <hr>
+      <p class="fw-bold">Total</p>
+      <div>{{ tag.transactions_total || 0 | profileCurrency }}</div>
+
+      <!-- Note -->
+      <hr>
+      <p class="fw-bold">Note</p>
+      <div class="text-pre">{{tag.note || 'Nothing here.'}}</div>
+
+      <!-- Archive message -->
+      <div *ngIf="tag.archive" class="text-warning">
+        <hr>
+        <p class="fw-bold">Archived</p>
+        <p>This event is archived.</p>
+      </div>
+
+      <!-- Responsive separator -->
+      <hr class="d-lg-none">
+    </div>
+  </div>
+</div>

@@ -85,6 +85,21 @@
               ],
               "outputHashing": "all"
             },
+            "local": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "dev-prod": {
               "fileReplacements": [
                 {
@@ -112,6 +127,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "dev-local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },
@@ -129,11 +152,17 @@
             "staging": {
               "browserTarget": "expensephere:build:staging"
             },
+            "local": {
+              "browserTarget": "expensephere:build:local"
+            },
             "dev-prod": {
               "browserTarget": "expensephere:build:dev-prod"
             },
             "dev-stag": {
               "browserTarget": "expensephere:build:dev-stag"
+            },
+            "dev-local": {
+              "browserTarget": "expensephere:build:dev-local"
             }
           }
         },

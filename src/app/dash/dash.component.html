@@ -43,6 +43,8 @@
             <a (click)="addCategory()" class="dropdown-item">Category</a>
             <!-- Event -->
             <a (click)="addEvent()" class="dropdown-item">Event</a>
+            <!-- Event -->
+            <a (click)="addTag()" class="dropdown-item">Tag</a>
             <!-- Invoice -->
             <a [routerLink]="'/dash/invoice/add'" class="dropdown-item">Invoice</a>
             <!-- Separator -->
@@ -198,6 +200,10 @@
         <a routerLink="/dash/event" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faEvents"></fa-icon>
           <span>Events</span>
+        </a>
+        <a routerLink="/dash/tag" routerLinkActive="active">
+          <fa-icon [fixedWidth]="true" [icon]="faTags"></fa-icon>
+          <span>Tags</span>
         </a>
         <a routerLink="/dash/invoice" routerLinkActive="active">
           <fa-icon [fixedWidth]="true" [icon]="faInvoice"></fa-icon>

@@ -5,33 +5,33 @@
   <span>{{ isEditing ? 'Edit' : 'New' }} Transaction</span>
 
   <!-- Close -->
-  <button class="ms-auto btn btn-link" (click)="modal.hide()">
+  <button (click)="modal.hide()" class="ms-auto btn btn-link">
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
 
 <!-- Body -->
-<div class="modal-body pb-0" *ngIf="!noWallets">
-  <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
+<div *ngIf="!noWallets" class="modal-body pb-0">
+  <form (ngSubmit)="submit()" *ngIf="form.form" [formGroup]="form.form">
 
     <!-- Kind -->
     <div class="form-group btn-group d-flex justify-content-center text-uppercase" title="Transaction Type">
-      <div class="btn fw-bold"
-           (click)="setExpenseKind(expenseKind.INCOME)"
+      <div (click)="setExpenseKind(expenseKind.INCOME)"
            [class.btn-light]="expenseKindSelected !== expenseKind.INCOME"
-           [class.btn-primary]="expenseKindSelected === expenseKind.INCOME">
+           [class.btn-primary]="expenseKindSelected === expenseKind.INCOME"
+           class="btn fw-bold">
         <span>Income</span>
       </div>
-      <div class="btn fw-bold"
-           (click)="setExpenseKind(expenseKind.EXPENSE)"
+      <div (click)="setExpenseKind(expenseKind.EXPENSE)"
+           [class.btn-danger]="expenseKindSelected === expenseKind.EXPENSE"
            [class.btn-light]="expenseKindSelected !== expenseKind.EXPENSE"
-           [class.btn-danger]="expenseKindSelected === expenseKind.EXPENSE">
+           class="btn fw-bold">
         <span>Expense</span>
       </div>
-      <div class="btn fw-bold"
-           (click)="setExpenseKind(expenseKind.TRANSFER)"
+      <div (click)="setExpenseKind(expenseKind.TRANSFER)"
            [class.btn-light]="expenseKindSelected !== expenseKind.TRANSFER"
-           [class.btn-secondary]="expenseKindSelected === expenseKind.TRANSFER">
+           [class.btn-secondary]="expenseKindSelected === expenseKind.TRANSFER"
+           class="btn fw-bold">
         <span>Transfer</span>
       </div>
     </div>
@@ -41,54 +41,63 @@
       <label for="wallet">Wallet</label>
       <div class="input-group">
         <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWallet"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faWallet" class="input-group-text"></fa-icon>
         </div>
-        <app-select id="wallet"
-                    selectLabel="Select wallet"
-                    [showAdd]="true"
+        <app-select (add)="addWallet()"
+                    (choose)="form.form.get('wallet').setValue($event.id); walletInlineStorage.value = $event.id"
                     [items]="wallets"
-                    (add)="addWallet()"
                     [selectedId]="form.form.get('wallet').value"
-                    (choose)="form.form.get('wallet').setValue($event.id); walletInlineStorage.value = $event.id">
+                    [showAdd]="true"
+                    id="wallet"
+                    selectLabel="Select wallet">
         </app-select>
-        <div class="invalid-tooltip" *ngIf="form.error.wallet">{{ form.error.wallet[0] }}</div>
+        <div *ngIf="form.error.wallet" class="invalid-tooltip">{{ form.error.wallet[0] }}</div>
       </div>
     </div>
 
     <!-- Into (wallet) -->
-    <div class="form-group" *ngIf="expenseKindSelected === expenseKind.TRANSFER">
+    <div *ngIf="expenseKindSelected === expenseKind.TRANSFER" class="form-group">
       <label for="into">Into Wallet</label>
       <div class="input-group">
         <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faWallet"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faWallet" class="input-group-text"></fa-icon>
         </div>
-        <app-select id="into"
-                    selectLabel="Select wallet to transfer into"
-                    [selectedId]="form.form.get('into').value"
+        <app-select (choose)="form.form.get('into').setValue($event.id)"
                     [items]="wallets"
-                    (choose)="form.form.get('into').setValue($event.id)">
+                    [selectedId]="form.form.get('into').value"
+                    id="into"
+                    selectLabel="Select wallet to transfer into">
         </app-select>
-        <div class="invalid-tooltip" *ngIf="form.error.into">{{ form.error.into[0] }}</div>
+        <div *ngIf="form.error.into" class="invalid-tooltip">{{ form.error.into[0] }}</div>
       </div>
     </div>
 
     <!-- Category -->
-    <div class="form-group" *ngIf="expenseKindSelected !== expenseKind.TRANSFER">
+    <div *ngIf="expenseKindSelected !== expenseKind.TRANSFER" class="form-group">
       <label for="category">Category</label>
       <div class="input-group">
         <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faCategory"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faCategory" class="input-group-text"></fa-icon>
         </div>
-        <app-select id="category"
-                    selectLabel="Select category"
-                    *ngIf="categories"
-                    [showAdd]="true"
-                    [selectedId]="form.form.get('category').value"
-                    [items]="categoryGroups[expenseKindSelected]"
+        <app-select (add)="addCategory()"
                     (choose)="form.form.get('category').setValue($event.id)"
-                    (add)="addCategory()">
+                    *ngIf="categories"
+                    [items]="categoryGroups[expenseKindSelected]"
+                    [selectedId]="form.form.get('category').value"
+                    [showAdd]="true"
+                    id="category"
+                    selectLabel="Select category">
         </app-select>
-        <div class="invalid-tooltip" *ngIf="form.error.category">{{ form.error.category[0] }}</div>
+        <div *ngIf="form.error.category" class="invalid-tooltip">{{ form.error.category[0] }}</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="tag">Tag</label>
+      <div class="input-group">
+        <div class="input-group-text">
+          <fa-icon [fixedWidth]="true" [icon]="faTag" class="input-group-text"></fa-icon>
+        </div>
       </div>
     </div>
 
@@ -97,13 +106,13 @@
       <label for="amount">Amount</label>
       <div class="input-group">
         <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faAmount" class="input-group-text"></fa-icon>
         </div>
-        <input type="number" id="amount" class="form-control" formControlName="amount"
-               [step]="1" [min]="0" placeholder="Enter amount" autocomplete="off"
-               [class.is-invalid]="form.error.amount">
+        <input [class.is-invalid]="form.error.amount" [min]="0" [step]="1" autocomplete="off"
+               class="form-control" formControlName="amount" id="amount" placeholder="Enter amount"
+               type="number">
         <div class="input-group-text w-auto"><span class="input-group-text fw-bold">{{ currency }}</span></div>
-        <div class="invalid-tooltip" *ngIf="form.error.amount">{{ form.error.amount[0] }}</div>
+        <div *ngIf="form.error.amount" class="invalid-tooltip">{{ form.error.amount[0] }}</div>
       </div>
     </div>
 
@@ -112,19 +121,19 @@
       <label for="time">Time</label>
       <div class="input-group">
         <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faTime"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faTime" class="input-group-text"></fa-icon>
         </div>
-        <input type="datetime-local" id="time" class="form-control" formControlName="time"
-               [class.is-invalid]="form.error.time">
-        <div class="invalid-tooltip" *ngIf="form.error.time">{{ form.error.time[0] }}</div>
+        <input [class.is-invalid]="form.error.time" class="form-control" formControlName="time" id="time"
+               type="datetime-local">
+        <div *ngIf="form.error.time" class="invalid-tooltip">{{ form.error.time[0] }}</div>
       </div>
     </div>
 
     <!-- Extra details toggle -->
-    <a class="d-block fw-bold text-secondary mt-5 mb-3 text-uppercase"
-       (click)="showExtraDetails = !showExtraDetails">
+    <a (click)="showExtraDetails = !showExtraDetails"
+       class="d-block fw-bold text-secondary mt-5 mb-3 text-uppercase">
       <span>Extra Details</span>
-      <fa-icon class="float-end" [icon]="faCollapse" [flip]="showExtraDetails ? 'vertical' : null"></fa-icon>
+      <fa-icon [flip]="showExtraDetails ? 'vertical' : null" [icon]="faCollapse" class="float-end"></fa-icon>
     </a>
 
     <!-- Extra details -->
@@ -135,19 +144,19 @@
         <label for="event">Event</label>
         <div class="input-group">
           <div class="input-group-text">
-            <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faEvent"></fa-icon>
+            <fa-icon [fixedWidth]="true" [icon]="faEvent" class="input-group-text"></fa-icon>
           </div>
-          <app-select id="event"
-                      selectLabel="Select event"
-                      [selectedId]="form.form.get('event').value"
-                      [items]="events"
-                      [showAdd]="true"
-                      (add)="addEvent()"
-                      [allowClear]="true"
+          <app-select (add)="addEvent()"
                       (choose)="form.form.get('event').setValue($event.id)"
-                      (clear)="form.form.get('event').reset()">
+                      (clear)="form.form.get('event').reset()"
+                      [allowClear]="true"
+                      [items]="events"
+                      [selectedId]="form.form.get('event').value"
+                      [showAdd]="true"
+                      id="event"
+                      selectLabel="Select event">
           </app-select>
-          <div class="invalid-tooltip" *ngIf="form.error.event">{{ form.error.event[0] }}</div>
+          <div *ngIf="form.error.event" class="invalid-tooltip">{{ form.error.event[0] }}</div>
         </div>
       </div>
 
@@ -156,12 +165,13 @@
         <label for="note">Note</label>
         <div class="input-group">
           <div class="input-group-text">
-            <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faNote"></fa-icon>
+            <fa-icon [fixedWidth]="true" [icon]="faNote" class="input-group-text"></fa-icon>
           </div>
-          <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
-                    [class.is-invalid]="form.error.note">
+          <textarea [class.is-invalid]="form.error.note" [rows]="3" class="form-control" formControlName="note"
+                    id="note"
+                    placeholder="Write a note">
           </textarea>
-          <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[0] }}</div>
+          <div *ngIf="form.error.note" class="invalid-tooltip">{{ form.error.note[0] }}</div>
         </div>
       </div>
 
@@ -169,7 +179,7 @@
       <div class="form-group">
         <label for="archive">Archive</label>
         <div class="form-check form-switch position-static">
-          <input class="form-check-input" type="checkbox" formControlName="archive" id="archive">
+          <input class="form-check-input" formControlName="archive" id="archive" type="checkbox">
           <label class="form-check-label" for="archive">Archive and hide from the list</label>
         </div>
       </div>
@@ -178,7 +188,7 @@
       <div class="form-group">
         <label for="exclude">Exclude</label>
         <div class="form-check form-switch position-static">
-          <input class="form-check-input" type="checkbox" formControlName="exclude" id="exclude">
+          <input class="form-check-input" formControlName="exclude" id="exclude" type="checkbox">
           <label class="form-check-label" for="exclude">Exclude from the reports</label>
         </div>
       </div>
@@ -187,25 +197,25 @@
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-end" *ngIf="!noWallets">
+<div *ngIf="!noWallets" class="modal-footer text-end">
 
   <!-- Delete -->
-  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(transaction)">
+  <a (click)="delete(transaction)" *ngIf="isEditing" class="text-danger me-auto">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
   </a>
 
   <!-- Cancel -->
-  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+  <button (click)="modal.hide()" class="btn btn-light">Cancel</button>
 
   <!-- Submit -->
-  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+  <button (click)="submit()" [disabled]="form.loading || form.form.invalid" class="btn btn-primary">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>
 
 <!-- Body (when no wallets) -->
-<div class="modal-body" *ngIf="noWallets">
+<div *ngIf="noWallets" class="modal-body">
   <p class="fw-bold text-warning">No Wallets 😮</p>
   <p>You don't have any wallets for your profile.</p>
-  <button class="btn btn-primary" (click)="addWallet(); modal.hide();">Add Wallet</button>
+  <button (click)="addWallet(); modal.hide();" class="btn btn-primary">Add Wallet</button>
 </div>

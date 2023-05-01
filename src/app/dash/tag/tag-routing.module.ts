@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EventComponent } from './event.component';
+import { EventComponent } from '@app/dash/event/event.component';
 
 const routes: Routes = [
   {
@@ -28,5 +28,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class EventRoutingModule {
+export class TagRoutingModule {
 }
