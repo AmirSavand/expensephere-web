@@ -75,6 +75,9 @@ Here are the app routes to follow:
 /dash/event/list
 /dash/event/<id>
 
+/dash/tag/list
+/dash/tag/<id>
+
 /dash/transaction/list
 /dash/transaction/bulk-add
 /dash/transaction/<id>
@@ -95,8 +98,8 @@ Here are some modals that can be used instead of a page for that route:
 - `WalletFormModal` is used for creating and editing a wallet.
 - `CategoryFormModal` is used for creating and editing a category.
 - `EventFormModal` is used for creating and editing an event.
+- `TagFormModal` is used for creating and editing an tag.
 - `TransactionFormModal` is used for creating and editing a transaction.
-
 
 ### Invoice Templates
 

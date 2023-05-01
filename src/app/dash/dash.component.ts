@@ -23,6 +23,7 @@ import {
   faTags,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { faBoxes } from '@fortawesome/free-solid-svg-icons/faBoxes';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Profile } from '@shared/interfaces/profile';
@@ -30,6 +31,7 @@ import { User } from '@shared/interfaces/user';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
 import { ProfileFormModalComponent } from '@shared/modules/profile-form-modal/profile-form-modal.component';
+import { TagFormModalComponent } from '@shared/modules/tag-form-modal/tag-form-modal.component';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { AuthService } from '@shared/services/auth.service';
@@ -67,12 +69,13 @@ export class DashComponent implements OnInit, OnDestroy {
 
   readonly faDashboard: IconDefinition = faTachometerAlt;
   readonly faTransactions: IconDefinition = faRetweet;
-  readonly faCategories: IconDefinition = faTags;
+  readonly faCategories: IconDefinition = faBoxes;
   readonly faCalendar: IconDefinition = faCalendarDay;
   readonly faEvents: IconDefinition = faCalendarAlt;
   readonly faProfile: IconDefinition = faUser;
   readonly faSelected: IconDefinition = faCheckCircle;
   readonly faNotSelected: IconDefinition = faCircle;
+  readonly faTags: IconDefinition = faTags;
 
   /**
    * Authenticated user data
@@ -183,6 +186,13 @@ export class DashComponent implements OnInit, OnDestroy {
    */
   addEvent(): void {
     this.modalService.show(EventFormModalComponent);
+  }
+
+  /**
+   * Open up event form modal
+   */
+  addTag(): void {
+    this.modalService.show(TagFormModalComponent);
   }
 
   ngOnDestroy(): void {

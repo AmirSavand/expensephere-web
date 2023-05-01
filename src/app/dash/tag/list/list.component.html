@@ -1,0 +1,20 @@
+<!-- Filter -->
+<div class="bg-tertiary py-3">
+  <div class="container">
+    <app-filters (update)="filtersSelected = $event; load()" [filters]="filters"></app-filters>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="container pb-3">
+
+  <!-- Categories -->
+  <app-tag-list *ngIf="tags && tags.length" [tags]="tags"></app-tag-list>
+
+  <!-- No data -->
+  <app-no-data *ngIf="tags && !tags.length" classes="mt-3"></app-no-data>
+
+  <!-- Loading -->
+  <app-loading *ngIf="!tags" classes="mt-3"></app-loading>
+</div>
+

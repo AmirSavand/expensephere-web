@@ -5,6 +5,7 @@ export interface Transaction {
   wallet: number;
   category: number;
   kind: ExpenseKind;
+  tags: number[];
   event?: number;
   into?: number;
   amount: number;

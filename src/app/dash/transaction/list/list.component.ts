@@ -1,8 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft, faArrowRight, faBars, faThLarge } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Selection } from '@shared/classes/selection';
@@ -13,6 +12,7 @@ import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
+import { Tag } from '@shared/interfaces/tag';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { Action } from '@shared/modules/actions/shared/interfaces/action';
@@ -22,8 +22,8 @@ import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
 import { ProfileCurrencyPipe } from '@shared/modules/profile-currency/profile-currency.pipe';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { TransactionListComponent } from '@shared/modules/transaction-list/transaction-list.component';
-import { isValid, addDays } from 'date-fns';
-import { Observable, forkJoin } from 'rxjs';
+import { addDays, isValid } from 'date-fns';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -49,7 +49,6 @@ export class ListComponent implements OnInit {
 
   readonly expenseKind = ExpenseKind;
 
-  readonly faTimeSelector: IconDefinition = faCalendar;
   readonly faPrev: IconDefinition = faArrowLeft;
   readonly faNext: IconDefinition = faArrowRight;
   readonly faListView: IconDefinition = faBars;
@@ -94,6 +93,12 @@ export class ListComponent implements OnInit {
       type: FilterType.LIST,
       label: 'Category',
       key: 'category',
+      value: '',
+    },
+    {
+      type: FilterType.LIST,
+      label: 'Tag',
+      key: 'tags',
       value: '',
     },
     {
@@ -319,16 +324,27 @@ export class ListComponent implements OnInit {
         });
       }
     });
+    /** Load Tags */
+    Api.tag.list().subscribe({
+      next: (data: Tag[]): void => {
+        for (const tag of data) {
+          if (!this.filters[4].values) {
+            this.filters[4].values = [];
+          }
+          this.filters[4].values.push({ label: tag.name, value: tag.id });
+        }
+      },
+    });
     /**
      * Load events
      */
     Api.event.list().subscribe((data: Event[]): void => {
       // Set event list to filter
       for (const event of data) {
-        if (!this.filters[4].values) {
-          this.filters[4].values = [];
+        if (!this.filters[5].values) {
+          this.filters[5].values = [];
         }
-        this.filters[4].values.push({
+        this.filters[5].values.push({
           label: event.name,
           value: event.id,
         });

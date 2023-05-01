@@ -1,11 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faClock, faMoneyBillAlt, faStickyNote } from '@fortawesome/free-regular-svg-icons';
-import { faChevronDown, faCube, faTimes, faTrash, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faCube, faTag, faTimes, faTrash, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { InlineStorage } from '@shared/classes/inline-storage';
 import { Utils } from '@shared/classes/utils';
@@ -13,13 +13,15 @@ import { ExpenseKind } from '@shared/enums/kind';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
+import { Tag } from '@shared/interfaces/tag';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
+import { TagFormModalComponent } from '@shared/modules/tag-form-modal/tag-form-modal.component';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ProfileService } from '@shared/services/profile.service';
-import { format, parseISO, formatISO } from 'date-fns';
+import { format, formatISO, parseISO } from 'date-fns';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 
@@ -39,6 +41,7 @@ export class TransactionFormModalComponent implements OnInit {
   readonly faClose: IconDefinition = faTimes;
   readonly faWallet: IconDefinition = faWallet;
   readonly faCategory: IconDefinition = faCube;
+  readonly faTag: IconDefinition = faTag;
   readonly faAmount: IconDefinition = faMoneyBillAlt;
   readonly faTime: IconDefinition = faClock;
   readonly faNote: IconDefinition = faStickyNote;
@@ -54,12 +57,16 @@ export class TransactionFormModalComponent implements OnInit {
 
   wallets: Wallet[];
   events: Event[];
+  tags: Tag[];
   categories: Category[];
   categoryGroups: Record<ExpenseKind, Category[]> = {
     [ExpenseKind.INCOME]: [],
     [ExpenseKind.EXPENSE]: [],
     [ExpenseKind.TRANSFER]: [],
   };
+
+  /** Dict of tags. */
+  tagsDict: Record<number, Tag>;
 
   form: ReactiveFormData = {
     error: {},
@@ -99,6 +106,20 @@ export class TransactionFormModalComponent implements OnInit {
         this.noWallets = true;
       }
     });
+    /** Load tags. */
+    Api.tag.list().subscribe({
+      next: (data: Tag[]): void => {
+        this.tags = data;
+        this.tagsDict = Utils.getDictOfList(this.tags);
+        if (this.isEditing) {
+          this.form.form.patchValue({
+            tags: this.tags
+              .filter((item: Tag): boolean => this.transaction.tags.includes(item.id))
+              .map((item: Tag): number => item.id),
+          });
+        }
+      },
+    });
     /**
      * Load categories
      */
@@ -129,6 +150,7 @@ export class TransactionFormModalComponent implements OnInit {
       into: [null],
       event: [null],
       amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
+      tags: [[]],
       time: [format(new Date(), Utils.HTML_DATETIME_FORMAT), Validators.required],
       archive: [false],
       exclude: [false],
@@ -256,5 +278,31 @@ export class TransactionFormModalComponent implements OnInit {
       this.categoryGroups[category.kind].unshift(category);
       this.form.form.get('category').patchValue(category.id);
     });
+  }
+
+  /**
+   * On click on add on tag selection.
+   */
+  addTag(): void {
+    const modal: BsModalRef = this.modalService.show(TagFormModalComponent, {
+      initialState: {
+        redirect: false,
+      },
+    });
+    modal.content.submitted.subscribe((tag: Tag): void => {
+      this.tags.unshift(tag);
+      this.tagsDict[tag.id] = tag;
+      this.onTagSelect(tag.id);
+    });
+  }
+
+  /** On select a tag. */
+  onTagSelect(tag: Tag['id']): void {
+    const selected: number[] = this.form.form.value.tags;
+    if (selected.includes(tag as number)) {
+      Utils.removeChild(selected, tag);
+    } else {
+      selected.push(tag as number);
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ExportOption } from '@app/dash/export/shared/interfaces/export-option';
 import { Api } from '@shared/classes/api';
@@ -10,6 +10,7 @@ import { ApiResponse } from '@shared/interfaces/api-response';
 import { Category } from '@shared/interfaces/category';
 import { Event } from '@shared/interfaces/event';
 import { GetParams } from '@shared/interfaces/get-params';
+import { Tag } from '@shared/interfaces/tag';
 import { Transaction } from '@shared/interfaces/transaction';
 import { TransactionsPage } from '@shared/interfaces/transactions-page';
 import { Wallet } from '@shared/interfaces/wallet';
@@ -73,6 +74,12 @@ export class ExportComponent implements OnInit {
     },
     {
       type: FilterType.LIST,
+      label: 'Tag',
+      key: 'tags',
+      value: '',
+    },
+    {
+      type: FilterType.LIST,
       label: 'Event',
       key: 'event',
       value: '',
@@ -131,12 +138,6 @@ export class ExportComponent implements OnInit {
    */
   loading: boolean;
 
-  constructor(private date: DatePipe,
-              private cdr: ChangeDetectorRef,
-              private router: Router,
-              private profileCurrency: ProfileCurrencyPipe) {
-  }
-
   /**
    * @returns Selected filters combined with date range values.
    */
@@ -160,6 +161,12 @@ export class ExportComponent implements OnInit {
     }
     // Finally, return the selected filters.
     return this.filtersSelected;
+  }
+
+  constructor(private date: DatePipe,
+              private cdr: ChangeDetectorRef,
+              private router: Router,
+              private profileCurrency: ProfileCurrencyPipe) {
   }
 
   /**
@@ -208,15 +215,26 @@ export class ExportComponent implements OnInit {
         this.categoryDict[category.id] = category;
       }
     });
+    /** Load tags for filters */
+    Api.tag.list().subscribe({
+      next: (data: Tag[]): void => {
+        for (const tag of data) {
+          if (!this.filters[3].values) {
+            this.filters[3].values = [];
+          }
+          this.filters[3].values.push({ label: tag.name, value: tag.id });
+        }
+      },
+    });
     /**
      * Load events for filters
      */
     Api.event.list().subscribe((data: Event[]): void => {
       for (const event of data) {
-        if (!this.filters[3].values) {
-          this.filters[3].values = [];
+        if (!this.filters[4].values) {
+          this.filters[4].values = [];
         }
-        this.filters[3].values.push({
+        this.filters[4].values.push({
           label: event.name,
           value: event.id,
         });

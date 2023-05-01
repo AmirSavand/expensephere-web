@@ -1,0 +1,19 @@
+<div class="row tag-list">
+  <div *ngFor="let tag of tags" [classList]="columnClass">
+    <div class="mt-3 item-icon-wrapper">
+      <div class="d-flex align-items-center">
+        <div [ngStyle]="style(tag.color)" class="item-icon">
+          <i class="icon-{{ tag.icon }}"></i>
+        </div>
+        <div (click)="editTag(tag)" class="item-icon edit" title="Edit category">
+          <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+        </div>
+        <a [routerLink]="['/dash', 'tag', tag.id]" class="ps-3 text-dark w-100"
+           title="View tag">
+          <div>{{ tag.name }}</div>
+          <div class="small text-muted">{{ tag.transactions_count }} Transactions</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

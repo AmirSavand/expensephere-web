@@ -1,15 +1,17 @@
 <!-- Selected -->
-<div class="form-select cursor-pointer"
-     (click)="edit = !edit" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
-  {{ selected ? selected.name : selectLabel }}
+<div #trigger="cdkOverlayOrigin"
+     (click)="edit = !edit"
+     cdkOverlayOrigin
+     class="form-select cursor-pointer">
+  {{ selected && showSelected ? selected.name : selectLabel }}
 </div>
 
 <!-- This template displays the overlay content and is connected to the select -->
-<ng-template cdkConnectedOverlay
+<ng-template (overlayOutsideClick)="handleOverlayOutsideClick($event, trigger)"
              [cdkConnectedOverlayFlexibleDimensions]="true"
-             [cdkConnectedOverlayOrigin]="trigger"
              [cdkConnectedOverlayOpen]="edit"
-             (overlayOutsideClick)="handleOverlayOutsideClick($event, trigger)">
+             [cdkConnectedOverlayOrigin]="trigger"
+             cdkConnectedOverlay>
 
   <!-- Selection -->
   <div class="card shadow-sm border">
@@ -21,19 +23,19 @@
       <div class="fw-bold">{{ selectLabel }}</div>
 
       <!-- Close button -->
-      <button class="btn btn-light ms-auto" (click)="edit = false">
+      <button (click)="edit = false" class="btn btn-light ms-auto">
         <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
       </button>
     </div>
 
     <!-- Search -->
-    <div class="card-body border-0 p-3" [class.input-group]="showAdd">
+    <div [class.input-group]="showAdd" class="card-body border-0 p-3">
 
       <!-- Input -->
-      <input appAutoFocus type="text" placeholder="Search" [(ngModel)]="search" class="form-control">
+      <input [(ngModel)]="search" appAutoFocus class="form-control" placeholder="Search" type="text">
 
       <!-- Add button -->
-      <button class="btn btn-light text-secondary" type="button" *ngIf="showAdd" (click)="edit = false; add.emit()">
+      <button (click)="edit = false; add.emit()" *ngIf="showAdd" class="btn btn-light text-secondary" type="button">
         <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
       </button>
     </div>
@@ -42,18 +44,18 @@
     <div class="list-group list-group-flush">
 
       <!-- Data -->
-      <div class="list-group-item list-group-item-action border-0 d-flex align-items-center cursor-pointer"
+      <div (click)="select(item)"
            *ngFor="let item of items | filter:search:'name'"
-           (click)="select(item)">
-        <div class="item-icon" [ngStyle]="style(item.color)" *ngIf="item.icon">
+           class="list-group-item list-group-item-action border-0 d-flex align-items-center cursor-pointer">
+        <div *ngIf="item.icon" [ngStyle]="style(item.color)" class="item-icon">
           <span class="icon-{{ item.icon }}"></span>
         </div>
         <div [class.ms-3]="item.icon">{{ item.name }}</div>
-        <fa-icon *ngIf="selected === item" [icon]="faSelected" class="ms-auto text-primary"></fa-icon>
+        <fa-icon *ngIf="showSelected && selected === item" [icon]="faSelected" class="ms-auto text-primary"></fa-icon>
       </div>
 
       <!-- No data -->
-      <app-no-data classes="my-3" *ngIf="!items || !items.length"></app-no-data>
+      <app-no-data *ngIf="!items || !items.length" classes="my-3"></app-no-data>
     </div>
   </div>
 </ng-template>

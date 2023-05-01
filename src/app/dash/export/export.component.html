@@ -10,7 +10,7 @@
       <!-- Info -->
       <div class="ms-auto badge bg-info badge-pill px-3"
            title="Number of transactions by your selected filters and dates.">
-        <b>{{ count >= 0 ? ( count | number ) : '...' }}</b> Selected
+        <b>{{ count >= 0 ? (count | number) : '...' }}</b> Selected
       </div>
     </div>
 
@@ -23,8 +23,8 @@
           <div class="card-header">Select Filters</div>
           <div class="card-body">
             <p>Filter what transactions you want to include for exporting.</p>
-            <app-filters [filters]="filters" (update)="filtersSelected = $event; load()"></app-filters>
-            <button class="btn btn-light w-100 mt-3" (click)="filtersSelected = {}; load()">
+            <app-filters (update)="filtersSelected = $event; load()" [filters]="filters"></app-filters>
+            <button (click)="filtersSelected = {}; load()" class="btn btn-light w-100 mt-3">
               Clear Filters
             </button>
           </div>
@@ -41,19 +41,25 @@
 
             <div class="form-group">
               <label for="from">From</label>
-              <input type="date" id="from" class="form-control"
-                     [(ngModel)]="from" (change)="load()">
+              <input (change)="load()"
+                     [(ngModel)]="from"
+                     class="form-control"
+                     id="from"
+                     type="date">
             </div>
 
             <div class="form-group">
               <label for="to">To</label>
-              <input type="date" id="to" class="form-control"
-                     [(ngModel)]="to" (change)="load()">
+              <input (change)="load()"
+                     [(ngModel)]="to"
+                     class="form-control"
+                     id="to"
+                     type="date">
             </div>
 
-            <button class="btn btn-light w-100"
-                    (click)="from = null; to = null; load()"
-                    [disabled]="!from && !to">
+            <button (click)="from = null; to = null; load()"
+                    [disabled]="!from && !to"
+                    class="btn btn-light w-100">
               Clear Dates
             </button>
           </div>
@@ -66,10 +72,10 @@
           <div class="card-header">Select Export Type</div>
           <div class="card-body">
             <p>Select what kind of file you want to export your transactions to.</p>
-            <button class="btn btn-primary w-100"
-                    [class.mt-2]="!first"
+            <button (click)="submit(option)"
                     *ngFor="let option of options; let first = first"
-                    (click)="submit(option)">
+                    [class.mt-2]="!first"
+                    class="btn btn-primary w-100">
               {{ option.label }}
             </button>
             <hr>

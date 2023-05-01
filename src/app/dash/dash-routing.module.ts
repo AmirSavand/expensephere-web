@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { DashComponent } from './dash.component';
 
@@ -31,6 +31,10 @@ const routes: Routes = [
       {
         path: 'event',
         loadChildren: () => import('./event/event.module').then(m => m.EventModule),
+      },
+      {
+        path: 'tag',
+        loadChildren: () => import('./tag/tag.module').then(m => m.TagModule),
       },
       {
         path: 'category',

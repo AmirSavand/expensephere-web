@@ -1,5 +1,5 @@
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Color } from '@shared/classes/color';
@@ -27,6 +27,52 @@ export class SelectComponent implements OnChanges {
    * Item list for selection
    */
   @Input() items: SelectItem[] = [];
+  /**
+   * Raw item key name for generating "item.id".
+   */
+  @Input() rawItemIdKey = 'id';
+  /**
+   * Raw item key name for generating "item.value".
+   */
+  @Input() rawItemLabelKey = 'name';
+  /**
+   * Item ID that is selected
+   */
+  @Input() selectedId: SelectItem['id'];
+  /**
+   * Allow clear
+   */
+  @Input() allowClear = false;
+  /**
+   * Show add button
+   */
+  @Input() showAdd = false;
+  /** Show selected item name. */
+  @Input() showSelected = true;
+  /**
+   * On data selection
+   */
+  @Output() choose = new EventEmitter<SelectItem>();
+  /**
+   * On data clear
+   */
+  @Output() clear = new EventEmitter<void>();
+  /**
+   * On click on add button
+   */
+  @Output() add = new EventEmitter<void>();
+  /**
+   * Item that is selected
+   */
+  selected: SelectItem;
+  /**
+   * Search query
+   */
+  search: string;
+  /**
+   * Is editing
+   */
+  edit: boolean;
 
   /**
    * Raw item list for generation of main item list.
@@ -41,61 +87,6 @@ export class SelectComponent implements OnChanges {
       }
     }
   }
-
-  /**
-   * Raw item key name for generating "item.id".
-   */
-  @Input() rawItemIdKey = 'id';
-
-  /**
-   * Raw item key name for generating "item.value".
-   */
-  @Input() rawItemLabelKey = 'name';
-
-  /**
-   * Item ID that is selected
-   */
-  @Input() selectedId: SelectItem['id'];
-
-  /**
-   * Allow clear
-   */
-  @Input() allowClear = false;
-
-  /**
-   * Show add button
-   */
-  @Input() showAdd = false;
-
-  /**
-   * On data selection
-   */
-  @Output() choose = new EventEmitter<SelectItem>();
-
-  /**
-   * On data clear
-   */
-  @Output() clear = new EventEmitter<void>();
-
-  /**
-   * On click on add button
-   */
-  @Output() add = new EventEmitter<void>();
-
-  /**
-   * Item that is selected
-   */
-  selected: SelectItem;
-
-  /**
-   * Search query
-   */
-  search: string;
-
-  /**
-   * Is editing
-   */
-  edit: boolean;
 
   /**
    * Update {@see selected} to reference value.
