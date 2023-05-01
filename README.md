@@ -9,30 +9,30 @@ Web app for Expensephere.
 
 Install dependencies.
 
-```bash
-> npm install
+```
+npm install
 ```
 
 Run the server.
 
-```bash
-> npm run serve
-> npm run serve-stag
-> npm run serve-prod
+```
+npm run serve-local
+npm run serve-stag
+npm run serve-prod
 ```
 
 Build the app.
 
-```bash
-> npm run build
-> npm run build-staging
-> npm run build-prodduction
+```
+npm run build-local
+npm run build-staging
+npm run build-production
 ```
 
 Check code quality.
 
-```bash
-> npm run lint
+```
+npm run lint
 ```
 
 ## Source Code

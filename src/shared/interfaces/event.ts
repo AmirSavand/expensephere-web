@@ -4,6 +4,7 @@ export interface Event {
   readonly transactions_count: number;
   readonly transactions_total: number;
   name: string;
+  used: number;
   budget: number;
   color: string;
   icon: string;

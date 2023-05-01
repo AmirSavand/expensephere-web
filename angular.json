@@ -85,6 +85,21 @@
               ],
               "outputHashing": "all"
             },
+            "local": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "dev-prod": {
               "fileReplacements": [
                 {
@@ -112,6 +127,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "dev-local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },
@@ -129,11 +152,17 @@
             "staging": {
               "browserTarget": "expensephere:build:staging"
             },
+            "local": {
+              "browserTarget": "expensephere:build:local"
+            },
             "dev-prod": {
               "browserTarget": "expensephere:build:dev-prod"
             },
             "dev-stag": {
               "browserTarget": "expensephere:build:dev-stag"
+            },
+            "dev-local": {
+              "browserTarget": "expensephere:build:dev-local"
             }
           }
         },
@@ -143,27 +172,6 @@
             "browserTarget": "expensephere:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/assets/favicon",
-              "src/assets/icon/fonts",
-              "src/assets/img",
-              "src/assets/manifest"
-            ],
-            "styles": [
-              "node_modules/angular-calendar/css/angular-calendar.css",
-              "src/styles.css"
-            ],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -171,37 +179,6 @@
               "src/**/*.ts",
               "src/**/*.html"
             ]
-          }
-        },
-        "cypress-run": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "flow:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "flow:serve:production"
-            }
-          }
-        },
-        "cypress-open": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "watch": true,
-            "headless": false
-          }
-        },
-        "e2e": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "flow:serve",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "flow:serve:production"
-            }
           }
         }
       }
