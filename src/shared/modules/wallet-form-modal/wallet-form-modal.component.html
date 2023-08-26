@@ -16,27 +16,34 @@
 
     <!-- Name -->
     <div class="form-group">
-      <label for="name">Name</label>
+      <label>Name</label>
       <div class="input-group">
         <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
         </div>
-        <input type="text" id="name" class="form-control" formControlName="name"
-               placeholder="Name" [class.is-invalid]="form.error.name">
+        <div class="form-control mat">
+         <mat-form-field [class.is-invalid]="form.error.name">
+           <mat-label class="small mat">Name</mat-label>
+           <input class="form-control" formControlName="name" matInput>
+         </mat-form-field>
+        </div>
         <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
       </div>
     </div>
 
     <!-- Initial balance -->
     <div class="form-group" *ngIf="!isEditing">
-      <label for="initial_balance">Initial Balance</label>
+      <label>Initial Balance</label>
       <div class="input-group">
         <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
         </div>
-        <input type="number" id="initial_balance" class="form-control" formControlName="initial_balance"
-               placeholder="Enter amount" autocomplete="off"
-               [class.is-invalid]="form.error.amount">
+        <div class="form-control mat">
+          <mat-form-field [class.is-invalid]="form.error.amount">
+            <mat-label class="small" formControlName="initial_balance">Enter amount</mat-label>
+            <input class="form-control" matInput>
+            </mat-form-field>
+          </div>
         <div class="input-group-text w-auto"><span class="input-group-text fw-bold">{{ currency }}</span></div>
         <div class="invalid-tooltip" *ngIf="form.error.initial_balance">{{ form.error.initial_balance[0] }}</div>
       </div>
@@ -75,9 +82,8 @@
     <!-- Archive -->
     <div class="form-group">
       <label for="archive">Archive</label>
-      <div class="form-check form-switch position-static">
-        <input class="form-check-input" type="checkbox" formControlName="archive" id="archive">
-        <label class="form-check-label" for="archive">Archive and hide from the list</label>
+      <div>
+        <mat-slide-toggle formControlName="archive" id="archive" class="small">Archive and hide from the list</mat-slide-toggle>
       </div>
     </div>
   </form>
