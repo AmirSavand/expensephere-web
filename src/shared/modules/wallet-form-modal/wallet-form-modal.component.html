@@ -16,19 +16,17 @@
 
     <!-- Name -->
     <div class="form-group">
-      <label>Name</label>
+      <label >Name</label>
       <div class="input-group">
         <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
         </div>
-        <div class="form-control mat">
-         <mat-form-field>
+         <mat-form-field class="form-control">
            <mat-label></mat-label>
-           <input class="form-control" formControlName="name" matInput placeholder="Name" >
+           <input class="form-control mat" formControlName="name" matInput placeholder="Name" >
          </mat-form-field>
-        </div>
-        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
       </div>
+        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
     </div>
 
     <!-- Initial balance -->
@@ -38,12 +36,11 @@
         <div class="input-group-text">
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
         </div>
-        <div class="form-control mat">
-          <mat-form-field >
+          <mat-form-field class="form-control">
             <mat-label></mat-label>
             <input class="form-control" formControlName="initial_balance" matInput placeholder="Enter amount">
             </mat-form-field>
-          </div>
+
         <div class="input-group-text w-auto"><span class="input-group-text fw-bold">{{ currency }}</span></div>
         <div class="invalid-tooltip" *ngIf="form.error.initial_balance">{{ form.error.initial_balance[0] }}</div>
       </div>
