@@ -22,9 +22,9 @@
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
         </div>
         <div class="form-control mat">
-         <mat-form-field [class.is-invalid]="form.error.name">
-           <mat-label class="small mat">Name</mat-label>
-           <input class="form-control" formControlName="name" matInput>
+         <mat-form-field>
+           <mat-label></mat-label>
+           <input class="form-control" formControlName="name" matInput placeholder="Name" >
          </mat-form-field>
         </div>
         <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
@@ -39,9 +39,9 @@
           <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
         </div>
         <div class="form-control mat">
-          <mat-form-field [class.is-invalid]="form.error.amount">
-            <mat-label class="small" formControlName="initial_balance">Enter amount</mat-label>
-            <input class="form-control" matInput>
+          <mat-form-field >
+            <mat-label></mat-label>
+            <input class="form-control" formControlName="initial_balance" matInput placeholder="Enter amount">
             </mat-form-field>
           </div>
         <div class="input-group-text w-auto"><span class="input-group-text fw-bold">{{ currency }}</span></div>
@@ -60,8 +60,7 @@
                     selectLabel="Select icon"
                     [items]="icons"
                     [selectedId]="form.form.get('icon').value"
-                    (choose)="form.form.get('icon').setValue($event.icon)">
-        </app-select>
+                    (choose)="form.form.get('icon').setValue($event.icon)"></app-select>
         <div class="invalid-tooltip" *ngIf="form.error.icon">{{ form.error.icon[0] }}</div>
       </div>
     </div>
