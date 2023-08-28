@@ -368,7 +368,9 @@
       <button mat-button type="button" class="ms-auto" routerLink="../list">
         {{ form.id ? 'Cancel' : 'Go Back' }}
       </button>
-      <button mat-flat-button color="primary" class="ms-2" (click)="submit()" [disabled]="form.loading">
+      <button mat-flat-button class="btn btn-primary ms-2"
+              (click)="submit()"
+              [disabled]="form.loading">
         {{ form.id ? 'Update' : 'Add' }}
       </button>
     </div>
