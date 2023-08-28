@@ -1,19 +1,23 @@
+@import "src/variables";
+
 .icon-prefix {
-  margin-right: 8px;
+  margin-right: map_get($spacers, 2);
   position: relative;
   top: -6px;
 }
+
 .budget-suffix {
-  margin-left: 8px;
+  margin-left: map_get($spacers, 2);
   position: relative;
   top: -6px;
 }
+
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  width: 15px;
-  height: 15px;
+  font-size: 15px;
 }
+
 .icon-note {
-  margin-right: 8px;
+  margin-right: map_get($spacers, 2);
   position: relative;
   top: -26px;
 }

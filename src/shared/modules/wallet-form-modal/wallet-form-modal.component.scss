@@ -1,10 +1,13 @@
+@import "src/variables";
+
 .icon-prefix {
-  margin-right: 8px;
+  margin-right: map_get($spacers, 2);
   position: relative;
   top: -6px;
 }
+
 .currency-suffix {
-  margin-left: 8px;
+  margin-left: map_get($spacers, 2);
   position: relative;
   top: -6px;
 }

@@ -4,7 +4,7 @@ import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { InvoiceService } from '@app/dash/invoice/invoice.service';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faChevronRight, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faInfoCircle, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
@@ -22,6 +22,7 @@ import { ProfileService } from '@shared/services/profile.service';
 import { Payload } from '@shared/types/payload';
 import { format } from 'date-fns';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { faClock, faMoneyBillAlt, faStickyNote } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-form',
@@ -316,4 +317,9 @@ export class FormComponent implements OnInit {
       },
     });
   }
+
+  protected readonly faInfoCircle = faInfoCircle;
+  protected readonly faStickyNote = faStickyNote;
+  protected readonly faClock = faClock;
+  protected readonly faMoneyBillAlt = faMoneyBillAlt;
 }
