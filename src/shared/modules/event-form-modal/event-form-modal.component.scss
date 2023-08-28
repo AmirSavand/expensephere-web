@@ -12,10 +12,6 @@
   top: -6px;
 }
 
-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  font-size: 15px;
-}
-
 .icon-note {
   margin-right: map_get($spacers, 2);
   position: relative;
