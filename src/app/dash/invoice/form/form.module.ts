@@ -15,28 +15,30 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   declarations: [
     FormComponent,
   ],
-  imports: [
-    CommonModule,
-    FormRoutingModule,
-    FontAwesomeModule,
-    NotFoundModule,
-    LoadingModule,
-    ReactiveFormsModule,
-    SelectModule,
-    GeneralErrorModule,
-    ProfileCurrencyModule,
-    ContactFormModalModule,
-    ModalModule.forChild(),
-    MatSlideToggleModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-  ],
+    imports: [
+        CommonModule,
+        FormRoutingModule,
+        FontAwesomeModule,
+        NotFoundModule,
+        LoadingModule,
+        ReactiveFormsModule,
+        SelectModule,
+        GeneralErrorModule,
+        ProfileCurrencyModule,
+        ContactFormModalModule,
+        ModalModule.forChild(),
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+    ],
 })
 export class FormModule {
 }

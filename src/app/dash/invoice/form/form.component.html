@@ -127,38 +127,39 @@
 
             <!-- Discount and discount type -->
             <div class="form-group" *ngIf="options.get('discount').value">
-              <label for="discount">Discount</label>
-              <div class="input-group">
-                <input type="number"
+              <label class="d-flex">Discount</label>
+                <mat-form-field class="w-50" appearance="fill">
+                  <mat-label>Enter discount</mat-label>
+                <input matInput
+                       type="number"
                        id="discount"
-                       class="form-control"
                        formControlName="discount"
-                       placeholder="Enter discount"
                        [step]="1"
                        [min]="0"
-                       [max]="100"
-                       [class.is-invalid]="form.error.discount">
-                <select id="discount_flat" formControlName="discount_flat" class="form-control">
-                  <option [ngValue]="true">Flat</option>
-                  <option [ngValue]="false">Percentage</option>
-                </select>
-                <div class="invalid-tooltip" *ngIf="form.error.discount">{{ form.error.discount[ 0 ] }}</div>
+                       [max]="100">
+                  </mat-form-field>
+                <mat-form-field class="w-50" appearance="fill">
+                  <mat-select id="discount_flat" formControlName="discount_flat">
+                    <mat-option [value]="true">Flat</mat-option>
+                    <mat-option [value]="false">Percentage</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="form.error.discount">{{ form.error.discount[ 0 ] }}</mat-error>
               </div>
-            </div>
 
             <!-- Tax -->
-            <div class="form-group" *ngIf="options.get('tax').value">
-              <label for="tax">Tax</label>
-              <input type="number"
-                     id="tax"
-                     class="form-control"
-                     formControlName="tax"
-                     placeholder="Enter tax (percentage)"
-                     [step]="1"
-                     [min]="0"
-                     [max]="100"
-                     [class.is-invalid]="form.error.tax">
-              <div class="invalid-tooltip" *ngIf="form.error.tax">{{ form.error.tax[ 0 ] }}</div>
+            <div *ngIf="options.get('tax').value">
+              <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Enter tax (percentage)</mat-label>
+                <input matInput
+                       type="number"
+                       id="tax"
+                       formControlName="tax"
+                       [step]="1"
+                       [min]="0"
+                       [max]="100">
+                <mat-error *ngIf="form.error.tax">{{ form.error.tax[ 0 ] }}</mat-error>
+              </mat-form-field>
             </div>
 
             <!-- Currency -->

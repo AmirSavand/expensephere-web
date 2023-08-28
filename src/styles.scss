@@ -511,6 +511,6 @@ select.no-style {
   top: -25px;
 }
 
-input[type='datetime-local'],input[type='date']::-webkit-calendar-picker-indicator {
+input[type='datetime-local']::-webkit-calendar-picker-indicator,input[type='date']::-webkit-calendar-picker-indicator {
   font-size: 20px;
 }
