@@ -1,0 +1,14 @@
+.icon-prefix {
+  margin-right: 8px;
+  position: relative;
+  top: -6px;
+}
+.budget-suffix {
+  margin-left: 8px;
+  position: relative;
+  top: -6px;
+}
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  width: 15px;
+  height: 15px;
+}

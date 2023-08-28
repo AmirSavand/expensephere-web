@@ -6,6 +6,10 @@ import { SelectColorModule } from '@shared/modules/select-color/select-color.mod
 import { SelectModule } from '@shared/modules/select/select.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { EventFormModalComponent } from './event-form-modal.component';
+import {MatButtonModule} from "@angular/material/button";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -15,6 +19,10 @@ import { EventFormModalComponent } from './event-form-modal.component';
     CollapseModule,
     SelectColorModule,
     SelectModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     EventFormModalComponent,
