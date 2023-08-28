@@ -4,7 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faClock, faStickyNote } from '@fortawesome/free-regular-svg-icons';
+import {faClock, faStickyNote} from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronDown,
   faIcons,
