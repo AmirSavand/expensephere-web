@@ -8,6 +8,7 @@ import { WalletFormModalComponent } from './wallet-form-modal.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
     MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
   ],
   declarations: [
     WalletFormModalComponent,
