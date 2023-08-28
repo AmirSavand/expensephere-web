@@ -6,6 +6,11 @@ import { SelectColorModule } from '@shared/modules/select-color/select-color.mod
 import { SelectModule } from '@shared/modules/select/select.module';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CategoryFormModalComponent } from './category-form-modal.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -15,6 +20,11 @@ import { CategoryFormModalComponent } from './category-form-modal.component';
     SelectColorModule,
     ButtonsModule,
     SelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatButtonToggleModule,
+    MatButtonModule,
   ],
   declarations: [
     CategoryFormModalComponent,
