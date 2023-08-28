@@ -510,3 +510,7 @@ select.no-style {
   position: relative;
   top: -25px;
 }
+
+input[type='datetime-local'],input[type='date']::-webkit-calendar-picker-indicator {
+  font-size: 20px;
+}
