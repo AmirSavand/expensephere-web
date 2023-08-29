@@ -20,10 +20,6 @@ td {
   padding-bottom: map_get($spacers, 1);
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-  font-size: 15px;
-}
-
 .input-select-container {
   display: flex;
   align-items: center;
