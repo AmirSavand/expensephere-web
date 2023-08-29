@@ -22,16 +22,16 @@
         </div>
 
         <!-- Create transaction button -->
-        <a (click)="addTransaction()" class="btn btn-primary ms-auto">
+        <button mat-flat-button (click)="addTransaction()" class="btn btn-primary ms-auto">
           <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
           <span class="ms-1">Transaction</span>
-        </a>
+        </button>
 
         <!-- Dropdown -->
         <div class="dropdown ms-2" dropdown>
 
           <!-- Create button -->
-          <button class="btn btn-primary" dropdownToggle>
+          <button mat-button class="btn btn-primary" dropdownToggle>
             <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
           </button>
 
@@ -55,7 +55,7 @@
         </div>
 
         <!-- Sidebar toggle button (mobile only) -->
-        <button (click)="sidebarClose = !sidebarClose" class="btn btn-secondary ms-2 d-block d-lg-none">
+        <button mat-button (click)="sidebarClose = !sidebarClose" class="btn btn-secondary ms-2 d-block d-lg-none">
           <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
         </button>
       </div>
@@ -74,7 +74,7 @@
     <div id="user">
 
       <!-- Sidebar toggle button (mobile only) -->
-      <button (click)="sidebarClose = true" class="btn btn-secondary me-3 d-block d-lg-none">
+      <button mat-button (click)="sidebarClose = true" class="btn btn-secondary me-3 d-block d-lg-none">
         <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
       </button>
 
@@ -88,9 +88,9 @@
       </div>
 
       <!-- Icon -->
-      <div (click)="toggleUserView()" class="btn btn-secondary ms-auto">
+      <button mat-button (click)="toggleUserView()" class="btn btn-secondary ms-auto">
         <fa-icon [fixedWidth]="true" [icon]="sidebarViewSelected === sidebarView.USER ? faBack : faView"></fa-icon>
-      </div>
+      </button>
     </div>
 
     <!-- Sidebar view: User -->

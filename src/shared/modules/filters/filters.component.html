@@ -12,6 +12,7 @@
 
     <!-- Text type -->
     <mat-form-field appearance="fill" *ngIf="filter.type === filterType.TEXT">
+      <mat-label><fa-icon [fixedWidth]="true" [icon]="faMagnifyingGlass"></fa-icon></mat-label>
       <input matInput
              [placeholder]="filter.label"
              [(ngModel)]="filter.value"

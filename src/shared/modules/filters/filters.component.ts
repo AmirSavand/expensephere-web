@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { GetParams } from '@shared/interfaces/get-params';
 import { FilterType } from './shared/enums/filter-type';
 import { Filter } from './shared/interfaces/filter';
@@ -19,6 +19,8 @@ export class FiltersComponent implements OnInit {
   @Input() filters: Filter[];
 
   @Output() update = new EventEmitter<GetParams>();
+
+  protected readonly faMagnifyingGlass = faMagnifyingGlass;
 
   /**
    * Filters expand/collapse status. Mobile only.
