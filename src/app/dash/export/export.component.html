@@ -24,7 +24,7 @@
           <div class="card-body">
             <p>Filter what transactions you want to include for exporting.</p>
             <app-filters (update)="filtersSelected = $event; load()" [filters]="filters"></app-filters>
-            <button (click)="filtersSelected = {}; load()" class="btn btn-light w-100 mt-3">
+            <button mat-flat-button (click)="filtersSelected = {}; load()" class="btn btn-light w-100 mt-3">
               Clear Filters
             </button>
           </div>
@@ -39,25 +39,27 @@
 
             <p>Include transactions between specific dates. Dates are ignored if they are not set.</p>
 
-            <div class="form-group">
-              <label for="from">From</label>
-              <input (change)="load()"
+            <label class="label2 d-flex">From</label>
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Select Date</mat-label>
+              <input matInput
+                     (change)="load()"
                      [(ngModel)]="from"
-                     class="form-control"
                      id="from"
                      type="date">
-            </div>
+            </mat-form-field>
 
-            <div class="form-group">
-              <label for="to">To</label>
-              <input (change)="load()"
+            <label class="label2 d-flex">To</label>
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Select Date</mat-label>
+              <input matInput
+                     (change)="load()"
                      [(ngModel)]="to"
-                     class="form-control"
                      id="to"
                      type="date">
-            </div>
+            </mat-form-field>
 
-            <button (click)="from = null; to = null; load()"
+            <button mat-flat-button  (click)="from = null; to = null; load()"
                     [disabled]="!from && !to"
                     class="btn btn-light w-100">
               Clear Dates
@@ -72,14 +74,14 @@
           <div class="card-header">Select Export Type</div>
           <div class="card-body">
             <p>Select what kind of file you want to export your transactions to.</p>
-            <button (click)="submit(option)"
+            <button mat-flat-button (click)="submit(option)"
                     *ngFor="let option of options; let first = first"
                     [class.mt-2]="!first"
                     class="btn btn-primary w-100">
               {{ option.label }}
             </button>
             <hr>
-            <a class="btn btn-dark w-100" routerLink="../pages">Mange Public Pages</a>
+            <button mat-flat-button class="btn btn-dark w-100" routerLink="../pages">Mange Public Pages</button>
           </div>
         </div>
       </div>

@@ -6,6 +6,8 @@ import { FiltersModule } from '@shared/modules/filters/filters.module';
 
 import { ExportRoutingModule } from './export-routing.module';
 import { ExportComponent } from './export.component';
+import {MatInputModule} from "@angular/material/input";
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { ExportComponent } from './export.component';
     FiltersModule,
     FontAwesomeModule,
     FormsModule,
+    MatInputModule,
+    MatButtonModule,
   ],
 })
 export class ExportModule {

@@ -6,6 +6,9 @@ import { ModelDebounceModule } from '@shared/modules/model-debounce/model-deboun
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { SelectModule } from '@shared/modules/select/select.module';
 import { FiltersComponent } from './filters.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -18,6 +21,9 @@ import { FiltersComponent } from './filters.component';
     SelectModule,
     FontAwesomeModule,
     CollapseModule,
+    MatSlideToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   exports: [
     FiltersComponent,
