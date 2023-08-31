@@ -19,69 +19,68 @@
 
       <!-- Filters -->
       <div class="col-lg-4">
-        <div class="card h-100 pb-3">
-          <div class="card-header">Select Filters</div>
-          <div class="card-body">
-            <p>Filter what transactions you want to include for exporting.</p>
+        <mat-card class="card h-100 pb-3">
+          <mat-card-title>Select Filters</mat-card-title>
+          <mat-card-content>
+            <mat-card-subtitle>
+              Filter what transactions you want to include for exporting.
+            </mat-card-subtitle>
             <app-filters (update)="filtersSelected = $event; load()" [filters]="filters"></app-filters>
-            <button (click)="filtersSelected = {}; load()" class="btn btn-light w-100 mt-3">
+            <button mat-stroked-button (click)="filtersSelected = {}; load()" class="w-100 mt-3">
               Clear Filters
             </button>
-          </div>
-        </div>
+          </mat-card-content>
+        </mat-card>
       </div>
 
       <!-- Date -->
       <div class="col-lg-4">
-        <div class="card h-100 pb-3">
-          <div class="card-header">Select Date Range</div>
-          <div class="card-body">
-
-            <p>Include transactions between specific dates. Dates are ignored if they are not set.</p>
-
-            <div class="form-group">
-              <label for="from">From</label>
-              <input (change)="load()"
+        <mat-card class="h-100 pb-3">
+          <mat-card-title>Select Date Range</mat-card-title>
+          <mat-card-content>
+            <mat-card-subtitle>
+              Include transactions between specific dates. Dates are ignored if they are not set.
+            </mat-card-subtitle>
+            <mat-form-field class="w-100">
+              <mat-label>From</mat-label>
+              <input matInput
+                     (change)="load()"
                      [(ngModel)]="from"
-                     class="form-control"
-                     id="from"
                      type="date">
-            </div>
+            </mat-form-field>
 
-            <div class="form-group">
-              <label for="to">To</label>
-              <input (change)="load()"
+            <mat-form-field class="w-100">
+              <mat-label>To</mat-label>
+              <input matInput (change)="load()"
                      [(ngModel)]="to"
-                     class="form-control"
-                     id="to"
                      type="date">
-            </div>
+            </mat-form-field>
 
-            <button (click)="from = null; to = null; load()"
+            <button mat-stroked-button (click)="from = null; to = null; load()"
                     [disabled]="!from && !to"
-                    class="btn btn-light w-100">
+                    class="w-100">
               Clear Dates
             </button>
-          </div>
-        </div>
+          </mat-card-content>
+        </mat-card>
       </div>
 
       <!-- Export -->
       <div class="col-lg-4">
-        <div class="card h-100 pb-3">
-          <div class="card-header">Select Export Type</div>
-          <div class="card-body">
-            <p>Select what kind of file you want to export your transactions to.</p>
-            <button (click)="submit(option)"
+        <mat-card class="h-100 pb-3">
+          <mat-card-title>Select Export Type</mat-card-title>
+          <mat-card-content>
+            <mat-card-subtitle>Select what kind of file you want to export your transactions to.</mat-card-subtitle>
+            <button mat-flat-button (click)="submit(option)"
                     *ngFor="let option of options; let first = first"
                     [class.mt-2]="!first"
                     class="btn btn-primary w-100">
               {{ option.label }}
             </button>
             <hr>
-            <a class="btn btn-dark w-100" routerLink="../pages">Mange Public Pages</a>
-          </div>
-        </div>
+            <a mat-flat-button-button class="btn btn-dark w-100" routerLink="../pages">Mange Public Pages</a>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </div>
