@@ -3,10 +3,7 @@
   <!-- Karma -->
   <div class="fw mt-4 d-flex justify-content-between" [class.clicked]="showKarmaInfo" (click)="showKarmaInfo = !showKarmaInfo">
     <span class="fw SMALL" (click)="showKarmaInfo">Karma Level</span>
-    <span class="mt-2 mx-lg-2"
-          matBadge="{{ profile.level | number }}"
-          title="Current level">
-    </span>
+    <span class="mt-2 mx-lg-2" matBadge="{{ profile.level | number }}" title="Current level"></span>
   </div>
 
   <!-- On click message -->
