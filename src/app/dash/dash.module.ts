@@ -10,6 +10,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DashRoutingModule } from './dash-routing.module';
 import { DashComponent } from './dash.component';
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DashComponent } from './dash.component';
     LoadingModule,
     OverlayModule,
     TagFormModalModule,
+    MatButtonModule,
   ],
 })
 export class DashModule {
