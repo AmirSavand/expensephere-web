@@ -1,13 +1,17 @@
 <div class="container">
 
   <!-- Karma -->
-  <div class="fw mt-4 d-flex justify-content-between" [class.clicked]="showKarmaInfo" (click)="showKarmaInfo = !showKarmaInfo">
+  <div class="fw mt-4 d-flex justify-content-between"
+       [class.clicked]="showKarmaInfo"
+       (click)="showKarmaInfo = !showKarmaInfo">
     <span class="fw SMALL" (click)="showKarmaInfo">Karma Level</span>
     <span class="mt-2 mx-lg-2" matBadge="{{ profile.level | number }}" title="Current level"></span>
   </div>
 
   <!-- On click message -->
-  <mat-card class="mt-2 no-shadow cursor-pointer" [class.clicked]="showKarmaInfo" (click)="showKarmaInfo = !showKarmaInfo">
+  <mat-card class="mt-2 no-shadow cursor-pointer"
+            [class.clicked]="showKarmaInfo"
+            (click)="showKarmaInfo = !showKarmaInfo">
     <mat-card-content *ngIf="showKarmaInfo">
       <p class="m-3 text-info text-center fw-bold">
         <span class="fw-normal">📋</span>
