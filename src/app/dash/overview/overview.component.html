@@ -1,18 +1,18 @@
 <div class="container">
 
   <!-- Karma -->
-  <div class="card mt-4 cursor-pointer" (click)="showKarmaInfo = !showKarmaInfo">
-    <div class="card-header">
+  <div class="mt-4 cursor-pointer" (click)="showKarmaInfo = !showKarmaInfo">
+    <div class="mat-title mb-2 d-flex align-items-center">
       <span class="me-auto" (click)="showKarmaInfo">Karma Level</span>
-      <span class="badge bg-primary" title="Current Level">{{ profile.level | number }}</span>
+      <span [matBadge]="profile.level | number" title="Current Level"></span>
     </div>
-    <div class="card-body p-0" *ngIf="showKarmaInfo">
+    <mat-card class="mat-card-custom p-0" *ngIf="showKarmaInfo">
       <p class="m-3 text-info text-center fw-bold">
         <span class="fw-normal">📋</span>
         When using Expensephere you gain Karma points and in here you can see your
         current karma points, level, and karma points required for next level.
       </p>
-    </div>
+    </mat-card>
     <progressbar *ngIf="!showKarmaInfo"
                  [max]="profile.karma + profile.next_level_karma"
                  [value]="profile.karma"
@@ -21,19 +21,25 @@
   </div>
 
   <!-- Spent in categories -->
-  <div class="card mt-4">
-    <div class="card-header" [title]="filterText">Spent in categories</div>
-    <div class="card-body p-0">
+  <div class="mt-4">
+
+    <!-- Header -->
+    <div class="mat-title mb-2" [title]="filterText">Spent in categories</div>
+
+    <!-- Body -->
+    <mat-card class="p-0">
+
       <!-- Metrics -->
       <app-metric-spent-category *ngIf="categories && categorySpentMetrics"
                                  [metrics]="categorySpentMetrics"
                                  [categories]="categories">
       </app-metric-spent-category>
+
       <!-- Loading -->
       <div class="p-3 text-center" *ngIf="!categories || !categorySpentMetrics">
         <app-loading></app-loading>
       </div>
-    </div>
+    </mat-card>
   </div>
 
   <!-- Row 2 -->
@@ -43,36 +49,36 @@
     <div class="col-xl-8 mb-4">
 
       <!-- Wallets -->
-      <div class="card mt-4">
+      <div class="mt-4">
 
         <!-- Header -->
-        <a class="card-header" routerLink="../wallet/list">
+        <div class="d-flex align-items-center mat-title mb-2" routerLink="../wallet/list">
           <span>My Wallets</span>
           <fa-icon [fixedWidth]="true" [icon]="faLink" class="ms-auto text-secondary"></fa-icon>
-        </a>
+        </div>
 
         <!-- Body -->
-        <div class="card-body pt-0 pb-3">
+        <mat-card class="pt-0 pb-3">
 
           <!-- Loading -->
           <app-loading classes="mt-5" *ngIf="!wallets"></app-loading>
 
           <!-- Data -->
           <app-wallet-list *ngIf="wallets" [wallets]="wallets" columnClass="col-xl-4 col-lg-6"></app-wallet-list>
-        </div>
+        </mat-card>
       </div>
 
       <!-- Categories -->
-      <div class="card mt-4">
+      <div class="mt-4">
 
         <!-- Header -->
-        <a class="card-header" routerLink="../category/list">
+        <div class="d-flex align-items-center mat-title mb-2" routerLink="../category/list">
           <span>My Categories</span>
           <fa-icon [fixedWidth]="true" [icon]="faLink" class="ms-auto text-secondary"></fa-icon>
-        </a>
+        </div>
 
         <!-- Body -->
-        <div class="card-body pt-0 pb-3">
+        <mat-card class="pt-0 pb-3">
 
           <!-- Loading -->
           <app-loading classes="mt-5" *ngIf="!categories"></app-loading>
@@ -85,7 +91,7 @@
 
           <!-- Data -->
           <app-category-list [categories]="categoriesToShow"></app-category-list>
-        </div>
+        </mat-card>
       </div>
 
       <!-- Balance chart + Categories chart -->
@@ -93,38 +99,40 @@
 
         <!-- Balance chart -->
         <div class="col-lg-6">
-          <div class="card mt-4">
-            <div class="card-header" [title]="filterText">Balance Chart</div>
-            <div class="card-body p-0"
-                 [class.chart-wrapper]="transactions && transactions.length && balanceChartResults">
+          <div class="mt-4">
+            <div class="mat-title mb-2" [title]="filterText">Balance Chart</div>
+            <mat-card class="pt-0 pb-3">
 
               <!-- Loading -->
               <app-loading *ngIf="!transactions" classes="mt-5"></app-loading>
 
-              <!-- No data -->
-              <p class="m-3 text-info text-center fw-bold"
-                 *ngIf="transactions && !transactions.length">
-                <span class="fw-normal">📋</span>
-                When you start adding transactions, statistical chart will show up here.
-              </p>
+              <div [class.chart-wrapper]="transactions && transactions.length && balanceChartResults">
 
-              <!-- Data -->
-              <ngx-charts-pie-chart *ngIf="transactions && transactions.length && balanceChartResults"
-                                    [results]="balanceChartResults"
-                                    [customColors]="balanceChartColors"
-                                    [doughnut]="true"
-                                    [arcWidth]="0.25"
-                                    [labels]="true">
-              </ngx-charts-pie-chart>
-            </div>
+                <!-- No data -->
+                <p class="m-3 text-info text-center fw-bold"
+                   *ngIf="transactions && !transactions.length">
+                  <span class="fw-normal">📋</span>
+                  When you start adding transactions, statistical chart will show up here.
+                </p>
+
+                <!-- Data -->
+                <ngx-charts-pie-chart *ngIf="transactions && transactions.length && balanceChartResults"
+                                      [results]="balanceChartResults"
+                                      [customColors]="balanceChartColors"
+                                      [doughnut]="true"
+                                      [arcWidth]="0.25"
+                                      [labels]="true">
+                </ngx-charts-pie-chart>
+              </div>
+            </mat-card>
           </div>
         </div>
 
         <!-- Categories chart -->
         <div class="col-lg-6">
-          <div class="card mt-4">
-            <div class="card-header" [title]="filterText">Categories Chart</div>
-            <div class="card-body p-0">
+          <div class="mt-4">
+            <div class="mat-title mb-2" [title]="filterText">Categories Chart</div>
+            <mat-card class="pt-0 pb-3">
               <!-- Chart -->
               <app-chart-spent-category *ngIf="categories && categorySpentMetrics"
                                         [metrics]="categorySpentMetrics"
@@ -132,7 +140,7 @@
               </app-chart-spent-category>
               <!-- Loading -->
               <app-loading *ngIf="!categories || !categorySpentMetrics" classes="m-3"></app-loading>
-            </div>
+            </mat-card>
           </div>
         </div>
       </div>
@@ -142,16 +150,16 @@
     <div class="col-xl-4 mb-4">
 
       <!-- My transactions -->
-      <div class="card overflow-hidden mt-4">
+      <div class="mt-4">
 
         <!-- Header -->
-        <a class="card-header" routerLink="../transaction/list">
+        <div class="mat-title mb-2 d-flex align-items-center" routerLink="../transaction/list">
           <span>My Transactions</span>
           <fa-icon [fixedWidth]="true" [icon]="faLink" class="ms-auto text-secondary"></fa-icon>
-        </a>
+        </div>
 
         <!-- Body -->
-        <div class="card-body pt-0">
+        <mat-card class="pt-2">
 
           <!-- Loading -->
           <app-loading classes="mt-5" *ngIf="!transactions || !categories || !wallets"></app-loading>
@@ -177,7 +185,7 @@
                      [paramsToCombine]="transactionsFilter"
                      (pageChanged)="loadTransactions()">
           </app-pager>
-        </div>
+        </mat-card>
       </div>
     </div>
   </div>

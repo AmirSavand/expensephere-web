@@ -17,6 +17,9 @@ import { ChartSpentCategoryModule } from 'src/shared/modules/chart-spent-categor
 
 import { OverviewRoutingModule } from './overview-routing.module';
 import { OverviewComponent } from './overview.component';
+import {MatCardModule} from "@angular/material/card";
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatBadgeModule} from "@angular/material/badge";
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import { OverviewComponent } from './overview.component';
     MetricSpentCategoryModule,
     ChartSpentCategoryModule,
     ProgressbarModule.forRoot(),
+    MatCardModule,
+    MatProgressBarModule,
+    MatBadgeModule,
   ],
 })
 export class OverviewModule {
