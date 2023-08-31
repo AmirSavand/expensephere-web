@@ -5,17 +5,19 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-currency.module';
 
 import { WalletListComponent } from './wallet-list.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
     WalletListComponent,
   ],
-  imports: [
-    CommonModule,
-    ProfileCurrencyModule,
-    FontAwesomeModule,
-    RouterModule,
-  ],
+    imports: [
+        CommonModule,
+        ProfileCurrencyModule,
+        FontAwesomeModule,
+        RouterModule,
+        MatCardModule,
+    ],
   exports: [
     WalletListComponent,
   ],
