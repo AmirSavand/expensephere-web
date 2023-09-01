@@ -106,17 +106,17 @@
         <app-loading *ngIf="!profiles" classes="mb-2"></app-loading>
 
         <!-- Profile -->
-        <div (click)="select(item)"
+        <mat-card (click)="select(item)"
              *ngFor="let item of profiles; let last = last"
              [class.cursor-pointer]="profile && item.id !== profile.id"
-             class="card shadow-sm mb-2">
-          <div class="card-body py-2">
+             class="btn mb-2">
+          <div class="py-2">
             <div class="d-flex align-items-center">
 
               <!-- Profile name and total balance -->
               <div class="me-auto">
-                <div class="fw-bold">{{ item.name }}</div>
-                <div class="small text-secondary" title="Total balance">
+                <div class="fw-bold text-start text-light">{{ item.name }}</div>
+                <div class="small mb-1 text-secondary" title="Total balance">
                   {{ item.balance.total | profileCurrency:item.currency }}
                 </div>
               </div>
@@ -135,9 +135,9 @@
                        class="text-tertiary">
               </fa-icon>
             </div>
-            <div *ngIf="item.note" class="text-muted small">{{ item.note }}</div>
+            <div *ngIf="item.note" class="text-start text-muted small">{{ item.note }}</div>
           </div>
-        </div>
+        </mat-card>
 
         <!-- Add profile -->
         <button (click)="addProfile()" class="btn btn-link text-secondary fw-bold ms-2">Add Profile</button>
@@ -150,14 +150,14 @@
         <p class="fw-bold">My Account</p>
 
         <!-- Settings -->
-        <a class="btn btn-secondary shadow-sm" routerLink="/user/settings" title="Settings">
+        <button mat-button class="btn btn-secondary" routerLink="/user/settings" title="Settings">
           <fa-icon [fixedWidth]="true" [icon]="faSettings"></fa-icon>
-        </a>
+        </button>
 
         <!-- Sign out -->
-        <a class="btn btn-secondary shadow-sm ms-2" routerLink="/user/sign-out" title="Sign Out">
+        <button mat-button class="btn btn-secondary ms-2" routerLink="/user/sign-out" title="Sign Out">
           <fa-icon [fixedWidth]="true" [icon]="faSignOut"></fa-icon>
-        </a>
+        </button>
       </div>
 
       <!-- App info -->

@@ -15,15 +15,16 @@
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
 
     <!-- Kind -->
-    <div class=" mb-3">
-      <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100" appearance="legacy">
-        <mat-button-toggle class="btn btn-light fw-bold income-style"
+    <div class="mb-4">
+      <mat-button-toggle-group name="fontStyle" class="w-100" appearance="legacy">
+        <mat-button-toggle class="fw-bold income-style text-dark"
                            (click)="form.form.get('kind').patchValue(expenseKind.INCOME)"
                            [class.active]="form.form.get('kind').value === expenseKind.INCOME">INCOME
         </mat-button-toggle>
-        <mat-button-toggle class="btn btn-light fw-bold w-100"
+        <mat-button-toggle class="fw-bold w-100 text-dark"
                            (click)="form.form.get('kind').patchValue(expenseKind.EXPENSE)"
-                           [class.active]="form.form.get('kind').value === expenseKind.EXPENSE">EXPENSE
+                           [class.active]="form.form.get('kind').value === expenseKind.EXPENSE"
+                           [checked]="true">EXPENSE
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>

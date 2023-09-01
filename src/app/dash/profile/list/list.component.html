@@ -7,56 +7,55 @@
     <div *ngFor="let item of profiles" class="col-xl-4 col-lg-6">
 
       <!-- Profile card -->
-      <div class="card mt-4">
-        <div class="card-body">
-          <div class="d-flex align-items-center">
+      <mat-card class="mt-4 h-100">
 
-            <!-- Currency -->
-            <div class="badge text-bg-secondary me-2">{{ item.currency }}</div>
+        <div class="d-flex align-items-center">
 
-            <!-- Profile name -->
-            <div class="fw-bold">{{ item.name }}</div>
+          <!-- Currency -->
+          <div class="badge text-bg-secondary me-2">{{ item.currency }}</div>
 
-            <!-- Profile select button -->
-            <button (click)="select(item)" [class.btn-link]="profile && item.id === profile.id"
-                    [class.btn-primary]="!profile || item.id !== profile.id"
-                    [disabled]="profile && item.id === profile.id"
-                    class="btn btn-sm ms-auto">
-              {{ profile && item.id === profile.id ? 'Selected' : 'Select' }}
-            </button>
+          <!-- Profile name -->
+          <div class="fw-bold">{{ item.name }}</div>
 
-            <!-- Edit button -->
-            <button (click)="edit(item)" class="btn btn-sm btn-light ms-2">
-              <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
-            </button>
-            <a [routerLink]="['..', item.id]" class="btn btn-sm btn-light ms-2">
-              <fa-icon [fixedWidth]="true" [icon]="faVisit"></fa-icon>
-            </a>
-          </div>
+          <!-- Profile select button -->
+          <button mat-button (click)="select(item)" [class.btn-link]="profile && item.id === profile.id"
+                  [class.btn-primary]="!profile || item.id !== profile.id"
+                  [disabled]="profile && item.id === profile.id"
+                  class="btn btn-sm ms-auto">
+            {{ profile && item.id === profile.id ? 'Selected' : 'Select' }}
+          </button>
 
-          <!-- Income progress bar -->
-          <div class="d-flex my-3">
-            <div [style.width]="(item.balance.expense / item.balance.total) * 100 + '%'" class="progress me-1">
-              <div class="progress-bar w-100 bg-danger"></div>
-            </div>
-            <div [style.width]="(item.balance.income / item.balance.total) * 100 + '%'" class="progress ms-1">
-              <div class="progress-bar w-100 bg-primary"></div>
-            </div>
-          </div>
-
-          <!-- Note info -->
-          <div [title]="item.note" class="text-truncate">{{ item.note || 'No note.' }}</div>
+          <!-- Edit button -->
+          <button mat-button (click)="edit(item)">
+            <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+          </button>
+          <button mat-button [routerLink]="['..', item.id]">
+            <fa-icon [fixedWidth]="true" [icon]="faVisit"></fa-icon>
+          </button>
         </div>
-      </div>
+
+        <!-- Income progress bar -->
+        <div class="d-flex my-3">
+          <div [style.width]="(item.balance.expense / item.balance.total) * 100 + '%'" class="progress me-1">
+             <div class="progress-bar w-100 bg-danger"></div>
+          </div>
+          <div [style.width]="(item.balance.income / item.balance.total) * 100 + '%'" class="progress ms-1">
+            <div class="progress-bar w-100 bg-primary"></div>
+          </div>
+        </div>
+
+        <!-- Note info -->
+        <div [title]="item.note" class="text-truncate">{{ item.note || 'No note.' }}</div>
+      </mat-card>
     </div>
 
     <!-- Add new profile -->
     <div class="col-xl-4 col-lg-6">
-      <div class="card mt-4">
-        <div class="card-body d-flex align-items-center justify-content-center">
-          <div (click)="add()" class="btn btn-light fw-bold">ADD PROFILE</div>
+      <mat-card class="mt-4 h-100">
+        <div class="d-flex align-items-center justify-content-center">
+          <div (click)="add()" class="fw-bold mt-5 cursor-pointer">ADD PROFILE</div>
         </div>
-      </div>
+      </mat-card>
     </div>
   </div>
 </div>

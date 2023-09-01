@@ -10,25 +10,27 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DashRoutingModule } from './dash-routing.module';
 import { DashComponent } from './dash.component';
-import {MatButtonModule} from "@angular/material/button";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
 
 @NgModule({
   declarations: [
     DashComponent,
   ],
-    imports: [
-        CommonModule,
-        DashRoutingModule,
-        FontAwesomeModule,
-        ModalModule.forRoot(),
-        TransactionFormModalModule,
-        ProfileCurrencyModule,
-        BsDropdownModule.forRoot(),
-        LoadingModule,
-        OverlayModule,
-        TagFormModalModule,
-        MatButtonModule,
-    ],
+  imports: [
+    CommonModule,
+    DashRoutingModule,
+    FontAwesomeModule,
+    ModalModule.forRoot(),
+    TransactionFormModalModule,
+    ProfileCurrencyModule,
+    BsDropdownModule.forRoot(),
+    LoadingModule,
+    OverlayModule,
+    TagFormModalModule,
+    MatButtonModule,
+    MatCardModule,
+  ],
 })
 export class DashModule {
 }

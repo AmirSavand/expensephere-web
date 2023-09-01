@@ -12,7 +12,8 @@ import { ProfileService } from '@shared/services/profile.service';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,18 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
     AuthService,
     ProfileService,
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'fill'
+      },
+    },
+    {
+      provide: MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS,
+      useValue: {
+        color: 'primary',
+      },
+    },
   ],
   bootstrap: [
     AppComponent,

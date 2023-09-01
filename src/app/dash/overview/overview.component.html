@@ -50,10 +50,10 @@
 
       <!-- Wallets -->
       <!-- Header -->
-      <a class="fw mb-2 mt-4 d-flex justify-content-between" routerLink="../wallet/list">
+      <div class="fw mb-2 mt-4 d-flex justify-content-between cursor-pointer" routerLink="../wallet/list">
         <span class="me-auto" >My Wallets</span>
         <fa-icon [fixedWidth]="true" [icon]="faLink" class="text-secondary"></fa-icon>
-      </a>
+      </div>
 
       <!-- Body -->
       <mat-card class="pt-0 pb-3">
@@ -68,10 +68,10 @@
 
       <!-- Categories -->
       <!-- Header -->
-      <a class="fw mb-2 mt-4 d-flex justify-content-between" routerLink="../category/list">
+      <div class="fw mb-2 mt-4 d-flex justify-content-between cursor-pointer" routerLink="../category/list">
         <span class="me-auto" >My Categories</span>
         <fa-icon [fixedWidth]="true" [icon]="faLink" class="ms-auto text-secondary"></fa-icon>
-      </a>
+      </div>
 
       <!-- Body -->
       <mat-card class="pt-0 pb-3">
@@ -141,13 +141,13 @@
 
       <!-- My transactions -->
       <!-- Header -->
-      <a class="fw mt-4 d-flex justify-content-between" routerLink="../transaction/list">
+      <div class="fw mt-4 mb-2 d-flex justify-content-between cursor-pointer" routerLink="../transaction/list">
         <span class="me-auto">My Transactions</span>
         <fa-icon [fixedWidth]="true" [icon]="faLink" class="text-secondary"></fa-icon>
-      </a>
+      </div>
 
       <!-- Body -->
-      <mat-card>
+      <mat-card class="pt-3">
 
         <!-- Loading -->
         <app-loading classes="mt-5" *ngIf="!transactions || !categories || !wallets"></app-loading>
