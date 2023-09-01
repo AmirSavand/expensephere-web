@@ -19,3 +19,8 @@ td {
   padding-top: map_get($spacers, 1);
   padding-bottom: map_get($spacers, 1);
 }
+
+.mat-button{
+  min-width: 0px;
+  padding: 0 12px;
+}

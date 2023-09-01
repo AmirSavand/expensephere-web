@@ -94,9 +94,9 @@
 <div class="modal-footer text-end" *ngIf="form.form">
 
   <!-- Delete -->
-  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(wallet)">
+  <button mat-button class="text-danger me-auto" *ngIf="isEditing" (click)="delete(wallet)">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
-  </a>
+  </button>
 
   <!-- Cancel -->
   <button mat-button class="mx-2" (click)="modal.hide()">Cancel</button>

@@ -40,5 +40,5 @@
   <p class="text-danger" *ngIf="form.error.non_field_errors">{{ form.error.non_field_errors[0] }}</p>
 
   <!-- Button -->
-  <button mat-flat-button class="btn w-100 btn-primary" routerLink="/" [disabled]="form.loading">Save Changes</button>
+  <button mat-flat-button class="btn w-100 btn-primary" [disabled]="form.loading">Save Changes</button>
 </form>
