@@ -317,8 +317,4 @@ export class FormComponent implements OnInit {
       },
     });
   }
-
-  protected readonly faInfoCircle = faInfoCircle;
-  protected readonly faStickyNote = faStickyNote;
-  protected readonly faClock = faClock;
 }
