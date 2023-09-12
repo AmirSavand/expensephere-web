@@ -6,6 +6,7 @@ import { ProfileCurrencyModule } from '@shared/modules/profile-currency/profile-
 
 import { WalletListComponent } from './wallet-list.component';
 import { MatCardModule } from "@angular/material/card";
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,10 @@ import { MatCardModule } from "@angular/material/card";
   ],
   exports: [
     WalletListComponent,
+  ],
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
   ],
 })
 export class WalletListModule {

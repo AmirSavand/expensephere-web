@@ -12,6 +12,7 @@ import { DashRoutingModule } from './dash-routing.module';
 import { DashComponent } from './dash.component';
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,12 @@ import { MatCardModule } from "@angular/material/card";
     TagFormModalModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
   ],
+  providers: [
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} }
+  ]
 })
 export class DashModule {
 }

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -12,8 +12,8 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Wallet } from '@shared/interfaces/wallet';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ProfileService } from '@shared/services/profile.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-wallet-form-modal',
@@ -33,11 +33,6 @@ export class WalletFormModalComponent implements OnInit {
   readonly faIcons: IconDefinition = faIcons;
   readonly faTrash: IconDefinition = faTrash;
   readonly faAmount: IconDefinition = faMoneyBillAlt;
-
-  /**
-   * Editing wallet data
-   */
-  @Input() wallet?: Wallet;
 
   /**
    * Redirect after creation?
@@ -77,10 +72,11 @@ export class WalletFormModalComponent implements OnInit {
    */
   isEditing: boolean;
 
-  constructor(public modal: BsModalRef,
-              private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private profileService: ProfileService,
-              private router: Router) {
+              private router: Router,
+              public dialogRef: MatDialogRef<WalletFormModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { wallet: Wallet }) {
   }
 
   ngOnInit(): void {
@@ -102,13 +98,13 @@ export class WalletFormModalComponent implements OnInit {
     /**
      * Check if editing
      */
-    if (this.wallet) {
+    if (this.data?.wallet) {
       this.isEditing = true;
       this.form.form.patchValue({
-        name: this.wallet.name,
-        color: this.wallet.color,
-        icon: this.wallet.icon,
-        archive: this.wallet.archive,
+        name: this.data.wallet.name,
+        color: this.data.wallet.color,
+        icon: this.data.wallet.icon,
+        archive: this.data.wallet.archive,
       });
     }
   }
@@ -135,17 +131,17 @@ export class WalletFormModalComponent implements OnInit {
     }
     let method: Observable<Wallet> = Api.wallet.create(payload);
     if (this.isEditing) {
-      method = Api.wallet.update(this.wallet.id, payload);
+      method = Api.wallet.update(this.data.wallet.id, payload);
     }
     method.subscribe((data: Wallet): void => {
       if (this.redirect && !this.isEditing) {
         this.router.navigate(['/dash/wallet/', data.id]);
       }
       if (this.isEditing) {
-        Object.assign(this.wallet, data);
+        Object.assign(this.data.wallet, data);
       }
       this.submitted.emit(data);
-      this.modal.hide();
+      this.dialogRef.close();
       WalletFormModalComponent.CHANGE.emit();
       /**
        * This change effects profile balance, so let's refresh profile
@@ -167,7 +163,6 @@ export class WalletFormModalComponent implements OnInit {
       return;
     }
     Api.wallet.delete(wallet.id).subscribe((): void => {
-      this.modal.hide();
       WalletFormModalComponent.CHANGE.emit();
     });
   }

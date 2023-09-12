@@ -38,6 +38,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dash',
@@ -104,7 +105,8 @@ export class DashComponent implements OnInit, OnDestroy {
 
   constructor(public auth: AuthService,
               private router: Router,
-              private modalService: BsModalService) {
+              private modalService: BsModalService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -170,8 +172,8 @@ export class DashComponent implements OnInit, OnDestroy {
   /**
    * Open up wallet form modal
    */
-  addWallet(): void {
-    this.modalService.show(WalletFormModalComponent);
+  addWallet() {
+    this.dialog.open(WalletFormModalComponent);
   }
 
   /**
