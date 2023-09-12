@@ -2,16 +2,16 @@
 <div class="modal-header">
 
   <!-- Title -->
-  <span>{{ isEditing ? 'Edit' : 'Add' }} Category</span>
+  <span mat-dialog-title>{{ isEditing ? 'Edit' : 'Add' }} Category</span>
 
   <!-- Close -->
-  <button mat-button class="text-secondary" (click)="modal.hide()">
+  <button mat-button class="text-secondary mb-4" mat-dialog-close>
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
 
 <!-- Body -->
-<div class="modal-body pb-0" *ngIf="!(isEditing && category.protect)">
+<div class="modal-body pb-0" *ngIf="!(isEditing && category?.protect)">
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
 
     <!-- Kind -->
@@ -91,27 +91,28 @@
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-end" *ngIf="!(isEditing && category.protect)">
+<div class="modal-footer text-end" *ngIf="!(isEditing && category?.protect)">
 
   <!-- Delete -->
-  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(category)">
+  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(this.data.category)" [mat-dialog-close]="true">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
   </a>
 
   <!-- Cancel -->
-  <button mat-button class="mx-2" (click)="modal.hide()">Cancel</button>
+  <button mat-button class="mx-2" mat-dialog-close>Cancel</button>
 
   <!-- Submit -->
   <button mat-flat-button
           color="primary"
           [disabled]="form.loading || form.form.invalid"
-          (click)="submit()">
+          (click)="submit()"
+          [mat-dialog-close]="true">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>
 
 <!-- Body (protect) -->
-<div class="modal-body pb-0" *ngIf="isEditing && category.protect">
+<div class="modal-body pb-0" *ngIf="isEditing && category?.protect">
 
   <!-- Protected message -->
   <p class="text-warning fw-bold">
@@ -120,8 +121,8 @@
 </div>
 
 <!-- Footer (protected) -->
-<div class="modal-footer text-end" *ngIf="isEditing && category.protect">
+<div class="modal-footer text-end" *ngIf="isEditing && category?.protect">
 
   <!-- Cancel -->
-  <button class="btn btn-light ms-auto" (click)="modal.hide()">Close</button>
+  <button class="btn btn-light ms-auto" mat-dialog-close>Close</button>
 </div>

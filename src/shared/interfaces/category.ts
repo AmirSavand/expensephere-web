@@ -3,7 +3,7 @@ import { ExpenseKind } from '@shared/enums/kind';
 export interface Category {
   readonly id: number;
   readonly profile: number;
-  readonly protect: boolean;
+  readonly protect?: boolean;
   kind: ExpenseKind;
   name: string;
   color: string;

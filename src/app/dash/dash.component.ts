@@ -180,7 +180,9 @@ export class DashComponent implements OnInit, OnDestroy {
    * Open up category form modal
    */
   addCategory(): void {
-    this.modalService.show(CategoryFormModalComponent);
+    this.dialog.open(CategoryFormModalComponent,{
+      width: '440px',
+    });
   }
 
   /**
