@@ -4,8 +4,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Color } from '@shared/classes/color';
 import { Wallet } from '@shared/interfaces/wallet';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-wallet-list',
