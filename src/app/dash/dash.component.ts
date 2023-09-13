@@ -198,7 +198,9 @@ export class DashComponent implements OnInit, OnDestroy {
    * Open up event form modal
    */
   addTag(): void {
-    this.modalService.show(TagFormModalComponent);
+    this.dialog.open(TagFormModalComponent,{
+      width: '425px',
+    });
   }
 
   ngOnDestroy(): void {

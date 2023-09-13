@@ -2,10 +2,10 @@
 <div class="modal-header">
 
   <!-- Title -->
-  <span>{{ isEditing ? 'Edit' : 'Add' }} Tag</span>
+  <span mat-dialog-title>{{ isEditing ? 'Edit' : 'Add' }} Tag</span>
 
   <!-- Close -->
-  <button mat-button class="text-secondary" (click)="modal.hide()">
+  <button mat-button class="text-secondary" mat-dialog-close>
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
@@ -107,15 +107,18 @@
 <div class="modal-footer text-end">
 
   <!-- Delete -->
-  <a (click)="delete(tag)" *ngIf="isEditing" class="text-danger me-auto">
+  <a (click)="delete(this.data.tag)" *ngIf="isEditing" [mat-dialog-close]="true" class="text-danger me-auto">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
   </a>
 
   <!-- Cancel -->
-  <button (click)="modal.hide()" class="btn btn-light">Cancel</button>
+  <button class="btn btn-light" mat-dialog-close>Cancel</button>
 
   <!-- Submit -->
-  <button (click)="submit()" [disabled]="form.loading || form.form.invalid" class="btn btn-primary">
+  <button (click)="submit()"
+          [mat-dialog-close]="true"
+          [disabled]="form.loading || form.form.invalid"
+          class="btn btn-primary">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>

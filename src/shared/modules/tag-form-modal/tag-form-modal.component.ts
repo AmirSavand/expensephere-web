@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -20,8 +20,8 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { Tag } from '@shared/interfaces/tag';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ProfileService } from '@shared/services/profile.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tag-form-modal',
@@ -85,9 +85,10 @@ export class TagFormModalComponent implements OnInit {
    */
   isEditing: boolean;
 
-  constructor(public modal: BsModalRef,
-              private formBuilder: UntypedFormBuilder,
-              private router: Router) {
+  constructor(private formBuilder: UntypedFormBuilder,
+              private router: Router,
+              public dialogRef: MatDialogRef<TagFormModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { tag: Tag }) {
   }
 
   ngOnInit(): void {
@@ -103,14 +104,14 @@ export class TagFormModalComponent implements OnInit {
       note: [''],
     });
 
-    if (this.tag) {
+    if (this.data?.tag) {
       this.isEditing = true;
       this.form.form.patchValue({
-        name: this.tag.name,
-        color: this.tag.color,
-        icon: this.tag.icon,
-        note: this.tag.note,
-        archive: this.tag.archive,
+        name: this.data.tag.name,
+        color: this.data.tag.color,
+        icon: this.data.tag.icon,
+        note: this.data.tag.note,
+        archive: this.data.tag.archive,
       });
     }
   }
@@ -123,17 +124,17 @@ export class TagFormModalComponent implements OnInit {
     const payload: Partial<Tag> = this.form.form.value;
     let method: Observable<Tag> = Api.tag.create(payload);
     if (this.isEditing) {
-      method = Api.tag.update(this.tag.id, payload);
+      method = Api.tag.update(this.data.tag.id, payload);
     }
     method.subscribe((data: Tag): void => {
       if (this.redirect && !this.isEditing) {
         this.router.navigate(['/dash/tag/', data.id]);
       }
       if (this.isEditing) {
-        Object.assign(this.tag, data);
+        Object.assign(this.data.tag, data);
       }
       this.submitted.emit(data);
-      this.modal.hide();
+      this.dialogRef.close();
       TagFormModalComponent.CHANGE.emit();
     }, (error: HttpErrorResponse): void => {
       this.form.error = error.error;
@@ -151,7 +152,6 @@ export class TagFormModalComponent implements OnInit {
       return;
     }
     Api.tag.delete(tag.id).subscribe((): void => {
-      this.modal.hide();
       TagFormModalComponent.CHANGE.emit();
     });
   }
