@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -9,8 +9,8 @@ import { Api } from '@shared/classes/api';
 import { Contact } from '@shared/interfaces/contact';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { ProfileService } from '@shared/services/profile.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-contact-form-modal',
@@ -59,10 +59,11 @@ export class ContactFormModalComponent implements OnInit {
   /** If {@see contact} is given, then the modal is for edit. */
   isEditing: boolean;
 
-  constructor(public modal: BsModalRef,
-              private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private profileService: ProfileService,
-              private router: Router) {
+              private router: Router,
+              public dialogRef: MatDialogRef<ContactFormModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { contact: Contact , redirect : boolean }) {
   }
 
   ngOnInit(): void {
@@ -76,14 +77,14 @@ export class ContactFormModalComponent implements OnInit {
       address: [null],
     });
     /** Check if editing. */
-    if (this.contact) {
+    if (this.data?.contact) {
       this.isEditing = true;
       this.form.form.patchValue({
-        name: this.contact.name,
-        email: this.contact.email,
-        phone: this.contact.phone,
-        website: this.contact.website,
-        address: this.contact.address,
+        name: this.data.contact.name,
+        email: this.data.contact.email,
+        phone: this.data.contact.phone,
+        website: this.data.contact.website,
+        address: this.data.contact.address,
       });
     }
   }
@@ -93,18 +94,18 @@ export class ContactFormModalComponent implements OnInit {
     this.form.loading = true;
     let method: Observable<Contact> = Api.invoiceContact.create(this.form.form.value);
     if (this.isEditing) {
-      method = Api.invoiceContact.update(this.contact.id, this.form.form.value);
+      method = Api.invoiceContact.update(this.data.contact.id, this.form.form.value);
     }
     method.subscribe({
       next: (data: Contact): void => {
-        if (this.redirect && !this.isEditing) {
+        if (this.data?.redirect == null && !this.isEditing) {
           this.router.navigate(['/dash/invoice/contacts/']);
         }
         if (this.isEditing) {
-          Object.assign(this.contact, data);
+          Object.assign(this.data.contact, data);
         }
         this.submitted.emit(data);
-        this.modal.hide();
+        this.dialogRef.close();
         ContactFormModalComponent.CHANGE.emit();
       },
       error: (error: HttpErrorResponse): void => {
@@ -126,7 +127,7 @@ export class ContactFormModalComponent implements OnInit {
     this.form.loading = true;
     Api.invoiceContact.delete(contact.id).subscribe({
       next: (): void => {
-        this.modal.hide();
+        this.dialogRef.close();
         this.destroyed.emit();
         this.form.loading = false;
       },

@@ -2,10 +2,10 @@
 <div class="modal-header">
 
   <!-- Title -->
-  <span>{{ isEditing ? 'Edit' : 'New' }} Transaction</span>
+  <span mat-dialog-title>{{ isEditing ? 'Edit' : 'New' }} Transaction</span>
 
   <!-- Close -->
-  <button mat-button (click)="modal.hide()" class="text-secondary">
+  <button mat-button class="text-secondary mb-4" mat-dialog-close>
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
@@ -234,15 +234,15 @@
 <div *ngIf="!noWallets" class="modal-footer text-end">
 
   <!-- Delete -->
-  <a (click)="delete(transaction)" *ngIf="isEditing" class="text-danger me-auto">
+  <a (click)="delete(this.data.transaction)" *ngIf="isEditing" class="text-danger me-auto" [mat-dialog-close]="true">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
   </a>
 
   <!-- Cancel -->
-  <button mat-button (click)="modal.hide()">Cancel</button>
+  <button mat-button mat-dialog-close>Cancel</button>
 
   <!-- Submit -->
-  <button mat-flat-button (click)="submit()" [disabled]="form.loading || form.form.invalid">
+  <button mat-flat-button (click)="submit()" [disabled]="form.loading || form.form.invalid" [mat-dialog-close]="true">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>
@@ -251,5 +251,5 @@
 <div *ngIf="noWallets" class="modal-body">
   <p class="fw-bold text-warning">No Wallets 😮</p>
   <p>You don't have any wallets for your profile.</p>
-  <button (click)="addWallet(); modal.hide();" class="btn btn-primary">Add Wallet</button>
+  <button (click)="addWallet()" class="btn btn-primary" [mat-dialog-close]="true">Add Wallet</button>
 </div>

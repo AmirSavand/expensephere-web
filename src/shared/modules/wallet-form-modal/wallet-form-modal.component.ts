@@ -76,7 +76,7 @@ export class WalletFormModalComponent implements OnInit {
               private profileService: ProfileService,
               private router: Router,
               public dialogRef: MatDialogRef<WalletFormModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { wallet: Wallet }) {
+              @Inject(MAT_DIALOG_DATA) public data: { wallet: Wallet , redirect : boolean }) {
   }
 
   ngOnInit(): void {
@@ -134,14 +134,15 @@ export class WalletFormModalComponent implements OnInit {
       method = Api.wallet.update(this.data.wallet.id, payload);
     }
     method.subscribe((data: Wallet): void => {
-      if (this.redirect && !this.isEditing) {
+      if (this.data?.redirect == null && !this.isEditing) {
         this.router.navigate(['/dash/wallet/', data.id]);
       }
       if (this.isEditing) {
         Object.assign(this.data.wallet, data);
       }
       this.submitted.emit(data);
-      this.dialogRef.close();
+      console.log(data)
+      this.dialogRef.close({wallet: data.id}) ;
       WalletFormModalComponent.CHANGE.emit();
       /**
        * This change effects profile balance, so let's refresh profile

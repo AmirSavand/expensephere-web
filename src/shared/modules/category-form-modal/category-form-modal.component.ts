@@ -80,7 +80,7 @@ export class CategoryFormModalComponent implements OnInit {
               private formBuilder: UntypedFormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<CategoryFormModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { category: Category }) {
+              @Inject(MAT_DIALOG_DATA) public data: { category: Category, redirect : boolean }) {
   }
 
   ngOnInit(): void {
@@ -121,7 +121,7 @@ export class CategoryFormModalComponent implements OnInit {
       method = Api.category.update(this.data.category.id, payload);
     }
     method.subscribe((data: Category): void => {
-      if (this.redirect && !this.isEditing) {
+      if (this.data?.redirect == null && !this.isEditing) {
         this.router.navigate(['/dash/category/', data.id]);
       }
       if (this.isEditing) {

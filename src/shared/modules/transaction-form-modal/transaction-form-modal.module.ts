@@ -12,6 +12,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatSlideToggleModule,
     MatButtonToggleModule,
     MatButtonModule,
+    MatDialogModule,
   ],
   declarations: [
     TransactionFormModalComponent,

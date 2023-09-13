@@ -88,7 +88,7 @@ export class TagFormModalComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<TagFormModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { tag: Tag }) {
+              @Inject(MAT_DIALOG_DATA) public data: { tag: Tag, redirect : boolean }) {
   }
 
   ngOnInit(): void {
@@ -127,7 +127,7 @@ export class TagFormModalComponent implements OnInit {
       method = Api.tag.update(this.data.tag.id, payload);
     }
     method.subscribe((data: Tag): void => {
-      if (this.redirect && !this.isEditing) {
+      if (this.data?.redirect == null && !this.isEditing) {
         this.router.navigate(['/dash/tag/', data.id]);
       }
       if (this.isEditing) {

@@ -96,7 +96,7 @@ export class EventFormModalComponent implements OnInit {
               private date: DatePipe,
               private router: Router,
               public dialogRef: MatDialogRef<EventFormModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
+              @Inject(MAT_DIALOG_DATA) public data: { event: Event, redirect : boolean }) {
   }
 
   ngOnInit(): void {
@@ -157,7 +157,7 @@ export class EventFormModalComponent implements OnInit {
       method = Api.event.update(this.data.event.id, payload);
     }
     method.subscribe((data: Event): void => {
-      if (this.redirect && !this.isEditing) {
+      if (this.data?.redirect == null && !this.isEditing) {
         this.router.navigate(['/dash/event/', data.id]);
       }
       if (this.isEditing) {

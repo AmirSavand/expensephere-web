@@ -166,7 +166,7 @@ export class DashComponent implements OnInit, OnDestroy {
    * Open up transaction form modal
    */
   addTransaction(): void {
-    this.modalService.show(TransactionFormModalComponent);
+    this.dialog.open(TransactionFormModalComponent);
   }
 
   /**

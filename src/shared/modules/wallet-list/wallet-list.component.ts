@@ -21,7 +21,7 @@ export class WalletListComponent {
 
   @Input() columnClass = 'col-xl-4';
 
-  constructor(public dialog: MatDialog) {
+  constructor(private dialog: MatDialog) {
   }
 
   /**
