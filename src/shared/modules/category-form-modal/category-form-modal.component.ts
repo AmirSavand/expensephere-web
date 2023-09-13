@@ -80,7 +80,7 @@ export class CategoryFormModalComponent implements OnInit {
               private formBuilder: UntypedFormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<CategoryFormModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data?: { category: Category }) {
+              @Inject(MAT_DIALOG_DATA) public data: { category: Category }) {
   }
 
   ngOnInit(): void {

@@ -4,7 +4,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Color } from '@shared/classes/color';
 import { Event } from '@shared/interfaces/event';
 import { EventFormModalComponent } from '@shared/modules/event-form-modal/event-form-modal.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-event-list',
@@ -21,16 +21,15 @@ export class EventListComponent {
 
   @Input() columnClass = 'col-xl-4';
 
-  constructor(private modalService: BsModalService) {
+  constructor(public dialog: MatDialog) {
   }
 
   /**
    * Open event form modal for editing
    */
   editEvent(event: Event): void {
-    this.modalService.show(EventFormModalComponent, {
-      class: 'modal-sm',
-      initialState: { event },
+    this.dialog.open(EventFormModalComponent, {
+      data: { event },
     });
   }
 }
