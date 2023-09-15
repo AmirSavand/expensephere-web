@@ -12,7 +12,7 @@
 
 <!-- Body -->
 <div class="modal-body pb-0" *ngIf="form.form">
-  <form [formGroup]="form.form" (ngSubmit)="submit()">
+  <form mat-dialog-content [formGroup]="form.form" (ngSubmit)="submit()">
 
     <!-- Name -->
     <label class="label2">Name</label>
@@ -98,22 +98,22 @@
     <!-- Error -->
     <app-general-error [form]="form"></app-general-error>
   </form>
-
-
-  <!-- Footer -->
-  <div class="modal-footer text-end" *ngIf="form.form">
-
-    <!-- Delete -->
-    <a class="text-danger me-auto" *ngIf="isEditing" (click)="destroy(this.data.contact)" [mat-dialog-close]="true">
-      <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
-    </a>
-
-    <!-- Cancel -->
-    <button mat-button class="btn btn-light" mat-dialog-close>Cancel</button>
-
-    <!-- Submit -->
-    <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
-      {{ isEditing ? 'Update' : 'Done' }}
-    </button>
-  </div>
 </div>
+
+<!-- Footer -->
+<div class="modal-footer text-end" *ngIf="form.form">
+
+  <!-- Delete -->
+  <a class="text-danger me-auto" *ngIf="isEditing" (click)="destroy(this.data.contact)" [mat-dialog-close]="true">
+    <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
+  </a>
+
+  <!-- Cancel -->
+  <button mat-button class="btn btn-light" mat-dialog-close>Cancel</button>
+
+  <!-- Submit -->
+  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+    {{ isEditing ? 'Update' : 'Done' }}
+  </button>
+</div>
+

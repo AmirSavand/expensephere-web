@@ -21,8 +21,6 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 import { ProfileService } from '@shared/services/profile.service';
 import { Payload } from '@shared/types/payload';
 import { format } from 'date-fns';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { faClock, faStickyNote } from '@fortawesome/free-regular-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

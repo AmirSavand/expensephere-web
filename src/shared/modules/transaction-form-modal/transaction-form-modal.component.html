@@ -11,7 +11,7 @@
 </div>
 
 <!-- Body -->
-<div *ngIf="!noWallets" class="modal-body pb-0">
+<div mat-dialog-content *ngIf="!noWallets" class="modal-body pb-0">
   <form (ngSubmit)="submit()" *ngIf="form.form" [formGroup]="form.form">
 
     <!-- Kind -->
