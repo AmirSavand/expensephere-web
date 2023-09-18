@@ -24,6 +24,7 @@ import { ProfileService } from '@shared/services/profile.service';
 import { format, formatISO, parseISO } from 'date-fns';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SnackBarService } from '@shared/services/snackbar.service';
 
 @Component({
   selector: 'app-transaction-form-modal',
@@ -87,6 +88,7 @@ export class TransactionFormModalComponent implements OnInit {
               private formBuilder: UntypedFormBuilder,
               private date: DatePipe,
               private router: Router,
+              private _snackbar: SnackBarService,
               public dialogRef: MatDialogRef<TransactionFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { transaction: Transaction },
               public dialog: MatDialog) {
@@ -199,6 +201,7 @@ export class TransactionFormModalComponent implements OnInit {
       this.form.loading = false;
       this.form.error = error.error;
     });
+    this._snackbar.openSnackBar('Transaction')
   }
 
   /**

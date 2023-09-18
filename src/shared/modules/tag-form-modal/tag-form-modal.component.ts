@@ -22,6 +22,7 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 import { ProfileService } from '@shared/services/profile.service';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SnackBarService } from '@shared/services/snackbar.service';
 
 @Component({
   selector: 'app-tag-form-modal',
@@ -87,6 +88,7 @@ export class TagFormModalComponent implements OnInit {
 
   constructor(private formBuilder: UntypedFormBuilder,
               private router: Router,
+              private _snackbar: SnackBarService,
               public dialogRef: MatDialogRef<TagFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { tag: Tag, redirect : boolean }) {
   }
@@ -140,6 +142,7 @@ export class TagFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     });
+    this._snackbar.openSnackBar('Tag')
   }
 
   /**
