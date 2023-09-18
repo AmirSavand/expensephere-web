@@ -22,36 +22,36 @@
         </div>
 
         <!-- Create transaction button -->
-        <button mat-flat-button (click)="addTransaction()" class="btn btn-primary ms-auto">
+        <button mat-flat-button (click)="addTransaction()" class="ms-auto" color="primary">
           <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
           <span class="ms-1">Transaction</span>
         </button>
 
         <!-- Dropdown -->
-        <div class="dropdown ms-2" dropdown>
+        <div class="ms-2" dropdown>
 
           <!-- Create button -->
-          <button mat-button class="btn btn-primary" dropdownToggle>
+          <button mat-flat-button [matMenuTriggerFor]="menu" color="primary">
             <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
           </button>
 
           <!-- Buttons -->
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+          <mat-menu #menu="matMenu" xPosition="before">
             <!-- Wallet -->
-            <a (click)="addWallet()" class="dropdown-item">Wallet</a>
+            <button mat-menu-item (click)="addWallet()">Wallet</button>
             <!-- Category -->
-            <a (click)="addCategory()" class="dropdown-item">Category</a>
+            <button mat-menu-item (click)="addCategory()">Category</button>
             <!-- Event -->
-            <a (click)="addEvent()" class="dropdown-item">Event</a>
+            <button mat-menu-item (click)="addEvent()" class="dropdown-item">Event</button>
             <!-- Event -->
-            <a (click)="addTag()" class="dropdown-item">Tag</a>
+            <button mat-menu-item (click)="addTag()" class="dropdown-item">Tag</button>
             <!-- Invoice -->
-            <a [routerLink]="'/dash/invoice/add'" class="dropdown-item">Invoice</a>
+            <button mat-menu-item [routerLink]="'/dash/invoice/add'" class="dropdown-item">Invoice</button>
             <!-- Separator -->
-            <div class="dropdown-divider"></div>
+            <mat-divider></mat-divider>
             <!-- Bulk transaction -->
-            <a class="dropdown-item" routerLink="/dash/transaction/bulk-add">Bulk Transaction</a>
-          </div>
+            <button mat-menu-item class="dropdown-item" routerLink="/dash/transaction/bulk-add">Bulk Transaction</button>
+          </mat-menu>
         </div>
 
         <!-- Sidebar toggle button (mobile only) -->

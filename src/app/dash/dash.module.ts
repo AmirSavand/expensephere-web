@@ -13,6 +13,8 @@ import { DashComponent } from './dash.component';
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
+    MatMenuModule,
+    MatDividerModule,
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} },
