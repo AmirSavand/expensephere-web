@@ -7,7 +7,7 @@ import { ApiResponse } from '@shared/interfaces/api-response';
 import { Tag } from '@shared/interfaces/tag';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
-import { CategoryFormModalComponent } from '@shared/modules/category-form-modal/category-form-modal.component';
+import { TagFormModalComponent } from '@shared/modules/tag-form-modal/tag-form-modal.component';
 import { GetParams } from '@shared/types/get-params';
 
 @Component({
@@ -49,7 +49,7 @@ export class DetailComponent implements OnInit {
     /**
      * Watch for modal changes.
      */
-    CategoryFormModalComponent.CHANGE.subscribe((): void => {
+    TagFormModalComponent.CHANGE.subscribe((): void => {
       this.load();
     });
     /**
@@ -68,7 +68,7 @@ export class DetailComponent implements OnInit {
         // Load category data
         this.load();
         // Update transaction filters.
-        this.transactionsFilter.category = this.tagId;
+        this.transactionsFilter.tag = this.tagId;
         /**
          * Load wallets for transactions
          */
