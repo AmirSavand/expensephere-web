@@ -5,7 +5,7 @@
   <span mat-dialog-title>{{ isEditing ? 'Edit' : 'Add' }} Tag</span>
 
   <!-- Close -->
-  <button mat-button class="text-secondary" mat-dialog-close>
+  <button mat-button class="text-secondary mb-4" mat-dialog-close>
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
@@ -112,13 +112,14 @@
   </a>
 
   <!-- Cancel -->
-  <button class="btn btn-light" mat-dialog-close>Cancel</button>
+  <button mat-button class="mx-2" mat-dialog-close>Cancel</button>
 
   <!-- Submit -->
-  <button (click)="submit()"
+  <button mat-flat-button
+          (click)="submit()"
           [mat-dialog-close]="true"
           [disabled]="form.loading || form.form.invalid"
-          class="btn btn-primary">
+          color="primary">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>

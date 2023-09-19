@@ -22,7 +22,7 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 import { ProfileService } from '@shared/services/profile.service';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SnackBarService } from '@shared/services/snackbar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tag-form-modal',
@@ -37,10 +37,8 @@ export class TagFormModalComponent implements OnInit {
   static readonly CHANGE: EventEmitter<void> = new EventEmitter();
 
   readonly faClose: IconDefinition = faTimes;
-  readonly faTime: IconDefinition = faClock;
   readonly faInfo: IconDefinition = faInfoCircle;
   readonly faPaint: IconDefinition = faPaintBrush;
-  readonly faBudget: IconDefinition = faPiggyBank;
   readonly faIcons: IconDefinition = faIcons;
   readonly faNote: IconDefinition = faStickyNote;
   readonly faCollapse: IconDefinition = faChevronDown;
@@ -88,7 +86,7 @@ export class TagFormModalComponent implements OnInit {
 
   constructor(private formBuilder: UntypedFormBuilder,
               private router: Router,
-              private _snackbar: SnackBarService,
+              private _snackbar: MatSnackBar,
               public dialogRef: MatDialogRef<TagFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { tag: Tag, redirect : boolean }) {
   }
@@ -142,7 +140,7 @@ export class TagFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     });
-    this._snackbar.openSnackBar('Tag')
+    this._snackbar.open('Tag created successfully!', 'close')
   }
 
   /**

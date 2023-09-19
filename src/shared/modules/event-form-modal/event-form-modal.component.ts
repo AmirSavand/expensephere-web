@@ -23,7 +23,7 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 import { ProfileService } from '@shared/services/profile.service';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SnackBarService } from '@shared/services/snackbar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-form-modal',
@@ -96,7 +96,7 @@ export class EventFormModalComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private date: DatePipe,
               private router: Router,
-              private _snackbar: SnackBarService,
+              private _snackbar: MatSnackBar,
               public dialogRef: MatDialogRef<EventFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { event: Event, redirect : boolean }) {
   }
@@ -172,7 +172,7 @@ export class EventFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
-    this._snackbar.openSnackBar('Event')
+    this._snackbar.open('Event created successfully!', 'close')
   }
 
   /**

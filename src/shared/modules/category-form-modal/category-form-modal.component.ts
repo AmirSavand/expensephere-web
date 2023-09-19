@@ -14,7 +14,7 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 import { ProfileService } from '@shared/services/profile.service';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SnackBarService } from '@shared/services/snackbar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-category-form-modal',
@@ -80,7 +80,7 @@ export class CategoryFormModalComponent implements OnInit {
   constructor(
               private formBuilder: UntypedFormBuilder,
               private router: Router,
-              private _snackbar: SnackBarService,
+              private _snackbar: MatSnackBar,
               public dialogRef: MatDialogRef<CategoryFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { category: Category, redirect : boolean }) {
   }
@@ -136,7 +136,7 @@ export class CategoryFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
-    this._snackbar.openSnackBar('Category')
+    this._snackbar.open('Category created successfully!', 'close')
   }
 
   /**

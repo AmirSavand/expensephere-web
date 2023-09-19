@@ -15,7 +15,6 @@ import { ProfileService } from '@shared/services/profile.service';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackBarService } from '@shared/services/snackbar.service';
 
 @Component({
   selector: 'app-wallet-form-modal',
@@ -77,7 +76,7 @@ export class WalletFormModalComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private profileService: ProfileService,
               private router: Router,
-              private _snackbar: SnackBarService,
+              private _snackbar: MatSnackBar,
               public dialogRef: MatDialogRef<WalletFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { wallet: Wallet , redirect : boolean }) {
   }
@@ -154,7 +153,7 @@ export class WalletFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
-    this._snackbar.openSnackBar('Wallet')
+    this._snackbar.open('Wallet created successfully!', 'close')
   }
 
   /**
