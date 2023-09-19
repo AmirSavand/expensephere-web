@@ -338,16 +338,15 @@
 
     <!-- Buttons -->
     <div class="d-flex align-items-center mt-3">
-      <button mat-button
-              type="button"
+      <button mat-flat-button
               *ngIf="form.id"
-              class="btn btn-danger"
+              color="warn"
               (click)="remove()"><fa-icon [icon]="faDelete" [fixedWidth]="true"></fa-icon>
       </button>
-      <button mat-flat-button type="button" class="btn btn-secondary ms-auto" routerLink="../list">
+      <button mat-button class="mx-2 ms-auto" routerLink="../list">
         {{ form.id ? 'Cancel' : 'Go Back' }}
       </button>
-      <button mat-flat-button class="btn btn-primary btn-form ms-2" (click)="submit()" [disabled]="form.loading">
+      <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.loading">
         {{ form.id ? 'Update' : 'Add' }}
       </button>
     </div>

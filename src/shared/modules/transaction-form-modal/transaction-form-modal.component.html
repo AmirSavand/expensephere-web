@@ -234,15 +234,23 @@
 <div *ngIf="!noWallets" class="modal-footer text-end">
 
   <!-- Delete -->
-  <a (click)="delete(this.data.transaction)" *ngIf="isEditing" class="text-danger me-auto" [mat-dialog-close]="true">
+  <button mat-button
+          (click)="delete(this.data.transaction)"
+          *ngIf="isEditing"
+          class="me-auto"
+          color="warn"
+          [mat-dialog-close]="true">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
-  </a>
+  </button>
 
   <!-- Cancel -->
   <button mat-button class="mx-2" mat-dialog-close>Cancel</button>
 
   <!-- Submit -->
-  <button mat-flat-button (click)="submit()" [disabled]="form.loading || form.form.invalid" [mat-dialog-close]="true">
+  <button mat-flat-button
+          (click)="submit()" color="primary"
+          [disabled]="form.loading || form.form.invalid"
+          [mat-dialog-close]="true">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>

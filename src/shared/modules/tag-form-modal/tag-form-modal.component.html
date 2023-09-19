@@ -107,9 +107,14 @@
 <div class="modal-footer text-end">
 
   <!-- Delete -->
-  <a (click)="delete(this.data.tag)" *ngIf="isEditing" [mat-dialog-close]="true" class="text-danger me-auto">
+  <button mat-button
+          (click)="delete(this.data.tag)"
+          *ngIf="isEditing"
+          [mat-dialog-close]="true"
+          class="me-auto"
+          color="warn">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
-  </a>
+  </button>
 
   <!-- Cancel -->
   <button mat-button class="mx-2" mat-dialog-close>Cancel</button>

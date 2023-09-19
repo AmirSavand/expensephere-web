@@ -96,7 +96,7 @@ export class EventFormModalComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private date: DatePipe,
               private router: Router,
-              private _snackbar: MatSnackBar,
+              private _snackBar: MatSnackBar,
               public dialogRef: MatDialogRef<EventFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { event: Event, redirect : boolean }) {
   }
@@ -172,7 +172,12 @@ export class EventFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
-    this._snackbar.open('Event created successfully!', 'close')
+    if (!this.isEditing) {
+      this._snackBar.open('Event created successfully!', 'close')
+    }
+    else {
+      this._snackBar.open('Event updated!', 'close')
+    }
   }
 
   /**

@@ -96,7 +96,8 @@
 
   <!-- Delete -->
   <button mat-button
-          class="text-danger me-auto"
+          class="me-auto"
+          color="warn"
           *ngIf="isEditing"
           (click)="delete(data.wallet)"
           [mat-dialog-close]="true">

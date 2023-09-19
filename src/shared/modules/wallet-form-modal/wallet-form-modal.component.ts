@@ -76,7 +76,7 @@ export class WalletFormModalComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private profileService: ProfileService,
               private router: Router,
-              private _snackbar: MatSnackBar,
+              private _snackBar: MatSnackBar,
               public dialogRef: MatDialogRef<WalletFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { wallet: Wallet , redirect : boolean }) {
   }
@@ -153,7 +153,12 @@ export class WalletFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
-    this._snackbar.open('Wallet created successfully!', 'close')
+    if (!this.isEditing) {
+      this._snackBar.open('Wallet created successfully!', 'close')
+    }
+    else {
+      this._snackBar.open('Wallet updated!', 'close')
+    }
   }
 
   /**

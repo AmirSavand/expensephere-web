@@ -86,7 +86,7 @@ export class TagFormModalComponent implements OnInit {
 
   constructor(private formBuilder: UntypedFormBuilder,
               private router: Router,
-              private _snackbar: MatSnackBar,
+              private _snackBar: MatSnackBar,
               public dialogRef: MatDialogRef<TagFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { tag: Tag, redirect : boolean }) {
   }
@@ -140,7 +140,11 @@ export class TagFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     });
-    this._snackbar.open('Tag created successfully!', 'close')
+    if (!this.isEditing) {
+      this._snackBar.open('Tag created successfully!', 'close')
+    } else {
+      this._snackBar.open('Tag updated!', 'close')
+    }
   }
 
   /**

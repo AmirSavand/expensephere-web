@@ -88,7 +88,7 @@ export class TransactionFormModalComponent implements OnInit {
               private formBuilder: UntypedFormBuilder,
               private date: DatePipe,
               private router: Router,
-              private _snackbar: MatSnackBar,
+              private _snackBar: MatSnackBar,
               public dialogRef: MatDialogRef<TransactionFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { transaction: Transaction },
               public dialog: MatDialog) {
@@ -201,7 +201,12 @@ export class TransactionFormModalComponent implements OnInit {
       this.form.loading = false;
       this.form.error = error.error;
     });
-    this._snackbar.open('Transaction created successfully!', 'close')
+    if (!this.isEditing) {
+      this._snackBar.open('Transaction created successfully!', 'close')
+    }
+    else {
+      this._snackBar.open('Transaction updated!', 'close')
+    }
   }
 
   /**

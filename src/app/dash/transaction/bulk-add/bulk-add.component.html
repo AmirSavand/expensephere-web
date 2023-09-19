@@ -110,7 +110,7 @@
         <!-- Actions -->
         <td class="actions">
           <!-- Delete -->
-          <button mat-button class="text-danger" (click)="removeForm(form)">
+          <button mat-button color="warn" (click)="removeForm(form)">
             <fa-icon [fixedWidth]="true" [icon]="faDelete"></fa-icon>
           </button>
           <!-- Success -->
@@ -135,6 +135,6 @@
     </button>
 
     <!-- Submit -->
-    <button mat-flat-button class="btn btn-primary" (click)="submit()">Create All Transactions</button>
+    <button mat-flat-button color="primary" (click)="submit()">Create All Transactions</button>
   </div>
 </div>

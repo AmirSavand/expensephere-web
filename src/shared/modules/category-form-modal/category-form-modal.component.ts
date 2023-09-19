@@ -80,7 +80,7 @@ export class CategoryFormModalComponent implements OnInit {
   constructor(
               private formBuilder: UntypedFormBuilder,
               private router: Router,
-              private _snackbar: MatSnackBar,
+              private _snackBar: MatSnackBar,
               public dialogRef: MatDialogRef<CategoryFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { category: Category, redirect : boolean }) {
   }
@@ -136,7 +136,12 @@ export class CategoryFormModalComponent implements OnInit {
       this.form.error = error.error;
       this.form.loading = false;
     }));
-    this._snackbar.open('Category created successfully!', 'close')
+    if (!this.isEditing) {
+      this._snackBar.open('Category created successfully!', 'close')
+    }
+    else {
+      this._snackBar.open('Category updated!', 'close')
+    }
   }
 
   /**

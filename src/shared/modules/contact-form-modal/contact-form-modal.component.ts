@@ -11,6 +11,7 @@ import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { ProfileService } from '@shared/services/profile.service';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contact-form-modal',
@@ -62,6 +63,7 @@ export class ContactFormModalComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private profileService: ProfileService,
               private router: Router,
+              private _snackBar: MatSnackBar,
               public dialogRef: MatDialogRef<ContactFormModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { contact: Contact , redirect : boolean }) {
   }
@@ -113,6 +115,12 @@ export class ContactFormModalComponent implements OnInit {
         this.form.loading = false;
       },
     });
+    if (!this.isEditing) {
+      this._snackBar.open('Contact created successfully!', 'close')
+    }
+    else {
+      this._snackBar.open('Contact updated!', 'close')
+    }
   }
 
   /**

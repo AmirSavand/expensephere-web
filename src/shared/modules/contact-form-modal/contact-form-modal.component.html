@@ -109,10 +109,10 @@
   </a>
 
   <!-- Cancel -->
-  <button mat-button class="btn btn-light" mat-dialog-close>Cancel</button>
+  <button mat-button class="mx-2" mat-dialog-close>Cancel</button>
 
   <!-- Submit -->
-  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+  <button mat-flat-button color="primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>
