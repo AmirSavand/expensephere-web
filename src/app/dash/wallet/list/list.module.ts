@@ -20,7 +20,6 @@ import { ListRoutingModule } from './list-routing.module';
     ListRoutingModule,
     FontAwesomeModule,
     ProfileCurrencyModule,
-    WalletFormModalModule,
     WalletListModule,
     NoDataModule,
     LoadingModule,

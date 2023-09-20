@@ -156,3 +156,18 @@
     }
   }
 }
+
+.mat-button{
+  min-width: 0;
+  padding: 0 12px;
+}
+
+.mat-flat-button{
+  min-width: 0;
+  padding: 0 13px;
+}
+
+.mat-flat-button.mat-warn {
+  background-color: #32414d; /* Your new accent color */
+  color: #ffffff;
+}

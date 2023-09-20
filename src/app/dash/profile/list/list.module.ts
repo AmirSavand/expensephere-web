@@ -6,6 +6,8 @@ import { ProfileFormModalModule } from '@shared/modules/profile-form-modal/profi
 
 import { ListRoutingModule } from './list-routing.module';
 import { ListComponent } from './list.component';
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { ListComponent } from './list.component';
     ProfileFormModalModule,
     FontAwesomeModule,
     ProfileCurrencyModule,
+    MatCardModule,
+    MatButtonModule,
   ],
 })
 export class ListModule {

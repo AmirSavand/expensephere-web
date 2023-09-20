@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -22,8 +22,9 @@ import { TagFormModalComponent } from '@shared/modules/tag-form-modal/tag-form-m
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
 import { ProfileService } from '@shared/services/profile.service';
 import { format, formatISO, parseISO } from 'date-fns';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-transaction-form-modal',
@@ -83,12 +84,14 @@ export class TransactionFormModalComponent implements OnInit {
   // No wallet, used to show alert to add wallet.
   noWallets = false;
 
-  constructor(public modal: BsModalRef,
-              private modalService: BsModalService,
-              private profileService: ProfileService,
+  constructor(private profileService: ProfileService,
               private formBuilder: UntypedFormBuilder,
               private date: DatePipe,
-              private router: Router) {
+              private router: Router,
+              private _snackBar: MatSnackBar,
+              public dialogRef: MatDialogRef<TransactionFormModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { transaction: Transaction },
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -159,10 +162,10 @@ export class TransactionFormModalComponent implements OnInit {
     /**
      * Check if editing
      */
-    if (this.transaction) {
+    if (this.data?.transaction) {
       this.isEditing = true;
-      this.form.form.patchValue(Object.assign(this.transaction, {
-        time: this.date.transform(this.transaction.time, Utils.HTML_DATETIME_FORMAT),
+      this.form.form.patchValue(Object.assign(this.data.transaction, {
+        time: this.date.transform(this.data.transaction.time, Utils.HTML_DATETIME_FORMAT),
       }));
     }
   }
@@ -179,16 +182,16 @@ export class TransactionFormModalComponent implements OnInit {
     });
     let method: Observable<Transaction> = Api.transaction.create(payload);
     if (this.isEditing) {
-      method = Api.transaction.update(this.transaction.id, payload);
+      method = Api.transaction.update(this.data.transaction.id, payload);
     }
     method.subscribe((data: Transaction): void => {
       if (!this.isEditing) {
         this.router.navigate(['/dash/transaction/', data.id]);
       }
       if (this.isEditing) {
-        Object.assign(this.transaction, data);
+        Object.assign(this.data.transaction, data);
       }
-      this.modal.hide();
+      this.dialogRef.close();
       TransactionFormModalComponent.CHANGE.emit();
       /**
        * This change effects profile balance, so let's refresh profile
@@ -198,6 +201,12 @@ export class TransactionFormModalComponent implements OnInit {
       this.form.loading = false;
       this.form.error = error.error;
     });
+    if (!this.isEditing) {
+      this._snackBar.open('Transaction created successfully!', 'close')
+    }
+    else {
+      this._snackBar.open('Transaction updated!', 'close')
+    }
   }
 
   /**
@@ -226,7 +235,6 @@ export class TransactionFormModalComponent implements OnInit {
       return;
     }
     Api.transaction.delete(transaction.id).subscribe((): void => {
-      this.modal.hide();
       TransactionFormModalComponent.CHANGE.emit();
       /**
        * This change effects profile balance, so let's refresh profile
@@ -239,10 +247,10 @@ export class TransactionFormModalComponent implements OnInit {
    * Open up icon form modal
    */
   addEvent(): void {
-    const modal: BsModalRef = this.modalService.show(EventFormModalComponent, {
-      initialState: { redirect: false },
+    const dialogRef = this.dialog.open(EventFormModalComponent, {
+      data: { redirect: false },
     });
-    modal.content.submitted.subscribe((event: Event): void => {
+    dialogRef.afterClosed().subscribe((event: Event): void => {
       this.events.unshift(event);
       this.form.form.get('event').patchValue(event.id);
     });
@@ -253,14 +261,17 @@ export class TransactionFormModalComponent implements OnInit {
    * Open up wallet form modal
    */
   addWallet(): void {
-    const modal: BsModalRef = this.modalService.show(WalletFormModalComponent, {
-      initialState: {
+    const dialogRef = this.dialog.open(WalletFormModalComponent, {
+      data: {
+        wallet: null,
         redirect: false,
       },
     });
-    modal.content.submitted.subscribe((wallet: Wallet): void => {
-      this.wallets.unshift(wallet);
-      this.form.form.get('wallet').patchValue(wallet.id);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result.wallet)
+      console.log(result)
+      this.wallets.unshift(result);
+      this.form.form.get('wallet').patchValue(result.id);
     });
   }
 
@@ -268,12 +279,12 @@ export class TransactionFormModalComponent implements OnInit {
    * On click on add on category selection.
    */
   addCategory(): void {
-    const modal: BsModalRef = this.modalService.show(CategoryFormModalComponent, {
-      initialState: {
+    const dialogRef = this.dialog.open(CategoryFormModalComponent, {
+      data: {
         redirect: false,
       },
     });
-    modal.content.submitted.subscribe((category: Category): void => {
+    dialogRef.afterClosed().subscribe((category: Category): void => {
       this.categories.unshift(category);
       this.categoryGroups[category.kind].unshift(category);
       this.form.form.get('category').patchValue(category.id);
@@ -284,12 +295,12 @@ export class TransactionFormModalComponent implements OnInit {
    * On click on add on tag selection.
    */
   addTag(): void {
-    const modal: BsModalRef = this.modalService.show(TagFormModalComponent, {
-      initialState: {
+    const dialogRef = this.dialog.open(TagFormModalComponent, {
+      data: {
         redirect: false,
       },
     });
-    modal.content.submitted.subscribe((tag: Tag): void => {
+    dialogRef.afterClosed().subscribe((tag: Tag) => {
       this.tags.unshift(tag);
       this.tagsDict[tag.id] = tag;
       this.onTagSelect(tag.id);

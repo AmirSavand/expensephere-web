@@ -33,126 +33,130 @@
 
       <!-- Information -->
       <div class="col-xl-4 mb-3">
-        <div class="card h-100">
-          <div class="card-header">Information</div>
-          <div class="card-body pb-0">
+        <div class="fw mt-2 mb-2">Information</div>
+        <mat-card class="h-100">
 
-            <!-- Invoice ID -->
-            <div class="form-group">
-              <label for="invoice_id">Invoice ID</label>
-              <input id="invoice_id"
-                     class="form-control"
-                     formControlName="invoice_id"
-                     placeholder="Invoice ID"
-                     [class.is-invalid]="form.error.invoice_id">
-              <div class="invalid-tooltip" *ngIf="form.error.invoice_id">{{ form.error.invoice_id[ 0 ] }}</div>
-            </div>
+          <!-- Invoice ID -->
+          <label class="label2">Invoice ID</label>
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label>ID</mat-label>
+            <input matInput
+                   type="text"
+                   id="invoice_id"
+                   formControlName="invoice_id">
+            <mat-error *ngIf="form.error.invoice_id">{{ form.error.invoice_id[ 0 ] }}</mat-error>
+          </mat-form-field>
 
-            <!-- Company -->
-            <div class="form-group">
-              <label for="company">Company</label>
-              <app-select (add)="addContact('company')"
-                          (choose)="form.form.get('company').setValue($event.id)"
-                          [items]="contacts"
-                          [selectedId]="form.form.get('company').value"
-                          [showAdd]="true"
-                          id="company"
-                          selectLabel="Select company">
-              </app-select>
-              <div class="invalid-tooltip" *ngIf="form.error.company">{{ form.error.company[0] }}</div>
-            </div>
-
-            <!-- Client -->
-            <div class="form-group">
-              <label for="client">Client</label>
-              <app-select (add)="addContact('client')"
-                          (choose)="form.form.get('client').setValue($event.id)"
-                          [items]="contacts"
-                          [selectedId]="form.form.get('client').value"
-                          [showAdd]="true"
-                          id="client"
-                          selectLabel="Select client">
-              </app-select>
-              <div class="invalid-tooltip" *ngIf="form.error.client">{{ form.error.client[0] }}</div>
-            </div>
-
-            <!-- Note -->
-            <div class="form-group" *ngIf="options.get('note').value">
-              <label for="note">Note</label>
-              <textarea id="note"
-                        [rows]="4"
-                        class="form-control"
-                        formControlName="note"
-                        placeholder="Write a note"
-                        [class.is-invalid]="form.error.note"></textarea>
-              <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[ 0 ] }}</div>
-            </div>
+          <!-- Company -->
+          <div class="form-group">
+            <label for="company">Company</label>
+            <app-select (add)="addContact('company')"
+                        (choose)="form.form.get('company').setValue($event.id)"
+                        [items]="contacts"
+                        [selectedId]="form.form.get('company').value"
+                        [showAdd]="true"
+                        id="company"
+                        selectLabel="Select company">
+            </app-select>
+            <div class="invalid-tooltip" *ngIf="form.error.company">{{ form.error.company[0] }}</div>
           </div>
-        </div>
+
+          <!-- Client -->
+          <div class="form-group">
+            <label for="client">Client</label>
+            <app-select (add)="addContact('client')"
+                        (choose)="form.form.get('client').setValue($event.id)"
+                        [items]="contacts"
+                        [selectedId]="form.form.get('client').value"
+                        [showAdd]="true"
+                        id="client"
+                        selectLabel="Select client">
+            </app-select>
+            <div class="invalid-tooltip" *ngIf="form.error.client">{{ form.error.client[0] }}</div>
+          </div>
+
+          <!-- Note -->
+          <div *ngIf="options.get('note').value">
+            <label class="label2">Note</label>
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Write a note</mat-label>
+              <textarea matInput
+                        id="note"
+                        [rows]="4"
+                        type="text"
+                        formControlName="note"></textarea>
+              <mat-error *ngIf="form.error.note">{{ form.error.note[0] }}</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card>
       </div>
 
       <!-- Payment -->
       <div class="col-xl-4 mb-3">
-        <div class="card h-100">
-          <div class="card-header">Payment</div>
-          <div class="card-body pb-0">
+        <div class="fw mt-2 mb-2">Payment</div>
+        <mat-card class="h-100">
 
-            <!-- Date -->
-            <div class="form-group" *ngIf="options.get('date').value">
-              <label for="date">Date</label>
-              <input type="date"
+          <!-- Date -->
+          <div *ngIf="options.get('date').value">
+            <label class="label2">Date</label>
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Select date</mat-label>
+              <input matInput
                      id="date"
-                     class="form-control"
-                     formControlName="date"
-                     [class.is-invalid]="form.error.date">
-              <div class="form-error" *ngIf="form.error.date">{{ form.error.date[ 0 ] }}</div>
-            </div>
+                     type="date"
+                     formControlName="date">
+              <mat-error *ngIf="form.error.date">{{ form.error.date[0] }}</mat-error>
+            </mat-form-field>
+          </div>
 
             <!-- Due date -->
             <div class="form-group" *ngIf="options.get('due_date').value">
-              <label for="due_date">Due Date</label>
-              <input type="date"
-                     id="due_date"
-                     class="form-control"
-                     formControlName="due_date"
-                     [class.is-invalid]="form.error.due_date">
-              <div class="form-error" *ngIf="form.error.due_date">{{ form.error.due_date[ 0 ] }}</div>
+              <label class="label2">Due Date</label>
+              <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Select date</mat-label>
+                <input matInput
+                       id="due_date"
+                       type="date"
+                       formControlName="due_date">
+                <mat-error *ngIf="form.error.due_date">{{ form.error.due_date[ 0 ] }}</mat-error>
+              </mat-form-field>
             </div>
 
             <!-- Discount and discount type -->
             <div class="form-group" *ngIf="options.get('discount').value">
-              <label for="discount">Discount</label>
-              <div class="input-group">
-                <input type="number"
+              <label class="d-flex">Discount</label>
+              <mat-form-field class="w-50" appearance="fill">
+                <mat-label>Enter discount</mat-label>
+                <input matInput
+                       type="number"
                        id="discount"
-                       class="form-control"
                        formControlName="discount"
-                       placeholder="Enter discount"
                        [step]="1"
                        [min]="0"
-                       [max]="100"
-                       [class.is-invalid]="form.error.discount">
-                <select id="discount_flat" formControlName="discount_flat" class="form-control">
-                  <option [ngValue]="true">Flat</option>
-                  <option [ngValue]="false">Percentage</option>
-                </select>
-                <div class="invalid-tooltip" *ngIf="form.error.discount">{{ form.error.discount[ 0 ] }}</div>
-              </div>
+                       [max]="100">
+              </mat-form-field>
+              <mat-form-field class="w-50" appearance="fill">
+                 <mat-select id="discount_flat" formControlName="discount_flat">
+                   <mat-option [value]="true">Flat</mat-option>
+                   <mat-option [value]="false">Percentage</mat-option>
+                 </mat-select>
+              </mat-form-field>
+              <mat-error *ngIf="form.error.discount">{{ form.error.discount[ 0 ] }}</mat-error>
             </div>
 
             <!-- Tax -->
-            <div class="form-group" *ngIf="options.get('tax').value">
-              <label for="tax">Tax</label>
-              <input type="number"
-                     id="tax"
-                     class="form-control"
-                     formControlName="tax"
-                     placeholder="Enter tax (percentage)"
-                     [step]="1"
-                     [min]="0"
-                     [max]="100"
-                     [class.is-invalid]="form.error.tax">
-              <div class="invalid-tooltip" *ngIf="form.error.tax">{{ form.error.tax[ 0 ] }}</div>
+            <div *ngIf="options.get('tax').value">
+              <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Enter tax (percentage)</mat-label>
+                <input matInput
+                       type="number"
+                       id="tax"
+                       formControlName="tax"
+                       [step]="1"
+                       [min]="0"
+                       [max]="100">
+                <mat-error *ngIf="form.error.tax">{{ form.error.tax[ 0 ] }}</mat-error>
+              </mat-form-field>
             </div>
 
             <!-- Currency -->
@@ -165,201 +169,184 @@
                           [selectedId]="form.form.get('currency').value"
                           (choose)="form.form.get('currency').setValue($event.id)">
               </app-select>
-              <div class="invalid-tooltip" *ngIf="form.error.currency">{{ form.error.currency[ 0 ] }}</div>
-            </div>
+            <div class="invalid-tooltip" *ngIf="form.error.currency">{{ form.error.currency[ 0 ] }}</div>
           </div>
-        </div>
+        </mat-card>
       </div>
 
       <!-- Options -->
       <div class="col-xl-4 mb-3 order-first order-xl-last">
-        <div class="card h-100">
-          <div class="card-header">Options</div>
-          <div class="card-body pb-0">
+        <div class="fw mb-2 mt-2">Options</div>
+        <mat-card class="h-100">
 
-            <!-- Template -->
-            <div class="form-group border-bottom pb-3 mb-3">
-              <label for="currency" class="d-flex align-items-center">
-                <span>Template</span>
-                <small class="ms-auto">More templates coming soon 😉</small>
-              </label>
-              <app-select id="template"
-                          selectLabel="Select template"
-                          [items]="templates"
-                          [selectedId]="form.form.get('template').value"
-                          (choose)="form.form.get('template').setValue($event.id)">
-              </app-select>
-              <div class="invalid-tooltip" *ngIf="form.error.template">{{ form.error.template[0] }}</div>
-            </div>
+          <!-- Template -->
+          <div class="form-group border-bottom pb-3 mb-3">
+            <label for="currency" class="d-flex align-items-center">
+              <span>Template</span>
+              <small class="ms-auto">More templates coming soon 😉</small>
+            </label>
+            <app-select id="template"
+                        selectLabel="Select template"
+                        [items]="templates"
+                        [selectedId]="form.form.get('template').value"
+                        (choose)="form.form.get('template').setValue($event.id)">
+            </app-select>
+            <div class="invalid-tooltip" *ngIf="form.error.template">{{ form.error.template[0] }}</div>
+          </div>
 
-            <!-- UI Options -->
-            <div class="pb-3 mb-3 border-bottom" [formGroup]="options">
+          <!-- UI Options -->
+          <div class="pb-3 mb-3 border-bottom" [formGroup]="options">
 
-              <!-- Title -->
-              <p>Click to toggle invoice options.</p>
+            <!-- Title -->
+            <p>Click to toggle invoice options.</p>
 
-              <!-- Discount -->
-              <div class="form-check form-switch">
-                <input type="checkbox" class="form-check-input"
-                       id="option-discount" formControlName="discount">
-                <label class="form-check-label" for="option-discount">Discount</label>
-              </div>
+            <!-- Discount -->
+            <mat-slide-toggle formControlName="discount"
+                              id="option-discount"
+                              class="d-flex">Discount
+            </mat-slide-toggle>
 
-              <!-- Tax -->
-              <div class="form-check form-switch">
-                <input type="checkbox" class="form-check-input"
-                       id="option-tax" formControlName="tax">
-                <label class="form-check-label" for="option-tax">Tax</label>
-              </div>
+            <!-- Tax -->
+            <mat-slide-toggle formControlName="tax" id="option-tax" class="d-flex">Tax</mat-slide-toggle>
 
-              <!-- Payment status (is_paid) -->
-              <div class="form-check form-switch">
-                <input type="checkbox" class="form-check-input"
-                       id="option-is_paid" formControlName="is_paid">
-                <label class="form-check-label" for="option-is_paid">Payment Status</label>
-              </div>
+            <!-- Payment status (is_paid) -->
+            <mat-slide-toggle formControlName="is_paid"
+                              id="option-is_paid"
+                              class="d-flex">Payment Status
+            </mat-slide-toggle>
 
-              <!-- Date -->
-              <div class="form-check form-switch">
-                <input type="checkbox" class="form-check-input"
-                       id="option-date" formControlName="date">
-                <label class="form-check-label" for="option-date">Date</label>
-              </div>
+            <!-- Date -->
+            <mat-slide-toggle formControlName="date" id="option-date" class="d-flex">Date</mat-slide-toggle>
 
-              <!-- Due date -->
-              <div class="form-check form-switch">
-                <input type="checkbox" class="form-check-input"
-                       id="option-due_date" formControlName="due_date">
-                <label class="form-check-label" for="option-due_date">Due Date</label>
-              </div>
+            <!-- Due date -->
+            <mat-slide-toggle formControlName="due_date"
+                              id="option-due_date"
+                              class="d-flex">Due Date
+            </mat-slide-toggle>
 
-              <!-- Note -->
-              <div class="form-check form-switch">
-                <input type="checkbox" class="form-check-input"
-                       id="option-note" formControlName="note">
-                <label class="form-check-label" for="option-note">Note</label>
-              </div>
-
-              <!-- Items label -->
-              <div class="form-check form-switch">
-                <input type="checkbox" class="form-check-input"
-                       id="option-items_label" formControlName="items_label">
-                <label class="form-check-label" for="option-items_label">Items Label</label>
-              </div>
-            </div>
-
-            <!-- Public -->
-            <div class="form-group">
-              <label for="is_published">Publish</label>
-              <div class="form-check form-switch position-static">
-                <input class="form-check-input" type="checkbox" formControlName="is_published" id="is_published">
-                <label class="form-check-label" for="is_published">Allow access to direct link</label>
-              </div>
-            </div>
-
-            <!-- Paid -->
-            <div class="form-group" *ngIf="options.get('is_paid').value">
-              <label for="is_published">Paid</label>
-              <div class="form-check form-switch position-static">
-                <input class="form-check-input" type="checkbox" formControlName="is_paid" id="is_paid">
-                <label class="form-check-label" for="is_paid">Is invoice paid by client</label>
-              </div>
-            </div>
+            <!-- Note -->
+            <mat-slide-toggle formControlName="note" id="option-note" class="d-flex">Note</mat-slide-toggle>
 
             <!-- Items label -->
-            <div class="form-group" *ngIf="options.get('items_label').value">
-              <label for="items_label">Items Label</label>
-              <input id="items_label"
-                     class="form-control"
-                     formControlName="items_label"
-                     placeholder="Label for the items/products/services"
-                     [class.is-invalid]="form.error.items_label">
-              <div class="invalid-tooltip" *ngIf="form.error.items_label">{{ form.error.items_label[ 0 ] }}</div>
-            </div>
+            <mat-slide-toggle formControlName="items_label"
+                              id="option-items_label"
+                              class="d-flex">Items Label
+            </mat-slide-toggle>
           </div>
-        </div>
+
+          <!-- Publish -->
+          <label class="label2">Publish</label>
+          <mat-slide-toggle formControlName="is_published"
+                            id="is_published"
+                            class="d-flex small mb-3">Allow access to direct link
+           </mat-slide-toggle>
+
+          <!-- Paid -->
+          <div *ngIf="options.get('is_paid').value">
+            <label class="label2">Paid</label>
+            <mat-slide-toggle formControlName="is_paid"
+                              id="is_paid"
+                              class="d-flex small mb-3">Is invoice paid by client
+            </mat-slide-toggle>
+          </div>
+
+          <!-- Items label -->
+          <div class="form-group" *ngIf="options.get('items_label').value">
+            <label class="label2">Items Label</label>
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Label for the items/products/services</mat-label>
+              <input matInput
+                     id="items_label"
+                     formControlName="items_label">
+              <mat-error *ngIf="form.error.items_label">{{ form.error.items_label[ 0 ] }}</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card>
       </div>
     </div>
 
     <!-- Items -->
-    <div class="card mb-3">
-      <div class="card-header">{{ form.form.get('items_label').value || "Items" }}</div>
-      <div class="card-body">
-
-        <!-- Invoice items table -->
-        <table class="table table-borderless" *ngIf="itemForms.length">
-          <thead>
-          <tr>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th class="text-end">Total</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <!-- Invoice item row -->
-          <tr *ngFor="let item of itemForms; let index = index" [formGroup]="item.form">
-            <!-- Description -->
-            <td>
-              <input type="text"
-                     class="form-control"
-                     formControlName="description"
-                     [class.is-invalid]="item.error.description">
-              <div class="invalid-tooltip" *ngIf="item.error.description">{{ item.error.description[ 0 ] }}</div>
-            </td>
-            <!-- Quantity -->
-            <td>
-              <input type="number" min="0"
-                     class="form-control"
+    <div class="mt-5 fw mb-2">{{ form.form.get('items_label').value || "Items" }}</div>
+    <mat-card class="mb-3">
+      <!-- Invoice items table -->
+      <table class="table table-borderless" *ngIf="itemForms.length">
+        <thead>
+        <tr>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th class="text-end">Total</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Invoice item row -->
+        <tr *ngFor="let item of itemForms; let index = index" [formGroup]="item.form">
+          <!-- Description -->
+          <td>
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>description</mat-label>
+              <input matInput formControlName="description">
+              <mat-error *ngIf="item.error.description">{{ item.error.description[ 0 ] }}</mat-error>
+            </mat-form-field>
+          </td>
+          <!-- Quantity -->
+          <td>
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>quantity</mat-label>
+              <input matInput
+                     type="number" min="0"
                      formControlName="quantity"
                      [class.is-invalid]="item.error.quantity">
-              <div class="invalid-tooltip" *ngIf="item.error.quantity">{{ item.error.quantity[ 0 ] }}</div>
-            </td>
-            <!-- Price -->
-            <td>
-              <input type="number"
-                     class="form-control"
-                     formControlName="price"
-                     [class.is-invalid]="item.error.price">
-              <div class="invalid-tooltip" *ngIf="item.error.price">{{ item.error.price[ 0 ] }}</div>
-            </td>
-            <!-- Total -->
-            <td class="text-end">
-              <div class="pt-2 ps-2 pb-0 pe-0">{{ (item.data.amount || 0) | profileCurrency:currency }}</div>
-            </td>
-            <!-- Delete -->
-            <td class="text-end">
-              <a class="pt-2 ps-2 pb-0 pe-0 d-block text-danger" (click)="removeItem(item)">
-                <fa-icon [fixedWidth]="true" [icon]="faDelete"></fa-icon>
-              </a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+              <mat-error *ngIf="item.error.quantity">{{ item.error.quantity[ 0 ] }}</mat-error>
+            </mat-form-field>
+          </td>
+          <!-- Price -->
+          <td>
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>price</mat-label>
+              <input matInput type="number" formControlName="price" [class.is-invalid]="item.error.price">
+              <mat-error *ngIf="item.error.price">{{ item.error.price[ 0 ] }}</mat-error>
+            </mat-form-field>
+          </td>
+          <!-- Total -->
+          <td class="text-end">
+            <div class="pt-3 ps-2 pb-0 pe-0">{{ (item.data.amount || 0) | profileCurrency:currency }}</div>
+          </td>
+          <!-- Delete -->
+          <td class="text-end">
+            <button mat-button
+                    class="mt-2 text-danger"
+                    (click)="removeItem(item)"><fa-icon [fixedWidth]="true" [icon]="faDelete"></fa-icon>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
 
-        <!-- No invoice items message -->
-        <p class="text-muted" *ngIf="!itemForms.length">There are no invoice items. Click to add new ones 🚀</p>
+      <!-- No invoice items message -->
+      <p class="text-muted" *ngIf="!itemForms.length">There are no invoice items. Click to add new ones 🚀</p>
 
-        <!-- Add a new invoice item form to the list -->
-        <button type="button" class="btn btn-success" (click)="addItemForm()">
-          <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon> Add a new item
-        </button>
-      </div>
-    </div>
+      <!-- Add a new invoice item form to the list -->
+      <button mat-flat-button type="button" class="btn btn-success" (click)="addItemForm()">
+        <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon> Add a new item
+      </button>
+    </mat-card>
 
     <!-- Error -->
     <app-general-error [form]="form"></app-general-error>
 
     <!-- Buttons -->
     <div class="d-flex align-items-center mt-3">
-      <button type="button" class="btn btn-danger" (click)="remove()" *ngIf="form.id">
-        <fa-icon [icon]="faDelete" [fixedWidth]="true"></fa-icon>
+      <button mat-flat-button
+              *ngIf="form.id"
+              color="warn"
+              (click)="remove()"><fa-icon [icon]="faDelete" [fixedWidth]="true"></fa-icon>
       </button>
-      <button type="button" class="btn btn-secondary ms-auto" routerLink="../list">
+      <button mat-button class="mx-2 ms-auto" routerLink="../list">
         {{ form.id ? 'Cancel' : 'Go Back' }}
       </button>
-      <button class="btn btn-primary btn-form ms-2" (click)="submit()" [disabled]="form.loading">
+      <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.loading">
         {{ form.id ? 'Update' : 'Add' }}
       </button>
     </div>

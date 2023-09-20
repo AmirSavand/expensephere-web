@@ -38,6 +38,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { ProfileService } from '@shared/services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dash',
@@ -104,7 +105,8 @@ export class DashComponent implements OnInit, OnDestroy {
 
   constructor(public auth: AuthService,
               private router: Router,
-              private modalService: BsModalService) {
+              private modalService: BsModalService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -164,35 +166,41 @@ export class DashComponent implements OnInit, OnDestroy {
    * Open up transaction form modal
    */
   addTransaction(): void {
-    this.modalService.show(TransactionFormModalComponent);
+    this.dialog.open(TransactionFormModalComponent);
   }
 
   /**
    * Open up wallet form modal
    */
-  addWallet(): void {
-    this.modalService.show(WalletFormModalComponent);
+  addWallet() {
+    this.dialog.open(WalletFormModalComponent);
   }
 
   /**
    * Open up category form modal
    */
   addCategory(): void {
-    this.modalService.show(CategoryFormModalComponent);
+    this.dialog.open(CategoryFormModalComponent,{
+      width: '400px',
+    });
   }
 
   /**
    * Open up event form modal
    */
   addEvent(): void {
-    this.modalService.show(EventFormModalComponent);
+    this.dialog.open(EventFormModalComponent,{
+      width: '425px',
+    });
   }
 
   /**
    * Open up event form modal
    */
   addTag(): void {
-    this.modalService.show(TagFormModalComponent);
+    this.dialog.open(TagFormModalComponent,{
+      width: '425px',
+    });
   }
 
   ngOnDestroy(): void {

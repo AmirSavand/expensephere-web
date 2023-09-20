@@ -2,44 +2,46 @@
 <div class="modal-header">
 
   <!-- Title -->
-  <span>{{ isEditing ? 'Edit' : 'Add' }} Category</span>
+  <span mat-dialog-title>{{ isEditing ? 'Edit' : 'Add' }} Category</span>
 
   <!-- Close -->
-  <button class="ms-auto btn btn-link" (click)="modal.hide()">
+  <button mat-button class="text-secondary mb-4" mat-dialog-close>
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
 
 <!-- Body -->
-<div class="modal-body pb-0" *ngIf="!(isEditing && category.protect)">
+<div class="modal-body pb-0" *ngIf="!(isEditing && category?.protect)">
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
 
     <!-- Kind -->
-    <div class="form-group btn-group d-flex" title="Type">
-      <button class="btn btn-light fw-bold" type="button"
-              (click)="form.form.get('kind').patchValue(expenseKind.INCOME)"
-              [class.active]="form.form.get('kind').value === expenseKind.INCOME">
-        INCOME
-      </button>
-      <button class="btn btn-light fw-bold" type="button"
-              (click)="form.form.get('kind').patchValue(expenseKind.EXPENSE)"
-              [class.active]="form.form.get('kind').value === expenseKind.EXPENSE">
-        EXPENSE
-      </button>
+    <div class="mb-4">
+      <mat-button-toggle-group name="fontStyle" class="w-100" appearance="legacy">
+        <mat-button-toggle class="fw-bold income-style text-dark"
+                           (click)="form.form.get('kind').patchValue(expenseKind.INCOME)"
+                           [class.active]="form.form.get('kind').value === expenseKind.INCOME">INCOME
+        </mat-button-toggle>
+        <mat-button-toggle class="fw-bold w-100 text-dark"
+                           (click)="form.form.get('kind').patchValue(expenseKind.EXPENSE)"
+                           [class.active]="form.form.get('kind').value === expenseKind.EXPENSE"
+                           [checked]="true">EXPENSE
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
 
     <!-- Name -->
-    <div class="form-group">
-      <label for="name">Name</label>
-      <div class="input-group">
-        <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
-        </div>
-        <input type="text" id="name" class="form-control" formControlName="name"
-               placeholder="Name" [class.is-invalid]="form.error.name">
-        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
-      </div>
-    </div>
+    <label class="label2">Name</label>
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Name</mat-label>
+      <span matPrefix class="icon-prefix">
+        <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
+      </span>
+      <input matInput
+             type="text"
+             formControlName="name"
+             placeholder="Name">
+      <mat-error *ngIf="form.error.name">{{ form.error.name[0] }}</mat-error>
+    </mat-form-field>
 
     <!-- Icon -->
     <div class="form-group">
@@ -55,7 +57,7 @@
                     [selectedId]="form.form.get('icon').value"
                     (choose)="form.form.get('icon').setValue($event.id)">
         </app-select>
-        <div class="invalid-tooltip" *ngIf="form.error.icon">{{ form.error.icon[0] }}</div>
+        <mat-error class="invalid-tooltip" *ngIf="form.error.icon">{{ form.error.icon[0] }}</mat-error>
       </div>
     </div>
 
@@ -70,40 +72,51 @@
                           [selected]="form.form.get('color').value"
                           (choose)="form.form.get('color').setValue($event)">
         </app-select-color>
-        <div class="invalid-tooltip" *ngIf="form.error.color">{{ form.error.color[0] }}</div>
+        <mat-error class="invalid-tooltip" *ngIf="form.error.color">{{ form.error.color[0] }}</mat-error>
       </div>
     </div>
 
     <!-- Archive -->
     <div class="form-group">
       <label for="archive">Archive</label>
-      <div class="form-check form-switch position-static">
-        <input class="form-check-input" type="checkbox" formControlName="archive" id="archive">
-        <label class="form-check-label" for="archive">Archive and hide from the list</label>
+      <div>
+        <mat-slide-toggle formControlName="archive"
+                        id="archive"
+                        class="small">
+          Archive and hide from the list
+        </mat-slide-toggle>
       </div>
     </div>
   </form>
 </div>
 
 <!-- Footer -->
-<div class="modal-footer text-end" *ngIf="!(isEditing && category.protect)">
+<div class="modal-footer text-end" *ngIf="!(isEditing && category?.protect)">
 
   <!-- Delete -->
-  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(category)">
+  <button mat-button
+          class="me-auto" color="warn"
+          *ngIf="isEditing"
+          (click)="delete(this.data.category)"
+          [mat-dialog-close]="true">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
-  </a>
+  </button>
 
   <!-- Cancel -->
-  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+  <button mat-button class="mx-2" mat-dialog-close>Cancel</button>
 
   <!-- Submit -->
-  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+  <button mat-flat-button
+          color="primary"
+          [disabled]="form.loading || form.form.invalid"
+          (click)="submit()"
+          [mat-dialog-close]="true">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>
 
 <!-- Body (protect) -->
-<div class="modal-body pb-0" *ngIf="isEditing && category.protect">
+<div class="modal-body pb-0" *ngIf="isEditing && category?.protect">
 
   <!-- Protected message -->
   <p class="text-warning fw-bold">
@@ -112,8 +125,8 @@
 </div>
 
 <!-- Footer (protected) -->
-<div class="modal-footer text-end" *ngIf="isEditing && category.protect">
+<div class="modal-footer text-end" *ngIf="isEditing && category?.protect">
 
   <!-- Cancel -->
-  <button class="btn btn-light ms-auto" (click)="modal.hide()">Close</button>
+  <button mat-button class="mx-2" mat-dialog-close>Close</button>
 </div>

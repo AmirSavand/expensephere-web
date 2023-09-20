@@ -10,7 +10,7 @@ import { Event } from '@shared/interfaces/event';
 import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-detail',
@@ -64,7 +64,7 @@ export class DetailComponent implements OnInit {
   error = false;
 
   constructor(private route: ActivatedRoute,
-              private modalService: BsModalService) {
+              private dialog : MatDialog) {
   }
 
   ngOnInit(): void {
@@ -138,6 +138,6 @@ export class DetailComponent implements OnInit {
    * Open transaction form modal for editing
    */
   edit(): void {
-    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction: this.transaction } });
+    this.dialog.open(TransactionFormModalComponent, { data: { transaction: this.transaction } });
   }
 }

@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -21,8 +21,9 @@ import { Event } from '@shared/interfaces/event';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ProfileService } from '@shared/services/profile.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-form-modal',
@@ -92,10 +93,12 @@ export class EventFormModalComponent implements OnInit {
    */
   currency: string;
 
-  constructor(public modal: BsModalRef,
-              private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private date: DatePipe,
-              private router: Router) {
+              private router: Router,
+              private _snackBar: MatSnackBar,
+              public dialogRef: MatDialogRef<EventFormModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { event: Event, redirect : boolean }) {
   }
 
   ngOnInit(): void {
@@ -120,17 +123,17 @@ export class EventFormModalComponent implements OnInit {
     /**
      * Check if editing
      */
-    if (this.event) {
+    if (this.data?.event) {
       this.isEditing = true;
       this.form.form.patchValue({
-        name: this.event.name,
-        start: this.date.transform(this.event.start, Utils.HTML_DATETIME_FORMAT),
-        end: this.date.transform(this.event.end, Utils.HTML_DATETIME_FORMAT),
-        color: this.event.color,
-        icon: this.event.icon,
-        budget: this.event.budget,
-        note: this.event.note,
-        archive: this.event.archive,
+        name: this.data.event.name,
+        start: this.date.transform(this.data.event.start, Utils.HTML_DATETIME_FORMAT),
+        end: this.date.transform(this.data.event.end, Utils.HTML_DATETIME_FORMAT),
+        color: this.data.event.color,
+        icon: this.data.event.icon,
+        budget: this.data.event.budget,
+        note: this.data.event.note,
+        archive: this.data.event.archive,
       });
     }
   }
@@ -153,22 +156,28 @@ export class EventFormModalComponent implements OnInit {
     }
     let method: Observable<Event> = Api.event.create(payload);
     if (this.isEditing) {
-      method = Api.event.update(this.event.id, payload);
+      method = Api.event.update(this.data.event.id, payload);
     }
     method.subscribe((data: Event): void => {
-      if (this.redirect && !this.isEditing) {
+      if (this.data?.redirect == null && !this.isEditing) {
         this.router.navigate(['/dash/event/', data.id]);
       }
       if (this.isEditing) {
-        Object.assign(this.event, data);
+        Object.assign(this.data.event, data);
       }
       this.submitted.emit(data);
-      this.modal.hide();
+      this.dialogRef.close();
       EventFormModalComponent.CHANGE.emit();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;
       this.form.loading = false;
     }));
+    if (!this.isEditing) {
+      this._snackBar.open('Event created successfully!', 'close')
+    }
+    else {
+      this._snackBar.open('Event updated!', 'close')
+    }
   }
 
   /**
@@ -181,7 +190,6 @@ export class EventFormModalComponent implements OnInit {
       return;
     }
     Api.event.delete(event.id).subscribe((): void => {
-      this.modal.hide();
       EventFormModalComponent.CHANGE.emit();
     });
   }

@@ -9,7 +9,7 @@ import { Transaction } from '@shared/interfaces/transaction';
 import { Wallet } from '@shared/interfaces/wallet';
 import { TransactionFormModalComponent } from '@shared/modules/transaction-form-modal/transaction-form-modal.component';
 import { startOfDay, parseISO, formatISO, getTime } from 'date-fns';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-transaction-list',
@@ -46,7 +46,7 @@ export class TransactionListComponent implements OnInit, OnChanges {
    */
   transactionsGroupsTotal: Record<string, number> = {};
 
-  constructor(private modalService: BsModalService) {
+  constructor(private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -144,6 +144,6 @@ export class TransactionListComponent implements OnInit, OnChanges {
    * Open transaction form modal for editing
    */
   editTransaction(transaction: Transaction): void {
-    this.modalService.show(TransactionFormModalComponent, { initialState: { transaction } });
+    this.dialog.open(TransactionFormModalComponent, { data: { transaction } });
   }
 }

@@ -9,6 +9,7 @@ import { TruncateModule } from '@shared/modules/truncate/truncate.module';
 
 import { ListRoutingModule } from './list-routing.module';
 import { ListComponent } from './list.component';
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ListComponent } from './list.component';
     ProfileCurrencyModule,
     FontAwesomeModule,
     TruncateModule,
+    MatButtonModule,
   ],
 })
 export class ListModule {

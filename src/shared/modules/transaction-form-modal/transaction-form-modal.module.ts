@@ -7,6 +7,12 @@ import { SelectModule } from '@shared/modules/select/select.module';
 import { TagFormModalModule } from '@shared/modules/tag-form-modal/tag-form-modal.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TransactionFormModalComponent } from './transaction-form-modal.component';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   imports: [
@@ -17,6 +23,12 @@ import { TransactionFormModalComponent } from './transaction-form-modal.componen
     SelectModule,
     CategoryFormModalModule,
     TagFormModalModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatDialogModule,
   ],
   declarations: [
     TransactionFormModalComponent,

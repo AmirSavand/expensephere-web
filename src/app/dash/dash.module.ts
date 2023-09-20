@@ -10,6 +10,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DashRoutingModule } from './dash-routing.module';
 import { DashComponent } from './dash.component';
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,16 @@ import { DashComponent } from './dash.component';
     LoadingModule,
     OverlayModule,
     TagFormModalModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatDividerModule,
   ],
+  providers: [
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} }
+  ]
 })
 export class DashModule {
 }

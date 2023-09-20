@@ -4,7 +4,7 @@ import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { InvoiceService } from '@app/dash/invoice/invoice.service';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faChevronRight, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faInfoCircle, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Utils } from '@shared/classes/utils';
@@ -21,7 +21,7 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 import { ProfileService } from '@shared/services/profile.service';
 import { Payload } from '@shared/types/payload';
 import { format } from 'date-fns';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-form',
@@ -102,8 +102,8 @@ export class FormComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private invoiceService: InvoiceService,
               private route: ActivatedRoute,
-              private modalService: BsModalService,
-              private router: Router) {
+              private router: Router,
+              private dialog : MatDialog) {
   }
 
   /** Redirect to edit page of this invoice. */
@@ -306,10 +306,11 @@ export class FormComponent implements OnInit {
 
   /** Add a client or company from the dropdowns. */
   addContact(field: 'client' | 'company'): void {
-    const modal: BsModalRef<ContactFormModalComponent> = this.modalService.show(ContactFormModalComponent, {
-      initialState: { redirect: false },
+    const dialogRef = this.dialog.open(ContactFormModalComponent, {
+      width : '500px',
+      data: { redirect: false },
     });
-    modal.content.submitted.subscribe({
+    dialogRef.afterClosed().subscribe({
       next: (data: Contact): void => {
         this.contacts.push(data);
         this.form.form.get(field).patchValue(data.id);

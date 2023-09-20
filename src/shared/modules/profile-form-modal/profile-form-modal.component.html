@@ -5,7 +5,7 @@
   <span>{{ isEditing ? 'Edit' : 'Add' }} Profile</span>
 
   <!-- Close -->
-  <button class="ms-auto btn btn-link" (click)="modal.hide()">
+  <button mat-button class="text-secondary" (click)="modal.hide()">
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
@@ -15,17 +15,19 @@
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
 
     <!-- Name -->
-    <div class="form-group">
-      <label for="name">Name</label>
-      <div class="input-group">
-        <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
-        </div>
-        <input type="text" id="name" class="form-control" formControlName="name"
-               placeholder="Name" [class.is-invalid]="form.error.name">
-        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
-      </div>
-    </div>
+    <label class="label2">Name</label>
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Name</mat-label>
+      <span matPrefix class="icon-prefix">
+        <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
+      </span>
+      <input matInput
+             type="text"
+             id="name"
+             formControlName="name"
+             [class.is-invalid]="form.error.name">
+      <mat-error *ngIf="form.error.name">{{ form.error.name[0] }}</mat-error>
+    </mat-form-field>
 
     <!-- Currency -->
     <div class="form-group">
@@ -46,18 +48,19 @@
     </div>
 
     <!-- Note -->
-    <div class="form-group">
-      <label for="note">Note</label>
-      <div class="input-group">
-        <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faNote"></fa-icon>
-        </div>
-        <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
-                  [class.is-invalid]="form.error.note">
-        </textarea>
-        <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[0] }}</div>
-      </div>
-    </div>
+    <label class="label2">Note</label>
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Write a note</mat-label>
+      <span matPrefix class="note-prefix">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faNote"></fa-icon>
+        </span>
+      <textarea matInput
+                id="note"
+                [rows]="3"
+                type="text"
+                formControlName="note"></textarea>
+      <mat-error *ngIf="form.error.note">{{ form.error.note[0] }}</mat-error>
+    </mat-form-field>
   </form>
 </div>
 
@@ -70,10 +73,10 @@
   </a>
 
   <!-- Cancel -->
-  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+  <button mat-button (click)="modal.hide()">Cancel</button>
 
   <!-- Submit -->
-  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+  <button mat-flat-button [disabled]="form.loading || form.form.invalid" (click)="submit()">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>

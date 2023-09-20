@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Color } from '@shared/classes/color';
 import { Wallet } from '@shared/interfaces/wallet';
 import { WalletFormModalComponent } from '@shared/modules/wallet-form-modal/wallet-form-modal.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-wallet-list',
@@ -21,16 +21,16 @@ export class WalletListComponent {
 
   @Input() columnClass = 'col-xl-4';
 
-  constructor(private modalService: BsModalService) {
+  constructor(private dialog: MatDialog) {
   }
 
   /**
    * Open wallet form modal for editing
    */
   editWallet(wallet: Wallet): void {
-    this.modalService.show(WalletFormModalComponent, {
-      class: 'modal-sm',
-      initialState: { wallet },
+    this.dialog.open(WalletFormModalComponent, {
+      width: '300px',
+      data: { wallet } ,
     });
   }
 

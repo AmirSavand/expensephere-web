@@ -11,13 +11,15 @@
   <div class="filter" *ngFor="let filter of filters">
 
     <!-- Text type -->
-    <input *ngIf="filter.type === filterType.TEXT"
-           [placeholder]="filter.label"
-           [(ngModel)]="filter.value"
-           (debouncedChange)="onUpdate()"
-           appModelDebounce
-           type="text"
-           class="form-control">
+    <mat-form-field appearance="fill" *ngIf="filter.type === filterType.TEXT">
+      <mat-label><fa-icon [fixedWidth]="true" [icon]="faMagnifyingGlass"></fa-icon></mat-label>
+      <input matInput
+             [placeholder]="filter.label"
+             [(ngModel)]="filter.value"
+             (debouncedChange)="onUpdate()"
+             appModelDebounce
+             type="text">
+    </mat-form-field>
 
     <!-- List type -->
     <app-select *ngIf="filter.type === filterType.LIST && (!filter.values || filter.values.length)"
@@ -32,13 +34,12 @@
     </app-select>
 
     <!-- Boolean type -->
-    <div *ngIf="filter.type === filterType.BOOLEAN" class="form-check form-switch position-static">
-      <input [(ngModel)]="filter.value"
-             [id]="'filter-' + filter.key"
-             (ngModelChange)="onUpdate()"
-             class="form-check-input"
-             type="checkbox">
-      <label class="form-check-label" [for]="'filter-' + filter.key">{{ filter.label }}</label>
+    <div *ngIf="filter.type === filterType.BOOLEAN" class="">
+        <mat-slide-toggle [(ngModel)]="filter.value"
+                          [id]="'filter-' + filter.key"
+                          (ngModelChange)="onUpdate()">
+        </mat-slide-toggle>
+      <label class="small p-2" [for]="'filter-' + filter.key">{{ filter.label }}</label>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -12,8 +12,9 @@ import { Category } from '@shared/interfaces/category';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
 import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item';
 import { ProfileService } from '@shared/services/profile.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-category-form-modal',
@@ -76,9 +77,12 @@ export class CategoryFormModalComponent implements OnInit {
    */
   isEditing: boolean;
 
-  constructor(public modal: BsModalRef,
+  constructor(
               private formBuilder: UntypedFormBuilder,
-              private router: Router) {
+              private router: Router,
+              private _snackBar: MatSnackBar,
+              public dialogRef: MatDialogRef<CategoryFormModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { category: Category, redirect : boolean }) {
   }
 
   ngOnInit(): void {
@@ -96,14 +100,14 @@ export class CategoryFormModalComponent implements OnInit {
     /**
      * Check if editing
      */
-    if (this.category) {
+    if (this.data?.category) {
       this.isEditing = true;
       this.form.form.patchValue({
-        kind: this.category.kind,
-        name: this.category.name,
-        color: this.category.color,
-        icon: this.category.icon,
-        archive: this.category.archive,
+        kind: this.data.category.kind,
+        name: this.data.category.name,
+        color: this.data.category.color,
+        icon: this.data.category.icon,
+        archive: this.data.category.archive,
       });
     }
   }
@@ -116,22 +120,28 @@ export class CategoryFormModalComponent implements OnInit {
     const payload: Partial<Category> = this.form.form.value;
     let method: Observable<Category> = Api.category.create(payload);
     if (this.isEditing) {
-      method = Api.category.update(this.category.id, payload);
+      method = Api.category.update(this.data.category.id, payload);
     }
     method.subscribe((data: Category): void => {
-      if (this.redirect && !this.isEditing) {
+      if (this.data?.redirect == null && !this.isEditing) {
         this.router.navigate(['/dash/category/', data.id]);
       }
       if (this.isEditing) {
-        Object.assign(this.category, data);
+        Object.assign(this.data.category, data);
       }
       this.submitted.emit(data);
-      this.modal.hide();
+      this.dialogRef.close();
       CategoryFormModalComponent.CHANGE.emit();
     }, ((error: HttpErrorResponse): void => {
       this.form.error = error.error;
       this.form.loading = false;
     }));
+    if (!this.isEditing) {
+      this._snackBar.open('Category created successfully!', 'close')
+    }
+    else {
+      this._snackBar.open('Category updated!', 'close')
+    }
   }
 
   /**
@@ -144,7 +154,6 @@ export class CategoryFormModalComponent implements OnInit {
       return;
     }
     Api.category.delete(category.id).subscribe((): void => {
-      this.modal.hide();
       CategoryFormModalComponent.CHANGE.emit();
     });
   }

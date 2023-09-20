@@ -10,7 +10,8 @@ import { GetParams } from '@shared/interfaces/get-params';
 import { ContactFormModalComponent } from '@shared/modules/contact-form-modal';
 import { FilterType } from '@shared/modules/filters/shared/enums/filter-type';
 import { Filter } from '@shared/modules/filters/shared/interfaces/filter';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-contacts',
@@ -40,7 +41,7 @@ export class ContactsComponent {
   /** Delete API loading indicator. */
   deleting = false;
 
-  constructor(private modalService: BsModalService) {
+  constructor(private dialog : MatDialog) {
   }
 
   load(): void {
@@ -52,19 +53,19 @@ export class ContactsComponent {
   }
 
   update(contact: Contact): void {
-    const modal: BsModalRef<ContactFormModalComponent> = this.modalService.show(ContactFormModalComponent, {
-      initialState: { contact },
+    const dialogRef = this.dialog.open(ContactFormModalComponent, {
+      data: { contact }
     });
-    modal.content.destroyed.subscribe({
-      next: (): void => {
-        Utils.removeChild(this.contacts, contact);
-      },
-    });
+    // dialogRef.afterClosed().subscribe({
+    //   next: (): void => {
+    //     Utils.removeChild(this.contacts, contact);
+    //   },
+    // });
   }
 
   create(): void {
-    const modal: BsModalRef<ContactFormModalComponent> = this.modalService.show(ContactFormModalComponent);
-    modal.content.submitted.subscribe({
+    const dialogRef = this.dialog.open(ContactFormModalComponent);
+    dialogRef.afterClosed().subscribe({
       next: (data: Contact): void => {
         this.contacts.push(data);
       },

@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Account } from '@shared/interfaces/account';
 import { ReactiveFormData } from '@shared/interfaces/reactive-form-data';
@@ -64,4 +64,6 @@ export class SettingsComponent implements OnInit {
       this.form.error = error.error;
     });
   }
+
+    protected readonly faInfoCircle = faInfoCircle;
 }

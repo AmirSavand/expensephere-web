@@ -41,6 +41,8 @@
 //@import "bootstrap/scss/placeholders";
 @import "bootstrap/scss/helpers";
 @import "bootstrap/scss/utilities/api";
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 
 /* Icons */
 
@@ -480,4 +482,48 @@ select.no-style {
   display: flex;
   max-width: 100%;
   max-height: 100%;
+}
+
+.icon-prefix {
+  margin-right: map_get($spacers, 2);
+  position: relative;
+  top: -6px;
+}
+
+.label2{
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  font-size: 0.875em;
+  display: inline-block;
+  color: #808e9b;
+  margin-bottom: 0.5rem;
+}
+
+.currency-suffix {
+  margin-left: map_get($spacers, 2);
+  position: relative;
+  top: -6px;
+}
+
+.note-prefix {
+  margin-right: map_get($spacers, 2);
+  position: relative;
+  top: -25px;
+}
+
+input[type='datetime-local']::-webkit-calendar-picker-indicator,input[type='date']::-webkit-calendar-picker-indicator {
+  font-size: 13px;
+}
+
+.fw{
+  font-weight: 700;
+}
+
+.income-style{
+  width : 92%;
+}
+
+.mat-flat-button.mat-accent {
+  background-color: #808e9b; /* Your new accent color */
+  color: #ffffff;
 }

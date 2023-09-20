@@ -2,45 +2,50 @@
 <div class="modal-header">
 
   <!-- Title -->
-  <span>{{ isEditing ? 'Edit' : 'Add' }} Event</span>
+  <span mat-dialog-title>{{ isEditing ? 'Edit' : 'Add' }} Event</span>
 
   <!-- Close -->
-  <button class="ms-auto btn btn-link" (click)="modal.hide()">
+  <button mat-button class="text-secondary mb-4" mat-dialog-close>
     <fa-icon [fixedWidth]="true" [icon]="faClose"></fa-icon>
   </button>
 </div>
 
 
 <!-- Body -->
-<div class="modal-body pb-0">
+<div mat-dialog-content class="modal-body pb-0">
   <form [formGroup]="form.form" (ngSubmit)="submit()" *ngIf="form.form">
 
     <!-- Name -->
-    <div class="form-group">
-      <label for="name">Name</label>
-      <div class="input-group">
-        <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
-        </div>
-        <input type="text" id="name" class="form-control" formControlName="name"
-               placeholder="Name" [class.is-invalid]="form.error.name">
-        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
-      </div>
-    </div>
+    <label class="label2">Name</label>
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Name</mat-label>
+      <span matPrefix class="icon-prefix">
+        <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
+      </span>
+      <input matInput
+             type="text"
+             formControlName="name"
+             placeholder="Name">
+      <mat-error *ngIf="form.error.name">{{ form.error.name[0] }}</mat-error>
+    </mat-form-field>
 
     <!-- Budget -->
-    <div class="form-group">
-      <label for="budget">Budget</label>
-      <div class="input-group">
-        <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faBudget"></fa-icon>
-        </div>
-        <input type="number" id="budget" class="form-control" formControlName="budget"
-               [step]="1" [min]="0" placeholder="Enter budget" autocomplete="off"
-               [class.is-invalid]="form.error.budget">
-        <div class="input-group-text w-auto"><span class="input-group-text fw-bold">{{ currency }}</span></div>
-        <div class="invalid-tooltip" *ngIf="form.error.budget">{{ form.error.budget[0] }}</div>
-      </div>
+    <div *ngIf="!isEditing">
+      <label class="label2">Budget</label>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Budget</mat-label>
+        <span matPrefix class="icon-prefix">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faBudget"></fa-icon>
+        </span>
+        <input matInput
+               [min]="0"
+               placeholder="Enter amount"
+               formControlName="budget"
+               autocomplete="off"
+               type="number">
+        <span matSuffix class="currency-suffix"><span class="fw-bold">{{ currency }}</span></span>
+        <mat-error *ngIf="form.error.initial_balance">{{ form.error.initial_balance[0] }}</mat-error>
+      </mat-form-field>
     </div>
 
     <!-- Icon -->
@@ -76,9 +81,11 @@
     <!-- Archive -->
     <div class="form-group">
       <label for="archive">Archive</label>
-      <div class="form-check form-switch position-static">
-        <input class="form-check-input" type="checkbox" formControlName="archive" id="archive">
-        <label class="form-check-label" for="archive">Archive and hide from the list</label>
+      <div>
+        <mat-slide-toggle formControlName="archive"
+                          id="archive"
+                          class="small">Archive and hide from the list
+        </mat-slide-toggle>
       </div>
     </div>
 
@@ -93,44 +100,45 @@
     <div [collapse]="!showExtraDetails">
 
       <!-- Start -->
-      <div class="form-group">
-        <label for="start">Start</label>
-        <div class="input-group">
-          <div class="input-group-text">
-            <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faTime"></fa-icon>
-          </div>
-          <input type="datetime-local" id="start" class="form-control" formControlName="start"
-                 [class.is-invalid]="form.error.start">
-          <div class="invalid-tooltip" *ngIf="form.error.start">{{ form.error.start[0] }}</div>
-        </div>
-      </div>
+      <label class="label2">Start</label>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Select date</mat-label>
+        <span matPrefix class="icon-prefix">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faTime"></fa-icon>
+        </span>
+        <input matInput
+               type="datetime-local"
+               formControlName="start">
+        <mat-error *ngIf="form.error.start">{{ form.error.start[0] }}</mat-error>
+      </mat-form-field>
 
       <!-- End -->
-      <div class="form-group">
-        <label for="end">End</label>
-        <div class="input-group">
-          <div class="input-group-text">
-            <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faTime"></fa-icon>
-          </div>
-          <input type="datetime-local" id="end" class="form-control current-timedate" formControlName="end"
-                 [class.is-invalid]="form.error.end">
-          <div class="invalid-tooltip" *ngIf="form.error.end">{{ form.error.end[0] }}</div>
-        </div>
-      </div>
+      <label class="label2">End</label>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Select date</mat-label>
+        <span matPrefix class="icon-prefix">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faTime"></fa-icon>
+        </span>
+        <input matInput
+               type="datetime-local"
+               formControlName="end">
+        <mat-error *ngIf="form.error.end">{{ form.error.end[0] }}</mat-error>
+      </mat-form-field>
 
       <!-- Note -->
-      <div class="form-group">
-        <label for="note">Note</label>
-        <div class="input-group">
-          <div class="input-group-text">
-            <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faNote"></fa-icon>
-          </div>
-          <textarea id="note" [rows]="3" class="form-control" formControlName="note" placeholder="Write a note"
-                    [class.is-invalid]="form.error.note">
-          </textarea>
-          <div class="invalid-tooltip" *ngIf="form.error.note">{{ form.error.note[0] }}</div>
-        </div>
-      </div>
+      <label class="label2">Note</label>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Write a note</mat-label>
+        <span matPrefix class="note-prefix">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faNote"></fa-icon>
+        </span>
+        <textarea matInput
+                  id="note"
+                  [rows]="3"
+                  type="text"
+                  formControlName="note"></textarea>
+        <mat-error *ngIf="form.error.note">{{ form.error.note[0] }}</mat-error>
+      </mat-form-field>
     </div>
   </form>
 </div>
@@ -139,15 +147,24 @@
 <div class="modal-footer text-end">
 
   <!-- Delete -->
-  <a class="text-danger me-auto" *ngIf="isEditing" (click)="delete(event)">
+  <button mat-button
+          class="me-auto"
+          color="warn"
+          *ngIf="isEditing"
+          (click)="delete(this.data.event)"
+          [mat-dialog-close]="true">
     <fa-icon [fixedWidth]="true" [icon]="faTrash"></fa-icon>
-  </a>
+  </button>
 
   <!-- Cancel -->
-  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+  <button mat-button class="mx-2" mat-dialog-close>Cancel</button>
 
   <!-- Submit -->
-  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+  <button mat-flat-button
+          color="primary"
+          [disabled]="form.loading || form.form.invalid"
+          (click)="submit()"
+          [mat-dialog-close]="true">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>

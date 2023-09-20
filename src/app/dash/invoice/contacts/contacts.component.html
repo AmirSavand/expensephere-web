@@ -37,15 +37,15 @@
       <tbody>
       <tr *ngFor="let contact of contacts">
         <!-- Name -->
-        <td>{{ contact.name }}</td>
+        <td>{{ contact?.name }}</td>
         <!-- Email -->
-        <td><a [href]="'mailto:' + contact.email">{{ contact.email }}</a></td>
+        <td><a [href]="'mailto:' + contact?.email">{{ contact?.email }}</a></td>
         <!-- Phone -->
-        <td><a [href]="'tel:' + contact.phone">{{ contact.phone }}</a></td>
+        <td><a [href]="'tel:' + contact?.phone">{{ contact?.phone }}</a></td>
         <!-- Website -->
-        <td><a [href]="contact.website" target="_blank">{{ contact.website }}</a></td>
+        <td><a [href]="contact?.website" target="_blank">{{ contact?.website }}</a></td>
         <!-- Address -->
-        <td [title]="contact.address">{{ contact.address | slice:0:20 }}</td>
+        <td [title]="contact?.address">{{ contact?.address | slice:0:20 }}</td>
         <!-- Actions -->
         <td class="text-end">
           <!-- Edit -->
