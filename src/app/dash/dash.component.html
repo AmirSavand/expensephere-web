@@ -74,7 +74,7 @@
     <div id="user">
 
       <!-- Sidebar toggle button (mobile only) -->
-      <button mat-button (click)="sidebarClose = true" class="btn btn-secondary me-3 d-block d-lg-none">
+      <button mat-flat-button (click)="sidebarClose = true" color="accent" class="me-3 d-block d-lg-none">
         <fa-icon [fixedWidth]="true" [icon]="faSidebarToggle"></fa-icon>
       </button>
 
@@ -88,7 +88,7 @@
       </div>
 
       <!-- Icon -->
-      <button mat-button (click)="toggleUserView()" class="btn btn-secondary ms-auto">
+      <button mat-flat-button (click)="toggleUserView()" color="accent" class="ms-auto">
         <fa-icon [fixedWidth]="true" [icon]="sidebarViewSelected === sidebarView.USER ? faBack : faView"></fa-icon>
       </button>
     </div>
@@ -106,26 +106,24 @@
         <app-loading *ngIf="!profiles" classes="mb-2"></app-loading>
 
         <!-- Profile -->
-        <mat-card (click)="select(item)"
+        <button mat-flat-button (click)="select(item)"
              *ngFor="let item of profiles; let last = last"
              [class.cursor-pointer]="profile && item.id !== profile.id"
-             class="btn mb-2">
+             class="mb-2 w-100"
+             color="warn">
           <div class="py-2">
-            <div class="d-flex align-items-center">
-
+            <div class="text-start">
               <!-- Profile name and total balance -->
-              <div class="me-auto">
-                <div class="fw-bold text-start text-light">{{ item.name }}</div>
-                <div class="small mb-1 text-secondary" title="Total balance">
-                  {{ item.balance.total | profileCurrency:item.currency }}
-                </div>
-              </div>
+              <span class="fw-bold text-light d-block">{{ item.name }}</span>
+              <span class="text-secondary" title="Total balance">
+                {{ item.balance.total | profileCurrency:item.currency }}
+              </span>
 
               <!-- Selected icon -->
               <fa-icon *ngIf="profile.id === item.id"
                        [fixedWidth]="true"
                        [icon]="faSelected"
-                       class="text-primary">
+                       class="text-primary text-end">
               </fa-icon>
 
               <!-- Not selected icon -->
@@ -137,7 +135,7 @@
             </div>
             <div *ngIf="item.note" class="text-start text-muted small">{{ item.note }}</div>
           </div>
-        </mat-card>
+        </button>
 
         <!-- Add profile -->
         <button (click)="addProfile()" class="btn btn-link text-secondary fw-bold ms-2">Add Profile</button>
@@ -150,12 +148,12 @@
         <p class="fw-bold">My Account</p>
 
         <!-- Settings -->
-        <button mat-button class="btn btn-secondary" routerLink="/user/settings" title="Settings">
+        <button mat-flat-button color="accent" routerLink="/user/settings" title="Settings">
           <fa-icon [fixedWidth]="true" [icon]="faSettings"></fa-icon>
         </button>
 
         <!-- Sign out -->
-        <button mat-button class="btn btn-secondary ms-2" routerLink="/user/sign-out" title="Sign Out">
+        <button mat-flat-button class="ms-2" color="accent" routerLink="/user/sign-out" title="Sign Out">
           <fa-icon [fixedWidth]="true" [icon]="faSignOut"></fa-icon>
         </button>
       </div>

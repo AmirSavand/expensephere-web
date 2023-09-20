@@ -174,5 +174,4 @@ export class WalletFormModalComponent implements OnInit {
       WalletFormModalComponent.CHANGE.emit();
     });
   }
-
 }

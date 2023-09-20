@@ -35,10 +35,9 @@
 
     <!-- Boolean type -->
     <div *ngIf="filter.type === filterType.BOOLEAN" class="">
-        <mat-slide-toggle
-             [(ngModel)]="filter.value"
-             [id]="'filter-' + filter.key"
-             (ngModelChange)="onUpdate()">
+        <mat-slide-toggle [(ngModel)]="filter.value"
+                          [id]="'filter-' + filter.key"
+                          (ngModelChange)="onUpdate()">
         </mat-slide-toggle>
       <label class="small p-2" [for]="'filter-' + filter.key">{{ filter.label }}</label>
     </div>

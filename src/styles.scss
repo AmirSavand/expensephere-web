@@ -523,3 +523,7 @@ input[type='datetime-local']::-webkit-calendar-picker-indicator,input[type='date
   width : 92%;
 }
 
+.mat-flat-button.mat-accent {
+  background-color: #808e9b; /* Your new accent color */
+  color: #ffffff;
+}

@@ -21,9 +21,9 @@
       <div class="col-lg-4">
         <div class="fw mt-2 mb-2">Select Filters</div>
         <mat-card class="h-100">
-          <p>Filter what transactions you want to include for exporting.</p>
+          <mat-card-subtitle>Filter what transactions you want to include for exporting.</mat-card-subtitle>
           <app-filters (update)="filtersSelected = $event; load()" [filters]="filters"></app-filters>
-          <button mat-flat-button (click)="filtersSelected = {}; load()" class="btn btn-light w-100 mt-3">
+          <button mat-button (click)="filtersSelected = {}; load()" class="w-100 mt-3">
             Clear Filters
           </button>
         </mat-card>
@@ -33,7 +33,7 @@
       <div class="col-lg-4">
         <div class="fw mt-2 mb-2">Select Date Range</div>
         <mat-card class="h-100 ">
-          <p>Include transactions between specific dates. Dates are ignored if they are not set.</p>
+          <mat-card-subtitle>Include transactions between specific dates. Dates are ignored if they are not set.</mat-card-subtitle>
           <label class="label2 d-flex">From</label>
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>Select Date</mat-label>
@@ -45,10 +45,10 @@
             <input matInput (change)="load()" [(ngModel)]="to" id="to" type="date">
           </mat-form-field>
 
-          <button mat-flat-button
+          <button mat-button
                   (click)="from = null; to = null; load()"
                   [disabled]="!from && !to"
-                  class="btn btn-light w-100">
+                  class="w-100">
             Clear Dates
           </button>
         </mat-card>
@@ -58,11 +58,12 @@
       <div class="col-lg-4">
         <div class="fw mb-2 mt-2">Select Export Type</div>
         <mat-card class="h-100">
-          <p>Select what kind of file you want to export your transactions to.</p>
+          <mat-card-subtitle>Select what kind of file you want to export your transactions to.</mat-card-subtitle>
           <button mat-flat-button (click)="submit(option)"
                   *ngFor="let option of options; let first = first"
                   [class.mt-2]="!first"
-                  class="btn btn-primary w-100">
+                  class="w-100"
+                  color="primary">
             {{ option.label }}
           </button>
           <hr>
