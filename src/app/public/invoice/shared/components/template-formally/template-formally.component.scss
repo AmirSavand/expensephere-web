@@ -1,0 +1,67 @@
+@import "src/variables";
+
+$invoice-bg-color: #f0f1f3;
+
+.snapshot-mode {
+  $size: 950px;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin-top: 0 !important;
+  max-width: $size !important;
+  width: $size !important;
+  min-width: $size !important;
+}
+
+th {
+  color: rgba($dark, 0.5);
+  font-weight: $font-weight-bold;
+}
+
+.container {
+  max-width: map_get($grid-breakpoints, md);
+}
+
+td {
+  color: $dark;
+  font-weight: $font-weight-bold;
+}
+
+th, td {
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.container {
+  padding-bottom: 40px;
+  max-width: map_get($grid-breakpoints, lg);
+}
+
+.invoice {
+  padding: 40px;
+  border-radius: 2px;
+
+  .private {
+    padding: 0 16px;
+    font-weight: bold;
+    border-radius: 100px;
+    background: $invoice-bg-color;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .invoice-info {
+    flex-wrap: wrap;
+
+    > div {
+      margin-bottom: 20px;
+      width: 50% !important;
+      flex-basis: 50% !important;
+    }
+  }
+}
