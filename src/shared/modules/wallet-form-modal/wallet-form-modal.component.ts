@@ -152,6 +152,7 @@ export class WalletFormModalComponent implements OnInit {
        */
       this.profileService.refresh();
     }, ((error: HttpErrorResponse): void => {
+      this.form.form.get('name').setErrors({ api: true });
       this.form.error = error.error;
       this.form.loading = false;
     }));

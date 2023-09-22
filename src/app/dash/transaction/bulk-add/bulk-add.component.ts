@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { faChevronRight, faCircleNotch, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
+import { faChevronRight, faCircleNotch, faInfoCircle, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { Utils } from '@shared/classes/utils';
 import { ExpenseKind } from '@shared/enums/kind';
@@ -150,4 +150,7 @@ export class BulkAddComponent implements OnInit {
       });
     }
   }
+
+  protected readonly faInfoCircle = faInfoCircle;
+  protected readonly faClock = faClock;
 }

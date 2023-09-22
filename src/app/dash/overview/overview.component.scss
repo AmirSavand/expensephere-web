@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+
+.mat-card:hover {
+  @include mat.elevation(8, $opacity: 0.5);
+}
+
+.mat-card-custom {
+  box-shadow: none;
+}
+
+.mat-badge {
+  left: -13px;
+}

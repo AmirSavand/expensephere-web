@@ -1,3 +1,4 @@
+@use "@angular/material" as mat;
 @import "src/variables";
 
 .invalid-tooltip {
@@ -18,4 +19,14 @@ th, td {
 td {
   padding-top: map_get($spacers, 1);
   padding-bottom: map_get($spacers, 1);
+}
+
+.input-select-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.mat-card:hover {
+  @include mat.elevation(8, $opacity: 0.5);
 }

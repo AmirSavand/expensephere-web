@@ -5,7 +5,15 @@ import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faClock, faMoneyBillAlt, faStickyNote } from '@fortawesome/free-regular-svg-icons';
-import { faChevronDown, faCube, faTag, faTimes, faTrash, faWallet } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronDown,
+  faCube,
+  faPiggyBank,
+  faTag,
+  faTimes,
+  faTrash,
+  faWallet,
+} from '@fortawesome/free-solid-svg-icons';
 import { Api } from '@shared/classes/api';
 import { InlineStorage } from '@shared/classes/inline-storage';
 import { Utils } from '@shared/classes/utils';
@@ -305,4 +313,6 @@ export class TransactionFormModalComponent implements OnInit {
       selected.push(tag as number);
     }
   }
+
+  protected readonly faPiggyBank = faPiggyBank;
 }

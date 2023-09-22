@@ -30,72 +30,106 @@
         </td>
         <!-- Kind -->
         <td *ngIf="!form.success">
-          <select class="form-select" formControlName="kind"
-                  (ngModelChange)="form.form.get('category').setValue(categoryGroups[form.form.value.kind][0].id)">
-            <option [ngValue]="expenseKind.INCOME">Income</option>
-            <option [ngValue]="expenseKind.EXPENSE">Expense</option>
-            <option [ngValue]="expenseKind.TRANSFER">Transfer</option>
-          </select>
+          <mat-form-field class="w-100">
+          <mat-select formControlName="kind"
+                      (valueChange)="form.form.get('category').setValue(categoryGroups[form.form.value.kind][0].id)">
+            <mat-option [value]="expenseKind.INCOME">Income</mat-option>
+            <mat-option [value]="expenseKind.EXPENSE">Expense</mat-option>
+            <mat-option [value]="expenseKind.TRANSFER">Transfer</mat-option>
+          </mat-select>
+          </mat-form-field>
         </td>
         <!-- Wallet -->
         <td *ngIf="!form.success">
-          <!-- Wallet from and into -->
+
+          <!-- Wallet form and into -->
           <div class="d-flex">
-            <!-- Wallet from -->
-            <div class="w-100">
-              <select class="form-select" formControlName="wallet" [class.is-invalid]="form.error.wallet">
-                <option *ngFor="let wallet of wallets" [ngValue]="wallet.id">{{ wallet.name }}</option>
-              </select>
-            </div>
+
+            <!-- Wallet form -->
+              <mat-form-field class="w-100">
+              <mat-select formControlName="wallet">
+                <mat-option *ngFor="let wallet of wallets" [value]="wallet.id">
+                  {{ wallet.name }}
+                </mat-option>
+              </mat-select>
+              </mat-form-field>
+
             <!-- Wallet into -->
-            <div class="w-100 ms-2" *ngIf="form.form.value.kind === expenseKind.TRANSFER"
-                 [class.is-invalid]="form.error.into">
-              <select class="form-select" formControlName="into">
-                <option [ngValue]="null">Select wallet</option>
-                <option *ngFor="let wallet of wallets"
-                        [disabled]="wallet.id === form.form.value['wallet']"
-                        [ngValue]="wallet.id">
+            <mat-form-field class="w-100 ms-2" *ngIf="form.form.value.kind === expenseKind.TRANSFER">
+              <mat-select formControlName="into">
+                <mat-option [value]="null">Select wallet</mat-option>
+                <mat-option *ngFor="let wallet of wallets"
+                            [disabled]="wallet.id === form.form.value['wallet']"
+                            [value]="wallet.id">
                   Into {{ wallet.name }}
-                </option>
-              </select>
-              <div class="form-error" *ngIf="form.error.wallet">{{ form.error.wallet[0] }}</div>
-            </div>
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.error.wallet">
+                {{ form.error.wallet[0] }}
+              </mat-error>
+            </mat-form-field>
           </div>
+
           <!-- 1 error text for both of them -->
-          <div class="form-error" *ngIf="form.error.wallet || form.error.into">
+          <mat-error *ngIf="form.error.wallet || form.error.into">
             {{ form.error.wallet ? form.error.wallet[0] : form.error.into[0] }}
-          </div>
+          </mat-error>
         </td>
+
         <!-- Category -->
         <td *ngIf="!form.success">
-          <select class="form-select" formControlName="category" [class.is-invalid]="form.error.category">
-            <option *ngFor="let category of categoryGroups[form.form.value.kind]" [ngValue]="category.id">
-              {{ category.name }}
-            </option>
-          </select>
-          <div class="form-error" *ngIf="form.error.category">{{ form.error.category[0] }}</div>
+          <mat-form-field class="w-100">
+            <mat-select formControlName="category">
+              <mat-option *ngFor="let category of categoryGroups[form.form.value.kind]"
+                          [value]="category.id">
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.error.category">
+              {{ form.error.category[0] }}
+            </mat-error>
+          </mat-form-field>
         </td>
+
         <!-- Amount -->
         <td *ngIf="!form.success">
-          <input [placeholder]="currency" class="form-control" type="number" [step]="1" formControlName="amount"
-                 [class.is-invalid]="form.error.amount">
-          <div class="form-error" *ngIf="form.error.amount">{{ form.error.amount[0] }}</div>
+          <mat-form-field class="w-100">
+            <input matInput
+                   type="number"
+                   formControlName="amount"
+                   [placeholder]="currency"
+                   [step]="1"
+                   [min]="0">
+            <mat-error *ngIf="form.error.amount">
+              {{ form.error.amount[0] }}
+            </mat-error>
+          </mat-form-field>
         </td>
+
         <!-- Time -->
         <td *ngIf="!form.success">
-          <input type="datetime-local" id="time" class="form-control" formControlName="time"
-                 [class.is-invalid]="form.error.time">
-          <div class="form-error" *ngIf="form.error.time">{{ form.error.time[0] }}</div>
+            <mat-form-field class="w-100">
+              <input matInput
+                     type="datetime-local"
+                     formControlName="time">
+              <mat-error *ngIf="form.error.time">
+                {{ form.error.time[0] }}
+              </mat-error>
+            </mat-form-field>
         </td>
+
         <!-- Actions -->
         <td class="actions">
+
           <!-- Delete -->
           <a class="text-danger" (click)="removeForm(form)">
             <fa-icon [fixedWidth]="true" [icon]="faDelete"></fa-icon>
           </a>
+
           <!-- Success -->
           <fa-icon class="text-success" [fixedWidth]="true"
                    [icon]="faSuccess" *ngIf="form.success"></fa-icon>
+
           <!-- Loading -->
           <fa-icon class="text-warning" [fixedWidth]="true"
                    [icon]="faLoading" [spin]="true" *ngIf="form.loading">
@@ -110,11 +144,11 @@
   <div class="d-flex align-items-center mt-3">
 
     <!-- Add button -->
-    <button class="btn btn-success me-auto" (click)="forms.push(getForm())">
+    <button mat-icon-button class="btn btn-success me-auto" (click)="forms.push(getForm())">
       <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
     </button>
 
     <!-- Submit -->
-    <button class="btn btn-primary" (click)="submit()">Create All Transactions</button>
+    <button mat-flat-button class="btn btn-primary" (click)="submit()">Create All Transactions</button>
   </div>
 </div>

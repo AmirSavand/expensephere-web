@@ -16,20 +16,20 @@
   <form (ngSubmit)="submit()" *ngIf="form.form" [formGroup]="form.form">
 
     <!-- Name -->
-    <div class="form-group">
-      <label for="name">Name</label>
-      <div class="input-group">
-        <div class="input-group-text">
-          <fa-icon [fixedWidth]="true" [icon]="faInfo" class="input-group-text"></fa-icon>
-        </div>
-        <input [class.is-invalid]="form.error.name"
-               class="form-control"
+    <div class="mb-3">
+      <mat-form-field class="w-100">
+        <mat-label>Name</mat-label>
+        <span matPrefix class="icon-prefix">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
+        </span>
+        <input matInput
+               type="text"
                formControlName="name"
-               id="name"
-               placeholder="Name"
-               type="text">
-        <div *ngIf="form.error.name" class="invalid-tooltip">{{ form.error.name[0] }}</div>
-      </div>
+               placeholder="Name">
+        <mat-error *ngIf="form.error.name">
+          {{ form.error.name[0] }}
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <!-- Icon -->
@@ -66,12 +66,8 @@
     </div>
 
     <!-- Archive -->
-    <div class="form-group">
-      <label for="archive">Archive</label>
-      <div class="form-check form-switch position-static">
-        <input class="form-check-input" formControlName="archive" id="archive" type="checkbox">
-        <label class="form-check-label" for="archive">Archive and hide from the list</label>
-      </div>
+    <div class="pt-3">
+      <mat-slide-toggle formControlName="archive" id="archive">Archive and hide from the list</mat-slide-toggle>
     </div>
 
     <!-- Extra details toggle -->
@@ -85,19 +81,19 @@
     <div [collapse]="!showExtraDetails">
 
       <!-- Note -->
-      <div class="form-group">
-        <label for="note">Note</label>
-        <div class="input-group">
-          <div class="input-group-text">
-            <fa-icon [fixedWidth]="true" [icon]="faNote" class="input-group-text"></fa-icon>
-          </div>
-          <textarea [class.is-invalid]="form.error.note" [rows]="3" class="form-control" formControlName="note"
-                    id="note"
-                    placeholder="Write a note">
-          </textarea>
-          <div *ngIf="form.error.note" class="invalid-tooltip">{{ form.error.note[0] }}</div>
-        </div>
-      </div>
+      <mat-form-field class="w-100">
+        <mat-label>Note</mat-label>
+        <span matPrefix class="icon-note align-items-baseline">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faNote"></fa-icon>
+        </span>
+        <textarea matInput [rows]="3"
+                  formControlName="note"
+                  placeholder="Write a note">
+        </textarea>
+        <mat-error *ngIf="form.error.note">
+          {{ form.error.note[0] }}
+        </mat-error>
+      </mat-form-field>
     </div>
   </form>
 </div>
@@ -112,10 +108,13 @@
   </a>
 
   <!-- Cancel -->
-  <button (click)="modal.hide()" class="btn btn-light">Cancel</button>
+  <button mat-button class="mx-2" (click)="modal.hide()">Cancel</button>
 
   <!-- Submit -->
-  <button (click)="submit()" [disabled]="form.loading || form.form.invalid" class="btn btn-primary">
+  <button mat-flat-button
+          class="btn btn-primary"
+          [disabled]="form.loading || form.form.invalid"
+          (click)="submit()">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>

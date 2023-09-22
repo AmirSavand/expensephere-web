@@ -1,0 +1,13 @@
+@import "src/variables";
+
+.icon-prefix {
+  margin-right: map_get($spacers, 2);
+  position: relative;
+  top: -6px;
+}
+
+.icon-note {
+  margin-right: map_get($spacers, 2);
+  position: relative;
+  top: -26px;
+}

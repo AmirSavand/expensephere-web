@@ -11,35 +11,45 @@
 </div>
 
 <!-- Body -->
-<div class="modal-body pb-0" *ngIf="form.form">
+<div class="modal-body" *ngIf="form.form">
   <form [formGroup]="form.form" (ngSubmit)="submit()">
 
     <!-- Name -->
-    <div class="form-group">
-      <label for="name">Name</label>
-      <div class="input-group">
-        <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
-        </div>
-        <input type="text" id="name" class="form-control" formControlName="name"
-               placeholder="Name" [class.is-invalid]="form.error.name">
-        <div class="invalid-tooltip" *ngIf="form.error.name">{{ form.error.name[0] }}</div>
-      </div>
+    <div class="mb-3">
+      <mat-form-field class="w-100">
+        <mat-label>Name</mat-label>
+        <span matPrefix class="icon-prefix">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faInfo"></fa-icon>
+        </span>
+        <input matInput
+               type="text"
+               formControlName="name"
+               placeholder="Name">
+        <mat-error *ngIf="form.error.name">
+          {{ form.error.name[0] }}
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <!-- Initial balance -->
-    <div class="form-group" *ngIf="!isEditing">
-      <label for="initial_balance">Initial Balance</label>
-      <div class="input-group">
-        <div class="input-group-text">
-          <fa-icon class="input-group-text" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
-        </div>
-        <input type="number" id="initial_balance" class="form-control" formControlName="initial_balance"
-               placeholder="Enter amount" autocomplete="off"
-               [class.is-invalid]="form.error.amount">
-        <div class="input-group-text w-auto"><span class="input-group-text fw-bold">{{ currency }}</span></div>
-        <div class="invalid-tooltip" *ngIf="form.error.initial_balance">{{ form.error.initial_balance[0] }}</div>
-      </div>
+    <div *ngIf="!isEditing">
+      <mat-form-field class="w-100">
+        <mat-label>Initial Balance</mat-label>
+        <span matPrefix class="icon-prefix">
+          <fa-icon class="fa-lg" [fixedWidth]="true" [icon]="faAmount"></fa-icon>
+        </span>
+        <input matInput
+               placeholder="Enter amount"
+               formControlName="initial_balance"
+               autocomplete="off"
+               type="number">
+        <span matSuffix class="currency-suffix ">
+          <span class="fw-bold">{{ currency }}</span>
+        </span>
+        <mat-error *ngIf="form.error.initial_balance">
+          {{ form.error.initial_balance[0] }}
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <!-- Icon -->
@@ -73,12 +83,8 @@
     </div>
 
     <!-- Archive -->
-    <div class="form-group">
-      <label for="archive">Archive</label>
-      <div class="form-check form-switch position-static">
-        <input class="form-check-input" type="checkbox" formControlName="archive" id="archive">
-        <label class="form-check-label" for="archive">Archive and hide from the list</label>
-      </div>
+    <div class="pt-3">
+      <mat-slide-toggle formControlName="archive" id="archive">Archive and hide from the list</mat-slide-toggle>
     </div>
   </form>
 </div>
@@ -92,10 +98,13 @@
   </a>
 
   <!-- Cancel -->
-  <button class="btn btn-light" (click)="modal.hide()">Cancel</button>
+  <button mat-button class="mx-2" (click)="modal.hide()">Cancel</button>
 
   <!-- Submit -->
-  <button class="btn btn-primary" [disabled]="form.loading || form.form.invalid" (click)="submit()">
+  <button mat-flat-button
+          class="btn btn-primary"
+          [disabled]="form.loading || form.form.invalid"
+          (click)="submit()">
     {{ isEditing ? 'Update' : 'Done' }}
   </button>
 </div>
