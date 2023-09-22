@@ -22,37 +22,32 @@
         </div>
 
         <!-- Create transaction button -->
-        <button mat-stroked-button (click)="addTransaction()" class="btn btn-primary ms-auto">
+        <button mat-flat-button (click)="addTransaction()" class="ms-auto" color="primary">
           <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
           <span class="ms-1">Transaction</span>
         </button>
 
-        <!-- Dropdown -->
-        <div class="dropdown ms-2" dropdown>
-
-          <!-- Create button -->
-          <button class="btn btn-primary" dropdownToggle>
-            <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
-          </button>
-
-          <!-- Buttons -->
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
-            <!-- Wallet -->
-            <a (click)="addWallet()" class="dropdown-item">Wallet</a>
-            <!-- Category -->
-            <a (click)="addCategory()" class="dropdown-item">Category</a>
-            <!-- Event -->
-            <a (click)="addEvent()" class="dropdown-item">Event</a>
-            <!-- Event -->
-            <a (click)="addTag()" class="dropdown-item">Tag</a>
-            <!-- Invoice -->
-            <a [routerLink]="'/dash/invoice/add'" class="dropdown-item">Invoice</a>
-            <!-- Separator -->
-            <div class="dropdown-divider"></div>
-            <!-- Bulk transaction -->
-            <a class="dropdown-item" routerLink="/dash/transaction/bulk-add">Bulk Transaction</a>
-          </div>
-        </div>
+        <!-- Create button -->
+        <button mat-flat-button [matMenuTriggerFor]="menu" class="ms-2 py-0 px-0" color="primary">
+          <fa-icon [fixedWidth]="true" [icon]="faAdd"></fa-icon>
+        </button>
+        <!-- Dropdown menu -->
+        <mat-menu #menu="matMenu" xPosition="before" >
+          <!-- Wallet -->
+          <button (click)="addWallet()" mat-menu-item>Wallet</button>
+          <!-- Category -->
+          <button (click)="addCategory()" mat-menu-item>Category</button>
+          <!-- Event -->
+          <button (click)="addEvent()" mat-menu-item>Event</button>
+          <!-- Tag -->
+          <button (click)="addTag()" mat-menu-item>Tag</button>
+          <!-- Invoice -->
+          <button [routerLink]="'/dash/invoice/add'" mat-menu-item class="mb-2">Invoice</button>
+          <!-- Divider -->
+          <mat-divider></mat-divider>
+          <!-- Bulk Transaction -->
+          <button routerLink="/dash/transaction/bulk-add" mat-menu-item class="mt-2">Bulk Transaction</button>
+        </mat-menu>
 
         <!-- Sidebar toggle button (mobile only) -->
         <button (click)="sidebarClose = !sidebarClose" class="btn btn-secondary ms-2 d-block d-lg-none">
