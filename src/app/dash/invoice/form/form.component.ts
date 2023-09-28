@@ -21,7 +21,7 @@ import { SelectItem } from '@shared/modules/select/shared/interfaces/select-item
 import { ProfileService } from '@shared/services/profile.service';
 import { Payload } from '@shared/types/payload';
 import { format } from 'date-fns';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-form',
@@ -257,6 +257,16 @@ export class FormComponent implements OnInit {
         // @ts-ignore
         payload[key] = null;
       }
+    }
+    /** Validate discount. */
+    if (!payload.discount_flat && payload.discount > 100) {
+      this.form.error = {
+        discount: ['Discount percentage can not be more than 100.'],
+        detail: 'Invoice discount is invalid.',
+      };
+      this.form.errorStatus = 400;
+      this.form.loading = false;
+      return;
     }
     /**
      * Submit the invoice form and all the invoice item forms.

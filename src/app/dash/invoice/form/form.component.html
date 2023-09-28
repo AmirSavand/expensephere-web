@@ -123,8 +123,8 @@
             <div *ngIf="options.get('discount').value" class="form-group">
               <label for="discount">Discount</label>
               <div class="input-group">
-                <input [class.is-invalid]="form.error.discount"
-                       [max]="100"
+                <input [attr.max]="form.form.value['discount_flat'] ? undefined : 100"
+                       [class.is-invalid]="form.error.discount"
                        [min]="0"
                        [step]="1"
                        class="form-control"
@@ -136,8 +136,8 @@
                   <option [ngValue]="true">Flat</option>
                   <option [ngValue]="false">Percentage</option>
                 </select>
-                <div *ngIf="form.error.discount" class="invalid-tooltip">{{ form.error.discount[0] }}</div>
               </div>
+              <div *ngIf="form.error.discount" class="invalid-tooltip d-block">{{ form.error.discount[0] }}</div>
             </div>
 
             <!-- Tax -->

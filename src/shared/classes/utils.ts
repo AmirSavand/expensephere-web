@@ -15,7 +15,7 @@ import { PK } from '@shared/types/pk';
 import domtoimage from 'dom-to-image';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Observable, from, Subject } from 'rxjs';
+import { from, Observable, Subject } from 'rxjs';
 
 // @ts-ignore
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -237,7 +237,7 @@ export class Utils {
    * @param form Reactive form data object to update.
    * @param data Data to patch to the form (usually comes from API).
    *
-   * @version 21.3.3
+   * @version 23.9.28
    */
   static patchForm<T = Record<string, any>>(form: ReactiveFormData, data: T): void {
     for (const key in form.form.controls) {
@@ -247,8 +247,7 @@ export class Utils {
        * data value is the number 0 since it is considered
        * "false" for JavaScript.
        */
-      // @ts-ignore
-      if (form.form.controls[key] && (data[key] || data[key] === 0)) {
+      if (key in form.form.controls && key in data) {
         const control: AbstractControl = form.form.get(key);
         // @ts-ignore
         if (data[key]?.id || data[key]?.code) {
