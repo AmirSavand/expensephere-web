@@ -1,0 +1,60 @@
+@import "src/variables";
+
+$invoice-bg-color: #f6f6f8;
+
+.snapshot-mode {
+  $size: 950px;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin-top: 0 !important;
+  max-width: $size !important;
+  width: $size !important;
+  min-width: $size !important;
+}
+
+th {
+  color: rgba($dark, 0.5);
+  font-weight: $font-weight-bold;
+}
+
+td {
+  color: $dark;
+  font-weight: $font-weight-bold;
+}
+
+th, td {
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.container {
+  padding-bottom: map_get($spacers, 5);
+  padding-top: map_get($spacers, 5);
+  max-width: map_get($grid-breakpoints, lg);
+}
+
+.invoice {
+  background: $invoice-bg-color;
+  padding: map_get($spacers, 5);
+  border-radius: $border-radius;
+  box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.05);
+  border: $border-width $border-style $border-color;
+
+  &.snapshot-mode {
+    background: #fff;
+  }
+
+  .formal-badge {
+    border: $border-width $border-style $border-color;
+    padding: 0 16px;
+    font-weight: bold;
+    border-radius: $border-radius;
+    background: $invoice-bg-color;
+  }
+}

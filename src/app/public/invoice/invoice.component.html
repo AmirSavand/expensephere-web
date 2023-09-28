@@ -64,5 +64,10 @@
                         [invoice]="invoice"
                         [snapshotLoading]="snapshotLoading">
     </app-template-paper>
+    <app-template-formal (snapshotElementLoad)="snapshotElement = $event"
+                         *ngSwitchCase="'formal'"
+                         [invoice]="invoice"
+                         [snapshotLoading]="snapshotLoading">
+    </app-template-formal>
   </ng-container>
 </div>
