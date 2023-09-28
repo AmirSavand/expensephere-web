@@ -6,6 +6,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt, faUser } from '@fortawesome/free-regular-svg-icons';
 import {
   faBars,
+  faBoxes,
   faCalendarDay,
   faCheckCircle,
   faChevronDown,
@@ -23,7 +24,6 @@ import {
   faTags,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { faBoxes } from '@fortawesome/free-solid-svg-icons/faBoxes';
 import { Api } from '@shared/classes/api';
 import { Color } from '@shared/classes/color';
 import { Profile } from '@shared/interfaces/profile';

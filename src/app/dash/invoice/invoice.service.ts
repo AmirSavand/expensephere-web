@@ -20,7 +20,7 @@ export class InvoiceService {
       authors: ['Amer Ansari'],
     },
     {
-      name: 'Formally',
+      name: 'Formal',
       version: '1.0',
       authors: ['Fara Zanjani'],
     },

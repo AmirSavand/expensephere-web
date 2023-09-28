@@ -2,11 +2,11 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
 import { Invoice } from '@shared/interfaces/invoice';
 
 @Component({
-  selector: 'app-template-formally',
-  templateUrl: './template-formally.component.html',
-  styleUrls: ['./template-formally.component.scss'],
+  selector: 'app-template-formal',
+  templateUrl: './template-formal.component.html',
+  styleUrls: ['./template-formal.component.scss'],
 })
-export class TemplateFormallyComponent implements AfterViewInit {
+export class TemplateFormalComponent implements AfterViewInit {
 
   @Input() snapshotLoading = false;
 

@@ -2,14 +2,14 @@
 <div class="container">
 
   <!-- Invoice -->
-  <div #snapshotElement [class.snapshot-mode]="snapshotLoading" class="invoice shadow-sm">
+  <div #snapshotElement [class.snapshot-mode]="snapshotLoading" class="invoice">
 
     <!-- Invoice detail -->
-    <div class="row mb-2">
+    <div class="row g-3">
 
       <!-- Invoice info -->
       <div class="col-md-6">
-        <div class="border bg-light rounded p-2 mt-2">
+        <div class="card card-body bg-light border">
 
           <!-- Invoice number -->
           <div class="row">
@@ -33,7 +33,7 @@
           <div class="row mt-2">
             <div class="col-6 fw-bold text-muted">Invoice Type</div>
             <div class="col-6 text-end">
-              <span class="private">{{ !invoice.is_published ? 'PRIVATE' : 'PUBLIC' }}</span>
+              <span class="formal-badge">{{ !invoice.is_published ? 'PRIVATE' : 'PUBLIC' }}</span>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
 
       <!-- Date & Due date -->
       <div class="col-md-6">
-        <div *ngIf="invoice.date || invoice.due_date" class="border bg-light rounded p-2 mt-2">
+        <div *ngIf="invoice.date || invoice.due_date" class="card card-body bg-light border">
           <div *ngIf="invoice.date" class="row">
             <span class="col-6 fw-bold text-muted td">Date</span>
             <span class="col-6 fw-bold text-end">{{ invoice.date | date }}</span>
@@ -55,7 +55,7 @@
           <div *ngIf="invoice.is_paid !== null" class="row mt-2">
             <div class="col-6 fw-bold text-muted">Payment Status</div>
             <div class="col-6 text-end">
-              <span class="private">{{ invoice.is_paid ? 'PAID' : 'NOT PAID' }}</span>
+              <span class="formal-badge">{{ invoice.is_paid ? 'PAID' : 'NOT PAID' }}</span>
             </div>
           </div>
 
@@ -63,7 +63,7 @@
           <div class="row mt-2">
             <div class="col-6 fw-bold text-muted">Total</div>
             <div class="col-6 text-end">
-              <span class="private">{{ invoice.total | profileCurrency:invoice.currency }}</span>
+              <span class="formal-badge">{{ invoice.total | profileCurrency:invoice.currency }}</span>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
     </div>
 
     <!-- Items table -->
-    <table class="table table-borderless">
+    <table class="table table-borderless mt-3">
       <thead>
       <tr>
         <th>{{ invoice.items_label || "Tasks" }}</th>
@@ -90,12 +90,9 @@
       </tbody>
     </table>
 
-    <!-- Separator -->
-    <hr class="my-4">
-
     <!-- Notes, total, subtotal, tax, discount -->
-    <div class="row">
-      <div class="col-md-7 mb-3 mb-md-0">
+    <div class="row g-3">
+      <div class="col-md-7">
         <p class="fw-bold text-muted">Notes</p>
         <div class="text-pre">{{ invoice.note || 'There are no notes.' }}</div>
       </div>
